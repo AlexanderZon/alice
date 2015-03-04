@@ -17,7 +17,7 @@ class CreateCoursesTable extends Migration {
 			$table->increments('id');
 			$table->integer('id_author');
 			$table->string('name');
-			$table->stirng('title');
+			$table->string('title');
 			$table->text('description');
 			$table->string('picture');
 			$table->string('status');
