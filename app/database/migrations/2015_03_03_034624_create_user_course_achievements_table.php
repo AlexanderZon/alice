@@ -15,7 +15,11 @@ class CreateUserCourseAchievementsTable extends Migration {
 		Schema::create('user_course_achievements', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('id_user');
+			$table->integer('id_course_achievement');
+			$table->string('status');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

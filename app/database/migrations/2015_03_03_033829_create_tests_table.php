@@ -15,7 +15,12 @@ class CreateTestsTable extends Migration {
 		Schema::create('tests', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('id_user');
+			$table->integer('id_evaluation');
+			$table->double('percentage', 1, 2);
+			$table->string('status');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

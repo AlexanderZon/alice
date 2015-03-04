@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUserDiscussionsTable extends Migration {
+class CreateAttachmentsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,14 @@ class CreateUserDiscussionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('user_discussions', function(Blueprint $table)
+		Schema::create('attachments', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('id_parent');
+			$table->string('model');
+			$table->string('status');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -27,7 +31,7 @@ class CreateUserDiscussionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('user_discussions');
+		Schema::drop('attachments');
 	}
 
 }

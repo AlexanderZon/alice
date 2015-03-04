@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUserDiscussionsKarmaTable extends Migration {
+class CreateDiscussionsKarmaTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,14 @@ class CreateUserDiscussionsKarmaTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('user_discussions_karma', function(Blueprint $table)
+		Schema::create('discussions_karma', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('id_user');
+			$table->integer('id_discussion');
+			$table->string('status');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -27,7 +31,7 @@ class CreateUserDiscussionsKarmaTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('user_discussions_karma');
+		Schema::drop('discussions_karma');
 	}
 
 }

@@ -15,7 +15,13 @@ class CreateCapabilitiesTable extends Migration {
 		Schema::create('capabilities', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->string('name');
+			$table->string('title');
+			$table->text('description');
+			$table->string('controller');
+			$table->string('status');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
