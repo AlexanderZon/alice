@@ -15,4 +15,9 @@ class Attachment extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function attachmentable(){
+
+    	return $this->morphTo();
+    }
+
 }

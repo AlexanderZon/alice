@@ -13,5 +13,6 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	$lesson = Lesson::find(1);
+	dd($lesson->attachments[0]);
 });

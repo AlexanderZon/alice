@@ -15,4 +15,10 @@ class Achievement extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function users(){
+
+    	return $this->belongsToMany('User', 'user_achievements', 'id_user', 'id_achievement');
+
+    }
+
 }

@@ -15,4 +15,10 @@ class Lesson extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function attachments(){
+
+    	return $this->morphMany('Attachment', 'attachmentable');
+
+    }
+
 }

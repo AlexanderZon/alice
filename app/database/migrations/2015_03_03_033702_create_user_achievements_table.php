@@ -16,7 +16,7 @@ class CreateUserAchievementsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('id_user');
-			$table->integer('id_achievements');
+			$table->integer('id_achievement');
 			$table->timestamps();
 			$table->softDeletes();
 		});
