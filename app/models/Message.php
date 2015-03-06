@@ -10,5 +10,9 @@ class Message extends \Eloquent {
 	protected $table = 'messages';
 
 	protected $fillable = [];
+
+    use SoftDeletingTrait;
+
+    protected $dates = ['deleted_at'];
 	
 }
