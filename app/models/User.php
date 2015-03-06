@@ -10,6 +10,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	use UserTrait, RemindableTrait;
 
 	/**
+	 * To apply the softDeleting.
+	 *
+	 * @var string
+	 */
+    use SoftDeletingTrait;
+
+	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
