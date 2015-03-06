@@ -14,7 +14,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var string
 	 */
-	
+
     use SoftDeletingTrait;
 
     protected $dates = ['deleted_at'];
@@ -32,6 +32,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	 */
 	protected $hidden = array('password', 'remember_token');
+	
+    private $rules = array(
+        'username' => 'required|alpha|min:6|unique:users',
+        'password'  => 'required',
+        'email' => 'unique:users'
+        // .. more rules here ..
+    );
 
 	public function role(){
 
