@@ -19,6 +19,7 @@ class CreateLessonsTable extends Migration {
 			$table->integer('previous_id');
 			$table->string('name');
 			$table->string('title');
+			$table->double('approval_percentage', 3, 2);
 			$table->longText('content');
 			$table->string('status');
 			$table->timestamps();

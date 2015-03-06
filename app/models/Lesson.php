@@ -45,7 +45,7 @@ class Lesson extends \Eloquent {
 
     }
 
-    public function users(){
+    public function students(){
 
     	return $this->belongsToMany('User','user_lessons')->orderBy('created_at','ASC')->get();
 
@@ -71,19 +71,43 @@ class Lesson extends \Eloquent {
 
     public function myNotes( $user ){
 
-    	return $this->hasMany('Note','lesson_id')->where('user_id','=',$user->id);
+    	return $this->hasMany('Note','lesson_id')->where('user_id','=',$user->id)->get();
 
     }
 
     public function tests(){
 
-    	return $this->hasManyThrough('Test','Evaluation');
+    	return $this->hasManyThrough('Test','Evaluation')->orderBy('percentage','DESC')->get();
+
+    }
+
+    public function approvedTests(){
+
+    	return $this->hasManyThrough('Test','Evaluation')->where('percentage','>=',$this->approval_percentage)->orderBy('percentage','DESC')->get();
 
     }
 
     public function myTests( $user ){
 
-    	return $this->hasManyThrough('Test','Evaluation')->where('user_id','=',$user->id);
+    	return $this->hasManyThrough('Test','Evaluation')->where('user_id','=',$user->id)->get();
+
+    }
+
+    public function haveApproved( $user ){
+
+    	foreach($this->myTests($user) as $test) if($test->isApproved()) return true;
+
+    	return false;
+
+    }
+
+    public function studentsApproved(){
+
+    	$students = new User();
+
+    	foreach($this->approvedTests() as $test) $students = $students->orWhere('id','=',$test->user->id);
+
+    	return $students->get();
 
     }
 

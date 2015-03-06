@@ -15,4 +15,10 @@ class Link extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function lesson(){
+
+    	return $this->belongsTo('Lesson', 'lesson_id');
+
+    }
+
 }

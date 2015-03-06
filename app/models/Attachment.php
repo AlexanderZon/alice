@@ -18,6 +18,7 @@ class Attachment extends \Eloquent {
     public function attachmentable(){
 
     	return $this->morphTo();
+    	
     }
 
 }

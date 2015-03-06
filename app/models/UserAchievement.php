@@ -15,4 +15,16 @@ class UserAchievement extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function achievement(){
+
+    	return $this->belongsTo('Achievement','achievement_id');
+
+    }
+
+    public function user(){
+
+    	return $this->belongsTo('User','user_id');
+    	
+    }
+
 }

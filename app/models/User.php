@@ -32,7 +32,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	 */
 	protected $hidden = array('password', 'remember_token');
-	
+
     private $rules = array(
         'username' => 'required|alpha|min:6|unique:users',
         'password'  => 'required',
@@ -64,9 +64,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
-	public function audits(){
+	public function auditories(){
 
-		return $this->hasMany('Audits', 'id_user');
+		return $this->hasMany('Auditories', 'id_user');
 		
 	}
 
@@ -100,6 +100,106 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 		return $bool;
 
+	}
+
+	public function profile(){
+
+		return $this->hasOne('Profile','user_id');
+
+	}
+
+	public function achievements(){
+
+		return $this->belongsToMany('Achievement','user_achiements');
+
+	}
+
+	public function courseAchievements(){
+
+		return $this->belongsToMany('CourseAchievement','user_course_achievements');
+
+	}
+
+	public function achievementFromCourse( $course ){
+
+		return $this->belongsToMany('CourseAchievement','user_course_achievements')->where('course_id','=',$course->id)->get();
+
+	}
+
+	public function tests(){
+
+		return $this->hasMany('Test','user_id');
+
+	}
+
+	public function approvedTests(){
+
+		$approved = array();
+
+		foreach($this->tests as $test) if($test->tercentage >= $test->lesson->approval_percentage) $approved[] = $test;
+
+		return $approved;
+
+	}
+
+	public function contributions(){
+
+		return $this->belongsToMany('Course', 'contributes');
+
+	}
+
+	public function registeredCourses(){
+
+		return $this->belongsToMany('Course','inscriptions');
+
+	}
+
+	public function inscriptions(){
+
+		return $this->hasMany('Inscription','user_id');
+
+	}
+
+	public function myCourses(){
+
+		return $this->belongsToMany('Course','inscriptions')->where('status','=','active')->get();
+
+	}
+
+	public function iTeach(){
+
+		return $this->hasMany('Course','user_id');
+
+	}
+
+	public function notes(){
+
+		return $this->hasMany('Note','user_id');
+
+	}
+
+	public function discussions(){
+
+		return $this->hasMany('Discussion','user_id');
+
+	}
+
+	public function inbox(){
+
+		return $this->belongsToMany('Message','user_messages');
+
+	}
+
+	public function outbox(){
+
+		return $this->hasMany('Message','user_id');
+
+	}
+
+	public function lessons(){
+
+		return $this->belongsToMany('Lesson','user_lessons');
+		
 	}
 
 }
