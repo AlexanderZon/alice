@@ -15,8 +15,8 @@ class CreateAuditoriesTable extends Migration {
 		Schema::create('auditories', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('id_user');
-			$table->integer('id_course');
+			$table->integer('user_id');
+			$table->integer('course_id');
 			$table->string('name');
 			$table->string('title');
 			$table->text('description');

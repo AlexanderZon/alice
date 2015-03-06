@@ -15,10 +15,10 @@ class CreateCapabilityRoleTable extends Migration {
 		Schema::create('capability_role', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('id_capability')->unsigned()->index();
-			$table->foreign('id_capability')->references('id')->on('capabilities')->onDelete('cascade');
-			$table->integer('id_role')->unsigned()->index();
-			$table->foreign('id_role')->references('id')->on('roles')->onDelete('cascade');
+			$table->integer('capability_id')->unsigned()->index();
+			$table->foreign('capability_id')->references('id')->on('capabilities')->onDelete('cascade');
+			$table->integer('role_id')->unsigned()->index();
+			$table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
 			$table->timestamps();
 		});
 	}

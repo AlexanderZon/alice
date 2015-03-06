@@ -15,8 +15,8 @@ class CreateContributorsTable extends Migration {
 		Schema::create('contributors', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('id_user');
-			$table->integer('id_course');
+			$table->integer('user_id');
+			$table->integer('course_id');
 			$table->string('status');
 			$table->timestamps();
 			$table->softDeletes();

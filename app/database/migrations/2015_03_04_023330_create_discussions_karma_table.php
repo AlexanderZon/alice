@@ -15,8 +15,8 @@ class CreateDiscussionsKarmaTable extends Migration {
 		Schema::create('discussions_karma', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('id_user');
-			$table->integer('id_discussion');
+			$table->integer('user_id');
+			$table->integer('discussion_id');
 			$table->string('status');
 			$table->timestamps();
 			$table->softDeletes();

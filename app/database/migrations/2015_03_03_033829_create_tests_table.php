@@ -15,8 +15,8 @@ class CreateTestsTable extends Migration {
 		Schema::create('tests', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('id_user');
-			$table->integer('id_evaluation');
+			$table->integer('user_id');
+			$table->integer('evaluation_id');
 			$table->double('percentage', 3, 2);
 			$table->string('status');
 			$table->timestamps();
