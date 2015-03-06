@@ -15,4 +15,16 @@ class Contributor extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function user(){
+
+    	return $this->belongsTo('User','user_id');
+    	
+    }
+
+    public function course(){
+
+    	return $this->belongsTo('Course','course_id');
+
+    }
+
 }

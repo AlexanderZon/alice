@@ -15,4 +15,16 @@ class Inscription extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function course(){
+
+    	return $this->belongsTo('Course', 'ourse_id');
+
+    }
+
+    public function student(){
+
+    	return $this->belongsTo('User', 'user_id');
+    	
+    }
+
 }

@@ -15,4 +15,16 @@ class DiscussionKarma extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function user(){
+
+    	return $this->belongsTo('User', 'user_id');
+
+    }
+
+    public function discussion(){
+
+    	return $this->belongsTo('Discussion', 'discussion_id');
+    	
+    }
+
 }

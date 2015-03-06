@@ -15,4 +15,40 @@ class Discussion extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function discussionable(){
+
+    	return $this->morphTo();
+
+    }
+
+    public function attachments(){
+
+    	return $this->morphMany('Attachment','attachmentable');
+    	
+    }
+
+    public function karma(){
+
+    	return $this->hasMany('DiscussionKarma', 'discussion_id');
+
+    }
+
+    public function author(){
+
+    	return $this->belongsTo('User', 'user_id');
+
+    }
+
+    public function users(){
+
+    	return $this->belongsToMany('User','discussions_karma');
+
+    }
+
+    public function children(){
+
+    	return $this->morphMany('Discussions', 'discussionable');
+
+    }
+
 }
