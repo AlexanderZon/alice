@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="./style.css"/>
+	<script type="text/javascript" src="./jquery.min.js"></script>
+</head>
+<body>
+
+	<section class="enemy">
+		<div class="hand rock">
+			<div class="image">Rock</div>
+		</div>
+		<div class="hand paper">
+			<div class="image">Paper</div>
+		</div>
+		<div class="hand scissors">
+			<div class="image">Scissors</div>
+		</div>
+		<div class="hand lizard">
+			<div class="image">Lizard</div>
+		</div>
+		<div class="hand spock">
+			<div class="image">Spock</div>
+		</div>
+	</section>
+
+	<section class="question">
+		<div class="text"></div>
+	</section>
+
+	<section class="my-hand">
+		<div id="myRock" class="my hand rock">
+			<div class="possibleAnswer">
+				rock
+			</div>
+			<div class="image">Rock</div>
+		</div>
+		<div id="myPaper" class="my hand paper">
+			<div class="possibleAnswer">
+				
+			</div>
+			<div class="image">Paper</div>
+		</div>
+		<div id="myScissors" class="my hand scissors">
+			<div class="possibleAnswer">
+				
+			</div>
+			<div class="image">Scissors</div>
+		</div>
+		<div id="myLizard" class="my hand lizard">
+			<div class="possibleAnswer">
+				
+			</div>
+			<div class="image">Lizard</div>
+		</div>
+		<div id="mySpock" class="my hand spock">
+			<div class="possibleAnswer">
+				
+			</div>
+			<div class="image">Spock</div>
+		</div>
+	</section>
+
+	<script type="text/javascript">
+		var rpslsMAP = {
+			'rock' : {
+				on: [
+					'lizard',
+					'scissors'
+				],
+				below: [
+					'spock',
+					'paper'
+				]
+			},
+			'paper' : {
+				on: [
+					'rock',
+					'spock'
+				],
+				below: [
+					'lizard',
+					'scissors'
+				]
+			},
+			'scissors' : {
+				on: [
+					'lizard',
+					'paper'
+				],
+				below: [
+					'spock',
+					'rock'
+				]
+			},
+			'lizard' : {
+				on: [
+					'spock',
+					'paper'
+				],
+				below: [
+					'rock',
+					'scissors'
+				]
+			},
+			'spock' : {
+				on: [
+					'rock',
+					'scissors'
+				],
+				below: [
+					'lizard',
+					'paper'
+				]
+			},
+		}
+		var questions = [
+			{
+				question: "¿De que color es el caballo de Simón Bolívar?",
+				answer: 3,
+				options: [
+					{
+						id: 0,
+						item: "rock",
+						name: "Rojo",
+						answer: false,
+					},
+					{
+						id: 1,
+						item: "scissors",
+						name: "Azul",
+						answer: false,
+					},
+					{
+						id: 2,
+						item: "paper",
+						name: "Verde",
+						answer: false,
+					},
+					{
+						id: 3,
+						item: "lizard",
+						name: "Blanco",
+						answer: false,
+					},
+					{
+						id: 4,
+						item: "spock",
+						name: "Amarillo",
+						answer: false,
+					},
+				]
+			},
+		];
+
+		var selectQuestion = function(questions){
+			return questions[Math.floor((Math.random() * questions.length))];
+		}
+
+		var showQuestion = function(question){
+			console.log(question.question);
+			$('.question > .text').html(question.question);
+		}
+
+		var setPossibleAnswers = function(options){
+			for(i = 0; i < options.length; i++){
+				$option = null;
+				switch(options[i].item){
+					case 'rock':
+						$option = $('#myRock .possibleAnswer');
+						break;
+					case 'paper':
+						$option = $('#myPaper .possibleAnswer');
+						break;
+					case 'scissors':
+						$option = $('#myScissors .possibleAnswer');
+						break;
+					case 'lizard':
+						$option = $('#myLizard .possibleAnswer');
+						break;
+					case 'spock':
+						$option = $('#mySpock .possibleAnswer');
+						break;
+				}
+				$option.html(options[i].name);
+			}
+		}
+
+		$('.my').on('mouseover',function(){
+			var elem = $(this).children('.possibleAnswer').css({'display':'block'});
+		});
+
+		$('.my').on('mouseout',function(){
+			var elem = $(this).children('.possibleAnswer').css({'display':'none'});
+		});
+
+		$(document).on('ready', function(){
+
+			$question = selectQuestion(questions);
+			showQuestion($question);
+			setPossibleAnswers($question.options);
+			/*$.ajax({
+				url: 'http:localhost:8000/rpsls',
+				type: 'GET',
+				dataType: 'json',
+				error: function(err){
+					console.log("ERROR");
+					// consol.log(err);
+				},
+				success: function(data){
+					console.log(data);
+
+					console.log("success");
+				}
+			});*/
+		});
+	</script>
+</body>
+	<script type="text/javascript">
+		var questions = [
+			{
+				question: "¿De que color es el caballo de Simón Bolívar?",
+				answer: 3,
+				options: [
+					{
+						id: 0,
+						item: "rock",
+						name: "Rojo",
+						answer: false,
+					},
+					{
+						id: 1,
+						item: "scissors",
+						name: "Azul",
+						answer: false,
+					},
+					{
+						id: 2,
+						item: "paper",
+						name: "Verde",
+						answer: false,
+					},
+					{
+						id: 3,
+						item: "lizard",
+						name: "Blanco",
+						answer: false,
+					},
+					{
+						id: 4,
+						item: "spock",
+						name: "Amarillo",
+						answer: false,
+					},
+				]
+			},
+		];
+
+		var selectQuestion = function(questions){
+			return questions[Math.floor((Math.random() * questions.length))];
+		}
+
+		var setPossibleAnswers = function(options){
+			for(i = 0; i < options.length; i++){
+				$option = null;
+				switch(options[i].item){
+					case 'rock':
+						$option = $('#myRock .possibleAnswer');
+						break;
+					case 'paper':
+						$option = $('#myPaper .possibleAnswer');
+						break;
+					case 'scissors':
+						$option = $('#myScissors .possibleAnswer');
+						break;
+					case 'lizard':
+						$option = $('#myLizard .possibleAnswer');
+						break;
+					case 'spock':
+						$option = $('#mySpock .possibleAnswer');
+						break;
+				}
+				$option.html(options[i].name);
+			}
+		}
+
+		$(document).on('ready', function(){
+
+			$question = selectQuestion(questions);
+			setPossibleAnswers($question.options);
+			/*$.ajax({
+				url: 'http:localhost:8000/rpsls',
+				type: 'GET',
+				dataType: 'json',
+				error: function(err){
+					console.log("ERROR");
+					// consol.log(err);
+				},
+				success: function(data){
+					console.log(data);
+
+					console.log("success");
+				}
+			});*/
+		});
+	</script>
+</html>
