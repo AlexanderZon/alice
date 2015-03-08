@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/rpsls',function(){
+/*Route::get('/rpsls',function(){
 	$args = array(
 		array(
 			'question' => '¿De que color es el caballo de Simón Bolívar?',
@@ -53,11 +53,10 @@ Route::get('/rpsls',function(){
 
 	return Response::json( $args );
 	
-});
+});*/
 
 Route::get('/', function()
 {
-	$lesson = Lesson::find(1);
-	dd($lesson->attachments[0]);
+	return View::make('hello');
 });
 
