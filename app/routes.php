@@ -11,8 +11,9 @@
 |
 */
 
-/*Route::get('/rpsls',function(){
-	$args = array(
+
+Route::get('/rpsls',function(){
+	$questions = array(
 		array(
 			'question' => '¿De que color es el caballo de Simón Bolívar?',
 			'answer'=> 3,
@@ -51,9 +52,13 @@
 			)
 		);
 
-	return Response::json( $args );
+	$args = array(
+		'question' => Response::json($questions)
+		);
+
+	return View::make('games.rpsls.index')->with($args);
 	
-});*/
+});
 
 Route::get('/', function()
 {
