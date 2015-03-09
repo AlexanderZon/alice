@@ -167,7 +167,7 @@
 			console.log(options);
 			for(i = 0; i < options.length; i++){
 				$option = null;
-				switch(options[i].item){
+				switch(options[i].figure){
 					case 'rock':
 						$option = $('#my-rock');
 						break;
@@ -184,21 +184,21 @@
 						$option = $('#my-spock');
 						break;
 				}
-				console.log(options[i]);
-				$option.attr('data-possible-answer', options[i].name);
-				$option.attr('data-answer-value', options[i].answer);
+				$option.attr('data-figure', options[i].figure);
+				$option.attr('data-name', options[i].name);
+				$option.attr('data-answer', options[i].answer);
 			}
 		}
 
-		var enemyHandAnimation = function(){
+		var enemyInterval = setInterval(function(){
 			hands = $('.enemy .hand');
 			hand_animate = hands[Math.floor((Math.random() * hands.length))];
-			console.log($(hand_animate));
+			// console.log($(hand_animate));
 			$('.enemy .hand').animate({
 				width: '100px',
 				height: '100px',
 			}, function(){
-				console.log("Listo " + Math.floor((Math.random() * hands.length)));
+				// console.log("Listo " + Math.floor((Math.random() * hands.length)));
 				$(hand_animate).animate({
 					width: '120px',
 					height: '120px',
@@ -206,7 +206,7 @@
 					duration: 500
 				});
 			});
-		}
+		}, 500);
 
 		$('.my').on('mouseover',function(){
 			$(this).animate({
@@ -215,8 +215,8 @@
 			},{
 				duration: 500
 			});
-			console.log($(this).attr('data-possible-answer'));
-			var elem = $(".answer").html($(this).attr('data-possible-answer'));
+			// console.log($(this).attr('data-name'));
+			var elem = $(".answer").html($(this).attr('data-name'));
 		});
 
 		$('.my').on('mouseout',function(){
@@ -225,6 +225,29 @@
 				height: '100px',
 			});
 			var elem = $(".answer").html('&nbsp;');
+		});
+
+		$('.my').on('click', function(){
+			clearInterval(enemyInterval);
+			$('.enemy .hand').css({
+				width: '100px',
+				height: '100px',
+			});
+			var elem = $(this);
+			if(elem.attr('data-answer') == 'true'){
+				console.log(rpslsMAP[elem.attr('data-figure')].on.length);
+				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]).animate({
+					width: '200px',
+					height: '200px',
+				});
+			}
+			else{
+				console.log(rpslsMAP[elem.attr('data-figure')].below.length);
+				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]).animate({
+					width: '200px',
+					height: '200px',
+				});
+			}
 		});
 
 		$(document).on('ready', function(){
@@ -246,7 +269,6 @@
 					console.log("success");
 				}
 			});*/
-			setInterval(enemyHandAnimation, 500);
 		});
 
 	</script>

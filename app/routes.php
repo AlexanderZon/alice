@@ -20,31 +20,31 @@ Route::get('/rpsls',function(){
 			'options' => array(
 				array(
 					'id' => 0,					
-					'item' => "rock",
+					'figure' => "rock",
 					'name' => "Rojo",
 					'answer' => false,
 					),
 				array(
 					'id' => 1,					
-					'item' => "paper",
+					'figure' => "paper",
 					'name' => "Azul",
 					'answer' => false,
 					),
 				array(
 					'id' => 2,					
-					'item' => "scissors",
+					'figure' => "scissors",
 					'name' => "Verde",
 					'answer' => false,
 					),
 				array(
 					'id' => 3,					
-					'item' => "lizard",
+					'figure' => "lizard",
 					'name' => "Blanco",
-					'answer' => false,
+					'answer' => true,
 					),
 				array(
 					'id' => 4,					
-					'item' => "spock",
+					'figure' => "spock",
 					'name' => "Amarillo",
 					'answer' => false,
 					),
