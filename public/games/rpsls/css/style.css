@@ -1,0 +1,73 @@
+body{
+	margin: 0;
+}
+
+header{
+	background-color: #0477ab;
+	color: #fff;
+	font-size: 14pt;
+	font-weight: 600;
+	padding: 1.5em;
+	text-align:center;
+	font-variant: uppercase;
+	text-transform: uppercase
+}
+
+.content{
+	background-color: #585e95;
+}
+
+.aside{
+	background-color: #909fa7;
+}
+
+.aside img{
+}
+
+.score{
+	padding: 1em;
+	margin-bottom:1em;
+	color: #fff;
+	font-weight: 500;
+	font-size: 14pt;
+}
+.enemy{
+	height:150px;
+}
+.my-hand{
+	height:150px;
+}
+.question{
+	text-align: center;
+	padding: 2em;
+	padding-left: 0em;
+}
+
+.hand{
+	width: 100px;
+	height: 100px;
+}
+
+.hand:first-child{
+	margin-left: 0em;
+}
+
+.hand .image img{
+	width:100px;
+}
+
+.possibleAnswer{
+	display: none;
+}
+
+.center{
+	text-align: center;
+}
+
+h1{
+	color:#fff;
+}
+
+h3{
+	color: #FFF;
+}

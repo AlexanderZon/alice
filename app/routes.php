@@ -32,7 +32,7 @@ Route::get('/rpsls',function(){
 					),
 				array(
 					'id' => 2,					
-					'item' => "scisors",
+					'item' => "scissors",
 					'name' => "Verde",
 					'answer' => false,
 					),
@@ -53,7 +53,7 @@ Route::get('/rpsls',function(){
 		);
 
 	$args = array(
-		'question' => Response::json($questions)
+		'questions' => json_encode($questions)
 		);
 
 	return View::make('games.rpsls.index')->with($args);
