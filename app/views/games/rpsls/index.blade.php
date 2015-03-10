@@ -71,14 +71,14 @@
 				</div>
 				<div class="row center">
 					<div class="col-md-1"></div>
-					<div class="col-md-4" id="hand-selected"><img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/paper.png"/></div>
+					<div class="col-md-4" id="hand-selected"></div>
 					<div class="col-md-2" id="result-msg">
 						<div class="row" id="answer-selected">
 							<h3 class="col-md-12">Blanco</h3>
 						</div>
 						<div class="row">&nbsp;</div>
 						<div class="row">
-							<span class="col-md-12 btn btn-success btn-lg" id="answers-result">Correcto</span>
+							<span class="col-md-12 btn btn-lg" id="answers-result">&nbsp;</span>
 						</div>
 						<div class="row">&nbsp;</div>
 						<div class="row" id="next-question">
@@ -259,6 +259,11 @@
 			});
 			var elem = $(this);
 			if(elem.attr('data-answer') == 'true'){
+				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
+				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]+'.png"/>');
+				$('#answers-result').html('Correcto');
+				$('#answers-result').removeClass('btn-danger');
+				$('#answers-result').addClass('btn-success');
 				/*console.log(rpslsMAP[elem.attr('data-figure')].on.length);
 				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]).animate({
 					width: '200px',
@@ -266,6 +271,11 @@
 				});*/
 			}
 			else{
+				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
+				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]+'.png"/>');
+				$('#answers-result').html('Incorrecto');
+				$('#answers-result').removeClass('btn-success');
+				$('#answers-result').addClass('btn-danger');
 				/*console.log(rpslsMAP[elem.attr('data-figure')].below.length);
 				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]).animate({
 					width: '200px',

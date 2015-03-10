@@ -12,11 +12,34 @@
 */
 
 
+Route::get('/rpsls/create',function(){
+
+	return View::make('games.rpsls.create');
+	
+});
+
+Route::post('/rpsls/create',function(){
+	$question = new Games\RPSLS\Question();
+	$question->question = Input::get('question');
+	$question->save();
+	$answer = new Games\RPSLS\Answer();
+	$answer->question_id = $question->id;
+	$answer->answer = Input::get('correct');
+	$answer->is_correct = false;
+	$answer->save();
+	foreach(Input::get('incorrect') as $incorrect):
+		$answer = new Games\RPSLS\Answer();
+		$answer->question_id = $question->id;
+		$answer->answer = $incorrect;
+		$answer->is_correct = false;
+		$answer->save();
+	endforeach;
+});
+
 Route::get('/rpsls',function(){
 	$questions = array(
 		array(
 			'question' => '¿De que color es el caballo de Simón Bolívar?',
-			'answer'=> 3,
 			'options' => array(
 				array(
 					'id' => 0,					
