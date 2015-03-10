@@ -36,25 +36,8 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div class="enemy row">
-				<div class="col-md-1"></div>
-				<div class="col-md-2 hand rock">
-					<div class="image"><img src="/games/rpsls/images/red/rock.png"/></div>
-				</div>
-				<div class="col-md-2 hand paper">
-					<div class="image"><img src="/games/rpsls/images/red/paper.png"/></div>
-				</div>
-				<div class="col-md-2 hand scissors">
-					<div class="image"><img src="/games/rpsls/images/red/scissors.png"/></div>
-				</div>
-				<div class="col-md-2 hand lizard">
-					<div class="image"><img src="/games/rpsls/images/red/lizard.png"/></div>
-				</div>
-				<div class="col-md-2 hand spock">
-					<div class="image"><img src="/games/rpsls/images/red/spock.png"/></div>
-				</div>
-				<div class="col-md-1"></div>
-			</div> -->
+			
+
 			<div class="row enemy center">
 				<div class="col-md-1"></div>
 				<div class="col-md-2 col-sm-3 col-xs-4"><img id="enemy-rock" class="hand" src="/games/rpsls/images/red/rock.png"/></div>
@@ -64,12 +47,12 @@
 				<div class="col-md-2 col-sm-3 col-xs-6"><img id="enemy-spock" class="hand" src="/games/rpsls/images/red/spock.png"/></div>
 				<div class="col-md-1"></div>
 			</div>
-
+			
 			<div class="row question">
 				<h1 class="col-md-12 text"></h1>
 				<h3 class="col-md-12 answer">&nbsp;</h3>
 			</div>
-
+			
 			<div class="row my-hand center">
 				<div class="col-md-1"></div>
 				<div class="col-md-2 col-sm-3 col-xs-4"><img id="my-rock" class="my hand" src="/games/rpsls/images/blue/rock.png"/></div>
@@ -78,6 +61,35 @@
 				<div class="col-md-2 col-sm-2 col-xs-6"><img id="my-lizard" class="my hand" src="/games/rpsls/images/blue/lizard.png"/></div>
 				<div class="col-md-2 col-sm-3 col-xs-6"><img id="my-spock" class="my hand" src="/games/rpsls/images/blue/spock.png"/></div>
 				<div class="col-md-1"></div>
+			</div>
+
+			<div class="row result">
+				<div class="row question">
+					<h1 class="col-md-12 text">
+						
+					</h1>					
+				</div>
+				<div class="row center">
+					<div class="col-md-1"></div>
+					<div class="col-md-4" id="hand-selected"><img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/paper.png"/></div>
+					<div class="col-md-2" id="result-msg">
+						<div class="row" id="answer-selected">
+							<h3 class="col-md-12">Blanco</h3>
+						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row">
+							<span class="col-md-12 btn btn-success btn-lg" id="answers-result">Correcto</span>
+						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row" id="next-question">
+							<span class="col-md-5 btn btn-primary">Siguiente</span>
+							<span class="col-md-2"></span>
+							<span class="col-md-5 btn btn-primary">Finalizar</span>
+						</div>
+					</div>
+					<div class="col-md-4" id="hand-revenge"><img id="my-spock" class="finish-hand" src="/games/rpsls/images/red/spock.png"/></div>
+					<div class="col-md-1"></div>
+				</div>
 			</div>
 
 		</div>
@@ -91,7 +103,7 @@
 			<div class="row">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
-				Las tijeras cortan el papel, el papel cubre a la piedra, la piedra aplasta al lagarto, el lagarto envenena a Spock, Spock destroza las tijeras, las tijeras decapitan al lagarto, el lagarto se come el papel, el papel refuta a Spock, Spock vaporiza la piedra, y como es habitual... la piedra aplasta las tijeras.
+					Las tijeras cortan el papel, el papel cubre a la piedra, la piedra aplasta al lagarto, el lagarto envenena a Spock, Spock destroza las tijeras, las tijeras decapitan al lagarto, el lagarto se come el papel, el papel refuta a Spock, Spock vaporiza la piedra, y como es habitual... la piedra aplasta las tijeras.
 				</div>
 			</div>
 			<div class="col-md-2"></div>
@@ -152,6 +164,7 @@
 				]
 			},
 		}
+
 		var questions = {{ $questions }};
 
 		var selectQuestion = function(questions){
@@ -190,7 +203,7 @@
 			}
 		}
 
-		var enemyInterval = setInterval(function(){
+		var enemyInterval = 0/*setInterval(function(){
 			hands = $('.enemy .hand');
 			hand_animate = hands[Math.floor((Math.random() * hands.length))];
 			// console.log($(hand_animate));
@@ -206,7 +219,7 @@
 					duration: 500
 				});
 			});
-		}, 500);
+		}, 500)*/;
 
 		$('.my').on('mouseover',function(){
 			$(this).animate({
@@ -228,25 +241,36 @@
 		});
 
 		$('.my').on('click', function(){
-			clearInterval(enemyInterval);
+			// clearInterval(enemyInterval);
+			$('.enemy').fadeOut('slow/400/fast', function() {
+				
+			});
+			$('.question').fadeOut('slow/400/fast', function() {
+				
+			});
+			$('.my-hand').fadeOut('slow/400/fast', function() {
+				$('.result').fadeIn('slow/400/fast', function() {
+					
+				});
+			});
 			$('.enemy .hand').css({
 				width: '100px',
 				height: '100px',
 			});
 			var elem = $(this);
 			if(elem.attr('data-answer') == 'true'){
-				console.log(rpslsMAP[elem.attr('data-figure')].on.length);
+				/*console.log(rpslsMAP[elem.attr('data-figure')].on.length);
 				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]).animate({
 					width: '200px',
 					height: '200px',
-				});
+				});*/
 			}
 			else{
-				console.log(rpslsMAP[elem.attr('data-figure')].below.length);
+				/*console.log(rpslsMAP[elem.attr('data-figure')].below.length);
 				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]).animate({
 					width: '200px',
 					height: '200px',
-				});
+				});*/
 			}
 		});
 
