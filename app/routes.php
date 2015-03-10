@@ -52,21 +52,30 @@ Route::post('/rpsls/create',function(){
 });
 
 Route::get('/rpsls', function(){
+
 	$questions = array();
+
 	foreach(Games\RPSLS\Question::all() as $question):
+
 		$answers = array();
 		$figures = array('rock', 'paper', 'scissors', 'lizard', 'spock');
 		$tmp = array();
+
 		for($i = 0 ; $i < 5; $i++):
+
 			$rand = rand(0, count($figures)-1);
 			$tmp[] = $figures[$rand];
-			for ($j=$rand; $j < count($figures) - 1; $j++):
-				$figures[$j] = $figures[$j+1];
-			endfor;
+
+			for ($j=$rand; $j < count($figures) - 1; $j++) $figures[$j] = $figures[$j+1];
+
 			unset($figures[count($figures)-1]);
+
 		endfor;
+
 		$count = 0;
+
 		foreach($question->answers as $answer):
+
 			$answers[] = array(
 				'id' => $answer->id,
 				'figure' => $tmp[$count],
@@ -74,14 +83,24 @@ Route::get('/rpsls', function(){
 				'answer' => $answer->is_correct ? true : false,
 				);
 			$count++;
+
 		endforeach;
+
 		$questions[] = array(
 			'question' => $question->question,
-			'option' => $answers,
+			'options' => $answers,
 			);
+
 	endforeach;
 
-	return Response::json($questions);
+	$args = array(
+		'questions' => json_encode($questions)
+		);
+
+	return View::make('games.rpsls.index')->with($args);
+
+	// return Response::json($questions);
+
 });
 
 Route::get('/rpslsa',function(){

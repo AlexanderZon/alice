@@ -21,18 +21,18 @@
 
 		<div class="col-md-8">
 			<div class="row">
-				<div class="col-md-12 score">
-					<div class="col-md-4">
-						<div class="col-md-6">Tiempo: </div>
-						<div class="col-md-6" id="timer">00:00</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 score">
+					<div class="col-md-4 col-sm-4 col-xs-4">
+						<div class="col-md-6 col-sm-6 col-xs-0">Tiempo: </div>
+						<div class="col-md-6 col-sm-6 col-xs-12" id="timer">00:00</div>
 					</div>
-					<div class="col-md-4">
-						<div class="col-md-6">Puntos: </div>
-						<div class="col-md-6" id="points">0</div>
+					<div class="col-md-4 col-sm-4 col-xs-4">
+						<div class="col-md-6 col-sm-6 col-xs-0">Puntos: </div>
+						<div class="col-md-6 col-sm-6 col-xs-12" id="points">0</div>
 					</div>
-					<div class="col-md-4">
-						<div class="col-md-6">Respuestas: </div>
-						<div class="col-md-6" id="progress">0/0</div>
+					<div class="col-md-4 col-sm-4 col-xs-4">
+						<div class="col-md-6 col-sm-6 col-xs-0">Respuestas: </div>
+						<div class="col-md-6 col-sm-6 col-xs-12" id="progress">0/0</div>
 					</div>
 				</div>
 			</div>
@@ -70,25 +70,72 @@
 					</h1>					
 				</div>
 				<div class="row center">
-					<div class="col-md-1"></div>
-					<div class="col-md-4" id="hand-selected"></div>
-					<div class="col-md-2" id="result-msg">
+					<div class="col-md-1 col-sm-1 col-xs-1"></div>
+					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-selected"></div>
+					<div class="col-md-2 col-sm-2 col-xs-4" id="result-msg">
 						<div class="row" id="answer-selected">
-							<h3 class="col-md-12">Blanco</h3>
+							<h3 class="col-md-12 col-sm-12 col-xs-12">Blanco</h3>
 						</div>
 						<div class="row">&nbsp;</div>
 						<div class="row">
-							<span class="col-md-12 btn btn-lg" id="answers-result">&nbsp;</span>
+							<span class="col-md-12 col-sm-12 col-xs-12 alert alert-success" id="answers-result">&nbsp;</span>
 						</div>
 						<div class="row">&nbsp;</div>
-						<div class="row" id="next-question">
-							<span class="col-md-5 btn btn-primary">Siguiente</span>
-							<span class="col-md-2"></span>
-							<span class="col-md-5 btn btn-primary">Finalizar</span>
+						<div class="row">
+							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-primary btn-lg" id="next-button">Siguiente</span>
+							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg" id="finish-button">Finalizar</span>
 						</div>
 					</div>
-					<div class="col-md-4" id="hand-revenge"><img id="my-spock" class="finish-hand" src="/games/rpsls/images/red/spock.png"/></div>
-					<div class="col-md-1"></div>
+					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-revenge"></div>
+					<div class="col-md-1 col-sm-1 col-xs-1"></div>
+				</div>
+			</div>
+
+			<div class="row final-score">
+				<div class="row question">
+					<h1 class="col-md-12">
+						Resultado Final
+					</h1>					
+				</div>
+				<div class="row center">
+					<div class="col-md-2 col-sm-2 col-xs-1"></div>
+					<div class="col-md-8 col-sm-8 col-xs-10 center">
+						<div class="row" id="answer-selected">
+							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
+							<h3 class="col-lg-2 col-md-4 col-sm-4 col-xs-6"><img src="/games/rpsls/images/help.png" width="100%"/></h3>
+							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
+						</div>
+						<div class="row" id="answer-selected">
+							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<h3 class="col-md-3 col-sm-3 col-xs-5">Puntos: </h3>
+							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-points">200</h3>
+							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<h3 class="col-md-3 col-sm-3 col-xs-5">Respuestas Acertadas: </h3>
+							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-answers">2</h3>
+							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<div class="col-md-6 col-sm-6 col-xs-10">
+								<div class="progress">
+								  <div id="final-progress" class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+								    0%
+								  </div>
+								</div>
+								</div>
+							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row">
+							<div class="col-md-3 col-sm-3 col-xs-2"></div>
+							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-success btn-lg" id="save-button">Guardar</span>
+							<div class="col-md-3 col-sm-3 col-xs-2"></div>
+						</div>
+					</div>
+					<div class="col-md-2 col-sm-2 col-xs-1"></div>
 				</div>
 			</div>
 
@@ -112,6 +159,11 @@
 	</div>
 
 	<script type="text/javascript">
+
+		/* PROPERTIES */
+
+		var randomize = [];
+
 		var rpslsMAP = {
 			'rock' : {
 				on: [
@@ -167,8 +219,37 @@
 
 		var questions = {{ $questions }};
 
+		var time_by_question = 90;
+
+		var timing = 0;
+
+		var progress = 0;
+
+		var points = 0;
+
+		var correct_answers = 0;
+
+		var incorrect_answers = 0;
+
+		/* METHODS */
+
+		var setScore = function(questions){
+			$('#progress').html(progress+'/'+questions.length);
+			$('#points').html(points);
+		}
+
 		var selectQuestion = function(questions){
-			return questions[Math.floor((Math.random() * questions.length))];
+			progress++;
+			var temp,band;
+			do{
+				temp = Math.floor((Math.random() * questions.length));
+				console.log('ciclo: ' + temp);
+				band = false;
+				for(i = 0; i < randomize.length; i++) if(temp == randomize[i]) band = true;
+			}while(band);
+			randomize.push(temp);
+			console.log(randomize);
+			return questions[temp];
 		}
 
 		var showQuestion = function(question){
@@ -203,7 +284,110 @@
 			}
 		}
 
-		var enemyInterval = 0/*setInterval(function(){
+		var scene1 = function(){
+
+			$('.result').fadeOut('slow/400/fast', function() {
+				$('.enemy').fadeIn('slow/400/fast', function() {
+					
+				});
+				$('.question').fadeIn('slow/400/fast', function() {
+					
+				});
+				$('.my-hand').fadeIn('slow/400/fast', function() {
+				});
+			});
+			
+		}
+
+		var scene2 = function(){
+
+			$('.enemy').fadeOut('slow/400/fast', function() {
+				
+			});
+			$('.question').fadeOut('slow/400/fast', function() {
+				
+			});
+			$('.my-hand').fadeOut('slow/400/fast', function() {
+				$('.result').fadeIn('slow/400/fast', function() {
+					
+				});
+			});
+
+		}
+
+		var scene3 = function(){
+
+			$('.enemy').fadeOut('slow/400/fast', function() {
+				
+			});
+			$('.question').fadeOut('slow/400/fast', function() {
+				
+			});
+			$('.my-hand').fadeOut('slow/400/fast', function() {
+			});
+			$('.result').fadeOut('slow/400/fast', function() {
+				$('.final-score').fadeIn('slow/400/fast', function() {
+					
+				});
+			});
+
+		}
+
+		var decreaseInterval = null;
+
+		var setQuestion = function(questions){
+			$question = selectQuestion(questions);
+			setScore(questions);
+			resetTimer(setTimer);
+			decreaseInterval = setInterval(function(){
+				decreaseTimer(setTimer);
+			}, 1000);
+			console.log("setQuestion");
+			setAnswers($question.options);
+			showQuestion($question);
+		}
+
+		var increasePoints = function(pts){
+			points += pts;
+			setScore(questions);
+		}
+
+		var increaseAnswers = function(){
+			correct_answers++;
+		}
+
+		var setFinalScore = function(scene){
+			percentage = correct_answers*100/questions.length;
+			$('#final-points').html(points);
+			$('#final-answers').html(correct_answers);
+			$('#final-progress').css({
+				width: percentage+'%'
+			});
+			$('#final-progress').attr('aria-valuenow',percentage);
+			$('#final-progress').html(percentage+"%");
+			scene();
+		}
+
+		var setTimer = function(time){
+			var minutes = Math.floor( time/60);
+			var seconds = Math.floor((time - (minutes * 60)));
+		    if (minutes < 10) minutes = "0"+minutes;
+		    if (seconds < 10) seconds = "0"+seconds;
+		    $('#timer').html(minutes+':'+seconds);
+		}
+
+		var resetTimer = function(cb){
+			timing = time_by_question;
+			cb(timing);
+		}
+
+		var decreaseTimer = function(cb){
+			console.log("decrease");
+			cb(--timing);
+		}
+		/* EVENT LISTENERS */
+
+		/*var enemyInterval = 0setInterval(function(){
 			hands = $('.enemy .hand');
 			hand_animate = hands[Math.floor((Math.random() * hands.length))];
 			// console.log($(hand_animate));
@@ -241,29 +425,19 @@
 		});
 
 		$('.my').on('click', function(){
-			// clearInterval(enemyInterval);
-			$('.enemy').fadeOut('slow/400/fast', function() {
-				
-			});
-			$('.question').fadeOut('slow/400/fast', function() {
-				
-			});
-			$('.my-hand').fadeOut('slow/400/fast', function() {
-				$('.result').fadeIn('slow/400/fast', function() {
-					
-				});
-			});
-			$('.enemy .hand').css({
-				width: '100px',
-				height: '100px',
-			});
+			scene2();
+			console.log(timing);
+			clearInterval(decreaseInterval);
+			console.log(timing);
 			var elem = $(this);
 			if(elem.attr('data-answer') == 'true'){
 				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
 				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]+'.png"/>');
 				$('#answers-result').html('Correcto');
-				$('#answers-result').removeClass('btn-danger');
-				$('#answers-result').addClass('btn-success');
+				$('#answers-result').removeClass('alert-danger');
+				$('#answers-result').addClass('alert-success');
+				increasePoints(100+timing);
+				increaseAnswers();
 				/*console.log(rpslsMAP[elem.attr('data-figure')].on.length);
 				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]).animate({
 					width: '200px',
@@ -274,21 +448,35 @@
 				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
 				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]+'.png"/>');
 				$('#answers-result').html('Incorrecto');
-				$('#answers-result').removeClass('btn-success');
-				$('#answers-result').addClass('btn-danger');
+				$('#answers-result').removeClass('alert-success');
+				$('#answers-result').addClass('alert-danger');
 				/*console.log(rpslsMAP[elem.attr('data-figure')].below.length);
 				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]).animate({
 					width: '200px',
 					height: '200px',
 				});*/
 			}
+			if(progress == questions.length){
+				$('#next-button').css({
+					'display':'none'
+				});
+				$('#finish-button').fadeIn('slow/400/fast', function() {
+					
+				});
+			}
+		});
+
+		$('#next-button').on('click', function(){
+			setQuestion(questions);
+			scene1();
+		});
+
+		$('#finish-button').on('click', function(){
+			setFinalScore(scene3);
 		});
 
 		$(document).on('ready', function(){
-
-			$question = selectQuestion(questions);
-			setAnswers($question.options);
-			showQuestion($question);
+			setQuestion(questions);
 			/*$.ajax({
 				url: 'http:localhost:8000/rpsls',
 				type: 'GET',
@@ -304,6 +492,7 @@
 				}
 			});*/
 		});
+
 
 	</script>
 </body>

@@ -13,6 +13,14 @@ header{
 	text-transform: uppercase
 }
 
+h1{
+	color:#fff;
+}
+
+h3{
+	color: #FFF;
+}
+
 .content{
 	background-color: #585e95;
 }
@@ -26,6 +34,7 @@ header{
 
  .result{
 	display:none;
+	margin-bottom: 2em;
 } 
 
 .finish-hand{
@@ -72,10 +81,19 @@ header{
 	text-align: center;
 }
 
-h1{
-	color:#fff;
+.final-score{
+	display: none;
 }
 
-h3{
-	color: #FFF;
+#finish-button{
+	display:none;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        color: lightblue !important;
+    }
+    #hand-selected img, #hand-revenge img{
+		width:100px;
+    }
 }
