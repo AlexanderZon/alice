@@ -475,6 +475,10 @@
 			setFinalScore(scene3);
 		});
 
+		$('#save-button').on('click', function(){
+			// -- SAVE BUTTON
+		});
+
 		$(document).on('ready', function(){
 			setQuestion(questions);
 			/*$.ajax({
