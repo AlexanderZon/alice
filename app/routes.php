@@ -11,6 +11,18 @@
 |
 */
 
+Route::get('/arrays', function(){
+	$figures = array('rock', 'paper', 'scissors', 'lizard', 'spock');
+	for($i = 0 ; $i < 5; $i++):
+		$rand = rand(0, count($figures)-1);
+		var_dump($figures[$rand]);
+		for ($j=$rand; $j < count($figures) - 1; $j++):
+			$figures[$j] = $figures[$j+1];
+		endfor;
+		unset($figures[count($figures)-1]);
+	endfor;
+	return 0;
+});
 
 Route::get('/rpsls/create',function(){
 
@@ -25,7 +37,7 @@ Route::post('/rpsls/create',function(){
 	$answer = new Games\RPSLS\Answer();
 	$answer->question_id = $question->id;
 	$answer->answer = Input::get('correct');
-	$answer->is_correct = false;
+	$answer->is_correct = true;
 	$answer->save();
 	foreach(Input::get('incorrect') as $incorrect):
 		$answer = new Games\RPSLS\Answer();
@@ -34,9 +46,45 @@ Route::post('/rpsls/create',function(){
 		$answer->is_correct = false;
 		$answer->save();
 	endforeach;
+
+	return Redirect::to('rpsls/create');
+
 });
 
-Route::get('/rpsls',function(){
+Route::get('/rpsls', function(){
+	$questions = array();
+	foreach(Games\RPSLS\Question::all() as $question):
+		$answers = array();
+		$figures = array('rock', 'paper', 'scissors', 'lizard', 'spock');
+		$tmp = array();
+		for($i = 0 ; $i < 5; $i++):
+			$rand = rand(0, count($figures)-1);
+			$tmp[] = $figures[$rand];
+			for ($j=$rand; $j < count($figures) - 1; $j++):
+				$figures[$j] = $figures[$j+1];
+			endfor;
+			unset($figures[count($figures)-1]);
+		endfor;
+		$count = 0;
+		foreach($question->answers as $answer):
+			$answers[] = array(
+				'id' => $answer->id,
+				'figure' => $tmp[$count],
+				'name' => $answer->answer,
+				'answer' => $answer->is_correct ? true : false,
+				);
+			$count++;
+		endforeach;
+		$questions[] = array(
+			'question' => $question->question,
+			'option' => $answers,
+			);
+	endforeach;
+
+	return Response::json($questions);
+});
+
+Route::get('/rpslsa',function(){
 	$questions = array(
 		array(
 			'question' => '¿De que color es el caballo de Simón Bolívar?',
