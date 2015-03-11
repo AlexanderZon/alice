@@ -17,6 +17,7 @@ class CreateRpslsQuestionsTable extends Migration {
 			$table->increments('id');
 			$table->integer('evaluation_id');
 			$table->text('question');
+			$table->integer('seconds');
 			$table->timestamps();
 			$table->softDeletes();
 		});
