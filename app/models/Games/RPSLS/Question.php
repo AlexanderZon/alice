@@ -60,6 +60,7 @@ class Question extends \Eloquent {
 			$questions[] = array(
 				'question' => $question->question,
 				'options' => $answers,
+				'seconds' => $question->seconds,
 				);
 
 		endforeach;

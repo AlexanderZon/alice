@@ -260,7 +260,7 @@
 
 		var questions = {{ $questions }};
 
-		var time_by_question = 10;
+		var time_by_question = 90;
 
 		var timing = 0;
 
@@ -446,6 +446,7 @@
 		var setQuestion = function(questions){
 			$question = selectQuestion(questions);
 			setScore(questions);
+			time_by_question = $question.seconds;
 			resetTimer(setTimer);
 			decreaseInterval = setInterval(function(){
 				decreaseTimer(setTimer);

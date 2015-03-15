@@ -17,13 +17,17 @@
 <body>
 	<form method="post">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="col-md-3"><label>Pregunta: </label></div>
 			<div class="col-md-9"><textarea name="question" class="col-md-10"></textarea></div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="col-md-3"><label>Respuesta Correcta: </label></div>
 			<div class="col-md-9"><textarea name="correct" class="col-md-10"></textarea></div>
+		</div>
+		<div class="col-md-4">
+			<div class="col-md-3"><label>Segundos: </label></div>
+			<div class="col-md-9"><input type="number" name="seconds"/></div>
 		</div>
 	</div>
 	<div class="row">

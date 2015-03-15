@@ -3,6 +3,8 @@
 use \Games\RPSLS\Question as Question;
 use \Games\RPSLS\Answer as Answer;
 use \View as View;
+use \Input as Input;
+use \Redirect as Redirect;
 
 class QuestionController extends \BaseController {
 
@@ -26,6 +28,7 @@ class QuestionController extends \BaseController {
 
 		$question = new Question();
 		$question->question = Input::get('question');
+		$question->seconds = Input::get('seconds');
 		$question->save();
 		$answer = new Answer();
 		$answer->question_id = $question->id;
