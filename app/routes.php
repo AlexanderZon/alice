@@ -57,7 +57,7 @@ Route::get('/rpsls', function(){
 
 });*/
 
-Route::controller('/rpsls', 'Games\RPSLS\QuestionController');
+Route::controller('/rpsls', 'Games\RPSLS\ReadController');
 Route::controller('/hangman', 'Games\Hangman\ReadController');
 
 Route::get('/', function()

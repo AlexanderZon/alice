@@ -6,7 +6,7 @@ use \View as View;
 use \Input as Input;
 use \Redirect as Redirect;
 
-class QuestionController extends \BaseController {
+class ReadController extends \BaseController {
 
 	public function getIndex(){
 

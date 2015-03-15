@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/games/memory/create.blade.php
