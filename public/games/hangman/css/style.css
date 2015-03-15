@@ -23,13 +23,12 @@ h3{
 
 .content{
 	background-color: #585e95;
-}
+}	
 
 .aside{
-	background-color: #909fa7;
-}
-
-.aside img{
+	background-image: url(/games/hangman/images/battery.jpeg);
+	background-size: 100%;
+	background-repeat: no-repeat;
 }
 
  .result{
@@ -99,6 +98,35 @@ h3{
 
 .next-button{
 	margin-bottom: 2em;
+}
+
+.bg-red{
+	background-color: #e74c3c;
+}
+
+.bg-orange{
+	background-color: #e67e22;
+}
+
+.bg-yellow{
+	background-color: #f1c40f;
+}
+
+.bg-green{
+	background-color: #2ecc71;
+}
+
+.bg-blue{
+	background-color: #3498db;
+}
+
+.bg-black{
+	background-color: #2c3e50;
+}
+
+.battery div{
+	margin-top: 1em;
+	height: 150px;
 }
 
 @media screen and (max-width: 768px) {

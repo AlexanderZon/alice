@@ -12,7 +12,7 @@
 	<link href="/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 	<link href="/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 
-	<link rel="stylesheet" type="text/css" href="/games/rpsls/css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="/games/hangman/css/style.css"/>
 	<script type="text/javascript" src="/assets/global/plugins/jquery.min.js"></script>
 </head>
 <body>
@@ -31,7 +31,7 @@
 						<div class="col-md-6 col-sm-6 col-xs-12" id="points">0</div>
 					</div>
 					<div class="col-md-4 col-sm-4 col-xs-4">
-						<div class="col-md-6 col-sm-6 col-xs-0">Respuestas: </div>
+						<div class="col-md-6 col-sm-6 col-xs-0">Palabras: </div>
 						<div class="col-md-6 col-sm-6 col-xs-12" id="progress">0/0</div>
 					</div>
 					<div class="col-md-12 col-sm-12 col-xs-12 score">
@@ -48,29 +48,30 @@
 			</div>
 			
 
-			<div class="row enemy center">
+			<!-- <div class="row enemy center">
 				<div class="col-md-1"></div>
-				<div class="col-md-2 col-sm-3 col-xs-4"><img id="enemy-rock" class="hand" src="/games/rpsls/images/red/rock.png"/></div>
-				<div class="col-md-2 col-sm-2 col-xs-4"><img id="enemy-paper" class="hand" src="/games/rpsls/images/red/paper.png"/></div>
-				<div class="col-md-2 col-sm-2 col-xs-4"><img id="enemy-scissors" class="hand" src="/games/rpsls/images/red/scissors.png"/></div>
-				<div class="col-md-2 col-sm-2 col-xs-6"><img id="enemy-lizard" class="hand" src="/games/rpsls/images/red/lizard.png"/></div>
-				<div class="col-md-2 col-sm-3 col-xs-6"><img id="enemy-spock" class="hand" src="/games/rpsls/images/red/spock.png"/></div>
+				<div class="col-md-2 col-sm-3 col-xs-4"><img id="enemy-rock" class="hand" src="/games/hangman/images/red/rock.png"/></div>
+				<div class="col-md-2 col-sm-2 col-xs-4"><img id="enemy-paper" class="hand" src="/games/hangman/images/red/paper.png"/></div>
+				<div class="col-md-2 col-sm-2 col-xs-4"><img id="enemy-scissors" class="hand" src="/games/hangman/images/red/scissors.png"/></div>
+				<div class="col-md-2 col-sm-2 col-xs-6"><img id="enemy-lizard" class="hand" src="/games/hangman/images/red/lizard.png"/></div>
+				<div class="col-md-2 col-sm-3 col-xs-6"><img id="enemy-spock" class="hand" src="/games/hangman/images/red/spock.png"/></div>
 				<div class="col-md-1"></div>
-			</div>
+			</div> -->
 			
 			<div class="row question">
-				<h1 class="col-md-12 text"></h1>
-				<h3 class="col-md-12 answer">&nbsp;</h3>
+				<h1 class="col-md-12 text">&npsp;</h1>
+				<h1 class="col-md-12 answer">&nbsp;</h1>
 			</div>
 			
 			<div class="row my-hand center">
-				<div class="col-md-1"></div>
-				<div class="col-md-2 col-sm-3 col-xs-4"><img id="my-rock" class="my hand" src="/games/rpsls/images/blue/rock.png"/></div>
-				<div class="col-md-2 col-sm-2 col-xs-4"><img id="my-paper" class="my hand" src="/games/rpsls/images/blue/paper.png"/></div>
-				<div class="col-md-2 col-sm-2 col-xs-4"><img id="my-scissors" class="my hand" src="/games/rpsls/images/blue/scissors.png"/></div>
-				<div class="col-md-2 col-sm-2 col-xs-6"><img id="my-lizard" class="my hand" src="/games/rpsls/images/blue/lizard.png"/></div>
-				<div class="col-md-2 col-sm-3 col-xs-6"><img id="my-spock" class="my hand" src="/games/rpsls/images/blue/spock.png"/></div>
-				<div class="col-md-1"></div>
+				<!-- KEYBOARD -->
+				<!-- <div class="col-md-1"></div>
+				<div class="col-md-2 col-sm-3 col-xs-4"><img id="my-rock" class="my hand" src="/games/hangman/images/blue/rock.png"/></div>
+				<div class="col-md-2 col-sm-2 col-xs-4"><img id="my-paper" class="my hand" src="/games/hangman/images/blue/paper.png"/></div>
+				<div class="col-md-2 col-sm-2 col-xs-4"><img id="my-scissors" class="my hand" src="/games/hangman/images/blue/scissors.png"/></div>
+				<div class="col-md-2 col-sm-2 col-xs-6"><img id="my-lizard" class="my hand" src="/games/hangman/images/blue/lizard.png"/></div>
+				<div class="col-md-2 col-sm-3 col-xs-6"><img id="my-spock" class="my hand" src="/games/hangman/images/blue/spock.png"/></div>
+				<div class="col-md-1"></div> -->
 			</div>
 
 			<div class="row result">
@@ -81,10 +82,10 @@
 				</div>
 				<div class="row center">
 					<div class="col-md-1 col-sm-1 col-xs-1"></div>
-					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-selected"></div>
-					<div class="col-md-2 col-sm-2 col-xs-4" id="result-msg">
+					<div class="col-md-10 col-sm-10 col-xs-10" id="result-msg">
 						<div class="row" id="answer-selected">
-							<h3 class="col-md-12 col-sm-12 col-xs-12">Blanco</h3>
+							<h1 class="col-md-12 col-sm-12 col-xs-12" id="result-title">Bateria Descargada</h1>
+							<h3 class="col-md-12 col-sm-12 col-xs-12">Respuesta correcta:</h3>
 						</div>
 						<div class="row">&nbsp;</div>
 						<div class="row">
@@ -96,7 +97,6 @@
 							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg finish-button">Finalizar</span>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-revenge"></div>
 					<div class="col-md-1 col-sm-1 col-xs-1"></div>
 				</div>
 			</div>
@@ -112,7 +112,7 @@
 					<div class="col-md-8 col-sm-8 col-xs-10 center">
 						<div class="row" id="answer-selected">
 							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
-							<h3 class="col-lg-2 col-md-4 col-sm-4 col-xs-6"><img src="/games/rpsls/images/help.png" width="100%"/></h3>
+							<h3 class="col-lg-2 col-md-4 col-sm-4 col-xs-6"><img src="/games/hangman/images/help.png" width="100%"/></h3>
 							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
 						</div>
 						<div class="row" id="answer-selected">
@@ -123,7 +123,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<h3 class="col-md-3 col-sm-3 col-xs-5">Respuestas Acertadas: </h3>
+							<h3 class="col-md-3 col-sm-3 col-xs-5">Palabras Acertadas: </h3>
 							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-answers">2</h3>
 							<div class="col-md-3 col-sm-3 col-xs-1"></div>
 						</div>
@@ -160,8 +160,7 @@
 				</div>
 				<div class="row center">
 					<div class="col-md-1 col-sm-1 col-xs-1"></div>
-					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-selected"></div>
-					<div class="col-md-2 col-sm-2 col-xs-4" id="result-msg">
+					<div class="col-md-10 col-sm-10 col-xs-12" id="result-msg">
 						<div class="row" id="answer-selected">
 							<h3 class="col-md-12 col-sm-12 col-xs-12">Tiempo Agotado!</h3>
 						</div>
@@ -175,7 +174,6 @@
 							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg finish-button">Finalizar</span>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-revenge"></div>
 					<div class="col-md-1 col-sm-1 col-xs-1"></div>
 				</div>
 			</div>
@@ -183,17 +181,21 @@
 		</div>
 
 		<div class="col-md-4 aside center" id="right-side">
-			<div class="row">
-				<div class="col-md-2"></div>
-				<img class="col-md-8" src="/games/rpsls/images/help.png"/>
-				<div class="col-md-2"></div>
+			<div id="battery" class="row battery">
+				<div class="col-md-1">&nbsp;</div>
+				<div class="col-md-2 charge bg-red">&nbsp;</div>
+				<div class="col-md-2 charge bg-orange">&nbsp;</div>
+				<div class="col-md-2 charge bg-yellow">&nbsp;</div>
+				<div class="col-md-2 charge bg-green">&nbsp;</div>
+				<div class="col-md-2 charge bg-blue">&nbsp;</div>
+				<div class="col-md-1">&nbsp;</div>
 			</div>
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
 					Las tijeras cortan el papel, el papel cubre a la piedra, la piedra aplasta al lagarto, el lagarto envenena a Spock, Spock destroza las tijeras, las tijeras decapitan al lagarto, el lagarto se come el papel, el papel refuta a Spock, Spock vaporiza la piedra, y como es habitual... la piedra aplasta las tijeras.
 				</div>
-			</div>
+			</div> -->
 			<div class="col-md-2"></div>
 		</div>
 
@@ -205,60 +207,9 @@
 
 		var randomize = [];
 
-		var rpslsMAP = {
-			'rock' : {
-				on: [
-					'lizard',
-					'scissors'
-				],
-				below: [
-					'spock',
-					'paper'
-				]
-			},
-			'paper' : {
-				on: [
-					'rock',
-					'spock'
-				],
-				below: [
-					'lizard',
-					'scissors'
-				]
-			},
-			'scissors' : {
-				on: [
-					'lizard',
-					'paper'
-				],
-				below: [
-					'spock',
-					'rock'
-				]
-			},
-			'lizard' : {
-				on: [
-					'spock',
-					'paper'
-				],
-				below: [
-					'rock',
-					'scissors'
-				]
-			},
-			'spock' : {
-				on: [
-					'rock',
-					'scissors'
-				],
-				below: [
-					'lizard',
-					'paper'
-				]
-			},
-		}
-
 		var questions = {{ $questions }};
+
+		var $question = null;
 
 		var time_by_question = 90;
 
@@ -271,6 +222,8 @@
 		var correct_answers = 0;
 
 		var incorrect_answers = 0;
+
+		var battery = 5;
 
 		/* METHODS */
 
@@ -337,33 +290,6 @@
 			console.log(question.question);
 			$('.question > .text').html(question.question);
 		};
-
-		var setAnswers = function(options){
-			console.log(options);
-			for(i = 0; i < options.length; i++){
-				$option = null;
-				switch(options[i].figure){
-					case 'rock':
-						$option = $('#my-rock');
-						break;
-					case 'paper':
-						$option = $('#my-paper');
-						break;
-					case 'scissors':
-						$option = $('#my-scissors');
-						break;
-					case 'lizard':
-						$option = $('#my-lizard');
-						break;
-					case 'spock':
-						$option = $('#my-spock');
-						break;
-				}
-				$option.attr('data-figure', options[i].figure);
-				$option.attr('data-name', options[i].name);
-				$option.attr('data-answer', options[i].answer);
-			}
-		}
 
 		var scene1 = function(){
 
@@ -441,18 +367,49 @@
 
 		}
 
+		var covered_letters = [];
+
+		var setUnderLinedWord = function(word){
+
+			var upperWord = word.toUpperCase();
+			console.log(upperWord + ' has ' + upperWord.length + ' letters');
+			var html_answer = '';
+			var covered_positions = 0;
+			for (var i = 0; i < upperWord.length; i++) {
+				bool = false;
+				for(var j = 0; j < covered_letters.length; j++){
+					if(upperWord[i] == covered_letters[j]) bool = true;
+				}
+				if (bool) {
+					covered_positions++;
+					html_answer += ' ' + upperWord[i] + ' ';
+				}
+				else{
+					html_answer += ' _ ';						
+				}
+			};
+			if(covered_positions == upperWord.length){
+				wellDone();
+			}
+			$('.answer').html(html_answer);
+
+			return upperWord;
+
+		}
+
 		var decreaseInterval = null;
 
 		var setQuestion = function(questions){
 			$question = selectQuestion(questions);
 			setScore(questions);
+			$question.word = setUnderLinedWord($question.word);
 			time_by_question = $question.seconds;
 			resetTimer(setTimer);
 			decreaseInterval = setInterval(function(){
 				decreaseTimer(setTimer);
 			}, 1000);
 			console.log("setQuestion");
-			setAnswers($question.options);
+			// setAnswers($question.options);
 			showQuestion($question);
 		}
 
@@ -500,6 +457,7 @@
 
 		var spentTime = function(){
 			clearInterval(decreaseInterval);
+			$('#spent-result').html($question.word);
 			scene4();
 		}
 
@@ -507,78 +465,9 @@
 			console.log("decrease");
 			timing > 0 ? cb(--timing) : spentTime();
 		}
-		/* EVENT LISTENERS */
 
-		/*var enemyInterval = 0setInterval(function(){
-			hands = $('.enemy .hand');
-			hand_animate = hands[Math.floor((Math.random() * hands.length))];
-			// console.log($(hand_animate));
-			$('.enemy .hand').animate({
-				width: '100px',
-				height: '100px',
-			}, function(){
-				// console.log("Listo " + Math.floor((Math.random() * hands.length)));
-				$(hand_animate).animate({
-					width: '120px',
-					height: '120px',
-				},{
-					duration: 500
-				});
-			});
-		}, 500)*/;
-
-		$('.my').on('mouseover',function(){
-			$(this).animate({
-				width: '120px',
-				height: '120px',
-			},{
-				duration: 500
-			});
-			// console.log($(this).attr('data-name'));
-			var elem = $(".answer").html($(this).attr('data-name'));
-		});
-
-		$('.my').on('mouseout',function(){
-			$(this).animate({
-				width: '100px',
-				height: '100px',
-			});
-			var elem = $(".answer").html('&nbsp;');
-		});
-
-		$('.my').on('click', function(){
-			scene2();
-			console.log(timing);
+		var lowBattery = function(){
 			clearInterval(decreaseInterval);
-			console.log(timing);
-			var elem = $(this);
-			if(elem.attr('data-answer') == 'true'){
-				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
-				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]+'.png"/>');
-				$('#answers-result').html('Correcto');
-				$('#answers-result').removeClass('alert-danger');
-				$('#answers-result').addClass('alert-success');
-				increasePoints(100+timing);
-				increaseAnswers();
-				// correctProgressBar();
-				/*console.log(rpslsMAP[elem.attr('data-figure')].on.length);
-				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]).animate({
-					width: '200px',
-					height: '200px',
-				});*/
-			}
-			else{
-				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
-				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]+'.png"/>');
-				$('#answers-result').html('Incorrecto');
-				$('#answers-result').removeClass('alert-success');
-				$('#answers-result').addClass('alert-danger');
-				/*console.log(rpslsMAP[elem.attr('data-figure')].below.length);
-				$('#enemy-'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]).animate({
-					width: '200px',
-					height: '200px',
-				});*/
-			}
 			if(progress == questions.length){
 				$('.next-button').css({
 					'display':'none'
@@ -587,9 +476,77 @@
 					
 				});
 			}
-		});
+			$('#answers-result').html($question.word);
+			$('#result-title').html('Bateria Agotada');
+			scene2();
+		}
+
+		var wellDone = function(){
+			clearInterval(decreaseInterval);
+			if(progress == questions.length){
+				$('.next-button').css({
+					'display':'none'
+				});
+				$('.finish-button').fadeIn('slow/400/fast', function() {
+					
+				});
+			}
+			$('#answers-result').html($question.word);
+			$('#result-title').html('Bien Hecho has acertado');
+			increaseAnswers();
+			scene2();
+		}
+
+		var displayBattery = function(){
+			if(battery < 0){
+				lowBattery();
+			}
+			else{
+				for(var i = 0; i < $('.charge').length; i++){
+						console.log('Battery Discount ' + battery);
+					if(i>=battery) {
+						elem = $('.charge').get(i);
+						$(elem).css({'background-color':'#000'});
+					} 
+				}
+			}
+		}
+
+		var discountBattery = function(){
+			battery--;
+			console.log(battery);
+			displayBattery();
+		}
+
+		var letterIsCovered = function(letter){
+			var bool = false;
+			for(var i = 0 ; i < covered_letters.length; i++){
+				if(letter == covered_letters[i]) bool = true;
+			}
+			return bool;
+		}
+
+		var verifyLetter = function(letter){
+			bool = false;
+			if(!letterIsCovered(letter)){
+				for(var i = 0; i < $question.word.length ; i++){
+					if(letter == $question.word[i]) bool = true;
+				}
+				if(bool) {
+					increasePoints(10);
+					covered_letters.push(letter);
+					setUnderLinedWord($question.word);
+				}
+				else{
+					discountBattery();
+				}
+			}
+		}
+
+		/* EVENT LISTENERS */
 
 		$('.next-button').on('click', function(){
+			covered_letters = [];
 			setQuestion(questions);
 			scene1();
 		});
@@ -602,114 +559,23 @@
 			// -- SAVE BUTTON
 		});
 
+		$(document).on('keypress', function(e){
+			e.preventDefault();
+			var code = e.charCode;
+				var letter = String.fromCharCode(code);
+				console.log('code: ' + code);
+			if((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || code == 241 || code == 209){
+				console.log('Intervalo: ' + code);
+				verifyLetter(letter.toUpperCase());
+			}
+		})
+
 		$(document).on('ready', function(){
 			setQuestion(questions);
 			setLayout();
-			/*$.ajax({
-				url: 'http:localhost:8000/rpsls',
-				type: 'GET',
-				dataType: 'json',
-				error: function(err){
-					console.log("ERROR");
-					// consol.log(err);
-				},
-				success: function(data){
-					console.log(data);
-
-					console.log("success");
-				}
-			});*/
 		});
 
 
 	</script>
 </body>
-	<!--- <script type="text/javascript">
-		var questions = [
-			{
-				question: "¿De que color es el caballo de Simón Bolívar?",
-				answer: 3,
-				options: [
-					{
-						id: 0,
-						item: "rock",
-						name: "Rojo",
-						answer: false,
-					},
-					{
-						id: 1,
-						item: "scissors",
-						name: "Azul",
-						answer: false,
-					},
-					{
-						id: 2,
-						item: "paper",
-						name: "Verde",
-						answer: false,
-					},
-					{
-						id: 3,
-						item: "lizard",
-						name: "Blanco",
-						answer: true,
-					},
-					{
-						id: 4,
-						item: "spock",
-						name: "Amarillo",
-						answer: false,
-					},
-				]
-			},
-		];
-
-		var selectQuestion = function(questions){
-			return questions[Math.floor((Math.random() * questions.length))];
-		}
-
-		var setPossibleAnswers = function(options){
-			for(i = 0; i < options.length; i++){
-				$option = null;
-				switch(options[i].item){
-					case 'rock':
-						$option = $('#myRock .possibleAnswer');
-						break;
-					case 'paper':
-						$option = $('#myPaper .possibleAnswer');
-						break;
-					case 'scissors':
-						$option = $('#myScissors .possibleAnswer');
-						break;
-					case 'lizard':
-						$option = $('#myLizard .possibleAnswer');
-						break;
-					case 'spock':
-						$option = $('#mySpock .possibleAnswer');
-						break;
-				}
-				$option.html(options[i].name);
-			}
-		}
-
-		$(document).on('ready', function(){
-
-			$question = selectQuestion(questions);
-			setPossibleAnswers($question.options);
-			/*$.ajax({
-				url: 'http:localhost:8000/rpsls',
-				type: 'GET',
-				dataType: 'json',
-				error: function(err){
-					console.log("ERROR");
-					// consol.log(err);
-				},
-				success: function(data){
-					console.log(data);
-
-					console.log("success");
-				}
-			});*/
-		});
-	</script>
 </html>
