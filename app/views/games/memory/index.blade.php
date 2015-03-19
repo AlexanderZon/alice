@@ -103,7 +103,7 @@
 				</div>
 			</div>
 
-			<div class="row final-score">
+			<div class="row final-score center">
 				<div class="row">
 					<h1 class="col-md-12">
 						Resultado Final
@@ -118,16 +118,22 @@
 							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
 						</div>
 						<div class="row" id="answer-selected">
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<h3 class="col-md-3 col-sm-3 col-xs-5">Puntos: </h3>
-							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-points">200</h3>
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Puntos: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-points">0</h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<h3 class="col-md-3 col-sm-3 col-xs-5">Palabras Acertadas: </h3>
-							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-answers">2</h3>
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Respuestas Acertadas: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-answers">0</h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Respuestas Erróneas: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-wrong-answers">0</h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-1"></div>
@@ -455,15 +461,16 @@
 		}
 
 		var setFinalScore = function(scene){
-			percentage = correct_answers*100/questions.length;
+			percentage = correct_answers*100/(correct_answers+wrong_answers);
 			$('#final-points').html(points);
 			$('#final-answers').html(correct_answers);
+			$('#final-wrong-answers').html(wrong_answers);
 
 			$('#final-correct').css({
 				width: percentage+'%'
 			});
 			$('#final-correct').attr('aria-valuenow',percentage);
-			$('#final-correct').html(percentage+"%");
+			$('#final-correct').html(Math.floor(percentage)+"%");
 
 			$('#final-progress').css({
 				width: 100-percentage+'%'
@@ -599,9 +606,18 @@
 
 		}
 
+		var indication5 = function(){
+
+			$('#indications').html('Bravo!, Has completado la Actividad');
+
+		}
+
+		var indicatorTimeout = null;
+
 		/* EVENT LISTENERS */
 
 		$('.question').on('click', function(){
+			clearTimeout(indicatorTimeout);
 			$('.question').removeClass('selected');
 			$('.answer').removeClass('disable');
 			selected_question = $(this).attr('data-id');
@@ -613,23 +629,33 @@
 		});
 
 		$('.answer').on('click', function(){
+			clearTimeout(indicatorTimeout);
 			if(!$(this).hasClass('disable')){
 				$('.question').removeClass('selected');
 				$('.answer').addClass('disable');
 				if($(this).attr('data-id') == selected_question){
-					$('div[data-id='+$(this).attr('data-id')+']').css({'display':'none'});
+					$('div[data-id='+$(this).attr('data-id')+']').fadeOut('slow/400/fast', function() {});
 					indication3();
 					progress++;
 					increasePoints(100+timing);
 					increaseAnswers();
 					setScore(questions);
 					duringProgressBar();
+
+					if(correct_answers < questions.length){
+						indicatorTimeout = setTimeout(function(){
+							indication1();
+							console.log('timeout');
+						}, 2000);
+						console.log('correct');
+					}
+					else{
+						indicatorTimeout = setTimeout(function(){
+							indication5();
+							setFinalScore(scene3());
+						}, 0);
+					}
 					
-					setTimeout(function(){
-						indication1();
-						console.log('timeout');
-					}, 2000);
-					console.log('correct');
 				}
 				else{
 					console.log('wrong');

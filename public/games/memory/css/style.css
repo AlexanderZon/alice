@@ -79,6 +79,10 @@ h3{
 	text-align: center;
 }
 
+.right{
+	text-align: right;
+}
+
 .final-score{
 	display: none;
 }
