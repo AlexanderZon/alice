@@ -29,6 +29,7 @@ class Question extends \Eloquent {
 		foreach(self::all() as $question):
 
 			$answers = array();
+			$answer = null;
 			$figures = array('rock', 'paper', 'scissors', 'lizard', 'spock');
 			$tmp = array();
 
@@ -45,13 +46,15 @@ class Question extends \Eloquent {
 
 			$count = 0;
 
-			foreach($question->answers as $answer):
+			foreach($question->answers as $ans):
+
+				if($ans->is_correct) $answer = $ans->answer;
 
 				$answers[] = array(
-					'id' => $answer->id,
+					'id' => $ans->id,
 					'figure' => $tmp[$count],
-					'name' => $answer->answer,
-					'answer' => $answer->is_correct ? true : false,
+					'name' => $ans->answer,
+					'answer' => $ans->is_correct ? true : false,
 					);
 				$count++;
 
@@ -60,6 +63,7 @@ class Question extends \Eloquent {
 			$questions[] = array(
 				'question' => $question->question,
 				'options' => $answers,
+				'answer' => $answer,
 				'seconds' => $question->seconds,
 				);
 

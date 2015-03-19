@@ -160,8 +160,7 @@
 				</div>
 				<div class="row center">
 					<div class="col-md-1 col-sm-1 col-xs-1"></div>
-					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-selected"></div>
-					<div class="col-md-2 col-sm-2 col-xs-4" id="result-msg">
+					<div class="col-md-10 col-sm-10 col-xs-10" id="result-msg">
 						<div class="row" id="answer-selected">
 							<h3 class="col-md-12 col-sm-12 col-xs-12">Tiempo Agotado!</h3>
 						</div>
@@ -175,7 +174,6 @@
 							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg finish-button">Finalizar</span>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-revenge"></div>
 					<div class="col-md-1 col-sm-1 col-xs-1"></div>
 				</div>
 			</div>
@@ -257,6 +255,8 @@
 				]
 			},
 		}
+
+		var $question = null;
 
 		var questions = {{ $questions }};
 
@@ -500,6 +500,7 @@
 
 		var spentTime = function(){
 			clearInterval(decreaseInterval);
+			$('#spent-result').html($question.answer);
 			scene4();
 		}
 

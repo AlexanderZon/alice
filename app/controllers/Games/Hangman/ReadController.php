@@ -1,6 +1,6 @@
 <?php namespace Games\Hangman;
 
- use \Games\Hangman\Question as Question;
+use \Games\Hangman\Question as Question;
 use \View as View;
 use \Input as Input;
 use \Redirect as Redirect;

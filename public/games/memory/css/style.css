@@ -42,7 +42,6 @@ h3{
 
 .score{
 	padding: 1em;
-	margin-bottom:1em;
 	color: #fff;
 	font-weight: 500;
 	font-size: 14pt;
@@ -136,4 +135,68 @@ h3{
     #hand-selected img, #hand-revenge img{
 		width:100px;
     }
+}
+
+.cards{
+	margin-bottom: 1em;
+}
+
+.card{
+	padding: 1em;
+	background-color: #E0F2F1;
+	color: #212121;
+	margin:1em;
+	font-size: 1.25em;
+	cursor:pointer;
+}
+
+.question:hover{
+	background-color: #E53935;
+	color: #FAFAFA;
+}
+
+.answer:hover{
+	background-color: #1E88E5;
+	color: #FAFAFA;
+}
+
+.disable{
+	background-color: #BDBDBD;
+	color: #424242;
+	margin:1em;
+	font-size: 1.25em;
+	cursor: auto;
+}
+
+.disable:hover{
+	background-color: #BDBDBD;
+	color: #424242;
+	margin:1em;
+	font-size: 1.25em;
+}
+
+.disable:first-child:hover{
+	margin:1em; 
+	margin-top:1em;
+}
+
+.selected{
+	background-color: #E53935;
+	color: #FAFAFA;
+	margin:1em;
+	font-size: 1.25em;
+}
+
+.selected:hover{
+	background-color: #E53935;
+	color: #FAFAFA;
+	margin:1em;
+	font-size: 1.25em;
+}
+
+.non-selected{
+	background-color: #E53935;
+	color: #FAFAFA;
+	margin:1em;
+	font-size: 1.25em;
 }

@@ -1,86 +1,20 @@
 <?php namespace Games\Memory;
 
+use \Games\Memory\Question as Question;
+use \View as View;
+use \Input as Input;
+use \Redirect as Redirect;
+
 class ReadController extends \BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 * GET /read
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
+	public function getIndex(){
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /read/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+		$args = array(
+			'questions' => json_encode(array())
+			);
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /read
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+		return View::make('games.memory.index')->with($args);
 
-	/**
-	 * Display the specified resource.
-	 * GET /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /read/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }
