@@ -19,11 +19,11 @@
 	<div class="row">
 		<div class="col-md-4">
 			<div class="col-md-3"><label>Pregunta: </label></div>
-			<div class="col-md-9"><textarea name="question" class="col-md-10"></textarea></div>
+			<div class="col-md-9"><input type="text" name="question" ></div>
 		</div>
 		<div class="col-md-4">
 			<div class="col-md-3"><label>Reapuesta: </label></div>
-			<div class="col-md-9"><input type="text" name="word"/></textarea></div>
+			<div class="col-md-9"><input type="text" name="answer"/></div>
 		</div>
 	</div>
 	<div class="row">

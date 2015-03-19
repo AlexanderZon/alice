@@ -10,10 +10,27 @@ class ReadController extends \BaseController {
 	public function getIndex(){
 
 		$args = array(
-			'questions' => json_encode(array())
+			'questions' => Question::json()
 			);
 
 		return View::make('games.memory.index')->with($args);
+
+	}
+
+	public function getCreate(){
+
+		return View::make('games.memory.create');
+
+	}
+
+	public function postCreate(){
+
+		$question = new Question();
+		$question->question = Input::get('question');
+		$question->answer = Input::get('answer');
+		$question->save();
+
+		return Redirect::to('memory/create');
 
 	}
 

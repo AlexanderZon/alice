@@ -61,18 +61,22 @@
 			
 			<div class="row cards center">
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					@foreach(json_decode($questions) as $question)
+						<div class="row card question">&nbsp;</div>
+					@endforeach
+					<!-- <div class="row card question">&nbsp;</div>
 					<div class="row card question">&nbsp;</div>
 					<div class="row card question">&nbsp;</div>
-					<div class="row card question">&nbsp;</div>
-					<div class="row card question">&nbsp;</div>
-					<div class="row card question">&nbsp;</div>
+					<div class="row card question">&nbsp;</div> -->
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					@foreach(json_decode($questions) as $question)
+						<div class="row card answer disable">&nbsp;</div>
+					@endforeach
+					<!-- <div class="row card answer disable">&nbsp;</div>
 					<div class="row card answer disable">&nbsp;</div>
 					<div class="row card answer disable">&nbsp;</div>
-					<div class="row card answer disable">&nbsp;</div>
-					<div class="row card answer disable">&nbsp;</div>
-					<div class="row card answer disable">&nbsp;</div>
+					<div class="row card answer disable">&nbsp;</div> -->
 				</div>
 			</div>
 
@@ -196,11 +200,11 @@
 
 		var randomize = [];
 
-		// var questions = {{ $questions }};
-
 		var seconds = 240;
 
-		var questions = [
+		var questions = {{ $questions }};
+
+		/*var questions = [
 			{
 				id: '810c7baa5f2d72a207f453d6854dffa7',
 				question: 'Question 1',
@@ -226,7 +230,7 @@
 				question: 'Question 5',
 				answer: 'Answer 5'
 			},
-		]
+		]*/
 
 		var $question = null;
 

@@ -15,7 +15,10 @@ class CreateMemoryQuestionsTable extends Migration {
 		Schema::create('memory_questions', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->string('question');
+			$table->string('answer');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

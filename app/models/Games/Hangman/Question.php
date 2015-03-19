@@ -16,12 +16,6 @@ class Question extends \Eloquent {
 
     }
 
-    public function answers(){
-
-    	return $this->hasMany('Games\\RPSLS\\Answer', 'question_id');
-
-    }
-
     public static function json(){
 
     	$questions = array();
