@@ -439,30 +439,11 @@
 		var increasePoints = function(pts){
 			points += pts;
 			setScore(questions);
-			$('#points').animate({
-				'color': '#76FF03',
-			}, 2000, 'swing', function(){
-				console.log('animation');
-				$('#points').animate({
-					'color': '#FFFFFF',
-				}, 200, 'swing', function(){
-
-				});
-			});
 		}
 
 		var decreasePoints = function(pts){
-			points += pts;
+			points -= pts;
 			setScore(questions);
-			$('#points').animate({
-				color: '#D50000',
-			}, 200, 'swing', function(){
-				$('#points').animate({
-					color: '#FFFFFF',
-				}, 200, 'swing', function(){
-
-				});
-			});
 		}
 
 		var increaseAnswers = function(){
@@ -652,6 +633,8 @@
 				}
 				else{
 					console.log('wrong');
+					decreasePoints(seconds-timing);
+					increaseWrongAnswers();
 					indication4();
 					setTimeout(function(){
 						indication1();
