@@ -1,7 +1,5 @@
 <?php namespace Games\Memory;
 
-use \Crypt as Crypt;
-
 class Question extends \Eloquent {
 
 	protected $table = 'memory_questions';
