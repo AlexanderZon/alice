@@ -1,86 +1,50 @@
 <?php namespace Games\Roulette;
 
+use \Games\Roulette\Question as Question;
+use \Games\Roulette\Answer as Answer;
+use \View as View;
+use \Input as Input;
+use \Redirect as Redirect;
+
 class ReadController extends \BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 * GET /read
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
+	public function getIndex(){
+
+		$args = array(
+			'questions' => json_encode(array()),
+			);
+
+		return View::make('games.roulette.index')->with($args);
+
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /read/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
+	public function getCreate(){
+
+		return View::make('games.roulette.create');
+
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /read
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+	public function postCreate(){
 
-	/**
-	 * Display the specified resource.
-	 * GET /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+		$question = new Question();
+		$question->question = Input::get('question');
+		$question->seconds = Input::get('seconds');
+		$question->save();
+		$answer = new Answer();
+		$answer->question_id = $question->id;
+		$answer->answer = Input::get('correct');
+		$answer->is_correct = true;
+		$answer->save();
+		foreach(Input::get('incorrect') as $incorrect):
+			$answer = new Answer();
+			$answer->question_id = $question->id;
+			$answer->answer = $incorrect;
+			$answer->is_correct = false;
+			$answer->save();
+		endforeach;
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /read/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+		return Redirect::to('roulette/create');
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }

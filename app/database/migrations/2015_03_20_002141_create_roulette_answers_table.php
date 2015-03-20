@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateRouletteQuestionsTable extends Migration {
+class CreateRouletteAnswersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,14 +12,10 @@ class CreateRouletteQuestionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('roulette_questions', function(Blueprint $table)
+		Schema::create('roulette_answers', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('evaluation_id');
-			$table->text('question');
-			$table->integer('seconds');
 			$table->timestamps();
-			$table->softDeletes();
 		});
 	}
 
@@ -31,7 +27,7 @@ class CreateRouletteQuestionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('roulette_questions');
+		Schema::drop('roulette_answers');
 	}
 
 }
