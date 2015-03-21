@@ -32,7 +32,7 @@
 						<div class="col-md-6 col-sm-6 col-xs-12" id="points">0</div>
 					</div>
 					<div class="col-md-4 col-sm-4 col-xs-4">
-						<div class="col-md-6 col-sm-6 col-xs-0">Respuestas: </div>
+						<div class="col-md-6 col-sm-6 col-xs-0">Aciertos: </div>
 						<div class="col-md-6 col-sm-6 col-xs-12" id="progress">0/0</div>
 					</div>
 					<div class="col-md-12 col-sm-12 col-xs-12 score">
@@ -52,23 +52,23 @@
 			<div class="row roulette center">
 				<div class="col-md-8 col-sm-12 col-xs-12">
 					<div id="roulette">
-				        <div class="item1 item" data-color="red">
+				        <div class="item1 item" data-color="red" data-action="clock">
 				            <div class="roulette-element"><a href="#one"><i class="fa fa-clock-o"></i></a></div>
 				        </div>
-				        <div class="item2 item" data-color="purple">
+				        <div class="item2 item" data-color="purple" data-action="eraser">
 				            <div class="roulette-element"><a href="#two"><i class="fa fa-eraser"></i></a></div>
 				        </div>
-				        <div class="item3 item" data-color="blue">
+				        <div class="item3 item" data-color="blue" data-action="flash">
 				            <div class="roulette-element"><a href="#three"><i class="fa fa-flash"></i></a></div>
 				        </div>
-				        <div class="item4 item" data-color="sky">
+				        <div class="item4 item" data-color="sky" data-action="plus">
 				            <div class="roulette-element"><a href="#four"><i class="fa fa-plus-circle"></i></a></div>
 				        </div>
-				        <div class="item5 item" data-color="green">
+				        <div class="item5 item" data-color="green" data-action="refresh">
 				            <div class="roulette-element"><a href="#five"><i class="fa fa-refresh"></i></a></div>
 				        </div>
 				        <div id="wrapper6">
-				            <div class="item6 item" data-color="yellow">
+				            <div class="item6 item" data-color="yellow" data-action="star">
 				                <div class="roulette-element"><a href="#six"><i class="fa fa-star"></i></a></div>
 				            </div>
 				        </div>
@@ -299,7 +299,7 @@
 
 		// var questions = {{ $questions }};
 
-		var questions = {
+		/*var questions = {
 			red: [
 				{
 					question: "Red Question #1",
@@ -936,9 +936,116 @@
 					]
 				},
 			],
-		};
+		};*/
 
-		var colorMAP = {
+		var questions = [
+			{
+				question: "Question #1",
+				answer: 3,
+				options: [
+					{
+						id: 0,
+						name: "Incorrect",
+						answer: false,
+					},
+					{
+						id: 1,
+						name: "Incorrect",
+						answer: false,
+					},
+					{
+						id: 2,
+						name: "Incorrect",
+						answer: false,
+					},
+					{
+						id: 3,
+						name: "Correct",
+						answer: true,
+					},
+				]
+			},
+			{
+				question: "Question #2",
+				answer: 1,
+				options: [
+					{
+						id: 0,
+						name: "Incorrect",
+						answer: false,
+					},
+					{
+						id: 1,
+						name: "Correct",
+						answer: true,
+					},
+					{
+						id: 2,
+						name: "Incorrect",
+						answer: false,
+					},
+					{
+						id: 3,
+						name: "Incorrect",
+						answer: false,
+					},
+				]
+			},
+			{
+				question: "Question #3",
+				answer: 0,
+				options: [
+					{
+						id: 0,
+						name: "Correct",
+						answer: true,
+					},
+					{
+						id: 1,
+						name: "Incorrect",
+						answer: false,
+					},
+					{
+						id: 2,
+						name: "Incorrect",
+						answer: false,
+					},
+					{
+						id: 3,
+						name: "Incorrect",
+						answer: false,
+					},
+				]
+			},
+			{
+				question: "Question #4",
+				answer: 2,
+				options: [
+					{
+						id: 0,
+						name: "Incorrect",
+						answer: false,
+					},
+					{
+						id: 1,
+						name: "Incorrect",
+						answer: false,
+					},
+					{
+						id: 2,
+						name: "Correct",
+						answer: true,
+					},
+					{
+						id: 3,
+						name: "Incorrect",
+						answer: false,
+					},
+				]
+			},
+		]
+
+		/*var colorMAP = {
 			red: {
 				counter: 0,
 				correct: 0,
@@ -975,6 +1082,36 @@
 				incorrect: 0,
 				limit: questions.yellow.length,
 			}
+		};*/
+
+		var actionMAP = {
+			clock: {
+				status: false,
+				counter: 0,
+				coeficient: 30,
+			},
+			eraser: {
+				status: false,
+				counter: 0,
+			},
+			flash: {
+				status: false,
+				counter: 0,	
+				used: 0,
+			},
+			plus: {
+				status: false,
+				counter: 0,
+			},
+			refresh: {
+				status: false,
+				counter: 0,
+				used: 0,
+			},
+			star: {
+				status: false,
+				counter: 0
+			}
 		};
 
 		var time_by_question = 90;
@@ -987,7 +1124,7 @@
 
 		var correct_answers = 0;
 
-		var incorrect_answers = 0;
+		var wrong_answers = 0;
 
 		var rouletteStrength = 0;
 
@@ -999,7 +1136,7 @@
 
 		var itemSelected = 0;
 
-		var colorSelected = null;
+		var actionSelected = null;
 
 		var rouletteRolling = false;
 
@@ -1020,37 +1157,50 @@
 
 		var selectColorItem = function(){
 			var selected = null;
-			colorSelected = $('.item'+itemSelected).attr('data-color');
-			switch(colorSelected){
-				case 'red':
-					selected = colorMAP.red;
+			actionSelected = $('.item'+itemSelected).attr('data-color');
+			switch(actionSelected){
+				case 'clock':
+					actionMAP.clock.counter++;
+					actionMAP.clock.status = true;
+					// selected = colorMAP.red;
 				break
-				case 'purple':
-					selected = colorMAP.purple;
+				case 'eraser':
+					actionMAP.eraser.counter++;
+					actionMAP.eraser.status = true;
+					// selected = colorMAP.purple;
 				break
-				case 'blue':
-					selected = colorMAP.blue;
+				case 'flash':
+					actionMAP.flash.counter++;
+					actionMAP.flash.status = true;
+					// selected = colorMAP.blue;
 				break
-				case 'sky':
-					selected = colorMAP.sky;
+				case 'plus':
+					actionMAP.plus.counter++;
+					actionMAP.plus.status = true;
+					// selected = colorMAP.sky;
 				break
-				case 'green':
-					selected = colorMAP.green;
+				case 'refresh':
+					actionMAP.refresh.counter++;
+					actionMAP.refresh.status = true;
+					// selected = colorMAP.green;
 				break
-				case 'yellow':
-					selected = colorMAP.yellow;
+				case 'star':
+					actionMAP.star.counter++;
+					actionMAP.star.status = true;
+					// selected = colorMAP.yellow;
 				break
 			}
-			if(selected.limit == selected.counter){
+			
+			showQuestion(actionSelected);
+			/*if(selected.limit == selected.counter){
 				changeItem();
 				selectColorItem();
 			}
 			else{
 				selected.counter++;
 				verifyCompletedQuestions();
-				showQuestion(selected);
 				console.log($('.item'+itemSelected).attr('data-color') + ' : ' + selected.counter);
-			}
+			}*/
 		}
 
 		var changeItem = function(){
@@ -1122,7 +1272,7 @@
 		}
 
 		var setScore = function(questions){
-			$('#progress').html(progress+'/'+questions.length);
+			$('#progress').html(correct_answers+'/'+questions.length);
 			$('#points').html(points);
 		}
 
@@ -1165,7 +1315,6 @@
 		}
 
 		var selectQuestion = function(questions){
-
 			duringProgressBar();
 
 			var temp,band;
@@ -1180,20 +1329,22 @@
 			return questions[temp];
 		}
 
-		var showQuestion = function(color){
+		var showQuestion = function(action){
 
-			console.log(questions[colorSelected][color.counter-1].question);
-			$('.question-text').html(questions[colorSelected][color.counter-1].question);
-			for(var i = 0 ; i < questions[colorSelected][color.counter-1].options.length ; i++){
-				$('.question'+(i+1)).html(questions[colorSelected][color.counter-1].options[i].name);
-				$('.question'+(i+1)).attr('data-status',questions[colorSelected][color.counter-1].options[i].answer);
+			$question = selectQuestion(questions);
+
+			console.log($question.question);
+			$('.question-text').html($question.question);
+			for(var i = 0 ; i < $question.options.length ; i++){
+				$('.question'+(i+1)).html($question.options[i].name);
+				$('.question'+(i+1)).attr('data-status',$question.options[i].answer);
 			}
 			setTimeout(function(){
 				scene2();
 			}, 1000);
 		};
 
-		var setAnswers = function(options){
+		/*var setAnswers = function(options){
 			console.log(options);
 			for(i = 0; i < options.length; i++){
 				$option = null;
@@ -1218,7 +1369,7 @@
 				$option.attr('data-name', options[i].name);
 				$option.attr('data-answer', options[i].answer);
 			}
-		}
+		}*/
 
 		var scene1 = function(){
 
@@ -1287,7 +1438,7 @@
 		var decreaseInterval = null;
 
 		var setQuestion = function(questions){
-			$question = selectQuestion(questions);
+			// $question = selectQuestion(questions);
 			setScore(questions);
 			// time_by_question = $question.seconds;
 			time_by_question = 240;
@@ -1305,8 +1456,25 @@
 			setScore(questions);
 		}
 
+		var decreasePoints = function(pts){
+			points -= pts;
+			setScore(questions);
+		}
+
 		var increaseAnswers = function(){
 			correct_answers++;
+		}
+
+		var decreaseAnswers = function(){
+			correct_answers--;
+		}
+
+		var increaseWrongAnswers = function(){
+			wrong_answers++;
+		}
+
+		var decreaseWrongAnswers = function(){
+			wrong_answers--;
 		}
 
 		var setFinalScore = function(scene){
@@ -1420,9 +1588,13 @@
 		$('.question-button').on('click', function(e){
 			e.preventDefault();
 			if($(this).attr('data-status') == 'true'){
+				increaseAnswers();
+				increasePoints(100+timing);
 				$(this).addClass('btn-success');
 			}
 			else{
+				increaseWrongAnswers();
+				decreasePoints(25+time_by_question-timing);
 				$(this).addClass('btn-danger');
 				$('.question-button[data-status=true]').addClass('btn-success');
 			}
