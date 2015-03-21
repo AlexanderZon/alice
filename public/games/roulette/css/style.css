@@ -32,10 +32,20 @@ h3{
 .aside img{
 }
 
- .result{
+.result{
 	display:none;
 	margin-bottom: 2em;
+}
+
+.question-button{
+	margin-bottom: .5em;
 } 
+
+.indications{
+	font-size: 12pt;
+	font-weight: 500;
+	color: #fff;
+}
 
 .finish-hand{
 	width: 200px;
@@ -79,6 +89,10 @@ h3{
 
 .center{
 	text-align: center;
+}
+
+.left{
+	text-align: left;
 }
 
 .final-score{

@@ -54,9 +54,6 @@
     -o-transition: background .5s;
     -ms-transition: background .5s;
 }
-.item:hover {
-    background: #eee
-}
 .item1 {
     background-color: #F44336;
     z-index: 1;

@@ -50,26 +50,26 @@
 			
 
 			<div class="row roulette center">
-				<div class="col-md-12">
+				<div class="col-md-8 col-sm-12 col-xs-12">
 					<div id="roulette">
 				        <div class="item1 item" data-color="red">
-				            <div class="roulette-element"><a href="#one"><i class="fa fa-user"></i></a></div>
+				            <div class="roulette-element"><a href="#one"><i class="fa fa-clock-o"></i></a></div>
 				        </div>
 				        <div class="item2 item" data-color="purple">
-				            <div class="roulette-element"><a href="#two"><i class="fa fa-user"></i></a></div>
+				            <div class="roulette-element"><a href="#two"><i class="fa fa-eraser"></i></a></div>
 				        </div>
 				        <div class="item3 item" data-color="blue">
-				            <div class="roulette-element"><a href="#three"><i class="fa fa-user"></i></a></div>
+				            <div class="roulette-element"><a href="#three"><i class="fa fa-flash"></i></a></div>
 				        </div>
 				        <div class="item4 item" data-color="sky">
-				            <div class="roulette-element"><a href="#four"><i class="fa fa-user"></i></a></div>
+				            <div class="roulette-element"><a href="#four"><i class="fa fa-plus-circle"></i></a></div>
 				        </div>
 				        <div class="item5 item" data-color="green">
-				            <div class="roulette-element"><a href="#five"><i class="fa fa-user"></i></a></div>
+				            <div class="roulette-element"><a href="#five"><i class="fa fa-refresh"></i></a></div>
 				        </div>
 				        <div id="wrapper6">
 				            <div class="item6 item" data-color="yellow">
-				                <div class="roulette-element"><a href="#six"><i class="fa fa-user"></i></a></div>
+				                <div class="roulette-element"><a href="#six"><i class="fa fa-star"></i></a></div>
 				            </div>
 				        </div>
 				        <div id="circle" class="">
@@ -84,6 +84,32 @@
 				   <div id="five" class="display-target">... to see how the circular menu works.</div>
 				   <div id="six" class="display-target">By Shaquin Trifonoff</div>
 				   					<p><a href="http://stackoverflow.com/users/1421049/shaquin-trifonoff" title="My profile on Stack Overflow">By Shaquin Trifonoff</a></p> -->
+				</div>
+				<div class="col-md-3 col-sm-12 col-xs-12 left indications">
+					<div class="row">
+						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-clock-o"></i></div>
+						<div class="col-md-10 col-sm-10 col-xs-10">Aumenta tu tiempo restante +30 segundos, si tu respuesta es correcta</div> 
+					</div>
+					<div class="row">
+						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-eraser"></i></div>
+						<div class="col-md-10 col-sm-10 col-xs-10">Elimina tu última respuesta incorrecta, si tu respuesta es correcta</div> 
+					</div>
+					<div class="row">
+						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-flash"></i></div>
+						<div class="col-md-10 col-sm-10 col-xs-10">Comodín de saltar pregunta</div> 
+					</div>
+					<div class="row">
+						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-plus-circle"></i></div>
+						<div class="col-md-10 col-sm-10 col-xs-10">Duplica la cantidad de puntos pon una respuesta correcta</div> 
+					</div>
+					<div class="row">
+						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-refresh"></i></div>
+						<div class="col-md-10 col-sm-10 col-xs-10">Tienes la opción de repetir si te equivocas</div> 
+					</div>
+					<div class="row">
+						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-star"></i></div>
+						<div class="col-md-10 col-sm-10 col-xs-10">Gana 1000 puntos si respondes correctamente</div> 
+					</div>
 				</div>
 			</div>
 			
@@ -103,35 +129,34 @@
 			</div> -->
 
 			<div class="row result">
-				<div class="row question">
-					<h1 class="col-md-12 text">
+				<div class="row center">
+					<h1 class="col-md-12 question-text">
 						
 					</h1>					
 				</div>
 				<div class="row center">
-					<div class="col-md-1 col-sm-1 col-xs-1"></div>
-					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-selected"></div>
-					<div class="col-md-2 col-sm-2 col-xs-4" id="result-msg">
-						<div class="row" id="answer-selected">
-							<h3 class="col-md-12 col-sm-12 col-xs-12">Blanco</h3>
-						</div>
-						<div class="row">&nbsp;</div>
+					<div class="col-md-3 col-sm-2 col-xs-1"></div>
+					<div class="col-md-6 col-sm-8 col-xs-10" id="result-msg">
 						<div class="row">
-							<span class="col-md-12 col-sm-12 col-xs-12 alert alert-success" id="answers-result">&nbsp;</span>
+							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg question-button question1" data-status="false">&nbsp;</span>
 						</div>
-						<div class="row">&nbsp;</div>
 						<div class="row">
-							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-primary btn-lg next-button">Siguiente</span>
-							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg finish-button">Finalizar</span>
+							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg question-button question2" data-status="false">&nbsp;</span>
+						</div>
+						<div class="row">
+							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg question-button question3" data-status="false">&nbsp;</span>
+						</div>
+						<div class="row">
+							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg question-button question4" data-status="false">&nbsp;</span>
+						</div>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-revenge"></div>
-					<div class="col-md-1 col-sm-1 col-xs-1"></div>
+					<div class="col-md-3 col-sm-2 col-xs-1"></div>
 				</div>
 			</div>
 
 			<div class="row final-score">
-				<div class="row question">
+				<div class="row">
 					<h1 class="col-md-12">
 						Resultado Final
 					</h1>					
@@ -323,7 +348,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -349,7 +374,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -429,7 +454,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -455,7 +480,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -535,7 +560,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -561,7 +586,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -641,7 +666,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -667,7 +692,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -747,7 +772,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -773,7 +798,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -853,7 +878,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -879,7 +904,7 @@
 						},
 						{
 							id: 3,
-							name: "Correct",
+							name: "Incorrect",
 							answer: false,
 						},
 					]
@@ -974,6 +999,8 @@
 
 		var itemSelected = 0;
 
+		var colorSelected = null;
+
 		var rouletteRolling = false;
 
 		var completedQuestions = false;
@@ -992,35 +1019,37 @@
 		}
 
 		var selectColorItem = function(){
-			var colorSelected = null;
-			switch($('.item'+itemSelected).attr('data-color')){
+			var selected = null;
+			colorSelected = $('.item'+itemSelected).attr('data-color');
+			switch(colorSelected){
 				case 'red':
-					colorSelected = colorMAP.red;
+					selected = colorMAP.red;
 				break
 				case 'purple':
-					colorSelected = colorMAP.purple;
+					selected = colorMAP.purple;
 				break
 				case 'blue':
-					colorSelected = colorMAP.blue;
+					selected = colorMAP.blue;
 				break
 				case 'sky':
-					colorSelected = colorMAP.sky;
+					selected = colorMAP.sky;
 				break
 				case 'green':
-					colorSelected = colorMAP.green;
+					selected = colorMAP.green;
 				break
 				case 'yellow':
-					colorSelected = colorMAP.yellow;
+					selected = colorMAP.yellow;
 				break
 			}
-			if(colorSelected.limit == colorSelected.counter){
+			if(selected.limit == selected.counter){
 				changeItem();
 				selectColorItem();
 			}
 			else{
-				colorSelected.counter++;
+				selected.counter++;
 				verifyCompletedQuestions();
-				console.log($('.item'+itemSelected).attr('data-color') + ' : ' + colorSelected.counter);
+				showQuestion(selected);
+				console.log($('.item'+itemSelected).attr('data-color') + ' : ' + selected.counter);
 			}
 		}
 
@@ -1081,10 +1110,10 @@
 				swing: 1000
 			},{
 				duration: rouletteStrength,
-				easing: 'swing',
+				easing: 'linear',
 				step: function(){
-					// console.log("Swing");
-					rouletteStrengthSwing = this.swing;
+					console.log("Swing: "+this.swing);
+					intervalCoeficient = this.swing;
 				},
 				done: function(){
 					rouletteRolling = false;
@@ -1151,9 +1180,17 @@
 			return questions[temp];
 		}
 
-		var showQuestion = function(question){
-			console.log(question.question);
-			$('.question > .text').html(question.question);
+		var showQuestion = function(color){
+
+			console.log(questions[colorSelected][color.counter-1].question);
+			$('.question-text').html(questions[colorSelected][color.counter-1].question);
+			for(var i = 0 ; i < questions[colorSelected][color.counter-1].options.length ; i++){
+				$('.question'+(i+1)).html(questions[colorSelected][color.counter-1].options[i].name);
+				$('.question'+(i+1)).attr('data-status',questions[colorSelected][color.counter-1].options[i].answer);
+			}
+			setTimeout(function(){
+				scene2();
+			}, 1000);
 		};
 
 		var setAnswers = function(options){
@@ -1186,32 +1223,28 @@
 		var scene1 = function(){
 
 			$('.spent-time').fadeOut('slow/400/fast', function() {
+
+			});
+			$('.final-score').fadeOut('slow/400/fast', function() {
+
 			});
 			$('.result').fadeOut('slow/400/fast', function() {
 				$('.roulette').fadeIn('slow/400/fast', function() {
 					
-				});
-				$('.question').fadeIn('slow/400/fast', function() {
-					
-				});
-				$('.my-hand').fadeIn('slow/400/fast', function() {
-					setLayout();
 				});
 			});
 			
 		}
 
 		var scene2 = function(){
-
+			console.log('show result');
 			$('.roulette').fadeOut('slow/400/fast', function() {
-				
+
 			});
-			$('.question').fadeOut('slow/400/fast', function() {
-				
+			$('.final-score').fadeOut('slow/400/fast', function() {
+
 			});
 			$('.spent-time').fadeOut('slow/400/fast', function() {
-			});
-			$('.my-hand').fadeOut('slow/400/fast', function() {
 				$('.result').fadeIn('slow/400/fast', function() {
 					setLayout();
 				});
@@ -1224,12 +1257,8 @@
 			$('.roulette').fadeOut('slow/400/fast', function() {
 				
 			});
-			$('.question').fadeOut('slow/400/fast', function() {
-				
-			});
-			$('.my-hand').fadeOut('slow/400/fast', function() {
-			});
 			$('.spent-time').fadeOut('slow/400/fast', function() {
+
 			});
 			$('.result').fadeOut('slow/400/fast', function() {
 				$('.final-score').fadeIn('slow/400/fast', function() {
@@ -1244,12 +1273,8 @@
 			$('.roulette').fadeOut('slow/400/fast', function() {
 				
 			});
-			$('.question').fadeOut('slow/400/fast', function() {
-				
-			});
-			$('.my-hand').fadeOut('slow/400/fast', function() {
-			});
 			$('.final-score').fadeOut('slow/400/fast', function() {
+
 			});
 			$('.result').fadeOut('slow/400/fast', function() {
 				$('.spent-time').fadeIn('slow/400/fast', function() {
@@ -1392,12 +1417,29 @@
 			}
 		});
 
+		$('.question-button').on('click', function(e){
+			e.preventDefault();
+			if($(this).attr('data-status') == 'true'){
+				$(this).addClass('btn-success');
+			}
+			else{
+				$(this).addClass('btn-danger');
+				$('.question-button[data-status=true]').addClass('btn-success');
+			}
+			setTimeout(function(){
+				$('.question-button').removeClass('btn-danger');
+				$('.question-button').removeClass('btn-success');
+				scene1();
+			}, 1000);
+		});
+
 		$('#circle').on('mousedown', function(){
 			// console.log("mousedown");
 			$(this).addClass('click');
 		});
 
 		$('#circle').on('click', function(){
+			intervalCoeficient = 150;
 			if(!completedQuestions){
 				rouletteStrength = Math.floor((Math.random() * 5000)+1500);
 				console.log(rouletteStrength);
@@ -1405,7 +1447,7 @@
 				changeItem();
 				// animateSwingRoulette();
 				rouletteRollInterval = setInterval(rouletteIntervalFunction, (intervalCoeficient));
-				setTimeout(animateSwingRoulette(),rouletteStrength);
+				setTimeout(function(){animateSwingRoulette()},rouletteStrength);
 			}
 			else{
 				alert("completed");
