@@ -155,13 +155,13 @@
 				</div>
 			</div>
 
-			<div class="row final-score">
+			<div class="row final-score center">
 				<div class="row">
 					<h1 class="col-md-12">
 						Resultado Final
 					</h1>					
 				</div>
-				<div class="row center">
+				<div class="row">
 					<div class="col-md-2 col-sm-2 col-xs-1"></div>
 					<div class="col-md-8 col-sm-8 col-xs-10 center">
 						<div class="row" id="answer-selected">
@@ -170,16 +170,16 @@
 							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
 						</div>
 						<div class="row" id="answer-selected">
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<h3 class="col-md-3 col-sm-3 col-xs-5">Puntos: </h3>
-							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-points">200</h3>
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-10 col-sm-10 col-xs-10">Puntos: </h3>
+							<h3 class="col-md-10 col-sm-10 col-xs-10" id="final-points">200</h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<h3 class="col-md-3 col-sm-3 col-xs-5">Respuestas Acertadas: </h3>
-							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-answers">2</h3>
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-10 col-sm-10 col-xs-10">Respuestas Acertadas: </h3>
+							<h3 class="col-md-10 col-sm-10 col-xs-10" id="final-answers">2</h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-1"></div>
@@ -1140,6 +1140,8 @@
 
 		var rouletteRolling = false;
 
+		var enableRolling = true;
+
 		var completedQuestions = false;
 
 		/* METHODS */
@@ -1149,13 +1151,13 @@
 			completedQuestions = true;
 
 			for(color in colorMAP){
-				console.log(colorMAP[color]);
+				// console.log(colorMAP[color]);
 				if(colorMAP[color].counter < colorMAP[color].limit) completedQuestions = false;
 			}
 
 		}
 
-		var selectColorItem = function(){
+		var selectActionItem = function(){
 			var selected = null;
 			actionSelected = $('.item'+itemSelected).attr('data-color');
 			switch(actionSelected){
@@ -1194,7 +1196,7 @@
 			showQuestion(actionSelected);
 			/*if(selected.limit == selected.counter){
 				changeItem();
-				selectColorItem();
+				selectActionItem();
 			}
 			else{
 				selected.counter++;
@@ -1212,46 +1214,14 @@
 
 		var rouletteIntervalFunction = function(){
 			clearInterval(rouletteRollInterval);
-			// console.log('changing');
 			changeItem();
 			if(rouletteRolling){
 				rouletteRollInterval = setInterval(rouletteIntervalFunction, (intervalCoeficient));
 			}
 			else{
-				selectColorItem();
-				// Item seleccionado
+				selectActionItem();
 			}
-		}/*
-
-		var animateSwingRoulette = function(){
-			$({
-				swing: 1
-			}).animate({
-				swing: rouletteStrength
-			},{
-				duration: 2500,
-				easing: 'swing',
-				step: function(){
-					rouletteStrengthSwing = this.swing
-				},
-				done: function(){
-					$({
-						swing: rouletteStrengthSwing
-					}).animate({
-						swing: 1
-					},{
-						duration: 5000,
-						easing: 'swing',
-						step: function(){
-							rouletteStrengthSwing = this.swing
-						},
-						done: function(){
-							rouletteRolling = false;
-						}
-					});
-				}
-			});
-		}*/
+		}
 
 		var animateSwingRoulette = function(){
 			$({
@@ -1262,7 +1232,7 @@
 				duration: rouletteStrength,
 				easing: 'linear',
 				step: function(){
-					console.log("Swing: "+this.swing);
+					// console.log("Swing: "+this.swing);
 					intervalCoeficient = this.swing;
 				},
 				done: function(){
@@ -1287,7 +1257,9 @@
 			},{
       			easing:'swing',
       			step: function() {
-			        $('#during-progress').css({width: this.percentage+'%'}, function(){console.log("width")});
+			        $('#during-progress').css({width: this.percentage+'%'}, function(){
+			        	// console.log("width");
+			        });
 			        // $('#during-progress').css({width: this.width+'%'}, function(){console.log("width")});
 			        // $('#during-progress').text(Math.floor(Math.round(this.percentage))+'%');
 			    }
@@ -1320,27 +1292,31 @@
 			var temp,band;
 			do{
 				temp = Math.floor((Math.random() * questions.length));
-				console.log('ciclo: ' + temp);
+				// console.log('ciclo: ' + temp);
 				band = false;
 				for(i = 0; i < randomize.length; i++) if(temp == randomize[i]) band = true;
 			}while(band);
 			randomize.push(temp);
-			console.log(randomize);
+			// console.log(randomize);
 			return questions[temp];
+		}
+
+		var stopRolling = function(){
+			enableRolling = true;
 		}
 
 		var showQuestion = function(action){
 
 			$question = selectQuestion(questions);
 
-			console.log($question.question);
+			// console.log($question.question);
 			$('.question-text').html($question.question);
 			for(var i = 0 ; i < $question.options.length ; i++){
 				$('.question'+(i+1)).html($question.options[i].name);
 				$('.question'+(i+1)).attr('data-status',$question.options[i].answer);
 			}
 			setTimeout(function(){
-				scene2();
+				scene2(stopRolling());
 			}, 1000);
 		};
 
@@ -1387,8 +1363,8 @@
 			
 		}
 
-		var scene2 = function(){
-			console.log('show result');
+		var scene2 = function(cb){
+			// console.log('show result');
 			$('.roulette').fadeOut('slow/400/fast', function() {
 
 			});
@@ -1399,6 +1375,7 @@
 				$('.result').fadeIn('slow/400/fast', function() {
 					setLayout();
 				});
+				cb;
 			});
 
 		}
@@ -1420,7 +1397,7 @@
 		}
 
 		var scene4 = function(){
-			console.log('scene4');
+			// console.log('scene4');
 			$('.roulette').fadeOut('slow/400/fast', function() {
 				
 			});
@@ -1446,7 +1423,7 @@
 			decreaseInterval = setInterval(function(){
 				decreaseTimer(setTimer);
 			}, 1000);
-			console.log("setQuestion");
+			// console.log("setQuestion");
 			// setAnswers($question.options);
 			// showQuestion($question);
 		}
@@ -1517,7 +1494,7 @@
 		}
 
 		var decreaseTimer = function(cb){
-			console.log("decrease");
+			// console.log("decrease");
 			timing > 0 ? cb(--timing) : spentTime();
 		}
 
@@ -1544,7 +1521,7 @@
 
 		$('.my').on('click', function(){
 			scene2();
-			console.log(timing);
+			// console.log(timing);
 			clearInterval(decreaseInterval);
 			console.log(timing);
 			var elem = $(this);
@@ -1601,7 +1578,18 @@
 			setTimeout(function(){
 				$('.question-button').removeClass('btn-danger');
 				$('.question-button').removeClass('btn-success');
-				scene1();
+				if(progress == questions.length){
+					$('.next-button').css({
+						'display':'none'
+					});
+					$('.finish-button').fadeIn('slow/400/fast', function() {
+						
+					});
+					setFinalScore(scene3());
+				}
+				else{
+					scene1();
+				}
 			}, 1000);
 		});
 
@@ -1611,18 +1599,22 @@
 		});
 
 		$('#circle').on('click', function(){
-			intervalCoeficient = 150;
-			if(!completedQuestions){
-				rouletteStrength = Math.floor((Math.random() * 5000)+1500);
-				console.log(rouletteStrength);
-				rouletteRolling = true;
-				changeItem();
-				// animateSwingRoulette();
-				rouletteRollInterval = setInterval(rouletteIntervalFunction, (intervalCoeficient));
-				setTimeout(function(){animateSwingRoulette()},rouletteStrength);
-			}
-			else{
-				alert("completed");
+			if(enableRolling){
+				console.log("Just Rolling!");
+				enableRolling = false;
+				intervalCoeficient = 150;
+				if(!completedQuestions){
+					rouletteStrength = Math.floor((Math.random() * 5000)+1500);
+					// console.log(rouletteStrength);
+					rouletteRolling = true;
+					changeItem();
+					// animateSwingRoulette();
+					rouletteRollInterval = setInterval(rouletteIntervalFunction, (intervalCoeficient));
+					setTimeout(function(){animateSwingRoulette()},rouletteStrength);
+				}
+				else{
+					alert("completed");
+				}
 			}
 		});
 
