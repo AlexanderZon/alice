@@ -172,25 +172,25 @@
 						<div class="row" id="answer-selected">
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Puntos: </h3>
-							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-points">0</h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 left" id="final-points">0</h3>
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Respuestas Acertadas: </h3>
-							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-answers">0</h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 left" id="final-answers">0</h3>
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Respuestas Erradas: </h3>
-							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-answers">0</h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 left" id="final-answers">0</h3>
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Comodines: </h3>
-							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-answers">
+							<h3 class="col-md-5 col-sm-5 col-xs-5 left" id="final-answers">
 								<i class="fa fa-clock-o"></i>x<span id="clock-counter">0</span>
 								<i class="fa fa-eraser"></i>x<span id="eraser-counter">0</span>
 								<i class="fa fa-flash"></i>x<span id="flash-counter">0</span>
@@ -200,6 +200,7 @@
 							</h3>
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
+						<div class="row">&nbsp;</div>
 						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-1"></div>
 							<div class="col-md-6 col-sm-6 col-xs-10">
@@ -225,30 +226,22 @@
 				</div>
 			</div>
 
-			<div class="row spent-time">
-				<div class="row question">
-					<h1 class="col-md-12 text">
-						
-					</h1>					
-				</div>
-				<div class="row center">
-					<div class="col-md-1 col-sm-1 col-xs-1"></div>
-					<div class="col-md-10 col-sm-10 col-xs-10" id="result-msg">
-						<div class="row" id="answer-selected">
-							<h3 class="col-md-12 col-sm-12 col-xs-12">Tiempo Agotado!</h3>
-						</div>
-						<div class="row">&nbsp;</div>
-						<div class="row">
-							<span class="col-md-12 col-sm-12 col-xs-12 alert alert-warning" id="spent-result">&nbsp;</span>
-						</div>
-						<div class="row">&nbsp;</div>
-						<div class="row">
-							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-primary btn-lg next-button">Siguiente</span>
-							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg finish-button">Finalizar</span>
-						</div>
+			<div class="row spent-time center">
+				<div class="col-md-1 col-sm-1 col-xs-1"></div>
+				<div class="col-md-10 col-sm-10 col-xs-10" id="result-msg">
+					<div class="row" id="answer-selected">
+						<h3 class="col-md-12 col-sm-12 col-xs-12">Tiempo Agotado!</h3>
 					</div>
-					<div class="col-md-1 col-sm-1 col-xs-1"></div>
+					<div class="row">&nbsp;</div>
+					<div class="row">
+						<div class="col-md-3 col-sm-2 col-xs-1"></div>
+						<span class="col-md-6 col-sm-8 col-xs-10 btn btn-primary btn-lg final-button">Ver Resultado</span>
+						<div class="col-md-3 col-sm-2 col-xs-1"></div>
+					</div>
+					<div class="row">&nbsp;</div>
+					<div class="row">&nbsp;</div>
 				</div>
+				<div class="col-md-1 col-sm-1 col-xs-1"></div>
 			</div>
 
 		</div>
@@ -1436,7 +1429,7 @@
 			// $question = selectQuestion(questions);
 			setScore(questions);
 			// time_by_question = $question.seconds;
-			time_by_question = 240;
+			time_by_question = 5;
 			resetTimer(setTimer);
 			decreaseInterval = setInterval(function(){
 				decreaseTimer(setTimer);
@@ -1505,7 +1498,7 @@
 
 		var spentTime = function(){
 			clearInterval(decreaseInterval);
-			$('#spent-result').html($question.answer);
+			// $('#spent-result').html($question.answer);
 			scene4();
 		}
 
@@ -1640,12 +1633,7 @@
 			$(this).removeClass('click');
 		});
 
-		$('.next-button').on('click', function(){
-			setQuestion(questions);
-			scene1();
-		});
-
-		$('.finish-button').on('click', function(){
+		$('.final-button').on('click', function(){
 			setFinalScore(scene3());
 		});
 
