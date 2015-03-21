@@ -149,6 +149,9 @@
 						<div class="row">
 							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg question-button question4" data-status="false">&nbsp;</span>
 						</div>
+						<div class="row">
+							<span class="col-md-10 col-sm-8 col-xs-6" data-status="false">&nbsp;</span>
+							<span class="col-md-2 col-sm-4 col-xs-6 btn btn-warning flash-button" data-status="false"><i class="fa fa-flash"></i></span>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-2 col-xs-1"></div>
@@ -1177,6 +1180,7 @@
 				case 'flash':
 					actionMAP.flash.counter++;
 					actionMAP.flash.status = true;
+					$('.flash-button').fadeIn();
 					// selected = colorMAP.blue;
 				break
 				case 'plus':
@@ -1196,7 +1200,7 @@
 				break
 			}
 			
-			showQuestion(actionSelected);
+			showQuestion();
 
 		}
 
@@ -1283,7 +1287,7 @@
 			enableRolling = true;
 		}
 
-		var showQuestion = function(action){
+		var showQuestion = function(){
 			$question = selectQuestion(questions);
 			// console.log($question.question);
 			$('.question-text').html($question.question);
@@ -1435,10 +1439,14 @@
 			timing > 0 ? cb(--timing) : spentTime();
 		}
 
+		var removeFocusedButtons = function(){
+			$('.question-button').removeClass('btn-danger');
+			$('.question-button').removeClass('btn-success');
+		}
+
 		var answeredTimeout = function(){
 			setTimeout(function(){
-				$('.question-button').removeClass('btn-danger');
-				$('.question-button').removeClass('btn-success');
+				removeFocusedButtons();
 				if(progress == questions.length){
 					$('.next-button').css({
 						'display':'none'
@@ -1454,7 +1462,27 @@
 			}, 1000);
 		}
 
+		var passQuestion = function(){
+			$('.result').fadeOut('slow/400/fast', function() {
+				showQuestion();
+				$('.result').fadeIn('slow/400/fast', function() {
+					
+				});
+			});
+		}
+
 		/* EVENT LISTENERS */
+
+		$('.flash-button').on('click', function(e){
+			e.preventDefault();
+			$('.question-button[data-status=true]').addClass('btn-success');
+			$('.flash-button').fadeOut('slow/1000/fast', function() {
+			});
+			setTimeout(function(){
+				passQuestion();
+				removeFocusedButtons();
+			},2000);
+		})
 
 		$('.question-button').on('click', function(e){
 			e.preventDefault();
@@ -1472,6 +1500,7 @@
 				}
 				if(actionMAP.flash.status){
 					actionMAP.flash.status = false;
+					$('.flash-button').fadeOut();
 					console.log("Comodin Saltar!");
 				}
 				if(actionMAP.plus.status){
@@ -1494,7 +1523,9 @@
 				answeredTimeout();
 			}
 			else{
+				if(actionMAP.flash.status) $('.flash-button').fadeOut();
 				if(actionMAP.repeat.status){
+					actionMAP.repeat.status = false;
 					$(this).addClass('btn-danger');
 				}
 				else{
