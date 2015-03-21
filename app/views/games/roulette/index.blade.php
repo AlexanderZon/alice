@@ -171,14 +171,33 @@
 						</div>
 						<div class="row" id="answer-selected">
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
-							<h3 class="col-md-10 col-sm-10 col-xs-10">Puntos: </h3>
-							<h3 class="col-md-10 col-sm-10 col-xs-10" id="final-points">200</h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Puntos: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-points">0</h3>
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
-							<h3 class="col-md-10 col-sm-10 col-xs-10">Respuestas Acertadas: </h3>
-							<h3 class="col-md-10 col-sm-10 col-xs-10" id="final-answers">2</h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Respuestas Acertadas: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-answers">0</h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Respuestas Erradas: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-answers">0</h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Comodines: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-answers">
+								<i class="fa fa-clock-o"></i>x<span id="clock-counter">0</span>
+								<i class="fa fa-eraser"></i>x<span id="eraser-counter">0</span>
+								<i class="fa fa-flash"></i>x<span id="flash-counter">0</span>
+								<i class="fa fa-plus-circle"></i>x<span id="plus-counter">0</span>
+								<i class="fa fa-refresh"></i>x<span id="refresh-counter">0</span>
+								<i class="fa fa-star"></i>x<span id="star-counter">0</span>
+							</h3>
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
@@ -1316,7 +1335,7 @@
 				$('.question'+(i+1)).attr('data-status',$question.options[i].answer);
 			}
 			setTimeout(function(){
-				scene2(stopRolling());
+				scene2();
 			}, 1000);
 		};
 
@@ -1363,7 +1382,7 @@
 			
 		}
 
-		var scene2 = function(cb){
+		var scene2 = function(){
 			// console.log('show result');
 			$('.roulette').fadeOut('slow/400/fast', function() {
 
@@ -1375,7 +1394,6 @@
 				$('.result').fadeIn('slow/400/fast', function() {
 					setLayout();
 				});
-				cb;
 			});
 
 		}
@@ -1470,8 +1488,6 @@
 			});
 			$('#final-progress').attr('aria-valuenow',100);
 
-			scene();
-
 		}
 
 		var setTimer = function(time){
@@ -1564,6 +1580,7 @@
 
 		$('.question-button').on('click', function(e){
 			e.preventDefault();
+			enableRolling = true;
 			if($(this).attr('data-status') == 'true'){
 				increaseAnswers();
 				increasePoints(100+timing);
@@ -1629,7 +1646,7 @@
 		});
 
 		$('.finish-button').on('click', function(){
-			setFinalScore(scene3);
+			setFinalScore(scene3());
 		});
 
 		$('.save-button').on('click', function(){

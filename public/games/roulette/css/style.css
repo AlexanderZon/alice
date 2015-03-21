@@ -95,6 +95,10 @@ h3{
 	text-align: left;
 }
 
+.right{
+	text-align: right;
+}
+
 .final-score{
 	display: none;
 }
