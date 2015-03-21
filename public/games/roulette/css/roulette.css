@@ -98,6 +98,24 @@
     -moz-transform: rotate(-30deg);
     -webkit-transform: rotate(-30deg);
 }
+.ft-red {
+    color: #F44336;
+}
+.ft-purple {
+    color: #9C27B0;
+}
+.ft-blue {
+    color: #3F51B5;
+}
+.ft-sky {
+    color: #03A9F4;
+}
+.ft-green {
+    color: #4CAF50;
+}
+.ft-yellow {
+    color: #FFC107;
+}
 .hover {
     background: #eee
 }

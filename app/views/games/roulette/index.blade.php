@@ -194,12 +194,12 @@
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Comodines: </h3>
 							<h3 class="col-md-5 col-sm-5 col-xs-5 left" id="final-answers">
-								<i class="fa fa-clock-o"></i>x<span id="clock-counter">0</span>
-								<i class="fa fa-eraser"></i>x<span id="eraser-counter">0</span>
-								<i class="fa fa-flash"></i>x<span id="flash-counter">0</span>
-								<i class="fa fa-plus-circle"></i>x<span id="plus-counter">0</span>
-								<i class="fa fa-repeat"></i>x<span id="repeat-counter">0</span>
-								<i class="fa fa-star"></i>x<span id="star-counter">0</span>
+								<span class="ft-red"><i class="fa fa-clock-o"></i>x<span id="clock-counter">0</span></span>
+								<span class="ft-purple"><i class="fa fa-eraser"></i>x<span id="eraser-counter">0</span></span>
+								<span class="ft-blue"><i class="fa fa-flash"></i>x<span id="flash-counter">0</span></span>
+								<span class="ft-sky"><i class="fa fa-plus-circle"></i>x<span id="plus-counter">0</span></span>
+								<span class="ft-green"><i class="fa fa-repeat"></i>x<span id="repeat-counter">0</span></span>
+								<span class="ft-yellow"><i class="fa fa-star"></i>x<span id="star-counter">0</span></span>
 							</h3>
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
@@ -1180,7 +1180,7 @@
 				case 'flash':
 					actionMAP.flash.counter++;
 					actionMAP.flash.status = true;
-					$('.flash-button').fadeIn();
+					if(progress < questions.length) $('.flash-button').fadeIn();
 					// selected = colorMAP.blue;
 				break
 				case 'plus':
@@ -1400,6 +1400,15 @@
 			timing += seconds;
 		}
 
+		var setComodinScore = function(){
+			$('#clock-counter').html(actionMAP.clock.counter);
+			$('#eraser-counter').html(actionMAP.eraser.counter);
+			$('#flash-counter').html(actionMAP.flash.counter);
+			$('#plus-counter').html(actionMAP.plus.counter);
+			$('#repeat-counter').html(actionMAP.repeat.counter);
+			$('#star-counter').html(actionMAP.star.counter);
+		}
+
 		var setFinalScore = function(scene){
 			percentage = correct_answers*100/questions.length;
 			$('#final-points').html(points);
@@ -1413,6 +1422,7 @@
 				width: 100-percentage+'%'
 			});
 			$('#final-progress').attr('aria-valuenow',100);
+			setComodinScore();
 		}
 
 		var setTimer = function(time){
@@ -1474,6 +1484,7 @@
 		/* EVENT LISTENERS */
 
 		$('.flash-button').on('click', function(e){
+			actionMAP.flash.used++;
 			e.preventDefault();
 			$('.question-button[data-status=true]').addClass('btn-success');
 			$('.flash-button').fadeOut('slow/1000/fast', function() {
@@ -1525,6 +1536,7 @@
 			else{
 				if(actionMAP.flash.status) $('.flash-button').fadeOut();
 				if(actionMAP.repeat.status){
+					actionMAP.repeat.used++;
 					actionMAP.repeat.status = false;
 					$(this).addClass('btn-danger');
 				}
