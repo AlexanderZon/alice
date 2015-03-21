@@ -64,8 +64,8 @@
 				        <div class="item4 item" data-color="sky" data-action="plus">
 				            <div class="roulette-element"><a href="#four"><i class="fa fa-plus-circle"></i></a></div>
 				        </div>
-				        <div class="item5 item" data-color="green" data-action="refresh">
-				            <div class="roulette-element"><a href="#five"><i class="fa fa-refresh"></i></a></div>
+				        <div class="item5 item" data-color="green" data-action="repeat">
+				            <div class="roulette-element"><a href="#five"><i class="fa fa-repeat"></i></a></div>
 				        </div>
 				        <div id="wrapper6">
 				            <div class="item6 item" data-color="yellow" data-action="star">
@@ -96,14 +96,14 @@
 					</div>
 					<div class="row">
 						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-flash"></i></div>
-						<div class="col-md-10 col-sm-10 col-xs-10">Comodín de saltar pregunta</div> 
+						<div class="col-md-10 col-sm-10 col-xs-10">Tienes la opción de saltarte la pregunta</div> 
 					</div>
 					<div class="row">
 						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-plus-circle"></i></div>
 						<div class="col-md-10 col-sm-10 col-xs-10">Duplica la cantidad de puntos pon una respuesta correcta</div> 
 					</div>
 					<div class="row">
-						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-refresh"></i></div>
+						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-repeat"></i></div>
 						<div class="col-md-10 col-sm-10 col-xs-10">Tienes la opción de repetir si te equivocas</div> 
 					</div>
 					<div class="row">
@@ -195,7 +195,7 @@
 								<i class="fa fa-eraser"></i>x<span id="eraser-counter">0</span>
 								<i class="fa fa-flash"></i>x<span id="flash-counter">0</span>
 								<i class="fa fa-plus-circle"></i>x<span id="plus-counter">0</span>
-								<i class="fa fa-refresh"></i>x<span id="refresh-counter">0</span>
+								<i class="fa fa-repeat"></i>x<span id="repeat-counter">0</span>
 								<i class="fa fa-star"></i>x<span id="star-counter">0</span>
 							</h3>
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
@@ -975,7 +975,7 @@
 						name: "Correct",
 						answer: true,
 					},
-				]
+				],
 			},
 			{
 				question: "Question #2",
@@ -1001,7 +1001,7 @@
 						name: "Incorrect",
 						answer: false,
 					},
-				]
+				],
 			},
 			{
 				question: "Question #3",
@@ -1027,7 +1027,7 @@
 						name: "Incorrect",
 						answer: false,
 					},
-				]
+				],
 			},
 			{
 				question: "Question #4",
@@ -1053,9 +1053,9 @@
 						name: "Incorrect",
 						answer: false,
 					},
-				]
+				],
 			},
-		]
+		];
 
 		/*var colorMAP = {
 			red: {
@@ -1115,7 +1115,7 @@
 				status: false,
 				counter: 0,
 			},
-			refresh: {
+			repeat: {
 				status: false,
 				counter: 0,
 				used: 0,
@@ -1123,7 +1123,7 @@
 			star: {
 				status: false,
 				counter: 0
-			}
+			},
 		};
 
 		var time_by_question = 90;
@@ -1156,22 +1156,13 @@
 
 		var completedQuestions = false;
 
+		var decreaseInterval = null;
+
 		/* METHODS */
-
-		var verifyCompletedQuestions = function(){
-
-			completedQuestions = true;
-
-			for(color in colorMAP){
-				// console.log(colorMAP[color]);
-				if(colorMAP[color].counter < colorMAP[color].limit) completedQuestions = false;
-			}
-
-		}
 
 		var selectActionItem = function(){
 			var selected = null;
-			actionSelected = $('.item'+itemSelected).attr('data-color');
+			actionSelected = $('.item'+itemSelected).attr('data-action');
 			switch(actionSelected){
 				case 'clock':
 					actionMAP.clock.counter++;
@@ -1193,9 +1184,9 @@
 					actionMAP.plus.status = true;
 					// selected = colorMAP.sky;
 				break
-				case 'refresh':
-					actionMAP.refresh.counter++;
-					actionMAP.refresh.status = true;
+				case 'repeat':
+					actionMAP.repeat.counter++;
+					actionMAP.repeat.status = true;
 					// selected = colorMAP.green;
 				break
 				case 'star':
@@ -1206,15 +1197,7 @@
 			}
 			
 			showQuestion(actionSelected);
-			/*if(selected.limit == selected.counter){
-				changeItem();
-				selectActionItem();
-			}
-			else{
-				selected.counter++;
-				verifyCompletedQuestions();
-				console.log($('.item'+itemSelected).attr('data-color') + ' : ' + selected.counter);
-			}*/
+
 		}
 
 		var changeItem = function(){
@@ -1272,30 +1255,13 @@
 			        $('#during-progress').css({width: this.percentage+'%'}, function(){
 			        	// console.log("width");
 			        });
-			        // $('#during-progress').css({width: this.width+'%'}, function(){console.log("width")});
-			        // $('#during-progress').text(Math.floor(Math.round(this.percentage))+'%');
 			    }
       		});
 
 		}
 
-		/*var correctProgressBar = function(){
-
-			$({percentage:(correct_answers)/questions.length*100, during: (progress)/questions.length*100 }).animate({percentage:(correct_answers)/questions.length*100, during: ((correct_answers)/questions.length*100)-((progress)/questions.length*100)},{
-      			easing:'swing',
-      			step: function() {
-			        $('#during-progress').css({width: this.during+'%'}, function(){console.log("width")});
-			        $('#correct-progress').css({width: this.percentage+'%'}, function(){console.log("width")});
-			        // $('#correct-progress').text(Math.floor(Math.round(this.percentage))+'%');
-			    }
-      		});
-
-		}*/
-
 		var setLayout = function(){
-
 			$('#right-side').height($('#left-side').height());
-
 		}
 
 		var selectQuestion = function(questions){
@@ -1318,9 +1284,7 @@
 		}
 
 		var showQuestion = function(action){
-
 			$question = selectQuestion(questions);
-
 			// console.log($question.question);
 			$('.question-text').html($question.question);
 			for(var i = 0 ; i < $question.options.length ; i++){
@@ -1330,37 +1294,9 @@
 			setTimeout(function(){
 				scene2();
 			}, 1000);
-		};
-
-		/*var setAnswers = function(options){
-			console.log(options);
-			for(i = 0; i < options.length; i++){
-				$option = null;
-				switch(options[i].figure){
-					case 'rock':
-						$option = $('#my-rock');
-						break;
-					case 'paper':
-						$option = $('#my-paper');
-						break;
-					case 'scissors':
-						$option = $('#my-scissors');
-						break;
-					case 'lizard':
-						$option = $('#my-lizard');
-						break;
-					case 'spock':
-						$option = $('#my-spock');
-						break;
-				}
-				$option.attr('data-figure', options[i].figure);
-				$option.attr('data-name', options[i].name);
-				$option.attr('data-answer', options[i].answer);
-			}
-		}*/
+		}
 
 		var scene1 = function(){
-
 			$('.spent-time').fadeOut('slow/400/fast', function() {
 
 			});
@@ -1372,7 +1308,6 @@
 					
 				});
 			});
-			
 		}
 
 		var scene2 = function(){
@@ -1388,11 +1323,9 @@
 					setLayout();
 				});
 			});
-
 		}
 
 		var scene3 = function(){
-
 			$('.roulette').fadeOut('slow/400/fast', function() {
 				
 			});
@@ -1404,7 +1337,6 @@
 					setLayout();					
 				});
 			});
-
 		}
 
 		var scene4 = function(){
@@ -1420,23 +1352,18 @@
 					setLayout();					
 				});
 			});
-
 		}
-
-		var decreaseInterval = null;
 
 		var setQuestion = function(questions){
 			// $question = selectQuestion(questions);
 			setScore(questions);
 			// time_by_question = $question.seconds;
-			time_by_question = 5;
+			time_by_question = 240;
 			resetTimer(setTimer);
 			decreaseInterval = setInterval(function(){
 				decreaseTimer(setTimer);
 			}, 1000);
 			// console.log("setQuestion");
-			// setAnswers($question.options);
-			// showQuestion($question);
 		}
 
 		var increasePoints = function(pts){
@@ -1454,7 +1381,7 @@
 		}
 
 		var decreaseAnswers = function(){
-			correct_answers--;
+			correct_answers > 0 ? correct_answers-- : correct_answers = 0;
 		}
 
 		var increaseWrongAnswers = function(){
@@ -1462,25 +1389,26 @@
 		}
 
 		var decreaseWrongAnswers = function(){
-			wrong_answers--;
+			wrong_answers > 0 ? wrong_answers-- : wrong_answers = 0;
+		}
+
+		var increaseTiming = function(seconds){
+			timing += seconds;
 		}
 
 		var setFinalScore = function(scene){
 			percentage = correct_answers*100/questions.length;
 			$('#final-points').html(points);
 			$('#final-answers').html(correct_answers);
-
 			$('#final-correct').css({
 				width: percentage+'%'
 			});
 			$('#final-correct').attr('aria-valuenow',percentage);
 			$('#final-correct').html(percentage+"%");
-
 			$('#final-progress').css({
 				width: 100-percentage+'%'
 			});
 			$('#final-progress').attr('aria-valuenow',100);
-
 		}
 
 		var setTimer = function(time){
@@ -1507,84 +1435,7 @@
 			timing > 0 ? cb(--timing) : spentTime();
 		}
 
-
-		/* EVENT LISTENERS */
-
-		/*var rouletteInterval = 0setInterval(function(){
-			hands = $('.roulette .hand');
-			hand_animate = hands[Math.floor((Math.random() * hands.length))];
-			// console.log($(hand_animate));
-			$('.roulette .hand').animate({
-				width: '100px',
-				height: '100px',
-			}, function(){
-				// console.log("Listo " + Math.floor((Math.random() * hands.length)));
-				$(hand_animate).animate({
-					width: '120px',
-					height: '120px',
-				},{
-					duration: 500
-				});
-			});
-		}, 500)*/;
-
-		$('.my').on('click', function(){
-			scene2();
-			// console.log(timing);
-			clearInterval(decreaseInterval);
-			console.log(timing);
-			var elem = $(this);
-			if(elem.attr('data-answer') == 'true'){
-				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
-				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]+'.png"/>');
-				$('#answers-result').html('Correcto');
-				$('#answers-result').removeClass('alert-danger');
-				$('#answers-result').addClass('alert-success');
-				increasePoints(100+timing);
-				increaseAnswers();
-				// correctProgressBar();
-				/*console.log(rpslsMAP[elem.attr('data-figure')].on.length);
-				$('#roulette-'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]).animate({
-					width: '200px',
-					height: '200px',
-				});*/
-			}
-			else{
-				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
-				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]+'.png"/>');
-				$('#answers-result').html('Incorrecto');
-				$('#answers-result').removeClass('alert-success');
-				$('#answers-result').addClass('alert-danger');
-				/*console.log(rpslsMAP[elem.attr('data-figure')].below.length);
-				$('#roulette-'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]).animate({
-					width: '200px',
-					height: '200px',
-				});*/
-			}
-			if(progress == questions.length){
-				$('.next-button').css({
-					'display':'none'
-				});
-				$('.finish-button').fadeIn('slow/400/fast', function() {
-					
-				});
-			}
-		});
-
-		$('.question-button').on('click', function(e){
-			e.preventDefault();
-			enableRolling = true;
-			if($(this).attr('data-status') == 'true'){
-				increaseAnswers();
-				increasePoints(100+timing);
-				$(this).addClass('btn-success');
-			}
-			else{
-				increaseWrongAnswers();
-				decreasePoints(25+time_by_question-timing);
-				$(this).addClass('btn-danger');
-				$('.question-button[data-status=true]').addClass('btn-success');
-			}
+		var answeredTimeout = function(){
 			setTimeout(function(){
 				$('.question-button').removeClass('btn-danger');
 				$('.question-button').removeClass('btn-success');
@@ -1601,6 +1452,59 @@
 					scene1();
 				}
 			}, 1000);
+		}
+
+		/* EVENT LISTENERS */
+
+		$('.question-button').on('click', function(e){
+			e.preventDefault();
+			enableRolling = true;
+			if($(this).attr('data-status') == 'true'){
+				if(actionMAP.clock.status){
+					increaseTiming(30);
+					actionMAP.clock.status = false;
+					console.log("Mas tiempo!");
+				}
+				if(actionMAP.eraser.status){
+					decreaseWrongAnswers();
+					actionMAP.eraser.status = false;
+					console.log("A Borrar!");
+				}
+				if(actionMAP.flash.status){
+					actionMAP.flash.status = false;
+					console.log("Comodin Saltar!");
+				}
+				if(actionMAP.plus.status){
+					increasePoints(100+timing);
+					actionMAP.plus.status = false;
+					console.log("Double Puntaje!");
+				}
+				if(actionMAP.repeat.status){
+					actionMAP.repeat.status = false;
+					console.log("Comodin Repetir!");
+				}
+				if(actionMAP.star.status){
+					increasePoints(1000);
+					actionMAP.star.status = false;
+					console.log("1000 PUNTOS!");
+				}
+				increaseAnswers();
+				increasePoints(100+timing);
+				$(this).addClass('btn-success');
+				answeredTimeout();
+			}
+			else{
+				if(actionMAP.repeat.status){
+					$(this).addClass('btn-danger');
+				}
+				else{
+					increaseWrongAnswers();
+					decreasePoints(25+time_by_question-timing);
+					$(this).addClass('btn-danger');
+					$('.question-button[data-status=true]').addClass('btn-success');
+					answeredTimeout();
+				}
+			}
 		});
 
 		$('#circle').on('mousedown', function(){
@@ -1644,111 +1548,9 @@
 		$(document).on('ready', function(){
 			setQuestion(questions);
 			setLayout();
-			/*$.ajax({
-				url: 'http:localhost:8000/rpsls',
-				type: 'GET',
-				dataType: 'json',
-				error: function(err){
-					console.log("ERROR");
-					// consol.log(err);
-				},
-				success: function(data){
-					console.log(data);
-
-					console.log("success");
-				}
-			});*/
 		});
 
 
 	</script>
 </body>
-	<!--- <script type="text/javascript">
-		var questions = [
-			{
-				question: "¿De que color es el caballo de Simón Bolívar?",
-				answer: 3,
-				options: [
-					{
-						id: 0,
-						item: "rock",
-						name: "Rojo",
-						answer: false,
-					},
-					{
-						id: 1,
-						item: "scissors",
-						name: "Azul",
-						answer: false,
-					},
-					{
-						id: 2,
-						item: "paper",
-						name: "Verde",
-						answer: false,
-					},
-					{
-						id: 3,
-						item: "lizard",
-						name: "Blanco",
-						answer: true,
-					},
-					{
-						id: 4,
-						item: "spock",
-						name: "Amarillo",
-						answer: false,
-					},
-				]
-			},
-		];
-
-		var selectQuestion = function(questions){
-			return questions[Math.floor((Math.random() * questions.length))];
-		}
-
-		var setPossibleAnswers = function(options){
-			for(i = 0; i < options.length; i++){
-				$option = null;
-				switch(options[i].item){
-					case 'rock':
-						$option = $('#myRock .possibleAnswer');
-						break;
-					case 'paper':
-						$option = $('#myPaper .possibleAnswer');
-						break;
-					case 'scissors':
-						$option = $('#myScissors .possibleAnswer');
-						break;
-					case 'lizard':
-						$option = $('#myLizard .possibleAnswer');
-						break;
-					case 'spock':
-						$option = $('#mySpock .possibleAnswer');
-						break;
-				}
-				$option.html(options[i].name);
-			}
-		}
-
-		$(document).on('ready', function(){
-
-			$question = selectQuestion(questions);
-			setPossibleAnswers($question.options);
-			/*$.ajax({
-				url: 'http:localhost:8000/rpsls',
-				type: 'GET',
-				dataType: 'json',
-				error: function(err){
-					console.log("ERROR");
-					// consol.log(err);
-				},
-				success: function(data){
-					console.log(data);
-
-					console.log("success");
-				}
-			});*/
-		});
-	</script>
 </html>
