@@ -52,23 +52,23 @@
 			<div class="row roulette center">
 				<div class="col-md-12">
 					<div id="roulette">
-				        <div class="item1 item">
+				        <div class="item1 item" data-color="red">
 				            <div class="roulette-element"><a href="#one"><i class="fa fa-user"></i></a></div>
 				        </div>
-				        <div class="item2 item">
+				        <div class="item2 item" data-color="purple">
 				            <div class="roulette-element"><a href="#two"><i class="fa fa-user"></i></a></div>
 				        </div>
-				        <div class="item3 item">
+				        <div class="item3 item" data-color="blue">
 				            <div class="roulette-element"><a href="#three"><i class="fa fa-user"></i></a></div>
 				        </div>
-				        <div class="item4 item">
+				        <div class="item4 item" data-color="sky">
 				            <div class="roulette-element"><a href="#four"><i class="fa fa-user"></i></a></div>
 				        </div>
-				        <div class="item5 item">
+				        <div class="item5 item" data-color="green">
 				            <div class="roulette-element"><a href="#five"><i class="fa fa-user"></i></a></div>
 				        </div>
 				        <div id="wrapper6">
-				            <div class="item6 item">
+				            <div class="item6 item" data-color="yellow">
 				                <div class="roulette-element"><a href="#six"><i class="fa fa-user"></i></a></div>
 				            </div>
 				        </div>
@@ -272,7 +272,685 @@
 
 		var $question = null;
 
-		var questions = {{ $questions }};
+		// var questions = {{ $questions }};
+
+		var questions = {
+			red: [
+				{
+					question: "Red Question #1",
+					answer: 3,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: true,
+						},
+					]
+				},
+				{
+					question: "Red Question #2",
+					answer: 1,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Red Question #3",
+					answer: 0,
+					options: [
+						{
+							id: 0,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Red Question #4",
+					answer: 2,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Correct",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Incorrect",
+							answer: true,
+						},
+					]
+				},
+			],
+			purple: [
+				{
+					question: "Purple Question #1",
+					answer: 3,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: true,
+						},
+					]
+				},
+				{
+					question: "Purple Question #2",
+					answer: 1,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Purple Question #3",
+					answer: 0,
+					options: [
+						{
+							id: 0,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Purple Question #4",
+					answer: 2,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Correct",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Incorrect",
+							answer: true,
+						},
+					]
+				},
+			],
+			blue: [
+				{
+					question: "Blue Question #1",
+					answer: 3,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: true,
+						},
+					]
+				},
+				{
+					question: "Blue Question #2",
+					answer: 1,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Blue Question #3",
+					answer: 0,
+					options: [
+						{
+							id: 0,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Blue Question #4",
+					answer: 2,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Correct",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Incorrect",
+							answer: true,
+						},
+					]
+				},
+			],
+			sky: [
+				{
+					question: "Sky Question #1",
+					answer: 3,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: true,
+						},
+					]
+				},
+				{
+					question: "Sky Question #2",
+					answer: 1,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Sky Question #3",
+					answer: 0,
+					options: [
+						{
+							id: 0,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Sky Question #4",
+					answer: 2,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Correct",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Incorrect",
+							answer: true,
+						},
+					]
+				},
+			],
+			green: [
+				{
+					question: "Green Question #1",
+					answer: 3,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: true,
+						},
+					]
+				},
+				{
+					question: "Green Question #2",
+					answer: 1,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Green Question #3",
+					answer: 0,
+					options: [
+						{
+							id: 0,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Green Question #4",
+					answer: 2,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Correct",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Incorrect",
+							answer: true,
+						},
+					]
+				},
+			],
+			yellow: [
+				{
+					question: "Yellow Question #1",
+					answer: 3,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: true,
+						},
+					]
+				},
+				{
+					question: "Yellow Question #2",
+					answer: 1,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Yellow Question #3",
+					answer: 0,
+					options: [
+						{
+							id: 0,
+							name: "Correct",
+							answer: true,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Correct",
+							answer: false,
+						},
+					]
+				},
+				{
+					question: "Yellow Question #4",
+					answer: 2,
+					options: [
+						{
+							id: 0,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 1,
+							name: "Incorrect",
+							answer: false,
+						},
+						{
+							id: 2,
+							name: "Correct",
+							answer: false,
+						},
+						{
+							id: 3,
+							name: "Incorrect",
+							answer: true,
+						},
+					]
+				},
+			],
+		};
+
+		var colorMAP = {
+			red: {
+				counter: 0,
+				correct: 0,
+				incorrect: 0,
+				limit: questions.red.length,
+			},
+			purple: {
+				counter: 0,
+				correct: 0,
+				incorrect: 0,
+				limit: questions.purple.length,
+			},
+			blue: {
+				counter: 0,
+				correct: 0,
+				incorrect: 0,
+				limit: questions.blue.length,
+			},
+			sky: {
+				counter: 0,
+				correct: 0,
+				incorrect: 0,
+				limit: questions.sky.length,
+			},
+			green: {
+				counter: 0,
+				correct: 0,
+				incorrect: 0,
+				limit: questions.green.length,
+			},
+			yellow: {
+				counter: 0,
+				correct: 0,
+				incorrect: 0,
+				limit: questions.yellow.length,
+			}
+		};
 
 		var time_by_question = 90;
 
@@ -290,7 +968,7 @@
 
 		var rouletteStrengthSwing = 1;
 
-		var intervalCoeficient = 200;
+		var intervalCoeficient = 150;
 
 		var rouletteRollInterval = null;
 
@@ -298,7 +976,53 @@
 
 		var rouletteRolling = false;
 
+		var completedQuestions = false;
+
 		/* METHODS */
+
+		var verifyCompletedQuestions = function(){
+
+			completedQuestions = true;
+
+			for(color in colorMAP){
+				console.log(colorMAP[color]);
+				if(colorMAP[color].counter < colorMAP[color].limit) completedQuestions = false;
+			}
+
+		}
+
+		var selectColorItem = function(){
+			var colorSelected = null;
+			switch($('.item'+itemSelected).attr('data-color')){
+				case 'red':
+					colorSelected = colorMAP.red;
+				break
+				case 'purple':
+					colorSelected = colorMAP.purple;
+				break
+				case 'blue':
+					colorSelected = colorMAP.blue;
+				break
+				case 'sky':
+					colorSelected = colorMAP.sky;
+				break
+				case 'green':
+					colorSelected = colorMAP.green;
+				break
+				case 'yellow':
+					colorSelected = colorMAP.yellow;
+				break
+			}
+			if(colorSelected.limit == colorSelected.counter){
+				changeItem();
+				selectColorItem();
+			}
+			else{
+				colorSelected.counter++;
+				verifyCompletedQuestions();
+				console.log($('.item'+itemSelected).attr('data-color') + ' : ' + colorSelected.counter);
+			}
+		}
 
 		var changeItem = function(){
 			if(itemSelected == 6) itemSelected = 0;
@@ -309,13 +1033,13 @@
 
 		var rouletteIntervalFunction = function(){
 			clearInterval(rouletteRollInterval);
-			console.log('changing');
+			// console.log('changing');
 			changeItem();
 			if(rouletteRolling){
 				rouletteRollInterval = setInterval(rouletteIntervalFunction, (intervalCoeficient));
 			}
 			else{
-				console.log('Item Seleccionado: ' + itemSelected);
+				selectColorItem();
 				// Item seleccionado
 			}
 		}/*
@@ -359,7 +1083,7 @@
 				duration: rouletteStrength,
 				easing: 'swing',
 				step: function(){
-					console.log("Swing");
+					// console.log("Swing");
 					rouletteStrengthSwing = this.swing;
 				},
 				done: function(){
@@ -674,13 +1398,18 @@
 		});
 
 		$('#circle').on('click', function(){
-			rouletteStrength = Math.floor((Math.random() * 5000)+1500);
-			console.log(rouletteStrength);
-			rouletteRolling = true;
-			changeItem();
-			// animateSwingRoulette();
-			rouletteRollInterval = setInterval(rouletteIntervalFunction, (intervalCoeficient));
-			setTimeout(animateSwingRoulette(),rouletteStrength);
+			if(!completedQuestions){
+				rouletteStrength = Math.floor((Math.random() * 5000)+1500);
+				console.log(rouletteStrength);
+				rouletteRolling = true;
+				changeItem();
+				// animateSwingRoulette();
+				rouletteRollInterval = setInterval(rouletteIntervalFunction, (intervalCoeficient));
+				setTimeout(animateSwingRoulette(),rouletteStrength);
+			}
+			else{
+				alert("completed");
+			}
 		});
 
 		$('#circle').on('mouseup', function(){
