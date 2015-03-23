@@ -21,8 +21,8 @@
 	<div class="row content">
 
 		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-12 col-sm-12 col-xs-12 score">
+			<div class="row score">
+				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="col-md-4 col-sm-4 col-xs-4">
 						<div class="col-md-6 col-sm-6 col-xs-0">Tiempo: </div>
 						<div class="col-md-6 col-sm-6 col-xs-12" id="timer">00:00</div>
@@ -312,7 +312,7 @@
 
 		var $question = null;
 
-		// var questions = {{ $questions }};
+		var questions = {{ $questions }};
 
 		/*var questions = {
 			red: [
@@ -953,7 +953,7 @@
 			],
 		};*/
 
-		var questions = [
+		/*var questions = [
 			{
 				question: "Question #1",
 				answer: 3,
@@ -1058,7 +1058,7 @@
 					},
 				],
 			},
-		];
+		];*/
 
 		/*var colorMAP = {
 			red: {
@@ -1334,6 +1334,9 @@
 				
 			});
 			$('.spent-time').fadeOut('slow/400/fast', function() {
+
+			});
+			$('.score').fadeOut('slow/400/fast', function() {
 
 			});
 			$('.result').fadeOut('slow/400/fast', function() {

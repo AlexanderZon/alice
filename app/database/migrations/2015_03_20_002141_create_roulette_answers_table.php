@@ -15,7 +15,11 @@ class CreateRouletteAnswersTable extends Migration {
 		Schema::create('roulette_answers', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('question_id');
+			$table->text('answer');
+			$table->boolean('is_correct');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

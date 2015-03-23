@@ -11,7 +11,7 @@ class ReadController extends \BaseController {
 	public function getIndex(){
 
 		$args = array(
-			'questions' => json_encode(array()),
+			'questions' => Question::json(),
 			);
 
 		return View::make('games.roulette.index')->with($args);
@@ -28,7 +28,6 @@ class ReadController extends \BaseController {
 
 		$question = new Question();
 		$question->question = Input::get('question');
-		$question->seconds = Input::get('seconds');
 		$question->save();
 		$answer = new Answer();
 		$answer->question_id = $question->id;
