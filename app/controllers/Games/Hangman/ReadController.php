@@ -7,31 +7,62 @@ use \Redirect as Redirect;
 
 class ReadController extends \BaseController {
 
+	public function __construct(){
+
+		// $this->beforeFilter('auth');
+
+		// $this->beforeFilter('hangman');
+		
+		self::$views = 'games.hangman';
+
+		self::$route = '/hangman';
+
+		self::$title = 'El Ahorcado';
+
+		self::$description = 'Juego del Ahorcado';
+
+		self::setArguments();
+
+		# --- Put here your global args for this Controller --- #
+
+	}
+
 	public function getIndex(){
 
-		$args = array(
-			'questions' => Question::json()
-			);
+		self::addArgument('questions', Question::json());
 
-		return View::make('games.hangman.index')->with($args);
+		return self::make('index');
+
+	}
+
+	public function getRead(){
+
+		self::addArgument('questions', Question::json());
+
+		return self::make('read');
 
 	}
 
 	public function getCreate(){
 
-		return View::make('games.hangman.create');
+		return self::make('create');
 
 	}
 
 	public function postCreate(){
 
-		$question = new Question();
-		$question->question = Input::get('question');
-		$question->seconds = Input::get('seconds');
-		$question->word = Input::get('word');
-		$question->save();
+		self::process(new Question());
 
 		return Redirect::to('hangman/create');
+
+	}
+
+	private static function process($model){
+
+		$model->question = Input::get('question');
+		$model->seconds = Input::get('seconds');
+		$model->word = Input::get('word');
+		$model->save();
 
 	}
 
