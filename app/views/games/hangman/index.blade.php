@@ -369,26 +369,170 @@
 
 		var covered_letters = [];
 
+		var filterStressedVowel = function(letter){
+
+			var stressedVowels = [
+					{
+						stressed: 'Á',
+						vowel: 'A',
+					},
+					{
+						stressed: 'À',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Â',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Ã',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Å',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Ä',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Æ',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Ç',
+						vowel: 'C',
+					},
+					{
+						stressed: 'È',
+						vowel: 'E',
+					},
+					{
+						stressed: 'É',
+						vowel: 'E',
+					},
+					{
+						stressed: 'Ê',
+						vowel: 'E',
+					},
+					{
+						stressed: 'Ë',
+						vowel: 'E',
+					},
+					{
+						stressed: 'Ì',
+						vowel: 'I',
+					},
+					{
+						stressed: 'Í',
+						vowel: 'I',
+					},
+					{
+						stressed: 'Î',
+						vowel: 'I',
+					},
+					{
+						stressed: 'Ï',
+						vowel: 'I',
+					},
+					{
+						stressed: 'Ð',
+						vowel: 'D',
+					},
+					{
+						stressed: 'Ò',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ó',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ô',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Õ',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ö',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ø',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ù',
+						vowel: 'U',
+					},
+					{
+						stressed: 'Ú',
+						vowel: 'U',
+					},
+					{
+						stressed: 'Û',
+						vowel: 'U',
+					},
+					{
+						stressed: 'Ü',
+						vowel: 'U',
+					},
+					{
+						stressed: 'ß',
+						vowel: 'S',
+					},
+				];
+
+			for(vowel in stressedVowels){
+				if(stressedVowels[vowel].stressed == letter) {
+					console.log("stressed vowel at " + stressedVowels[vowel].stressed);
+					return stressedVowels[vowel].vowel;
+				}
+			}
+
+			return letter;
+
+		}
+
+		var lettersWithoutSpaces = function(word){
+
+			var counter = 0;
+
+			for(letter in word){
+				if(word[letter] != ' ') counter++;
+			}
+
+			return counter;
+
+		}
+
 		var setUnderLinedWord = function(word){
 
 			var upperWord = word.toUpperCase();
-			console.log(upperWord + ' has ' + upperWord.length + ' letters');
+			console.log(upperWord + ' has ' + lettersWithoutSpaces(upperWord) + ' letters');
 			var html_answer = '';
 			var covered_positions = 0;
 			for (var i = 0; i < upperWord.length; i++) {
 				bool = false;
 				for(var j = 0; j < covered_letters.length; j++){
-					if(upperWord[i] == covered_letters[j]) bool = true;
+					if(filterStressedVowel(upperWord[i]) == covered_letters[j]) bool = true;
 				}
+				console.log(upperWord[i] == ' ');
 				if (bool) {
 					covered_positions++;
 					html_answer += ' ' + upperWord[i] + ' ';
+				}
+				else if(upperWord[i] == ' '){
+					html_answer += ' &nbsp; ';
 				}
 				else{
 					html_answer += ' _ ';						
 				}
 			};
-			if(covered_positions == upperWord.length){
+			if(covered_positions == lettersWithoutSpaces(upperWord)){
 				wellDone();
 			}
 			$('.answer').html(html_answer);
