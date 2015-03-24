@@ -15,4 +15,10 @@ class Auditory extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function capability(){
+
+    	return $this->belongsTo('Capability', 'capability_id');
+    	
+    }
+
 }
