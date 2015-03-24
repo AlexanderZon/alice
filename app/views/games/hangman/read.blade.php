@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/games/hangman/read.blade.php

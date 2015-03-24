@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/games/rpsls/read.blade.php
