@@ -449,6 +449,10 @@
 						vowel: 'O',
 					},
 					{
+						stressed: 'Ó',
+						vowel: 'O',
+					},
+					{
 						stressed: 'Ô',
 						vowel: 'O',
 					},
@@ -517,6 +521,7 @@
 			var covered_positions = 0;
 			for (var i = 0; i < upperWord.length; i++) {
 				bool = false;
+				console.log("upperWord length");
 				for(var j = 0; j < covered_letters.length; j++){
 					if(filterStressedVowel(upperWord[i]) == covered_letters[j]) bool = true;
 				}
@@ -674,7 +679,7 @@
 			bool = false;
 			if(!letterIsCovered(letter)){
 				for(var i = 0; i < $question.word.length ; i++){
-					if(letter == $question.word[i]) bool = true;
+					if(letter == filterStressedVowel($question.word[i])) bool = true;
 				}
 				if(bool) {
 					increasePoints(10);

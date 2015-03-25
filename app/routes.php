@@ -43,9 +43,9 @@ else:
 	Route::controller('/auth', '\Security\AuthenticationController');
 	Route::any('/{one?}/{two?}/{three?}/{four?}/{five?}/', function($one = '' ,$two = '' ,$three = '' ,$four = '' ,$five = '' ){
 		if(Request::path() == '/'):
-			return Redirect::to('/auth/login')->with('redirect_to', '/');
+			return Redirect::to('/auth/login')->with('redirect_to', '');
 		else:
-			return Redirect::to('/auth/login')->with('redirect_to', '/'.Request::path());
+			return Redirect::to('/auth/login')->with('redirect_to', Request::path());
 		endif;
 	});
 
