@@ -7,7 +7,7 @@ class RoleCapability extends \Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'role_capability';
+	protected $table = 'capability_role';
 
 	protected $fillable = [];
 

@@ -19,7 +19,7 @@ class CreateRolesTable extends Migration {
 			$table->string('title');
 			$table->text('description');
 			$table->string('status');
-			$table->integer('dashboard');
+			$table->integer('dashboard_id');
 			$table->timestamps();
 			$table->softDeletes();
 		});

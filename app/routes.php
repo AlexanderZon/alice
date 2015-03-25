@@ -11,59 +11,42 @@
 |
 */
 
-Route::get('/arrays', function(){
-	$figures = array('rock', 'paper', 'scissors', 'lizard', 'spock');
-	for($i = 0 ; $i < 5; $i++):
-		$rand = rand(0, count($figures)-1);
-		var_dump($figures[$rand]);
-		for ($j=$rand; $j < count($figures) - 1; $j++):
-			$figures[$j] = $figures[$j+1];
-		endfor;
-		unset($figures[count($figures)-1]);
-	endfor;
-	return 0;
-});
+if(Auth::check()):
 
-/*Route::get('/rpsls/create',function(){
+	switch(Auth::user()->role->name){
 
-	return View::make('games.rpsls.create');
-	
-});
+			case 'superadmin':
+				# Routes for administrator
+				Route::controller('/administrators', '\Administrators\DashboardController');
+				Route::get('/administrators', '\Administrators\DashboardController@getIndex');
+			break;
+			case 'teacher':
+				# Routes for teacher
+			break;
+			case 'student':
+				# Routes for student
+			break;
+			default:
+				# Routes for unknown
+			break;
+	}
 
-Route::post('/rpsls/create',function(){
-	$question = new Games\RPSLS\Question();
-	$question->question = Input::get('question');
-	$question->save();
-	$answer = new Games\RPSLS\Answer();
-	$answer->question_id = $question->id;
-	$answer->answer = Input::get('correct');
-	$answer->is_correct = true;
-	$answer->save();
-	foreach(Input::get('incorrect') as $incorrect):
-		$answer = new Games\RPSLS\Answer();
-		$answer->question_id = $question->id;
-		$answer->answer = $incorrect;
-		$answer->is_correct = false;
-		$answer->save();
-	endforeach;
+	Route::controller('/rpsls', '\Games\RPSLS\ReadController');
+	Route::controller('/hangman', '\Games\Hangman\ReadController');
+	Route::controller('/memory', '\Games\Memory\ReadController');
+	Route::controller('/roulette', '\Games\Roulette\ReadController');
+	Route::controller('/auth', '\Security\AuthenticationController');
+	Route::controller('/', '\Security\AuthenticationController');
 
-	return Redirect::to('rpsls/create');
+else:
 
-});
+	Route::controller('/auth', '\Security\AuthenticationController');
+	Route::any('/{one?}/{two?}/{three?}/{four?}/{five?}/', function($one = '' ,$two = '' ,$three = '' ,$four = '' ,$five = '' ){
+		if(Request::path() == '/'):
+			return Redirect::to('/auth/login')->with('redirect_to', '/');
+		else:
+			return Redirect::to('/auth/login')->with('redirect_to', '/'.Request::path());
+		endif;
+	});
 
-Route::get('/rpsls', function(){
-
-	// return Response::json($questions);
-
-});*/
-
-Route::controller('/rpsls', 'Games\RPSLS\ReadController');
-Route::controller('/hangman', 'Games\Hangman\ReadController');
-Route::controller('/memory', 'Games\Memory\ReadController');
-Route::controller('/roulette', 'Games\Roulette\ReadController');
-
-Route::get('/', function()
-{
-	return View::make('hello');
-});
-
+endif;

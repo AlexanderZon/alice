@@ -15,13 +15,19 @@ class Role extends \Eloquent {
 
 	public function capabilities(){
 
-		return $this->belongsToMany('Capabilities', 'role_capabilities', 'id_role', 'id_capability');
+		return $this->belongsToMany('Capability', 'capability_role');
+
+	}
+
+	public function dashboard(){
+
+		return $this->belongsTo('Capability', 'dashboard_id');
 
 	}
 
 	public function users(){
 
-		return $this->hasMany('Users', 'id_role', 'id');
+		return $this->hasMany('Users', 'role_id', 'id');
 		
 	}
 
