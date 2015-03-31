@@ -15,6 +15,8 @@ class ReadController extends \Ancestors\ReadController {
 		$this->beforeFilter('parameters');
 
 		$this->beforeFilter('arguments');
+
+		$this->afterFilter('auditory');
 		
 		self::pushModuleViews('parents');    
 

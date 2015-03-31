@@ -16,6 +16,8 @@ class ReadController extends \BaseController {
 
 		$this->beforeFilter('arguments');
 
+		$this->afterFilter('auditory');
+
 		self::$views = 'ancestors.read';
 
 		self::$route = '/ancestors';
@@ -26,7 +28,7 @@ class ReadController extends \BaseController {
 
 		self::$description = 'Gestión de Ancestors del Sistema';
 
-		self::setArguments();
+		self::pushBreadCrumb('Ancestors', self::$route );
 
 	}
 
