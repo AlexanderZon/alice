@@ -121,6 +121,8 @@ Route::filter('parameters', function( $route, $request){
 
 	call_user_func(array($controller, 'setParentUri'), $route->getUri());
 
+	call_user_func(array($controller, 'setSection'), $route->getAction()['controller'], $route->getMethods());
+
 	call_user_func(array($controller, 'setRouteUri'), $route->getUri());
 
 	call_user_func(array($controller, 'parseBreadcrumb'));
@@ -139,6 +141,6 @@ Route::filter('arguments', function( $route, $request){
 
 Route::filter('auditory', function( $route, $request, $response){
 
-	//dd($response->original->getData());
+	// dd($response->original->getData());
 
 });

@@ -85,7 +85,7 @@ class UserController extends ReadController {
 			'title' => 'Visualización detallada de Usuario',
 			'description' => 'Vizualización detallada del Usuario ' . $args['user']->username 
 			), 'READ');
-*/
+		*/
 		return self::make('show');
 	}
 
@@ -192,6 +192,7 @@ class UserController extends ReadController {
 			endif;
 
 		endif;
+
 	}
 
 	/**
@@ -326,12 +327,12 @@ class UserController extends ReadController {
 				/*$args = array(
 					'msg_success' => array(
 						'name' => 'users_update',
-						'title' => 'Usuario Updateado',
+						'title' => 'Usuario actualizado',
 						'description' => 'El usuario ' . $user->display_name . ' fue actualizado exitosamente'
 						)
 					);*/
 
-				self::setSuccess('security_user_update', 'Usuario Updateado', 'El usuario ' . $user->display_name . ' fue actualizado exitosamente');
+				self::setSuccess('security_user_update', 'Usuario actualizado', 'El usuario ' . $user->display_name . ' fue actualizado exitosamente');
 
 					// Audits::add(Auth::user(), $args['msg_success'], 'UPDATE');
 
@@ -367,11 +368,10 @@ class UserController extends ReadController {
 	 */
 	public function getDelete($id)
 	{
-		$args = array(
-			'user' => User::find( Crypt::decrypt($id) ),
-			'roles' => Role::all(),
-			'module' => $this->module,
-			);
+
+		self::addArgument('user', User::find( Crypt::decrypt($id) ));
+
+		self::addArgument('roles', Role::all());
 
 		/*Audits::add(Auth::user(), array(
 			'name' => 'users_get_delete',
@@ -395,27 +395,15 @@ class UserController extends ReadController {
 
 		if($user->delete()):
 
-			$args = array(
-				'msg_success' => array(
-					'name' => 'users_delete',
-					'title' => 'Usuario Eliminado',
-					'description' => 'El usuario ' . $user->display_name . ' fue eliminado exitosamente'
-					)
-				);
-
+			self::setSuccess('security_user_delete', 'Usuario Eliminado', 'El usuario ' . $user->display_name . ' fue eliminado exitosamente');
+			
 			// Audits::add(Auth::user(), $args['msg_success'], 'DELETE');
 
 			return self::go( 'index' );
 
 		else:
 
-			$args = array(
-				'msg_danger' => array(
-					'name' => 'users_delete_err',
-					'title' => 'Error al eliminar usuario',
-					'description' => 'Hubo un error al eliminar el usuario ' . $user->display_name
-					)
-				);
+			self::setDanger('security_user_delete_err', 'Error al eliminar usuario', 'Hubo un error al eliminar el usuario ' . $user->display_name);
 
 			// Audits::add(Auth::user(), $args['msg_danger'], 'DELETE');
 
@@ -441,13 +429,7 @@ class UserController extends ReadController {
 
 		if($user->save()):
 
-			$args = array(
-				'msg_success' => array(
-					'name' => 'users_activate',
-					'title' => 'Usuario activado satisfactoriamente',
-					'description' => 'El usuario ' . $user->display_name . ' ha sido activado exitosamente'
-					)
-				);
+			self::setSuccess('security_user_activate', 'Usuario Activado', 'El usuario ' . $user->display_name . ' fue activado exitosamente');
 
 			// Audits::add(Auth::user(), $args['msg_success'], 'UPDATE');
 
@@ -455,13 +437,7 @@ class UserController extends ReadController {
 
 		else:
 
-			$args = array(
-				'msg_danger' => array(
-					'name' => 'users_activate_err',
-					'title' => 'Error al activar usuario',
-					'description' => 'hubo un error al activar el usuario ' . $user->display_name
-					)
-				);
+			self::setDanger('security_user_activate_err', 'Error al activar usuario', 'Hubo un error al activar el usuario ' . $user->display_name);
 
 			// Audits::add(Auth::user(), $args['msg_danger'], 'UPDATE');
 
@@ -487,13 +463,7 @@ class UserController extends ReadController {
 
 		if($user->save()):
 
-			$args = array(
-				'msg_success' => array(
-					'name' => 'users_deactivate',
-					'title' => 'Usuario desactivado satisfactoriamente',
-					'description' => 'El usuario ' . $user->display_name . ' ha sido desactivado exitosamente'
-					)
-				);
+			self::setSuccess('security_user_deactivate', 'Usuario Desactivado', 'El usuario ' . $user->display_name . ' fue desactivado exitosamente');
 
 			// Audits::add(Auth::user(), $args['msg_success'], 'UPDATE');
 
@@ -501,32 +471,13 @@ class UserController extends ReadController {
 
 		else:
 
-			$args = array(
-				'msg_danger' => array(
-					'name' => 'users_deactivate_err',
-					'title' => 'Error al desactivar usuario',
-					'description' => 'hubo un error al desactivar el usuario ' . $user->display_name
-					)
-				);
+			self::setDanger('security_user_deactivate_err', 'Error al desactivar usuario', 'Hubo un error al desactivar el usuario ' . $user->display_name);
 
 			// Audits::add(Auth::user(), $args['msg_danger'], 'UPDATE');
 
 			return self::go( 'index' );
 
 		endif;
-
-	}
-
-	private function getBreadcumbs(){
-
-		$self_breadcrumb = array(
-			'name' => 'Usuarios',
-			'route' => '/users'
-			);
-
-		array_push( $this->breadcrumbs, $self_breadcrumb);
-
-		return $this->breadcrumbs;
 
 	}
 

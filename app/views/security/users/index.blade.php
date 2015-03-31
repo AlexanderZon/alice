@@ -33,7 +33,7 @@
 			</li>
 			@endforeach
 			<li class="active">
-				{{ $sections['index'] }}
+				{{ $sections[$section] }}
 			</li>
 		</ul>
 		<!-- END PAGE BREADCRUMB -->

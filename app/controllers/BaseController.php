@@ -38,6 +38,8 @@ class BaseController extends Controller implements BaseInterface{
 		'delete' => 'Eliminar',
 		);
 
+	protected static $section = 'index';
+
 	protected static $msg_warning = null;
 
 	protected static $msg_danger = null;
@@ -88,6 +90,16 @@ class BaseController extends Controller implements BaseInterface{
 
 	# --- Module Settings --- #
 
+	public static function setSection($controller, $methods){
+
+		foreach($methods as $method):
+			if($action = strstr($controller, strtolower($method))):
+				self::$section = strtolower(str_replace(strtolower($method), '', $action));
+			endif;
+		endforeach;
+
+	}
+
 	public static function setModule($module){
 
 		self::$module = $module;
@@ -109,6 +121,8 @@ class BaseController extends Controller implements BaseInterface{
 	}
 
 	public static function setRouteUri($uri){
+
+		$uri = strstr($uri,'/'.self::$section.'/',true) ? strstr($uri,'/'.self::$section.'/',true) : $uri;
 
 		self::$route = '/'.$uri;
 
@@ -157,6 +171,7 @@ class BaseController extends Controller implements BaseInterface{
 			'description' => self::$description,
 			'breadcrumbs' => self::$breadcrumbs,
 			'sections' => self::$sections,
+			'section' => self::$section,
 			'msg_danger' => self::$msg_danger,
 			'msg_warning' => self::$msg_warning,
 			'msg_success' => self::$msg_success,
