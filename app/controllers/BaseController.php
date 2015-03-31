@@ -1,16 +1,18 @@
 <?php
 
-class BaseController extends Controller {
+class BaseController extends Controller implements BaseInterface{
 
 	protected static $app = 'Alice';
 
 	protected static $upload_folder = 'uploads/';
 
-	protected static $views = 'base';
+	protected static $views = 'base.read';
 
-	protected static $args = array();
+	protected static $arguments = array();
 
-	protected static $module = array();
+	protected static $parameters = array();
+
+	protected static $module = 'read';
 
 	protected static $route = '/base';
 
@@ -40,11 +42,20 @@ class BaseController extends Controller {
 
 	protected static $msg_danger = null;
 
-	protected static $mgs_success = null;
+	protected static $msg_success = null;
 
-	protected static $msg_info = null;
+	protected static $msg_active = null;
 
 	protected static $action = 'BaseController@getIndex';
+
+	public function __construct(){
+
+		self::$msg_active = Session::get('msg_active');
+		self::$msg_success = Session::get('msg_success');
+		self::$msg_warning = Session::get('msg_warning');
+		self::$msg_danger = Session::get('msg_danger');
+
+	}
 
 	/**
 	 * Setup the layout used by the controller.
@@ -59,11 +70,85 @@ class BaseController extends Controller {
 		}
 	}
 
+	# --- Filter Parameters --- #
+
+	public static function getController( $action ){
+
+		return strstr($action, '@', true);
+
+	}
+
+	public static function setParameters( $parameters ){
+
+		foreach( $parameters as $key => $value ):
+			self::$parameters[$key] = $value;
+		endforeach; 
+
+	}
+
+	# --- Module Settings --- #
+
+	public static function setModule($module){
+
+		self::$module = $module;
+
+	}
+
+	public static function pushName($name){
+
+		self::$name = self::$name.'_'.$name;
+
+	}
+
+	public static function pushRoute($route){
+
+		self::$parent = self::$route;
+
+		self::$route = self::$route.'/'.$route;
+
+	}
+
+	public static function setRouteUri($uri){
+
+		self::$route = '/'.$uri;
+
+		if(!empty(self::$parameters)):
+			foreach(self::$parameters as $key => $value):
+				self::$route = str_replace('{'.$key.'}', $value, self::$route);
+				self::$route = str_replace('{'.$key.'?}', $value, self::$route);
+			endforeach;
+		endif;
+
+	}
+
+	public static function setParentUri($uri){
+
+		if(!empty(self::$parameters)):
+			foreach(self::$parameters as $key => $value):
+				self::$parent = str_replace('{'.$key.'}', $value, self::$parent);
+				self::$parent = str_replace('{'.$key.'?}', $value, self::$parent);
+			endforeach;
+		endif;
+
+	}
+
+	public static function pushViews($views){
+
+		self::$views = strstr(self::$views, self::$module, true).$views;
+
+	}
+
+	public static function pushModuleViews($views){
+
+		self::$views = strstr(self::$views, self::$module, true).$views.'.'.self::$module;
+
+	}
+
 	# --- Arguments --- #
 
-	public function setArguments(){
+	public static function setArguments(){
 
-		self::$args = array(
+		self::$arguments = array(
 			'app' => self::$app,
 			'route' => self::$route,
 			'parent' => self::$parent,
@@ -72,13 +157,17 @@ class BaseController extends Controller {
 			'description' => self::$description,
 			'breadcrumbs' => self::$breadcrumbs,
 			'sections' => self::$sections,
+			'msg_danger' => self::$msg_danger,
+			'msg_warning' => self::$msg_warning,
+			'msg_success' => self::$msg_success,
+			'msg_active' => self::$msg_active,
 			);
 
 	}
 
 	public static function addArgument( $key, $value ){
 
-		self::$args[$key] = $value;
+		self::$arguments[$key] = $value;
 
 	}
 
@@ -90,7 +179,7 @@ class BaseController extends Controller {
 
 	public static function deleteArgument( $key ){
 
-		unset(self::$args[$key]);
+		unset(self::$arguments[$key]);
 
 	}
 
@@ -98,7 +187,7 @@ class BaseController extends Controller {
 
 	public static function make( $file = 'index'){
 
-		return View::make(self::$views.'.'.$file)->with(self::$args);
+		return View::make(self::$views.'.'.$file)->with(self::$arguments);
 
 	}
 
@@ -106,19 +195,19 @@ class BaseController extends Controller {
 
 	public static function go( $route = 'index'){
 
-		return Redirect::to(self::$route.'/'.$route)->with(self::$args);
+		return Redirect::to(self::$route.'/'.$route)->with(self::$arguments);
 
 	}
 
 	public static function redirect( $route = 'index'){
 
-		return Redirect::to('/'.$route)->with(self::$args);
+		return Redirect::to('/'.$route)->with(self::$arguments);
 
 	}
 
 	public static function action( $controller = 'BaseController@getIndex'){
 
-		return Redirect::action($controller)->with(self::$args);
+		return Redirect::action($controller)->with(self::$arguments);
 
 	}
 
@@ -176,6 +265,58 @@ class BaseController extends Controller {
 		array_push( self::$breadcrumbs, $self_breadcrumb);
 
 	}
+
+	# --- MSGS --- #
+
+	public function setActive( $name = '', $title = '', $description = '' ){
+
+		self::$msg_active = array(
+			'name' => $name,
+			'title' => $title,
+			'description' => $description
+			);
+
+		self::setArguments();
+		
+	}
+
+	public function setSuccess( $name = '', $title = '', $description = '' ){
+
+		self::$msg_success = array(
+			'name' => $name,
+			'title' => $title,
+			'description' => $description
+			);
+
+		self::setArguments();
+		
+	}
+
+	public function setWarning( $name = '', $title = '', $description = '' ){
+
+		self::$msg_warning = array(
+			'name' => $name,
+			'title' => $title,
+			'description' => $description
+			);
+
+		self::setArguments();
+		
+	}
+
+	public function setDanger( $name = '', $title = '', $description = '' ){
+
+		self::$msg_danger = array(
+			'name' => $name,
+			'title' => $title,
+			'description' => $description
+			);
+
+		self::setArguments();
+
+	}
+
+	# --- Upload Image --- #
 
 	public function uploadImage($image){
 

@@ -382,13 +382,13 @@
 
 		var scene4 = function(){
 			console.log('scene4');
-			$('.enemy').fadeOut('slow/400/fast', function() {
+			$('.cards').fadeOut('slow/400/fast', function() {
 				
 			});
 			$('.question').fadeOut('slow/400/fast', function() {
 				
 			});
-			$('.my-hand').fadeOut('slow/400/fast', function() {
+			$('#indications').fadeOut('slow/400/fast', function() {
 			});
 			$('.final-score').fadeOut('slow/400/fast', function() {
 			});
@@ -500,7 +500,7 @@
 
 		var spentTime = function(){
 			clearInterval(decreaseInterval);
-			$('#spent-result').html($question.word);
+			//$('#spent-result').html($question.word);
 			scene4();
 		}
 

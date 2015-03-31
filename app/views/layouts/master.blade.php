@@ -735,9 +735,9 @@
 					</li>
 					@endif
 
-					@if(Auth::user()->hasCap('users_view_get') || Auth::user()->hasCap('roles_view_get') || Auth::user()->hasCap('capabilities_view_get'))
-					<li class="tooltips {{ $module['name'] == 'users' || $module['name'] == 'roles' || $module['name'] == 'capabilities' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Usuario, Roles y Capacidades">
-						<a href="/users">
+					@if(Auth::user()->hasCap('security_user_get_index') || Auth::user()->hasCap('security_role_get_index') || Auth::user()->hasCap('security_capability_get_index'))
+					<li class="tooltips {{ $name == 'security_user' || $name == 'security_role' || $name == 'security_capability' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Usuario, Roles y Capacidades">
+						<a href="/security/users">
 						<i class="icon-users"></i>
 						<span class="title">
 						Usuarios </span>
@@ -745,25 +745,25 @@
 						</a>
 						<ul class="sub-menu">
 
-							@if(Auth::user()->hasCap('users_view_get'))
-							<li class="{{ $module['name'] == 'users' ? 'active' : '' }}">
-								<a href="/users">
+							@if(Auth::user()->hasCap('security_user_get_index'))
+							<li class="{{ $name == 'security_user' ? 'active' : '' }}">
+								<a href="/security/users">
 								<i class="icon-list"></i>
 								Todos</a>
 							</li>
 							@endif
 
-							@if(Auth::user()->hasCap('roles_view_get'))
-							<li class="{{ $module['name'] == 'roles' ? 'active' : '' }}">
-								<a href="/roles">
+							@if(Auth::user()->hasCap('security_role_get_index'))
+							<li class="{{ $name == 'security_role' ? 'active' : '' }}">
+								<a href="/security/roles">
 								<i class="icon-lock"></i>
 								Roles</a>
 							</li>
 							@endif
 
-							@if(Auth::user()->hasCap('capabilities_view_get'))
-							<li class="{{ $module['name'] == 'capabilities' ? 'active' : '' }}">
-								<a href="/capabilities">
+							@if(Auth::user()->hasCap('security_capability_get_index'))
+							<li class="{{ $name == 'security_capability' ? 'active' : '' }}">
+								<a href="/security/capabilities">
 								<i class="icon-key"></i>
 								Capacidades</a>
 							</li>

@@ -31,7 +31,7 @@
 						<div class="col-md-6 col-sm-6 col-xs-12" id="points">0</div>
 					</div>
 					<div class="col-md-4 col-sm-4 col-xs-4">
-						<div class="col-md-6 col-sm-6 col-xs-0">Respuestas: </div>
+						<div class="col-md-6 col-sm-6 col-xs-0">Pregunta: </div>
 						<div class="col-md-6 col-sm-6 col-xs-12" id="progress">0/0</div>
 					</div>
 					<div class="col-md-12 col-sm-12 col-xs-12 score">
@@ -556,6 +556,7 @@
 			if(elem.attr('data-answer') == 'true'){
 				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
 				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].on[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].on.length))]+'.png"/>');
+				$('#answer-selected > h3').html(elem.attr('data-name'));
 				$('#answers-result').html('Correcto');
 				$('#answers-result').removeClass('alert-danger');
 				$('#answers-result').addClass('alert-success');
@@ -571,6 +572,7 @@
 			else{
 				$('#hand-selected').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/blue/'+elem.attr('data-figure')+'.png"/>');
 				$('#hand-revenge').html('<img id="my-paper" class="finish-hand" src="/games/rpsls/images/red/'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]+'.png"/>');
+				$('#answer-selected > h3').html(elem.attr('data-name'));
 				$('#answers-result').html('Incorrecto');
 				$('#answers-result').removeClass('alert-success');
 				$('#answers-result').addClass('alert-danger');

@@ -1,86 +1,60 @@
 <?php namespace Security;
 
-class CapabilityController extends \BaseController {
+class CapabilityController extends UserController {
+
+	public function __construct(){
+
+		parent::__construct();
+
+		$this->beforeFilter('auth');
+
+		$this->beforeFilter('capabilities');
+
+		$this->beforeFilter('parameters');
+
+		$this->beforeFilter('arguments');
+		
+		self::pushViews('capabilities');  
+
+		self::pushRoute('{user}/bar');       
+
+		self::setModule('capabilities');
+
+		self::pushName('user');
+
+		self::$title = 'Usuarios';
+
+		self::$description = 'Gestión de Usuarios del Sistema';
+
+		self::pushBreadCrumb('Usuarios', self::$route );
+
+		self::setArguments();
+
+		# --- Put here your global args for this Controller --- #
+
+	}
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /capability
+	 * GET /users
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getIndex()
 	{
-		//
-	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /capability/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+		self::addArgument('users', User::all());
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /capability
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+		self::addArgument('roles', Role::all());
 
-	/**
-	 * Display the specified resource.
-	 * GET /capability/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+		/*Audits::add(Auth::user(), array(
+			'name' => 'users_get_create',
+			'title' => 'Listado de Usuarios',
+			'description' => 'Vizualización del listado de Usuarios'
+			), 'READ');*/
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /capability/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+		return self::make('index');
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /capability/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /capability/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }

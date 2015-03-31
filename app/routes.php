@@ -16,9 +16,26 @@ if(Auth::check()):
 	switch(Auth::user()->role->name){
 
 			case 'superadmin':
+			
 				# Routes for administrator
+
+				# Ancestors Modules
+
+				Route::controller('/ancestors/{ancestor}/parents/{parent}/children','\Ancestors\Parents\Children\ReadController');
+				Route::controller('/ancestors/{ancestor}/parents','\Ancestors\Parents\ReadController');
+				Route::controller('/ancestors','\Ancestors\ReadController');				
+
+				# Security Module 
+				Route::controller('/security/users','\Security\UserController');
+				Route::controller('/security/roles','\Security\RoleController');
+				Route::controller('/security/capabilities','\Security\CapabilityController');
+				Route::controller('/security','\Security\ReadController');
+			
+				# Administrator Mosule
+
 				Route::controller('/administrators', '\Administrators\DashboardController');
 				Route::get('/administrators', '\Administrators\DashboardController@getIndex');
+
 			break;
 			case 'teacher':
 				# Routes for teacher

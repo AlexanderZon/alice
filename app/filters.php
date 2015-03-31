@@ -81,6 +81,48 @@ Route::filter('guest', function()
 |
 */
 
+Route::filter('capabilities', function( $route, $request){
+
+	/*$request = array(
+		'route' => $route->uri(),
+		'controller' => $route->getAction()['controller'],
+		'method' => $route->methods()[0]
+		);
+
+	if( $capability = Capabilities::getCapability( $request )):
+
+		if(!Auth::user()->hasCapability($capability) ):
+			return Redirect::to('/auth/notpermissions');
+		else:
+			//Si Tiene Permisos
+		endif;
+
+	else:
+		//Permiso No Establecido
+	endif;*/
+
+});
+
+Route::filter('parameters', function( $route, $request){
+
+	$controller = \BaseController::getController($route->getAction()['controller']);
+
+	call_user_func(array($controller, 'setParameters'), $route->parameters());
+
+	call_user_func(array($controller, 'setParentUri'), $route->getUri());
+
+	call_user_func(array($controller, 'setRouteUri'), $route->getUri());
+
+});
+
+Route::filter('arguments', function( $route, $request){
+
+	$controller = \BaseController::getController($route->getAction()['controller']);
+
+	call_user_func(array($controller, 'setArguments'));
+
+});
+
 Route::filter('csrf', function()
 {
 	if (Session::token() !== Input::get('_token'))

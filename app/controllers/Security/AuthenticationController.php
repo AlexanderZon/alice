@@ -4,21 +4,23 @@ use \Auth as Auth;
 use \Session as Session;
 use \Input as Input;
 
-class AuthenticationController extends \BaseController {
+class AuthenticationController extends ReadController {
 
 	public function __construct(){
 
-		// $this->beforeFilter('auth');
+		parent::__construct();
 
 		// $this->beforeFilter('auth');
+
+		$this->beforeFilter('parameters');
 		
 		self::$views = 'security.auth';
 
 		self::$route = '/auth';
 
-		self::$title = 'Usuarios';
+		self::$title = 'Acceder';
 
-		self::$description = 'Gestión de Usuarios del Sistema';
+		self::$description = 'Acceso al Sistema';
 
 		self::setArguments();
 
