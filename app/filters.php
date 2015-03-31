@@ -81,15 +81,25 @@ Route::filter('guest', function()
 |
 */
 
+Route::filter('csrf', function()
+{
+	if (Session::token() !== Input::get('_token'))
+	{
+		throw new Illuminate\Session\TokenMismatchException;
+	}
+});
+
+# --- BEFORE FILTERS --- #
+
 Route::filter('capabilities', function( $route, $request){
 
-	/*$request = array(
+	$request = array(
 		'route' => $route->uri(),
 		'controller' => $route->getAction()['controller'],
 		'method' => $route->methods()[0]
 		);
 
-	if( $capability = Capabilities::getCapability( $request )):
+	if( $capability = CapabilitY::getCapability( $request )):
 
 		if(!Auth::user()->hasCapability($capability) ):
 			return Redirect::to('/auth/notpermissions');
@@ -99,7 +109,7 @@ Route::filter('capabilities', function( $route, $request){
 
 	else:
 		//Permiso No Establecido
-	endif;*/
+	endif;
 
 });
 
@@ -125,14 +135,10 @@ Route::filter('arguments', function( $route, $request){
 
 });
 
-Route::filter('csrf', function()
-{
-	if (Session::token() !== Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
-});
+# --- AFTER FILTERS --- #
 
 Route::filter('auditory', function( $route, $request, $response){
-	dd($response->original->getData());
+
+	//dd($response->original->getData());
+
 });
