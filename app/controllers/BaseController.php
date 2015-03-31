@@ -266,6 +266,20 @@ class BaseController extends Controller implements BaseInterface{
 
 	}
 
+	public static function parseBreadcrumb(){
+
+		if(!empty(self::$parameters)):
+			foreach(self::$parameters as $key => $value):
+				foreach (self::$breadcrumbs as $i => $breadcrumb):
+					# code...
+					self::$breadcrumbs[$i]['route'] = str_replace('{'.$key.'}', $value, self::$breadcrumbs[$i]['route']);
+					self::$breadcrumbs[$i]['route'] = str_replace('{'.$key.'?}', $value, self::$breadcrumbs[$i]['route']);
+				endforeach;
+			endforeach;
+		endif;
+
+	}
+
 	# --- MSGS --- #
 
 	public function setActive( $name = '', $title = '', $description = '' ){

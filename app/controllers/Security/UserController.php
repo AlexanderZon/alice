@@ -20,10 +20,12 @@ class UserController extends ReadController {
 		$this->beforeFilter('parameters');
 
 		$this->beforeFilter('arguments');
+
+		$this->afterFilter('auditory');
 		
 		self::pushViews('users');    
 
-		self::pushRoute('{person}/users');       
+		self::pushRoute('users');       
 
 		self::setModule('users');
 

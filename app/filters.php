@@ -113,6 +113,8 @@ Route::filter('parameters', function( $route, $request){
 
 	call_user_func(array($controller, 'setRouteUri'), $route->getUri());
 
+	call_user_func(array($controller, 'parseBreadcrumb'));
+
 });
 
 Route::filter('arguments', function( $route, $request){
@@ -129,4 +131,8 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+Route::filter('auditory', function( $route, $request, $response){
+	dd($response->original->getData());
 });

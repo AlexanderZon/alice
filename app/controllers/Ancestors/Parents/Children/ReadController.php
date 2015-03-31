@@ -12,9 +12,11 @@ class ReadController extends \Ancestors\Parents\ReadController {
 
 		$this->beforeFilter('capabilities');
 
-		$this->beforeFilter('parameters');
+		$this->afterFilter('parameters');
 
-		$this->beforeFilter('arguments');
+		$this->afterFilter('arguments');
+		
+		$this->afterFilter('auditory');
 		
 		self::pushModuleViews('children');    
 
