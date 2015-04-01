@@ -6,7 +6,7 @@ use \Capability as Capability;
 use \Input as Input;
 use \Crypt as Crypt;
 
-class RoleController extends \BaseController {	
+class RoleController extends ReadController {	
 
 	public function __construct(){
 
@@ -21,6 +21,8 @@ class RoleController extends \BaseController {
 		$this->beforeFilter('arguments');
 
 		$this->afterFilter('auditory');
+
+		self::addSection('assign', 'Asignación');
 		
 		self::pushViews('roles');    
 
@@ -64,7 +66,7 @@ class RoleController extends \BaseController {
 	public function getCreate()
 	{
 
-		return View::make('create');
+		return self::make('create');
 
 	}
 
@@ -80,6 +82,7 @@ class RoleController extends \BaseController {
 		if(!Role::hasName(Input::get('name'))):
 
 			$role = new Role();
+			$role->title = Input::get('title');
 			$role->description = Input::get('description');
 			$role->name = Input::get('name');
 			$role->status = 'active';
@@ -131,13 +134,14 @@ class RoleController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function postEdit($id)
+	public function postUpdate($id)
 	{
 			
 		$role = Role::find( Crypt::decrypt($id) );
 
 		if(!Role::hasName(Input::get('name'), $role->id) ):
 		
+			$role->title = Input::get('title');
 			$role->description = Input::get('description');
 			$role->name = Input::get('name');
 			
@@ -178,7 +182,7 @@ class RoleController extends \BaseController {
 
 		self::addArgument('role', Role::find( Crypt::decrypt($id) ));
 
-		self::addArgument('capabilities', Capabilities::orderBy('title','ASC')->get());
+		self::addArgument('capabilities', Capability::orderBy('title','ASC')->get());
 
 		return self::make('assign');
 
@@ -197,7 +201,7 @@ class RoleController extends \BaseController {
 		
 		$role = Role::find( Crypt::decrypt($id) );
 
-		$capabilities = Input::get('capabilities');
+		$capabilities = Input::get('capabilities') != null ? Input::get('capabilities') : array();
 		
 		if($role->capabilities()->sync($capabilities)):
 
@@ -227,7 +231,7 @@ class RoleController extends \BaseController {
 
 		self::addArgument('role', Role::find( Crypt::decrypt($id) ));
 
-		return View::make('delete');
+		return self::make('delete');
 
 	}
 
