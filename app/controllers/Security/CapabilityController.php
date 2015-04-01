@@ -4,7 +4,6 @@ use \User as User;
 use \Role as Role;
 use \Capability as Capability;
 use \Input as Input;
-use \Hash as Hash;
 use \Crypt as Crypt;
 
 class CapabilityController extends ReadController {
@@ -20,6 +19,8 @@ class CapabilityController extends ReadController {
 		$this->beforeFilter('parameters');
 
 		$this->beforeFilter('arguments');
+
+		$this->afterFilter('auditory');
 		
 		self::pushViews('capabilities');  
 
@@ -34,8 +35,6 @@ class CapabilityController extends ReadController {
 		self::$description = 'Gestión de Capacidades del Sistema';
 
 		self::pushBreadCrumb('Capacidades', self::$route );
-
-		self::setArguments();
 
 		# --- Put here your global args for this Controller --- #
 

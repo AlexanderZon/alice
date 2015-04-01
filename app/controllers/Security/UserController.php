@@ -37,8 +37,6 @@ class UserController extends ReadController {
 
 		self::pushBreadCrumb('Usuarios', self::$route );
 
-		self::setArguments();
-
 		# --- Put here your global args for this Controller --- #
 
 	}
