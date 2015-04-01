@@ -16,17 +16,17 @@ class CapabilityController extends UserController {
 		
 		self::pushViews('capabilities');  
 
-		self::pushRoute('{user}/bar');       
+		self::pushRoute('capabilities');       
 
 		self::setModule('capabilities');
 
 		self::pushName('user');
 
-		self::$title = 'Usuarios';
+		self::$title = 'Capacidades';
 
-		self::$description = 'Gestión de Usuarios del Sistema';
+		self::$description = 'Gestión de Capacidades del Sistema';
 
-		self::pushBreadCrumb('Usuarios', self::$route );
+		self::pushBreadCrumb('Capacidades', self::$route );
 
 		self::setArguments();
 

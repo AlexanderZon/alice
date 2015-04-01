@@ -1,190 +1,136 @@
 @extends ('layouts.master')
 
+@section('toolbar')
+	
+	<div class="page-toolbar">
+		<!-- BEGIN THEME PANEL -->
+		<div class="btn-group btn-theme-panel">
+			@if(Auth::user()->hasCap('security_user_get_create'))
+				<a href="{{ $route }}/create" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo usuario"><i class="icon-plus"></i></a>
+			@endif
+		</div>
+		<!-- END THEME PANEL -->
+	</div>
+
+@stop
+
 @section ("content")
 
-<!-- BEGIN CONTENT -->
-<div class="page-content-wrapper">
-	<div class="page-content">
-		<!-- BEGIN PAGE HEAD -->
-		<div class="page-head">
-			<!-- BEGIN PAGE TITLE -->
-			<div class="page-title">
-				<h1>{{ $title }} <small>{{ $description }}</small></h1>
-			</div>
-			<!-- END PAGE TITLE -->
-			<!-- BEGIN PAGE TOOLBAR -->
-			<div class="page-toolbar">
-				<!-- BEGIN THEME PANEL -->
-				<div class="btn-group btn-theme-panel">
-					@if(Auth::user()->hasCap('security_user_get_create'))
-						<a href="{{ $route }}/create" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo usuario"><i class="icon-plus"></i></a>
-					@endif
-				</div>
-				<!-- END THEME PANEL -->
-			</div>
-			<!-- END PAGE TOOLBAR -->
-		</div>
-		<!-- END PAGE HEAD -->
-		<!-- BEGIN PAGE BREADCRUMB -->
-		<ul class="page-breadcrumb breadcrumb">
-			@foreach( $breadcrumbs as $breadcrumb )
-			<li>
-				<a href="{{ $breadcrumb['route'] }}">{{ $breadcrumb['name'] }}</a><i class="fa fa-circle"></i>
-			</li>
-			@endforeach
-			<li class="active">
-				{{ $sections[$section] }}
-			</li>
-		</ul>
-		<!-- END PAGE BREADCRUMB -->
-		<!-- BEGIN PAGE CONTENT INNER -->
-		@if( $msg_danger != null )
-			<div class="note note-danger">
-				<h4>{{ $msg_danger['title'] }}</h4>
-				<p>{{ $msg_danger['description'] }}</p>
-			</div>
-		@endif
-
-		@if( $msg_warning != null )
-			<div class="note note-warning">
-				<h4>{{ $msg_warning['title'] }}</h4>
-				<p>{{ $msg_warning['description'] }}</p>
-			</div>
-		@endif
-
-		@if( $msg_success != null )
-			<div class="note note-success">
-				<h4>{{ $msg_success['title'] }}</h4>
-				<p>{{ $msg_success['description'] }}</p>
-			</div>
-		@endif
-		<!-- END PAGE CONTENT INNER -->
-
-		@if( $msg_active != null )
-			<div class="note note-active">
-				<h4>{{ $msg_active['title'] }}</h4>
-				<p>{{ $msg_active['description'] }}</p>
-			</div>
-		@endif
-
 		<div class="row">
-				<div class="col-md-12">
-					<!-- BEGIN EXAMPLE TABLE PORTLET-->
-					<div class="portlet box green-haze">
-						<div class="portlet-title">
-							<div class="caption">
-								<i class="fa fa-user"></i>Listado de Usuarios
-							</div>
-							<div class="tools">
-								@if(Auth::user()->hasCap('security_user_get_create'))
-									<a href="{{ $route }}/create" class="label bg-green-haze"><i class="fa fa-plus-circle"></i> Añadir Nuevo</a>
-								@endif
-							</div>
+			<div class="col-md-12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box green-haze">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="fa fa-user"></i>Listado de Usuarios
 						</div>
-						<div class="portlet-body">
-							<table class="table table-striped table-bordered table-hover" id="datatable">
-							<thead>
-							<tr>
+						<div class="tools">
+							@if(Auth::user()->hasCap('security_user_get_create'))
+								<a href="{{ $route }}/create" class="label bg-green-haze"><i class="fa fa-plus-circle"></i> Añadir Nuevo</a>
+							@endif
+						</div>
+					</div>
+					<div class="portlet-body">
+						<table class="table table-striped table-bordered table-hover" id="datatable">
+						<thead>
+						<tr>
+							<th>
+								 Nombre
+							</th>
+							<th>
+								 Apellido
+							</th>
+							<th>
+								 Usuario
+							</th>
+							<th>
+								 Correo
+							</th>
+							<th>
+								 Rol
+							</th>
+							<th>
+								 Estado
+							</th>
+							@if(Auth::user()->hasCap('security_user_get_show') OR Auth::user()->hasCap('security_user_get_update') OR Auth::user()->hasCap('security_user_get_delete'))
 								<th>
-									 Nombre
+									 Acciones
 								</th>
-								<th>
-									 Apellido
-								</th>
-								<th>
-									 Usuario
-								</th>
-								<th>
-									 Correo
-								</th>
-								<th>
-									 Rol
-								</th>
-								<th>
-									 Estado
-								</th>
-								@if(Auth::user()->hasCap('security_user_get_show') OR Auth::user()->hasCap('security_user_get_update') OR Auth::user()->hasCap('security_user_get_delete'))
-									<th>
-										 Acciones
-									</th>
-								@endif
-							</tr>
-							</thead>
-							<tbody>
-							@foreach( $users as $user )
-							<tr>
-								<td>
-									{{ $user->first_name }}
-								</td>
-								<td>
-									{{ $user->last_name }}
-								</td>
-								<td>
-									{{ $user->username }}
-								</td>
-								<td>
-									{{ $user->email }}
-								</td>
-								<td>
-									{{ $user->role->title }}
-								</td>
-								<td>
-								@if(Auth::user()->id == $user->id)
-									{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
-								@elseif( $user->status == 'active' )
-									@if(Auth::user()->hasCap('security_user_get_deactivate'))
-										<a href="{{ $route . '/deactivate/' . Crypt::encrypt($user->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Desactivar"><span class="label bg-blue">{{ 'Activo' }}</span></a>
-									@else
-										{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
-									@endif
-								@elseif( $user->status == 'inactive' )
-									@if(Auth::user()->hasCap('security_user_get_activate'))
-										<a href="{{ $route . '/activate/' . Crypt::encrypt($user->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Activar"><span class="label bg-yellow-saffron">{{ 'Inactivo' }}</span>
-									@else
-										{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
-									@endif
+							@endif
+						</tr>
+						</thead>
+						<tbody>
+						@foreach( $users as $user )
+						<tr>
+							<td>
+								{{ $user->first_name }}
+							</td>
+							<td>
+								{{ $user->last_name }}
+							</td>
+							<td>
+								{{ $user->username }}
+							</td>
+							<td>
+								{{ $user->email }}
+							</td>
+							<td>
+								{{ $user->role->title }}
+							</td>
+							<td>
+							@if(Auth::user()->id == $user->id)
+								{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
+							@elseif( $user->status == 'active' )
+								@if(Auth::user()->hasCap('security_user_get_deactivate'))
+									<a href="{{ $route . '/deactivate/' . Crypt::encrypt($user->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Desactivar"><span class="label bg-blue">{{ 'Activo' }}</span></a>
 								@else
 									{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
 								@endif
-								</td>
-								@if(Auth::user()->hasCap('security_user_get_show') OR Auth::user()->hasCap('security_user_get_update') OR Auth::user()->hasCap('security_user_get_delete'))
-									<td>
-										@if( $user->status == 'active' )
-											@if(Auth::user()->hasCap('security_user_get_show'))
-												&nbsp;&nbsp;
-												<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
-											@endif
-										@elseif( $user->status == 'inactive' )
-											@if(Auth::user()->hasCap('security_user_get_show'))
-												&nbsp;&nbsp;
-												<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
-											@endif
-											@if(Auth::user()->hasCap('security_user_get_update'))
-												&nbsp;&nbsp;
-												<a class="font-yellow-crusta tooltips" href="{{ $route . '/update/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
-											@endif
-											@if(Auth::user()->hasCap('security_user_get_delete'))
-												&nbsp;&nbsp;
-												<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
-											@endif
-										@endif
-									</td>
+							@elseif( $user->status == 'inactive' )
+								@if(Auth::user()->hasCap('security_user_get_activate'))
+									<a href="{{ $route . '/activate/' . Crypt::encrypt($user->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Activar"><span class="label bg-yellow-saffron">{{ 'Inactivo' }}</span>
+								@else
+									{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
 								@endif
-							</tr>
-							@endforeach
-							</tbody>
-							</table>
-						</div>
+							@else
+								{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
+							@endif
+							</td>
+							@if(Auth::user()->hasCap('security_user_get_show') OR Auth::user()->hasCap('security_user_get_update') OR Auth::user()->hasCap('security_user_get_delete'))
+								<td>
+									@if( $user->status == 'active' )
+										@if(Auth::user()->hasCap('security_user_get_show'))
+											&nbsp;&nbsp;
+											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+										@endif
+									@elseif( $user->status == 'inactive' )
+										@if(Auth::user()->hasCap('security_user_get_show'))
+											&nbsp;&nbsp;
+											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+										@endif
+										@if(Auth::user()->hasCap('security_user_get_update'))
+											&nbsp;&nbsp;
+											<a class="font-yellow-crusta tooltips" href="{{ $route . '/update/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
+										@endif
+										@if(Auth::user()->hasCap('security_user_get_delete'))
+											&nbsp;&nbsp;
+											<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
+										@endif
+									@endif
+								</td>
+							@endif
+						</tr>
+						@endforeach
+						</tbody>
+						</table>
 					</div>
-					<!-- END EXAMPLE TABLE PORTLET-->
 				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
 			</div>
+		</div>
 
-		
 		<!-- END PAGE CONTENT INNER -->
-	</div>
-</div>
-<!-- END CONTENT -->
+
 @stop
 
 @section('javascripts')

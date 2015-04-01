@@ -1145,11 +1145,73 @@
 			</div>
 		</div>
 		<!-- END SIDEBAR -->
+
 		<!-- BEGIN CONTENT -->
+		<div class="page-content-wrapper">
+			<div class="page-content">
+				<!-- BEGIN PAGE HEAD -->
+				<div class="page-head">
+					<!-- BEGIN PAGE TITLE -->
+					<div class="page-title">
+						<h1>{{ $title }} <small>{{ $description }}</small></h1>
+					</div>
+					<!-- END PAGE TITLE -->
+					<!-- BEGIN PAGE TOOLBAR -->
 
-		@yield('content')
+					@yield('toolbar')
+					
+					<!-- END PAGE TOOLBAR -->
+				</div>
+				<!-- END PAGE HEAD -->
+				<!-- BEGIN PAGE BREADCRUMB -->
+				<ul class="page-breadcrumb breadcrumb">
+					@foreach( $breadcrumbs as $breadcrumb )
+					<li>
+						<a href="{{ $breadcrumb['route'] }}">{{ $breadcrumb['name'] }}</a><i class="fa fa-circle"></i>
+					</li>
+					@endforeach
+					<li class="active">
+						{{ $sections[$section] }}
+					</li>
+				</ul>
+				<!-- END PAGE BREADCRUMB -->
+				<!-- BEGIN PAGE CONTENT INNER -->
+				@if( $msg_danger != null )
+					<div class="note note-danger">
+						<h4>{{ $msg_danger['title'] }}</h4>
+						<p>{{ $msg_danger['description'] }}</p>
+					</div>
+				@endif
 
+				@if( $msg_warning != null )
+					<div class="note note-warning">
+						<h4>{{ $msg_warning['title'] }}</h4>
+						<p>{{ $msg_warning['description'] }}</p>
+					</div>
+				@endif
+
+				@if( $msg_success != null )
+					<div class="note note-success">
+						<h4>{{ $msg_success['title'] }}</h4>
+						<p>{{ $msg_success['description'] }}</p>
+					</div>
+				@endif
+				<!-- END PAGE CONTENT INNER -->
+
+				@if( $msg_active != null )
+					<div class="note note-active">
+						<h4>{{ $msg_active['title'] }}</h4>
+						<p>{{ $msg_active['description'] }}</p>
+					</div>
+				@endif
+
+				@yield('content')
+
+				<!-- END PAGE CONTENT INNER -->
+			</div>
+		</div>
 		<!-- END CONTENT -->
+
 	</div>
 	<!-- END CONTAINER -->
 	<!-- BEGIN FOOTER -->
