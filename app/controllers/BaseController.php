@@ -136,7 +136,7 @@ class BaseController extends Controller implements BaseInterface{
 	}
 
 	public static function setParentUri($uri){
-
+		
 		if(!empty(self::$parameters)):
 			foreach(self::$parameters as $key => $value):
 				self::$parent = str_replace('{'.$key.'}', $value, self::$parent);
