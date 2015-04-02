@@ -76,13 +76,13 @@
 								{{ $role->status == 'active' ? 'Activo' : 'Inactivo' }}
 							@else
 								@if( $role->status == 'active' )
-									@if(Auth::user()->hasCap('roles_deactivate_get'))
+									@if(Auth::user()->hasCap('security_role_get_deactivate'))
 										<a href="{{ $route . '/deactivate/' . Crypt::encrypt($role->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Desactivar"><span class="label bg-blue">{{ 'Activo' }}</span></a>
 									@else
 										{{ $role->status == 'active' ? 'Activo' : 'Inactivo' }}
 									@endif
 								@elseif( $role->status == 'inactive' )
-									@if(Auth::user()->hasCap('roles_deactivate_get'))
+									@if(Auth::user()->hasCap('security_role_get_activate'))
 										<a href="{{ $route . '/activate/' . Crypt::encrypt($role->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Activar"><span class="label bg-yellow-saffron">{{ 'Inactivo' }}</span>
 									@else
 										{{ $role->status == 'active' ? 'Activo' : 'Inactivo' }}

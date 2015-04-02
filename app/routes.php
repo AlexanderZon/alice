@@ -31,10 +31,20 @@ if(Auth::check()):
 				Route::controller('/security/capabilities','\Security\CapabilityController');
 				Route::controller('/security','\Security\ReadController');
 			
-				# Administrator Mosule
+				# Administrator Module
 
 				Route::controller('/administrators', '\Administrators\DashboardController');
 				Route::get('/administrators', '\Administrators\DashboardController@getIndex');
+
+			break;
+			case 'coordinator':
+			
+				# Routes for coordinator
+
+				Route::controller('/coordinators/courses', '\Coordinators\Courses\ReadController');
+				Route::controller('/coordinators/students', '\Coordinators\Students\ReadController');
+				Route::controller('/coordinators/teachers', '\Coordinators\Teachers\ReadController');
+				Route::controller('/coordinators', '\Coordinators\ReadController');
 
 			break;
 			case 'teacher':
@@ -56,7 +66,6 @@ if(Auth::check()):
 	Route::controller('/', '\Security\AuthenticationController');
 
 else:
-
 	Route::controller('/auth', '\Security\AuthenticationController');
 	Route::any('/{one?}/{two?}/{three?}/{four?}/{five?}/', function($one = '' ,$two = '' ,$three = '' ,$four = '' ,$five = '' ){
 		if(Request::path() == '/'):

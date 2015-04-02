@@ -125,6 +125,7 @@ return array(
 		'Maatwebsite\Excel\ExcelServiceProvider',
 		'Thujohn\Pdf\PdfServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
+		'Nathanmac\GUID\GUIDServiceProvider',
 
 	),
 

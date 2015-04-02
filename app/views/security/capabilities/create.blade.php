@@ -91,7 +91,7 @@
 												<span class="input-group-addon">
 												<i class="fa fa-user"></i>
 												</span>
-												<select name="crud" class="form-control select2me" data-placeholder="Seleccione un rol de usuario...">
+												<select name="crud" class="form-control select2me" data-placeholder="Seleccione un rol de usuario..." required>
 													<option value>--- SELECCIONE UN TIPO DE CRUD ---</option>
 													<option value="CREATE">CREATE</option>
 													<option value="READ">READ</option>

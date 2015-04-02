@@ -66,6 +66,8 @@ class RoleController extends ReadController {
 	public function getCreate()
 	{
 
+		self::addArgument('capabilities', Capability::all());
+
 		return self::make('create');
 
 	}
@@ -85,6 +87,7 @@ class RoleController extends ReadController {
 			$role->title = Input::get('title');
 			$role->description = Input::get('description');
 			$role->name = Input::get('name');
+			$role->dashboard_id = Input::get('dashboard_id');
 			$role->status = 'active';
 			
 			if( $role->save() ):
@@ -123,6 +126,8 @@ class RoleController extends ReadController {
 
 		self::addArgument('role', Role::find( Crypt::decrypt($id) ));
 
+		self::addArgument('capabilities', Capability::all());
+
 		return self::make('update');
 
 	}
@@ -144,6 +149,7 @@ class RoleController extends ReadController {
 			$role->title = Input::get('title');
 			$role->description = Input::get('description');
 			$role->name = Input::get('name');
+			$role->dashboard_id = Input::get('dashboard_id');
 			
 			if( $role->save() ):
 

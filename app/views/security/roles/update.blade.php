@@ -20,7 +20,7 @@
 			<div class="portlet box green-haze">
 				<div class="portlet-title">
 					<div class="caption">
-						<i class="fa fa-lock"></i>Creación de Roles
+						<i class="fa fa-lock"></i>Edición de Roles
 					</div>
 					<div class="tools">
 						<a href="{{ $route }}" class="label bg-green-haze"><i class="fa fa-arrow-circle-left"></i> Volver</a>
@@ -60,6 +60,24 @@
 										<div class="col-md-9">
 											<input name="name" type="text" class="form-control" placeholder="Ingrese el Nombre del Rol" value="{{ $role->name }}" readonly>
 											<!-- <span class="help-block">This is inline help</span> -->
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group {{ $msg_warning['name'] == 'security_user_role_err' ? 'has-error' : '' }}">
+										<label class="control-label col-md-3">Escritorio</label>
+										<div class="col-md-9">
+											<div class="input-group ">
+												<span class="input-group-addon">
+												<i class="fa fa-user"></i>
+												</span>
+												<select name="dashboard_id" class="form-control select2me" data-placeholder="Seleccione un rol de usuario..." required>
+													<option value>--- SELECCIONE UNA CAPACIDAD DE ESCRITORIO ---</option>
+													@foreach( $capabilities as $capability )
+														<option value="{{ $capability->id }}" {{ $role->dashboard_id == $capability->id ? 'selected' : '' }}>{{ $capability->title }}</option>
+													@endforeach
+												</select>
+											</div>
 										</div>
 									</div>
 								</div>

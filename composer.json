@@ -9,7 +9,8 @@
 		"way/generators": "~2.0",
 		"thujohn/pdf": "dev-master",
 		"maatwebsite/excel": "~1.2.1",
-    	"intervention/image": "2.*"
+    	"intervention/image": "2.*",
+    	"nathanmac/laravel-guid": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

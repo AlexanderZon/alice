@@ -8,11 +8,11 @@ class AuthenticationController extends ReadController {
 
 	public function __construct(){
 
-		parent::__construct();
+		// parent::__construct();
 
 		// $this->beforeFilter('auth');
 
-		$this->beforeFilter('parameters');
+		// $this->beforeFilter('parameters');
 		
 		self::$views = 'security.auth';
 
@@ -35,7 +35,6 @@ class AuthenticationController extends ReadController {
 	 */
 	public function getIndex()
 	{
-
 		// dd(Auth::user()->role->dashboard->controller);
 		if(self::session()) return self::action(Auth::user()->role->dashboard->controller);
 
@@ -50,7 +49,6 @@ class AuthenticationController extends ReadController {
 	 */
 	public function getLogin()
 	{
-
 		if(self::session()):
 
 			return self::go('index');

@@ -4,9 +4,17 @@ class DashboardController extends \BaseController {
 
 	public function __construct(){
 
-		// $this->beforeFilter('auth');
+		parent::__construct();
 
-		// $this->beforeFilter('auth');
+		$this->beforeFilter('auth');
+
+		$this->beforeFilter('capabilities');
+
+		$this->beforeFilter('parameters');
+
+		$this->beforeFilter('arguments');
+
+		$this->afterFilter('auditory');
 		
 		self::$views = 'administrators.dashboard';
 

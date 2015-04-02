@@ -104,7 +104,7 @@
 												<i class="fa fa-user"></i>
 												</span>
 												<select name="role_id" class="form-control select2me" data-placeholder="Seleccione un rol de usuario..." required>
-													<option value="0">--- SELECCIONE UN ROL DE USUARIO ---</option>
+													<option value>--- SELECCIONE UN ROL DE USUARIO ---</option>
 													@foreach( $roles as $role )
 														<option value="{{ $role->id }}" {{ $role->id == $user->role_id ? 'selected' : '' }}>{{ $role->title }}</option>
 													@endforeach

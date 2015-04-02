@@ -63,6 +63,24 @@
 										</div>
 									</div>
 								</div>
+								<div class="col-md-6">
+									<div class="form-group {{ $msg_warning['name'] == 'security_user_role_err' ? 'has-error' : '' }}">
+										<label class="control-label col-md-3">Escritorio</label>
+										<div class="col-md-9">
+											<div class="input-group ">
+												<span class="input-group-addon">
+												<i class="fa fa-user"></i>
+												</span>
+												<select name="dashboard_id" class="form-control select2me" data-placeholder="Seleccione un rol de usuario..." required>
+													<option value>--- SELECCIONE UNA CAPACIDAD DE ESCRITORIO ---</option>
+													@foreach( $capabilities as $capability )
+														<option value="{{ $capability->id }}">{{ $capability->title }}</option>
+													@endforeach
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="form-actions">

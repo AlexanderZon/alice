@@ -74,7 +74,7 @@ class UserController extends ReadController {
 	public function getShow($id)
 	{
 
-		self::addArgument('users', User::all());
+		self::addArgument('user', User::find(Crypt::decrypt($id)));
 
 		self::addArgument('roles', Role::all());
 
@@ -151,7 +151,7 @@ class UserController extends ReadController {
 			return self::go( 'create' );
 
 
-		elseif( Input::get('role_id') == 0 ):
+		elseif( Input::get('role_id') == null ):
 
 			self::setWarning('security_user_role_err', 'Error al agregar usuario', 'Debe indicar el rol del usuario');
 
@@ -293,7 +293,7 @@ class UserController extends ReadController {
 
 			return self::go( 'update/'.Crypt::encrypt($user->id) );
 
-		elseif( Input::get('role_id') == 0 ):
+		elseif( Input::get('role_id') == null ):
 
 			/*$args = array(
 				'msg_warning' => array(
