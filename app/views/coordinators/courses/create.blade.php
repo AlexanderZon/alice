@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/coordinators/courses/create.blade.php
