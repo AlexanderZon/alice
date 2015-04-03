@@ -563,81 +563,6 @@
 						</a>
 					</li>
 					@endif
-					<!-- BEGIN ANGULARJS LINK -->
-					@if(Auth::user()->hasCap('projects_view_get'))
-					<li class="tooltips {{ $module['name'] == 'projects' || $module['name'] == 'tasks' || $module['name'] == 'materials' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Proyectos">
-						<a href="/projects">
-						<i class="icon-paper-plane"></i>
-						<span class="title">
-						Proyectos </span><span class="arrow"></span>
-						</a>
-						<ul class="sub-menu">
-
-							@if(Auth::user()->hasCap('projects_view_get'))
-							<li class="{{ $module['name'] == 'projects' ? 'active' : '' }}">
-								<a href="/projects">
-								<i class="icon-list"></i>
-								Todos</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('my_tasks_view_get'))
-							<li class="{{ $module['name'] == 'tasks' ? 'active' : '' }}">
-								<a href="/my/tasks">
-								<i class="icon-pin"></i>
-								Tareas</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('materials_view_get') AND $module['name'] == 'materials' )
-							<li class="{{ $module['name'] == 'materials' ? 'active' : '' }}">
-								<a href="#">
-								<i class="icon-puzzle"></i>
-								Materiales</a>
-							</li>
-							@endif
-
-						</ul>
-					</li>
-					@endif
-
-					@if(Auth::user()->hasCap('stock_view_get'))
-					<li class="tooltips {{ $module['name'] == 'stock' || $module['name'] == 'categories' || $module['name'] == 'measurement_units' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Stock">
-						<a href="/stock">
-						<i class="icon-social-dropbox"></i>
-						<span class="title">
-						Stock </span>
-						<span class="arrow"></span>
-						</a>
-						<ul class="sub-menu">
-
-							@if(Auth::user()->hasCap('stock_view_get'))
-							<li class="{{ $module['name'] == 'stock' ? 'active' : '' }}">
-								<a href="/stock">
-								<i class="icon-list"></i>
-								Todos</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('categories_view_get'))
-							<li class="{{ $module['name'] == 'categories' ? 'active' : '' }}">
-								<a href="/categories">
-								<i class="icon-layers"></i>
-								Categorías</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('measurement_units_view_get'))
-							<li class="{{ $module['name'] == 'measurement_units' ? 'active' : '' }}">
-								<a href="/measurement_units">
-								<i class="icon-equalizer"></i>
-								Unidades de Medida</a>
-							</li>
-							@endif
-
-						</ul>
-					</li>
-					@endif
 
 					@if(Auth::user()->hasCap('persons_view_get') || Auth::user()->hasCap('clients_view_get') || Auth::user()->hasCap('providers_view_get') || Auth::user()->hasCap('locations_view_get'))
 					<li class="tooltips {{ $module['name'] == 'persons' || $module['name'] == 'clients' || $module['name'] == 'providers' || $module['name'] == 'locations' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Personas">
@@ -685,55 +610,108 @@
 					</li>
 					@endif
 
-					@if(Auth::user()->hasCap('sells_view_get'))
-					<li class="tooltips {{ $module['name'] == 'sells' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Ventas">
-						<a href="/sells">
-						<i class="icon-basket-loaded"></i>
-						<span class="title">
-						Ventas </span>
+					<!-- Coordanators Module -->
+
+					@if(Auth::user()->hasCap('coordinators_read_get_index'))
+					<li class="tooltips {{ $name == 'coordinators_read' ? 'active open' : '' }}">
+						<a href="/">
+						<i class="icon-home"></i>
+						<span class="title">Escritorio</span>
 						</a>
 					</li>
 					@endif
 
-					@if(Auth::user()->hasCap('reports_view_get'))
-					<li class="tooltips {{ $module['name'] == 'reports' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Reportes">
-						<a href="/reports">
-						<i class="icon-bar-chart"></i>
+					@if(Auth::user()->hasCap('coordinators_teachers_get_index'))
+					<li class="tooltips {{ $name == 'coordinators_teachers_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Profesores">
+						<a href="/teachers">
+						<i class="icon-graduation"></i>
 						<span class="title">
-						Reportes </span>
-						</a>
-					</li>
-					@endif
-
-					@if(Auth::user()->hasCap('invoice_accounts_view_get') || Auth::user()->hasCap('payment_methods_view_get'))
-					<li class="tooltips {{ $module['name'] == 'invoice_accounts' || $module['name'] == 'payment_methods' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Usuario, Roles y Capacidades">
-						<a href="/invoice_accounts">
-						<i class="icon-wallet"></i>
-						<span class="title">
-						Cuentas </span>
+						Profesores </span>
 						<span class="arrow"></span>
 						</a>
 						<ul class="sub-menu">
 
-							@if(Auth::user()->hasCap('invoice_accounts_view_get'))
-							<li class="{{ $module['name'] == 'invoice_accounts' ? 'active' : '' }}">
-								<a href="/invoice_accounts">
+							@if(Auth::user()->hasCap('coordinators_teachers_get_index'))
+							<li class="{{ $name == 'coordinators_teachers_read' ? 'active' : '' }}">
+								<a href="/teachers">
 								<i class="icon-list"></i>
-								Todas</a>
+								Activos</a>
 							</li>
 							@endif
 
-							@if(Auth::user()->hasCap('payment_methods_view_get'))
-							<li class="{{ $module['name'] == 'payment_methods' ? 'active' : '' }}">
-								<a href="/payment_methods">
-								<i class="fa fa-credit-card"></i>
-								Métodos de Pago</a>
+							@if(Auth::user()->hasCap('coordinators_teachers_inactive_get_index'))
+							<li class="{{ $name == 'coordinators_teachers_inactive' ? 'active' : '' }}">
+								<a href="/teachers/inactive">
+								<i class="icon-list"></i>
+								Inactivos</a>
 							</li>
 							@endif
 
 						</ul>
 					</li>
 					@endif
+
+					@if(Auth::user()->hasCap('coordinators_students_get_index'))
+					<li class="tooltips {{ $name == 'coordinators_students_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Estudiantes">
+						<a href="/students">
+						<i class="icon-emoticon-smile"></i>
+						<span class="title">
+						Estudiantes </span>
+						<span class="arrow"></span>
+						</a>
+						<ul class="sub-menu">
+
+							@if(Auth::user()->hasCap('coordinators_students_get_index'))
+							<li class="{{ $name == 'coordinators_students_read' ? 'active' : '' }}">
+								<a href="/students">
+								<i class="icon-list"></i>
+								Activos</a>
+							</li>
+							@endif
+
+							@if(Auth::user()->hasCap('coordinators_students_inactive_get_index'))
+							<li class="{{ $name == 'coordinators_students_inactive' ? 'active' : '' }}">
+								<a href="/students/inactive">
+								<i class="icon-list"></i>
+								Inactivos</a>
+							</li>
+							@endif
+
+						</ul>
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('coordinators_courses_get_index'))
+					<li class="tooltips {{ $name == 'coordinators_courses_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
+						<a href="/courses">
+						<i class="icon-emoticon-smile"></i>
+						<span class="title">
+						Cursos </span>
+						<span class="arrow"></span>
+						</a>
+						<ul class="sub-menu">
+
+							@if(Auth::user()->hasCap('coordinators_courses_get_index'))
+							<li class="{{ $name == 'coordinators_courses_read' ? 'active' : '' }}">
+								<a href="/courses">
+								<i class="icon-list"></i>
+								Activos</a>
+							</li>
+							@endif
+
+							@if(Auth::user()->hasCap('coordinators_courses_inactive_get_index'))
+							<li class="{{ $name == 'coordinators_courses_inactive' ? 'active' : '' }}">
+								<a href="/courses/inactive">
+								<i class="icon-list"></i>
+								Inactivos</a>
+							</li>
+							@endif
+
+						</ul>
+					</li>
+					@endif
+
+					<!-- Security Module -->
 
 					@if(Auth::user()->hasCap('security_user_get_index') || Auth::user()->hasCap('security_role_get_index') || Auth::user()->hasCap('security_capability_get_index'))
 					<li class="tooltips {{ $name == 'security_user' || $name == 'security_role' || $name == 'security_capability' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Usuario, Roles y Capacidades">
