@@ -4,7 +4,7 @@ use \User as User;
 use \Role as Role;
 use \Capability as Capability;
 use \Input as Input;
-use \Crypt as Crypt;
+use \Hashids as Hashids;
 
 class RoleController extends ReadController {	
 
@@ -124,7 +124,7 @@ class RoleController extends ReadController {
 	public function getUpdate($id)
 	{
 
-		self::addArgument('role', Role::find( Crypt::decrypt($id) ));
+		self::addArgument('role', Role::find( Hashids::decode($id) ));
 
 		self::addArgument('capabilities', Capability::all());
 
@@ -142,7 +142,7 @@ class RoleController extends ReadController {
 	public function postUpdate($id)
 	{
 			
-		$role = Role::find( Crypt::decrypt($id) );
+		$role = Role::find( Hashids::decode($id) );
 
 		if(!Role::hasName(Input::get('name'), $role->id) ):
 		
@@ -186,7 +186,7 @@ class RoleController extends ReadController {
 	public function getAssign($id)
 	{
 
-		self::addArgument('role', Role::find( Crypt::decrypt($id) ));
+		self::addArgument('role', Role::find( Hashids::decode($id) ));
 
 		self::addArgument('capabilities', Capability::orderBy('title','ASC')->get());
 
@@ -205,7 +205,7 @@ class RoleController extends ReadController {
 	public function postAssign($id)
 	{
 		
-		$role = Role::find( Crypt::decrypt($id) );
+		$role = Role::find( Hashids::decode($id) );
 
 		$capabilities = Input::get('capabilities') != null ? Input::get('capabilities') : array();
 		
@@ -235,7 +235,7 @@ class RoleController extends ReadController {
 	public function getDelete($id)
 	{
 
-		self::addArgument('role', Role::find( Crypt::decrypt($id) ));
+		self::addArgument('role', Role::find( Hashids::decode($id) ));
 
 		return self::make('delete');
 
@@ -250,7 +250,7 @@ class RoleController extends ReadController {
 	 */
 	public function postDelete($id)
 	{
-		$role =  Role::find( Crypt::decrypt($id) );
+		$role =  Role::find( Hashids::decode($id) );
 
 		if($role->delete()):
 

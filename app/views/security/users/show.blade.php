@@ -21,10 +21,10 @@
 			<!-- SIDEBAR BUTTONS -->
 			<div class="profile-userbuttons">
 				@if( Auth::user()->hasCap('security_user_get_update'))
-					<a href="{{ $route }}/update/{{ Crypt::encrypt($user->id) }}" type="button" class="btn btn-circle green-haze btn-sm">Editar</a>
+					<a href="{{ $route }}/update/{{ Hashids::encode($user->id) }}" type="button" class="btn btn-circle green-haze btn-sm">Editar</a>
 				@endif
 				@if( Auth::user()->hasCap('security_user_get_delete'))
-					<a href="{{ $route }}/delete/{{ Crypt::encrypt($user->id) }}" type="button" class="btn btn-circle btn-danger btn-sm">Eliminar</a>
+					<a href="{{ $route }}/delete/{{ Hashids::encode($user->id) }}" type="button" class="btn btn-circle btn-danger btn-sm">Eliminar</a>
 				@endif
 			</div>
 			<!-- END SIDEBAR BUTTONS -->
@@ -297,7 +297,7 @@
 								<div class="scroller" style="height: 320px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
 									<ul class="feeds">
 										<li>
-											<a href="/audits/show/{{ Crypt::encrypt(1) }}">
+											<a href="/audits/show/{{ Hashids::encode(1) }}">
 											<div class="col1">
 												<div class="cont">
 													<div class="cont-col1">

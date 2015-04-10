@@ -10,7 +10,8 @@
 		"thujohn/pdf": "dev-master",
 		"maatwebsite/excel": "~1.2.1",
     	"intervention/image": "2.*",
-    	"nathanmac/laravel-guid": "dev-master"
+    	"nathanmac/laravel-guid": "dev-master",
+    	"alexanderzon/laravel-hashids": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

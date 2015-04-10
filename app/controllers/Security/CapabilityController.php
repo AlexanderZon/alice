@@ -4,7 +4,7 @@ use \User as User;
 use \Role as Role;
 use \Capability as Capability;
 use \Input as Input;
-use \Crypt as Crypt;
+use \Hashids as Hashids;
 
 class CapabilityController extends ReadController {
 
@@ -139,7 +139,7 @@ class CapabilityController extends ReadController {
 	public function getUpdate($id)
 	{
 
-		self::addArgument('capability', Capability::find( Crypt::decrypt($id) ));
+		self::addArgument('capability', Capability::find( Hashids::decode($id) ));
 
 		return self::make('update');
 
@@ -155,7 +155,7 @@ class CapabilityController extends ReadController {
 	public function postUpdate($id)
 	{
 		
-		$capability = Capability::find( Crypt::decrypt($id) );
+		$capability = Capability::find( Hashids::decode($id) );
 
 		if((!Capability::hasName(Input::get('name'), $capability->id)) AND (!Capability::hasController(Input::get('controller'), $capability->id)) ):
 
@@ -215,7 +215,7 @@ class CapabilityController extends ReadController {
 	public function getDelete($id)
 	{
 
-		self::addArgument('capability', Capability::find( Crypt::decrypt($id) ));
+		self::addArgument('capability', Capability::find( Hashids::decode($id) ));
 
 		return self::make('delete');
 
@@ -230,7 +230,7 @@ class CapabilityController extends ReadController {
 	 */
 	public function postDelete($id)
 	{
-		$capability =  Capability::find( Crypt::decrypt($id) );
+		$capability =  Capability::find( Hashids::decode($id) );
 
 		if($capability->delete()):
 

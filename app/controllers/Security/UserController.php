@@ -5,7 +5,7 @@ use \Role as Role;
 use \Capability as Capability;
 use \Input as Input;
 use \Hash as Hash;
-use \Crypt as Crypt;
+use \Hashids as Hashids;
 
 class UserController extends ReadController {
 
@@ -74,7 +74,7 @@ class UserController extends ReadController {
 	public function getShow($id)
 	{
 
-		self::addArgument('user', User::find(Crypt::decrypt($id)));
+		self::addArgument('user', User::find(Hashids::decode($id)));
 
 		self::addArgument('roles', Role::all());
 
@@ -202,8 +202,8 @@ class UserController extends ReadController {
 	 */
 	public function getUpdate($id)
 	{
-
-		self::addArgument('user', User::find( Crypt::decrypt($id) ));
+		
+		self::addArgument('user', User::find( Hashids::decode($id) ));
 
 		self::addArgument('roles', Role::all());
 
@@ -227,7 +227,7 @@ class UserController extends ReadController {
 	public function postUpdate($id)
 	{
 
-		$user = User::find(Crypt::decrypt($id));
+		$user = User::find(Hashids::decode($id));
 
 		if( User::hasUsername(Input::get('username'), $user->id ) ):
 
@@ -243,7 +243,7 @@ class UserController extends ReadController {
 
 			// Audits::add(Auth::user(), $args['msg_warning'], 'UPDATE');
 
-			return self::go( 'update/'.Crypt::encrypt($user->id) );
+			return self::go( 'update/'.Hashids::encrypt($user->id) );
 
 		elseif( User::hasEmail(Input::get('email'), $user->id) ):
 
@@ -259,7 +259,7 @@ class UserController extends ReadController {
 
 			// Audits::add(Auth::user(), $args['msg_warning'], 'UPDATE');
 
-			return self::go( 'update/'.Crypt::encrypt($user->id) );
+			return self::go( 'update/'.Hashids::encrypt($user->id) );
 
 		elseif( strlen(Input::get('password_1')) < 6 AND strlen(Input::get('password_1')) > 0 ):
 
@@ -275,7 +275,7 @@ class UserController extends ReadController {
 
 			// Audits::add(Auth::user(), $args['msg_warning'], 'UPDATE');
 
-			return self::go( 'update/'.Crypt::encrypt($user->id) );
+			return self::go( 'update/'.Hashids::encrypt($user->id) );
 
 		elseif( Input::get('password_1') != Input::get('password_2')):
 
@@ -291,7 +291,7 @@ class UserController extends ReadController {
 
 			// Audits::add(Auth::user(), $args['msg_warning'], 'UPDATE');
 
-			return self::go( 'update/'.Crypt::encrypt($user->id) );
+			return self::go( 'update/'.Hashids::encrypt($user->id) );
 
 		elseif( Input::get('role_id') == null ):
 
@@ -307,7 +307,7 @@ class UserController extends ReadController {
 
 			// Audits::add(Auth::user(), $args['msg_warning'], 'UPDATE');
 
-			return self::go( 'update/'.Crypt::encrypt($user->id) );
+			return self::go( 'update/'.Hashids::encrypt($user->id) );
 
 		else:
 
@@ -350,7 +350,7 @@ class UserController extends ReadController {
 
 				// Audits::add(Auth::user(), $args['msg_danger'], 'UPDATE');
 
-				return self::go( 'update/'.Crypt::encrypt($user->id) );
+				return self::go( 'update/'.Hashids::encrypt($user->id) );
 
 			endif;
 
@@ -367,7 +367,7 @@ class UserController extends ReadController {
 	public function getDelete($id)
 	{
 
-		self::addArgument('user', User::find( Crypt::decrypt($id) ));
+		self::addArgument('user', User::find( Hashids::decode($id) ));
 
 		self::addArgument('roles', Role::all());
 
@@ -389,7 +389,7 @@ class UserController extends ReadController {
 	 */
 	public function postDelete($id)
 	{
-		$user = User::find(Crypt::decrypt($id));
+		$user = User::find(Hashids::decode($id));
 
 		if($user->delete()):
 
@@ -405,7 +405,7 @@ class UserController extends ReadController {
 
 			// Audits::add(Auth::user(), $args['msg_danger'], 'DELETE');
 
-			return self::go( 'delete/'.Crypt::encrypt($user->id) );
+			return self::go( 'delete/'.Hashids::encrypt($user->id) );
 
 		endif;
 
@@ -421,7 +421,7 @@ class UserController extends ReadController {
 	public function getActivate($id)
 	{
 
-		$user = User::find( Crypt::decrypt($id) );
+		$user = User::find( Hashids::decode($id) );
 
 		$user->status = 'active';
 
@@ -455,7 +455,7 @@ class UserController extends ReadController {
 	public function getDeactivate($id)
 	{
 
-		$user = User::find( Crypt::decrypt($id) );
+		$user = User::find( Hashids::decode($id) );
 
 		$user->status = 'inactive';
 

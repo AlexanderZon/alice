@@ -279,7 +279,7 @@
 								<li>
 									<ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('1') }}">
+											<a href="/me/inbox/{{ Hashids::encode('1') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
 											</span>
@@ -293,7 +293,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('2') }}">
+											<a href="/me/inbox/{{ Hashids::encode('2') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar3.jpg" class="img-circle" alt="">
 											</span>
@@ -307,7 +307,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('3') }}">
+											<a href="/me/inbox/{{ Hashids::encode('3') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar1.jpg" class="img-circle" alt="">
 											</span>
@@ -321,7 +321,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('4') }}">
+											<a href="/me/inbox/{{ Hashids::encode('4') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
 											</span>
@@ -335,7 +335,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('5') }}">
+											<a href="/me/inbox/{{ Hashids::encode('5') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar3.jpg" class="img-circle" alt="">
 											</span>

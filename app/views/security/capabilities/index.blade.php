@@ -88,15 +88,15 @@
 							<td>
 								@if(Auth::user()->hasCap('security_capability_get_show'))
 									&nbsp;&nbsp;
-									<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Crypt::encrypt($capability->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+									<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Hashids::encode($capability->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
 								@endif
 								@if(Auth::user()->hasCap('security_capability_get_update'))
 									&nbsp;&nbsp;
-									<a class="font-yellow-crusta tooltips" href="{{ $route . '/update/' . Crypt::encrypt($capability->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
+									<a class="font-yellow-crusta tooltips" href="{{ $route . '/update/' . Hashids::encode($capability->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
 								@endif
 								@if(Auth::user()->hasCap('security_capability_get_delete'))
 									&nbsp;&nbsp;
-									<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Crypt::encrypt($capability->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
+									<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Hashids::encode($capability->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
 								@endif
 							</td>
 						@endif

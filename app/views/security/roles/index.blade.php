@@ -77,13 +77,13 @@
 							@else
 								@if( $role->status == 'active' )
 									@if(Auth::user()->hasCap('security_role_get_deactivate'))
-										<a href="{{ $route . '/deactivate/' . Crypt::encrypt($role->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Desactivar"><span class="label bg-blue">{{ 'Activo' }}</span></a>
+										<a href="{{ $route . '/deactivate/' . Hashids::encode($role->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Desactivar"><span class="label bg-blue">{{ 'Activo' }}</span></a>
 									@else
 										{{ $role->status == 'active' ? 'Activo' : 'Inactivo' }}
 									@endif
 								@elseif( $role->status == 'inactive' )
 									@if(Auth::user()->hasCap('security_role_get_activate'))
-										<a href="{{ $route . '/activate/' . Crypt::encrypt($role->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Activar"><span class="label bg-yellow-saffron">{{ 'Inactivo' }}</span>
+										<a href="{{ $route . '/activate/' . Hashids::encode($role->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Activar"><span class="label bg-yellow-saffron">{{ 'Inactivo' }}</span>
 									@else
 										{{ $role->status == 'active' ? 'Activo' : 'Inactivo' }}
 									@endif
@@ -94,19 +94,19 @@
 							<td>
 								@if(Auth::user()->hasCap('security_role_get_show'))
 									&nbsp;&nbsp;
-									<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Crypt::encrypt($role->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a>
+									<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Hashids::encode($role->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a>
 								@endif
 								@if(Auth::user()->hasCap('security_role_get_assign'))
 									&nbsp;&nbsp;
-									<a class="font-green-jungle tooltips" href="{{ $route . '/assign/' . Crypt::encrypt($role->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Asignar Capacidades"> <i class="fa fa-gavel"></i> </a> 
+									<a class="font-green-jungle tooltips" href="{{ $route . '/assign/' . Hashids::encode($role->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Asignar Capacidades"> <i class="fa fa-gavel"></i> </a> 
 								@endif
 								@if(Auth::user()->hasCap('security_role_get_update'))
 									&nbsp;&nbsp;
-									<a class="font-yellow-crusta tooltips" href="{{ $route . '/update/' . Crypt::encrypt($role->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
+									<a class="font-yellow-crusta tooltips" href="{{ $route . '/update/' . Hashids::encode($role->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
 								@endif
 								@if(Auth::user()->hasCap('security_role_get_delete'))
 									&nbsp;&nbsp;
-									<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Crypt::encrypt($role->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
+									<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Hashids::encode($role->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
 								@endif
 							</td>
 						@endif

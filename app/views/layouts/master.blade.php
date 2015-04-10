@@ -279,7 +279,7 @@
 								<li>
 									<ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('1') }}">
+											<a href="/me/inbox/{{ Hashids::encode('1') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
 											</span>
@@ -293,7 +293,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('2') }}">
+											<a href="/me/inbox/{{ Hashids::encode('2') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar3.jpg" class="img-circle" alt="">
 											</span>
@@ -307,7 +307,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('3') }}">
+											<a href="/me/inbox/{{ Hashids::encode('3') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar1.jpg" class="img-circle" alt="">
 											</span>
@@ -321,7 +321,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('4') }}">
+											<a href="/me/inbox/{{ Hashids::encode('4') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
 											</span>
@@ -335,7 +335,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="/me/inbox/{{ Crypt::encrypt('5') }}">
+											<a href="/me/inbox/{{ Hashids::encode('5') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar3.jpg" class="img-circle" alt="">
 											</span>
@@ -623,7 +623,7 @@
 
 					@if(Auth::user()->hasCap('coordinators_teachers_get_index'))
 					<li class="tooltips {{ $name == 'coordinators_teachers_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Profesores">
-						<a href="/teachers">
+						<a href="/coordinators/teachers">
 						<i class="icon-graduation"></i>
 						<span class="title">
 						Profesores </span>
@@ -633,7 +633,7 @@
 
 							@if(Auth::user()->hasCap('coordinators_teachers_get_index'))
 							<li class="{{ $name == 'coordinators_teachers_read' ? 'active' : '' }}">
-								<a href="/teachers">
+								<a href="/coordinators/teachers">
 								<i class="icon-list"></i>
 								Activos</a>
 							</li>
@@ -641,7 +641,7 @@
 
 							@if(Auth::user()->hasCap('coordinators_teachers_inactive_get_index'))
 							<li class="{{ $name == 'coordinators_teachers_inactive' ? 'active' : '' }}">
-								<a href="/teachers/inactive">
+								<a href="/coordinators/teachers/inactive">
 								<i class="icon-list"></i>
 								Inactivos</a>
 							</li>
@@ -653,7 +653,7 @@
 
 					@if(Auth::user()->hasCap('coordinators_students_get_index'))
 					<li class="tooltips {{ $name == 'coordinators_students_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Estudiantes">
-						<a href="/students">
+						<a href="/coordinators/students">
 						<i class="icon-emoticon-smile"></i>
 						<span class="title">
 						Estudiantes </span>
@@ -663,7 +663,7 @@
 
 							@if(Auth::user()->hasCap('coordinators_students_get_index'))
 							<li class="{{ $name == 'coordinators_students_read' ? 'active' : '' }}">
-								<a href="/students">
+								<a href="/coordinators/students">
 								<i class="icon-list"></i>
 								Activos</a>
 							</li>
@@ -671,7 +671,7 @@
 
 							@if(Auth::user()->hasCap('coordinators_students_inactive_get_index'))
 							<li class="{{ $name == 'coordinators_students_inactive' ? 'active' : '' }}">
-								<a href="/students/inactive">
+								<a href="/coordinators/students/inactive">
 								<i class="icon-list"></i>
 								Inactivos</a>
 							</li>
@@ -683,17 +683,17 @@
 
 					@if(Auth::user()->hasCap('coordinators_courses_get_index'))
 					<li class="tooltips {{ $name == 'coordinators_courses_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
-						<a href="/courses">
-						<i class="icon-emoticon-smile"></i>
-						<span class="title">
-						Cursos </span>
-						<span class="arrow"></span>
+						<a href="/coordinators/courses">
+							<i class="icon-emoticon-smile"></i>
+							<span class="title">
+							Cursos </span>
+							<span class="arrow"></span>
 						</a>
 						<ul class="sub-menu">
 
 							@if(Auth::user()->hasCap('coordinators_courses_get_index'))
 							<li class="{{ $name == 'coordinators_courses_read' ? 'active' : '' }}">
-								<a href="/courses">
+								<a href="/coordinators/courses">
 								<i class="icon-list"></i>
 								Activos</a>
 							</li>
@@ -701,7 +701,7 @@
 
 							@if(Auth::user()->hasCap('coordinators_courses_inactive_get_index'))
 							<li class="{{ $name == 'coordinators_courses_inactive' ? 'active' : '' }}">
-								<a href="/courses/inactive">
+								<a href="/coordinators/courses/inactive">
 								<i class="icon-list"></i>
 								Inactivos</a>
 							</li>

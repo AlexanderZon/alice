@@ -75,20 +75,20 @@
 								{{ $user->email }}
 							</td>
 							<td>
-								{{ $user->role->title }}
+								{{ $user->role->title }} 
 							</td>
 							<td>
 							@if(Auth::user()->id == $user->id)
 								{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
 							@elseif( $user->status == 'active' )
 								@if(Auth::user()->hasCap('security_user_get_deactivate'))
-									<a href="{{ $route . '/deactivate/' . Crypt::encrypt($user->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Desactivar"><span class="label bg-blue">{{ 'Activo' }}</span></a>
+									<a href="{{ $route . '/deactivate/' . Hashids::encode($user->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Desactivar"><span class="label bg-blue">{{ 'Activo' }}</span></a>
 								@else
 									{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
 								@endif
 							@elseif( $user->status == 'inactive' )
 								@if(Auth::user()->hasCap('security_user_get_activate'))
-									<a href="{{ $route . '/activate/' . Crypt::encrypt($user->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Activar"><span class="label bg-yellow-saffron">{{ 'Inactivo' }}</span>
+									<a href="{{ $route . '/activate/' . Hashids::encode($user->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Activar"><span class="label bg-yellow-saffron">{{ 'Inactivo' }}</span>
 								@else
 									{{ $user->status == 'active' ? 'Activo' : 'Inactivo' }}
 								@endif
@@ -101,20 +101,20 @@
 									@if( $user->status == 'active' )
 										@if(Auth::user()->hasCap('security_user_get_show'))
 											&nbsp;&nbsp;
-											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Hashids::encode($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
 										@endif
 									@elseif( $user->status == 'inactive' )
 										@if(Auth::user()->hasCap('security_user_get_show'))
 											&nbsp;&nbsp;
-											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Hashids::encode($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
 										@endif
 										@if(Auth::user()->hasCap('security_user_get_update'))
 											&nbsp;&nbsp;
-											<a class="font-yellow-crusta tooltips" href="{{ $route . '/update/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
+											<a class="font-yellow-crusta tooltips" href="{{ $route . '/update/' . Hashids::encode($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
 										@endif
 										@if(Auth::user()->hasCap('security_user_get_delete'))
 											&nbsp;&nbsp;
-											<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Crypt::encrypt($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
+											<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Hashids::encode($user->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
 										@endif
 									@endif
 								</td>
