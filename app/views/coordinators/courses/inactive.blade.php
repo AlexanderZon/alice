@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/coordinators/courses/inactive.blade.php

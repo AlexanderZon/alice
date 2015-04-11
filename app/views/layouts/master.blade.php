@@ -639,12 +639,12 @@
 							</li>
 							@endif
 
-							@if(Auth::user()->hasCap('coordinators_teachers_inactive_get_index'))
-							<li class="{{ $name == 'coordinators_teachers_inactive' ? 'active' : '' }}">
+							@if(Auth::user()->hasCap('coordinators_teachers_get_inactive'))
+							<!-- <li class="{{ $name == 'coordinators_teachers_inactive' ? 'active' : '' }}">
 								<a href="/coordinators/teachers/inactive">
-								<i class="icon-list"></i>
+								<i class="icon-ban"></i>
 								Inactivos</a>
-							</li>
+							</li> -->
 							@endif
 
 						</ul>
@@ -669,12 +669,12 @@
 							</li>
 							@endif
 
-							@if(Auth::user()->hasCap('coordinators_students_inactive_get_index'))
-							<li class="{{ $name == 'coordinators_students_inactive' ? 'active' : '' }}">
+							@if(Auth::user()->hasCap('coordinators_students_get_inactive'))
+							<!-- <li class="{{ $name == 'coordinators_students_inactive' ? 'active' : '' }}">
 								<a href="/coordinators/students/inactive">
-								<i class="icon-list"></i>
+								<i class="icon-ban"></i>
 								Inactivos</a>
-							</li>
+							</li> -->
 							@endif
 
 						</ul>
@@ -684,7 +684,7 @@
 					@if(Auth::user()->hasCap('coordinators_courses_get_index'))
 					<li class="tooltips {{ $name == 'coordinators_courses_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
 						<a href="/coordinators/courses">
-							<i class="icon-emoticon-smile"></i>
+							<i class="icon-book-open"></i>
 							<span class="title">
 							Cursos </span>
 							<span class="arrow"></span>
@@ -699,12 +699,12 @@
 							</li>
 							@endif
 
-							@if(Auth::user()->hasCap('coordinators_courses_inactive_get_index'))
-							<li class="{{ $name == 'coordinators_courses_inactive' ? 'active' : '' }}">
+							@if(Auth::user()->hasCap('coordinators_courses_get_inactive'))
+							<!-- <li class="{{ $name == 'coordinators_courses_inactive' ? 'active' : '' }}">
 								<a href="/coordinators/courses/inactive">
-								<i class="icon-list"></i>
+								<i class="icon-ban"></i>
 								Inactivos</a>
-							</li>
+							</li> -->
 							@endif
 
 						</ul>

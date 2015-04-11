@@ -5,8 +5,8 @@
 	<div class="page-toolbar">
 		<!-- BEGIN THEME PANEL -->
 		<div class="btn-group btn-theme-panel">
-			@if(Auth::user()->hasCap('coordinators_teachers_get_inactive'))
-				<a href="{{ $route }}/inactive" class="btn tooltips" data-toggle="Visualizar Profesores Inactivos" data-container="body" data-placement="left" data-html="true"  data-original-title="Visualizar Profesores Inactivos"><i class="icon-ban"></i></a>
+			@if(Auth::user()->hasCap('coordinators_teachers_get_index'))
+				<a href="{{ $route }}" class="btn tooltips" data-toggle="Volver al Listado" data-container="body" data-placement="left" data-html="true"  data-original-title="Volver al Listado de Usuarios"><i class="icon-arrow-left"></i></a>
 			@endif
 			@if(Auth::user()->hasCap('coordinators_teachers_get_create'))
 				<a href="{{ $route }}/create" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo usuario"><i class="icon-plus"></i></a>
@@ -14,7 +14,7 @@
 		</div>
 		<!-- END THEME PANEL -->
 	</div>
-
+	
 @stop
 
 @section ("content")
@@ -25,14 +25,14 @@
 				<div class="portlet box green-haze">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="fa fa-graduation-cap"></i>Listado de Profesores
+							<i class="fa fa-graduation-cap"></i>Listado de Profesores Inactivos
 						</div>
 						<div class="tools">
-							@if(Auth::user()->hasCap('coordinators_teachers_get_inactive'))
-								<a href="{{ $route }}/inactive" class="label bg-green-haze"><i class="fa fa-ban"></i> Ver Inactivos</a>
+							@if(Auth::user()->hasCap('coordinators_teachers_get_index'))
+								<a href="{{ $route }}" class="label bg-green-haze"><i class="fa fa-arrow-circle-left"></i> Volver</a>
 							@endif
 							@if(Auth::user()->hasCap('coordinators_teachers_get_create'))
-								<a href="{{ $route }}/create" class="label bg-green-haze"><i class="fa fa-plus-circle"></i> Añadir Nuevo</a>
+								<a href="{{ $route }}/create" class="label bg-green-haze"><i class="fa fa-plus-circle"></i> Nuevo</a>
 							@endif
 						</div>
 					</div>

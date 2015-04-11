@@ -27,7 +27,7 @@ class Role extends \Eloquent {
 
 	public function users(){
 
-		return $this->hasMany('Users', 'role_id', 'id');
+		return $this->hasMany('User', 'role_id', 'id');
 		
 	}
 
@@ -38,6 +38,22 @@ class Role extends \Eloquent {
 		if(isset($role[0])):
 
 			return true;
+
+		else:
+
+			return false;
+
+		endif;
+
+	}
+
+	public static function getByName( $name ){
+
+		$role = self::where('name','=',$name)->take(1)->get();
+
+		if(isset($role[0])):
+
+			return $role[0];
 
 		else:
 

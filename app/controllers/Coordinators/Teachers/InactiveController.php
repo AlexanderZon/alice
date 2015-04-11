@@ -1,86 +1,57 @@
 <?php namespace Coordinators\Teachers;
 
+use \User as User;
+use \Role as Role;
+use \Capability as Capability;
+use \Input as Input;
+use \Hash as Hash;
+use \Hashids as Hashids;
+
 class InactiveController extends ReadController {
+
+	public function __construct(){
+
+		parent::__construct();
+
+		$this->beforeFilter('auth');
+
+		$this->beforeFilter('capabilities');
+
+		$this->beforeFilter('parameters');
+
+		$this->beforeFilter('arguments');
+
+		$this->afterFilter('auditory');
+
+		self::pushName('inactive');
+
+		self::addSection('inactive', 'Inactivos');
+
+		self::$title = 'Profesores';
+
+		self::$description = 'Gestión de Profesores del Sistema';
+
+		self::pushBreadCrumb('Profesores', self::$route );
+
+		# --- Put here your global args for this Controller --- #
+
+	}
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /inactive
+	 * GET /teachers
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getIndex()
 	{
-		//
-	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /inactive/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+		self::addArgument('teachers', User::getTeachers('inactive'));
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /inactive
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+		self::addArgument('roles', Role::all());
 
-	/**
-	 * Display the specified resource.
-	 * GET /inactive/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+		return self::make('inactive');
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /inactive/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /inactive/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /inactive/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }

@@ -29,13 +29,15 @@ class ReadController extends \Coordinators\ReadController {
 
 		self::setModule('teachers');
 
-		self::pushName('teacher');
+		self::pushName('teachers_read');
 
-		self::$title = 'Usuarios';
+		self::addSection('inactive', 'Inactivos');
 
-		self::$description = 'Gestión de Usuarios del Sistema';
+		self::$title = 'Profesores';
 
-		self::pushBreadCrumb('Usuarios', self::$route );
+		self::$description = 'Gestión de Profesores del Sistema';
+
+		self::pushBreadCrumb('Profesores', self::$route );
 
 		# --- Put here your global args for this Controller --- #
 
@@ -50,11 +52,28 @@ class ReadController extends \Coordinators\ReadController {
 	public function getIndex()
 	{
 
-		self::addArgument('teachers', User::all());
+		self::addArgument('teachers', User::getTeachers());
 
 		self::addArgument('roles', Role::all());
 
 		return self::make('index');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /teachers
+	 *
+	 * @return Response
+	 */
+	public function getInactive()
+	{
+
+		self::addArgument('teachers', User::getTeachers('inactive'));
+
+		self::addArgument('roles', Role::all());
+
+		return self::make('inactive');
 
 	}
 
@@ -85,7 +104,7 @@ class ReadController extends \Coordinators\ReadController {
 	public function getCreate()
 	{
 
-		self::addArgument('teachers', User::all());
+		self::addArgument('teachers', User::getTeachers());
 
 		self::addArgument('roles', Role::all());
 
@@ -102,58 +121,53 @@ class ReadController extends \Coordinators\ReadController {
 	public function postCreate()
 	{
 
-		if( User::hasUsername(Input::get('teachername')) ):
+		if( User::hasUsername(Input::get('username')) ):
 
-			self::setWarning('coordinator_teacher_teachername_err', 'Error al agregar usuario', 'El usuario ' . Input::get('teachername') . ' ya existe, por favor ingrese uno diferente');
+			self::setWarning('coordinators_teachers_username_err', 'Error al agregar usuario', 'El usuario ' . Input::get('username') . ' ya existe, por favor ingrese uno diferente');
 
 			return self::go( 'create' );
 
 		elseif( User::hasEmail(Input::get('email')) ):
 
-			self::setWarning('coordinator_teacher_email_err', 'Error al agregar usuario', 'El correo ' . Input::get('email') . ' ya existe, por favor ingrese uno diferente');
+			self::setWarning('coordinators_teachers_email_err', 'Error al agregar usuario', 'El correo ' . Input::get('email') . ' ya existe, por favor ingrese uno diferente');
 
 			return self::go( 'create' );
 
 		elseif( strlen(Input::get('password_1')) < 6 ):
 
-			self::setWarning('coordinator_teacher_password_err', 'Error al agregar usuario', 'La contraseña debe contener más de 5 caracteres');
+			self::setWarning('coordinators_teachers_password_err', 'Error al agregar usuario', 'La contraseña debe contener más de 5 caracteres');
 
 			return self::go( 'create' );
 
 		elseif( Input::get('password_1') != Input::get('password_2')):
 
-			self::setWarning('coordinator_teacher_password_err', 'Error al agregar usuario', 'Las contraseñas deben ser iguales');
-
-			return self::go( 'create' );
-
-
-		elseif( Input::get('role_id') == null ):
-
-			self::setWarning('coordinator_teacher_role_err', 'Error al agregar usuario', 'Debe indicar el rol del usuario');
+			self::setWarning('coordinators_teachers_password_err', 'Error al agregar usuario', 'Las contraseñas deben ser iguales');
 
 			return self::go( 'create' );
 
 		else:
 
+			$role = Role::getByName( 'teacher' );
+
 			$teacher = new User();
 			$teacher->first_name = Input::get('first_name');
 			$teacher->last_name = Input::get('last_name');
-			$teacher->teachername = Input::get('teachername');
+			$teacher->username = Input::get('username');
 			$teacher->display_name = Input::get('display_name') != '' ? Input::get('display_name') : Input::get('first_name').' '.Input::get('last_name');
 			$teacher->email = Input::get('email');
 			$teacher->password = Hash::make(Input::get('password_1'));
-			$teacher->role_id = Input::get('role_id');
-			$teacher->status = 'inactive';
+			$teacher->role_id = $role->id;
+			$teacher->status = 'active';
 			
 			if( $teacher->save() ):
 	
-				self::setSuccess('coordinator_teacher_create', 'Usuario Agregado', 'El usuario ' . $teacher->display_name . ' fue agregado exitosamente');
+				self::setSuccess('coordinators_teachers_create', 'Usuario Agregado', 'El usuario ' . $teacher->display_name . ' fue agregado exitosamente');
 
 				return self::go( 'index' );
 
 			else:
 
-				self::setDanger('coordinator_teacher_create_err', 'Error al agregar usuario', 'Hubo un error al agregar el usuario ' . $teacher->display_name);
+				self::setDanger('coordinators_teachers_create_err', 'Error al agregar usuario', 'Hubo un error al agregar el usuario ' . $teacher->display_name);
 
 				return self::go( 'create' );
 
@@ -193,56 +207,52 @@ class ReadController extends \Coordinators\ReadController {
 
 		$teacher = User::find(Hashids::decode($id));
 
-		if( User::hasUsername(Input::get('teachername'), $teacher->id ) ):
+		if( User::hasUsername(Input::get('username'), $teacher->id ) ):
 			
-			self::setWarning('coordinator_teacher_teachername_err', 'Error al agregar usuario', 'El usuario ' . Input::get('teachername') . ' ya existe, por favor ingrese uno diferente');
+			self::setWarning('coordinators_teachers_username_err', 'Error al agregar usuario', 'El usuario ' . Input::get('username') . ' ya existe, por favor ingrese uno diferente');
 
 			return self::go( 'update/'.Crypt::encrypt($teacher->id) );
 
 		elseif( User::hasEmail(Input::get('email'), $teacher->id) ):
 			
-			self::setWarning('coordinator_teacher_email_err', 'Error al agregar usuario', 'El correo ' . Input::get('email') . ' ya existe, por favor ingrese uno diferente');
+			self::setWarning('coordinators_teachers_email_err', 'Error al agregar usuario', 'El correo ' . Input::get('email') . ' ya existe, por favor ingrese uno diferente');
 
 			return self::go( 'update/'.Crypt::encrypt($teacher->id) );
 
 		elseif( strlen(Input::get('password_1')) < 6 AND strlen(Input::get('password_1')) > 0 ):
 			
-			self::setWarning('coordinator_teacher_password_err', 'Error al agregar usuario', 'La contraseña debe contener más de 5 caracteres');
+			self::setWarning('coordinators_teachers_password_err', 'Error al agregar usuario', 'La contraseña debe contener más de 5 caracteres');
 
 			return self::go( 'update/'.Crypt::encrypt($teacher->id) );
 
 		elseif( Input::get('password_1') != Input::get('password_2')):
 			
-			self::setWarning('coordinator_teacher_password_err', 'Error al agregar usuario', 'Las contraseñas deben ser iguales');
-
-			return self::go( 'update/'.Crypt::encrypt($teacher->id) );
-
-		elseif( Input::get('role_id') == null ):
-			
-			self::setWarning('coordinator_teacher_role_err', 'Error al agregar usuario', 'Debe indicar el rol del usuario');
+			self::setWarning('coordinators_teachers_password_err', 'Error al agregar usuario', 'Las contraseñas deben ser iguales');
 
 			return self::go( 'update/'.Crypt::encrypt($teacher->id) );
 
 		else:
 
+			$role = Role::getByName( 'teacher' );
+
 			$teacher->first_name = Input::get('first_name');
 			$teacher->last_name = Input::get('last_name');
-			$teacher->teachername = Input::get('teachername');
+			$teacher->username = Input::get('username');
 			$teacher->display_name = Input::get('display_name') != '' ? Input::get('display_name') : Input::get('first_name').' '.Input::get('last_name');
 			$teacher->email = Input::get('email');
 			$teacher->password = Input::get('password_1') != '' ? Hash::make(Input::get('password_1')) : $teacher->password;
-			$teacher->role_id = Input::get('role_id');
+			$teacher->role_id = $role->id;
 			$teacher->status = 'inactive';
 
 			if( $teacher->save() ):
 
-				self::setSuccess('coordinator_teacher_update', 'Usuario actualizado', 'El usuario ' . $teacher->display_name . ' fue actualizado exitosamente');
+				self::setSuccess('coordinators_teachers_update', 'Usuario actualizado', 'El usuario ' . $teacher->display_name . ' fue actualizado exitosamente');
 
 				return self::go( 'index' );
 
 			else:
 				
-				self::setDanger('coordinator_teacher_update_err', 'Error al actualizar usuario', 'Hubo un error al actualizar el usuario ' . $teacher->display_name);
+				self::setDanger('coordinators_teachers_update_err', 'Error al actualizar usuario', 'Hubo un error al actualizar el usuario ' . $teacher->display_name);
 
 				return self::go( 'update/'.Crypt::encrypt($teacher->id) );
 
@@ -281,13 +291,13 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($teacher->delete()):
 
-			self::setSuccess('coordinator_teacher_delete', 'Usuario Eliminado', 'El usuario ' . $teacher->display_name . ' fue eliminado exitosamente');
+			self::setSuccess('coordinators_teachers_delete', 'Usuario Eliminado', 'El usuario ' . $teacher->display_name . ' fue eliminado exitosamente');
 
 			return self::go( 'index' );
 
 		else:
 
-			self::setDanger('coordinator_teacher_delete_err', 'Error al eliminar usuario', 'Hubo un error al eliminar el usuario ' . $teacher->display_name);
+			self::setDanger('coordinators_teachers_delete_err', 'Error al eliminar usuario', 'Hubo un error al eliminar el usuario ' . $teacher->display_name);
 
 			return self::go( 'delete/'.Crypt::encrypt($teacher->id) );
 
@@ -311,13 +321,13 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($teacher->save()):
 
-			self::setSuccess('coordinator_teacher_activate', 'Usuario Activado', 'El usuario ' . $teacher->display_name . ' fue activado exitosamente');
+			self::setSuccess('coordinators_teachers_activate', 'Usuario Activado', 'El usuario ' . $teacher->display_name . ' fue activado exitosamente');
 
 			return self::go( 'index' );
 
 		else:
 
-			self::setDanger('coordinator_teacher_activate_err', 'Error al activar usuario', 'Hubo un error al activar el usuario ' . $teacher->display_name);
+			self::setDanger('coordinators_teachers_activate_err', 'Error al activar usuario', 'Hubo un error al activar el usuario ' . $teacher->display_name);
 
 			return self::go( 'index' );
 
@@ -341,13 +351,13 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($teacher->save()):
 
-			self::setSuccess('coordinator_teacher_deactivate', 'Usuario Desactivado', 'El usuario ' . $teacher->display_name . ' fue desactivado exitosamente');
+			self::setSuccess('coordinators_teachers_deactivate', 'Usuario Desactivado', 'El usuario ' . $teacher->display_name . ' fue desactivado exitosamente');
 
 			return self::go( 'index' );
 
 		else:
 
-			self::setDanger('coordinator_teacher_deactivate_err', 'Error al desactivar usuario', 'Hubo un error al desactivar el usuario ' . $teacher->display_name);
+			self::setDanger('coordinators_teachers_deactivate_err', 'Error al desactivar usuario', 'Hubo un error al desactivar el usuario ' . $teacher->display_name);
 
 			return self::go( 'index' );
 

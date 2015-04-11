@@ -196,6 +196,38 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
+	public static function getTeachers( $status = 'active' ){
+
+		if( $role = Role::getByName( 'teacher' ) ):
+
+			$users = self::where( 'role_id', '=', $role->id )->where( 'status', '=', $status )->get();
+
+			return $users;
+
+		else:
+
+			return false;
+
+		endif;
+
+	}
+
+	public static function getStudents( $status = 'active' ){
+
+		if( $role = Role::getByName( 'student' ) ):
+
+			$users = self::where( 'role_id', '=', $role->id )->where( 'status', '=', $status )->get();
+
+			return $users;
+
+		else:
+
+			return false;
+
+		endif;
+
+	}
+
 	public static function hasUsername( $username, $id = '' ){
 
 		if( $id != '' ):
