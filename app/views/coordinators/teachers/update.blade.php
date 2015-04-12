@@ -37,7 +37,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-3">Nombre</label>
 										<div class="col-md-9">
-											<input name="first_name" type="text" class="form-control" placeholder="Ingrese el nombre del Usuario" value="{{ $user->first_name }}">
+											<input name="first_name" type="text" class="form-control" placeholder="Ingrese el nombre del Usuario" value="{{ $teacher->first_name }}">
 											<!-- <span class="help-block">This is inline help</span> -->
 										</div>
 									</div>
@@ -47,7 +47,7 @@
 									<div class="form-group {{ false ? 'has-error' : '' }}">
 										<label class="control-label col-md-3">Apellido</label>
 										<div class="col-md-9">
-											<input name="last_name" type="text" class="form-control" placeholder="Ingrese el nombre del Usuario" value="{{ $user->last_name }}">
+											<input name="last_name" type="text" class="form-control" placeholder="Ingrese el nombre del Usuario" value="{{ $teacher->last_name }}">
 											<!-- <span class="help-block">This is inline help</span> -->
 										</div>
 									</div>
@@ -58,12 +58,12 @@
 							<!--/row-->
 							<div class="row">
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_username_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'coordinators_teachers_username_err' ? 'has-error' : '' }}">
 										<label class="control-label col-md-3">Usuario</label>
 										<div class="col-md-9">
 											<div class="input-icon right">
 												<i class="fa fa-user"></i>
-												<input name="username" type="text" class="form-control" placeholder="Ingrese el nombre del Usuario" value="{{ $user->username }}" readonly required>
+												<input name="username" type="text" class="form-control" placeholder="Ingrese el nombre del Usuario" value="{{ $teacher->username }}" readonly required>
 											</div>
 											<!-- <span class="help-block">This is inline help</span> -->
 										</div>
@@ -71,12 +71,12 @@
 								</div>
 								<!--/span-->
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_email_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'coordinators_teachers_email_err' ? 'has-error' : '' }}">
 										<label class="control-label col-md-3">Correo</label>
 										<div class="col-md-9">
 											<div class="input-icon right">
 												<i class="fa fa-envelope"></i>
-												<input name="email" type="email" placeholder="Ingrese el Correo Electrónico" class="form-control"  value="{{ $user->email }}" required>
+												<input name="email" type="email" placeholder="Ingrese el Correo Electrónico" class="form-control"  value="{{ $teacher->email }}" required>
 											</div>
 										</div>
 									</div>
@@ -92,14 +92,14 @@
 										<div class="col-md-9">
 											<div class="input-icon right">
 												<i class="fa fa-eye"></i>
-												<input name="display_name" type="text" class="form-control" placeholder="Ingrese el nombre para mostrar" value="{{ $user->display_name }}">
+												<input name="display_name" type="text" class="form-control" placeholder="Ingrese el nombre para mostrar" value="{{ $teacher->display_name }}">
 											</div>
 											<span class="help-block">This is inline help</span>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_role_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'coordinators_teachers_role_err' ? 'has-error' : '' }}">
 										<label class="control-label col-md-3">Rol</label>
 										<div class="col-md-9">
 											<div class="input-group ">
@@ -109,7 +109,7 @@
 												<select name="role_id" class="form-control select2me" data-placeholder="Seleccione un rol de usuario..." required>
 													<option value>--- SELECCIONE UN ROL DE USUARIO ---</option>
 													@foreach( $roles as $role )
-														<option value="{{ $role->id }}" {{ $role->id == $user->role_id ? 'selected' : '' }}>{{ $role->title }}</option>
+														<option value="{{ $role->id }}" {{ $role->id == $teacher->role_id ? 'selected' : '' }}>{{ $role->title }}</option>
 													@endforeach
 												</select>
 											</div>
@@ -120,7 +120,7 @@
 							 -->
 							<div class="row">
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_password_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'coordinators_teachers_password_err' ? 'has-error' : '' }}">
 										<label for="inputPassword1" class="col-md-3 control-label">Contraseña</label>
 										<div class="col-md-9">
 											<div class="input-icon right">
@@ -132,7 +132,7 @@
 								</div>
 								<!--/span-->
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_password_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'coordinators_teachers_password_err' ? 'has-error' : '' }}">
 										<label for="inputPassword1" class="col-md-3 control-label">Repita la Contraseña</label>
 										<div class="col-md-9">
 											<div class="input-icon right">

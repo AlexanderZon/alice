@@ -635,7 +635,7 @@
 							<li class="{{ $name == 'coordinators_teachers_read' ? 'active' : '' }}">
 								<a href="/coordinators/teachers">
 								<i class="icon-list"></i>
-								Activos</a>
+								Listado</a>
 							</li>
 							@endif
 
@@ -665,7 +665,7 @@
 							<li class="{{ $name == 'coordinators_students_read' ? 'active' : '' }}">
 								<a href="/coordinators/students">
 								<i class="icon-list"></i>
-								Activos</a>
+								Listado</a>
 							</li>
 							@endif
 
@@ -695,7 +695,7 @@
 							<li class="{{ $name == 'coordinators_courses_read' ? 'active' : '' }}">
 								<a href="/coordinators/courses">
 								<i class="icon-list"></i>
-								Activos</a>
+								Listado</a>
 							</li>
 							@endif
 

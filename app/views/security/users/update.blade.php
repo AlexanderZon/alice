@@ -56,7 +56,7 @@
 							<!--/row-->
 							<div class="row">
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_username_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'security_user_username_err' ? 'has-error' : '' }}">
 										<label class="control-label col-md-3">Usuario</label>
 										<div class="col-md-9">
 											<div class="input-icon right">
@@ -85,7 +85,7 @@
 							<!--/row-->
 							<div class="row">
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_email_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'security_user_email_err' ? 'has-error' : '' }}">
 										<label class="control-label col-md-3">Correo</label>
 										<div class="col-md-9">
 											<div class="input-icon right">
@@ -96,7 +96,7 @@
 									</div>
 								</div>
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_role_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'security_user_role_err' ? 'has-error' : '' }}">
 										<label class="control-label col-md-3">Rol</label>
 										<div class="col-md-9">
 											<div class="input-group ">
@@ -116,7 +116,7 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_password_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'security_user_password_err' ? 'has-error' : '' }}">
 										<label for="inputPassword1" class="col-md-3 control-label">Contraseña</label>
 										<div class="col-md-9">
 											<div class="input-icon right">
@@ -128,7 +128,7 @@
 								</div>
 								<!--/span-->
 								<div class="col-md-6">
-									<div class="form-group {{ $msg_warning['name'] == 'user_password_err' ? 'has-error' : '' }}">
+									<div class="form-group {{ $msg_warning['name'] == 'security_user_password_err' ? 'has-error' : '' }}">
 										<label for="inputPassword1" class="col-md-3 control-label">Repita la Contraseña</label>
 										<div class="col-md-9">
 											<div class="input-icon right">
