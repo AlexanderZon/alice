@@ -26,6 +26,7 @@ if(Auth::check()):
 				Route::controller('/ancestors','\Ancestors\ReadController');				
 
 				# Security Module 
+				
 				Route::controller('/security/users','\Security\UserController');
 				Route::controller('/security/roles','\Security\RoleController');
 				Route::controller('/security/capabilities','\Security\CapabilityController');
@@ -56,6 +57,7 @@ if(Auth::check()):
 			default:
 				# Routes for unknown
 			break;
+
 	}
 
 	Route::controller('/rpsls', '\Games\RPSLS\ReadController');
@@ -66,6 +68,7 @@ if(Auth::check()):
 	Route::controller('/', '\Security\AuthenticationController');
 
 else:
+
 	Route::controller('/auth', '\Security\AuthenticationController');
 	Route::any('/{one?}/{two?}/{three?}/{four?}/{five?}/', function($one = '' ,$two = '' ,$three = '' ,$four = '' ,$five = '' ){
 		if(Request::path() == '/'):
