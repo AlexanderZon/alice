@@ -161,7 +161,7 @@ class ReadController extends \Coordinators\ReadController {
 			
 			if( $student->save() ):
 	
-				self::setSuccess('coordinators_students_create', 'Estudiante Agregado', 'El estudiante ' . $student->display_name . ' fue agregado exitosamente');
+				self::setSuccess('coordinators_students_create', 'Estudiante Agregado', 'El estudiante ' . $student->display_name . ' fue agregado exitósamente');
 
 				return self::go( 'index' );
 
@@ -246,7 +246,7 @@ class ReadController extends \Coordinators\ReadController {
 
 			if( $student->save() ):
 
-				self::setSuccess('coordinators_students_update', 'Estudiante actualizado', 'El estudiante ' . $student->display_name . ' fue actualizado exitosamente');
+				self::setSuccess('coordinators_students_update', 'Estudiante actualizado', 'El estudiante ' . $student->display_name . ' fue actualizado exitósamente');
 
 				return self::go( 'inactive' );
 
@@ -291,7 +291,7 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($student->delete()):
 
-			self::setSuccess('coordinators_students_delete', 'Estudiante Eliminado', 'El estudiante ' . $student->display_name . ' fue eliminado exitosamente');
+			self::setSuccess('coordinators_students_delete', 'Estudiante Eliminado', 'El estudiante ' . $student->display_name . ' fue eliminado exitósamente');
 
 			return self::go( 'index' );
 
@@ -321,7 +321,7 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($student->save()):
 
-			self::setSuccess('coordinators_students_activate', 'Estudiante Activado', 'El estudiante ' . $student->display_name . ' fue activado exitosamente');
+			self::setSuccess('coordinators_students_activate', 'Estudiante Activado', 'El estudiante ' . $student->display_name . ' fue activado exitósamente');
 
 			return self::go( 'index' );
 
@@ -351,7 +351,7 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($student->save()):
 
-			self::setSuccess('coordinators_students_deactivate', 'Estudiante Desactivado', 'El estudiante ' . $student->display_name . ' fue desactivado exitosamente');
+			self::setSuccess('coordinators_students_deactivate', 'Estudiante Desactivado', 'El estudiante ' . $student->display_name . ' fue desactivado exitósamente');
 
 			return self::go( 'index' );
 

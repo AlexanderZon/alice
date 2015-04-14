@@ -173,7 +173,7 @@ class UserController extends ReadController {
 			
 			if( $user->save() ):
 	
-				self::setSuccess('security_user_create', 'Usuario Agregado', 'El usuario ' . $user->display_name . ' fue agregado exitosamente');
+				self::setSuccess('security_user_create', 'Usuario Agregado', 'El usuario ' . $user->display_name . ' fue agregado exitósamente');
 
 				// Audits::add(Auth::user(), $args['msg_success'], 'CREATE');
 
@@ -326,11 +326,11 @@ class UserController extends ReadController {
 					'msg_success' => array(
 						'name' => 'users_update',
 						'title' => 'Usuario actualizado',
-						'description' => 'El usuario ' . $user->display_name . ' fue actualizado exitosamente'
+						'description' => 'El usuario ' . $user->display_name . ' fue actualizado exitósamente'
 						)
 					);*/
 
-				self::setSuccess('security_user_update', 'Usuario actualizado', 'El usuario ' . $user->display_name . ' fue actualizado exitosamente');
+				self::setSuccess('security_user_update', 'Usuario actualizado', 'El usuario ' . $user->display_name . ' fue actualizado exitósamente');
 
 					// Audits::add(Auth::user(), $args['msg_success'], 'UPDATE');
 
@@ -393,7 +393,7 @@ class UserController extends ReadController {
 
 		if($user->delete()):
 
-			self::setSuccess('security_user_delete', 'Usuario Eliminado', 'El usuario ' . $user->display_name . ' fue eliminado exitosamente');
+			self::setSuccess('security_user_delete', 'Usuario Eliminado', 'El usuario ' . $user->display_name . ' fue eliminado exitósamente');
 			
 			// Audits::add(Auth::user(), $args['msg_success'], 'DELETE');
 
@@ -427,7 +427,7 @@ class UserController extends ReadController {
 
 		if($user->save()):
 
-			self::setSuccess('security_user_activate', 'Usuario Activado', 'El usuario ' . $user->display_name . ' fue activado exitosamente');
+			self::setSuccess('security_user_activate', 'Usuario Activado', 'El usuario ' . $user->display_name . ' fue activado exitósamente');
 
 			// Audits::add(Auth::user(), $args['msg_success'], 'UPDATE');
 
@@ -461,7 +461,7 @@ class UserController extends ReadController {
 
 		if($user->save()):
 
-			self::setSuccess('security_user_deactivate', 'Usuario Desactivado', 'El usuario ' . $user->display_name . ' fue desactivado exitosamente');
+			self::setSuccess('security_user_deactivate', 'Usuario Desactivado', 'El usuario ' . $user->display_name . ' fue desactivado exitósamente');
 
 			// Audits::add(Auth::user(), $args['msg_success'], 'UPDATE');
 

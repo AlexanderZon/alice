@@ -92,7 +92,7 @@ class RoleController extends ReadController {
 			
 			if( $role->save() ):
 
-				self::setSuccess('security_role_create', 'Rol Agregado', 'El rol ' . $role->title . ' fue agregado exitosamente');
+				self::setSuccess('security_role_create', 'Rol Agregado', 'El rol ' . $role->title . ' fue agregado exitósamente');
 
 				return self::go( 'index' );
 
@@ -153,7 +153,7 @@ class RoleController extends ReadController {
 			
 			if( $role->save() ):
 
-				self::setSuccess('security_role_update','Rol editado','El rol ' . $role->title . ' fue editado exitosamente');
+				self::setSuccess('security_role_update','Rol editado','El rol ' . $role->title . ' fue editado exitósamente');
 
 				return self::go( 'index' );
 
@@ -211,7 +211,7 @@ class RoleController extends ReadController {
 		
 		if($role->capabilities()->sync($capabilities)):
 
-			self::setSuccess('security_role_assign', 'Capacidades Asignadas', 'Las capacidades fueron exitosamente asignadas');
+			self::setSuccess('security_role_assign', 'Capacidades Asignadas', 'Las capacidades fueron exitósamente asignadas');
 
 			return self::go( 'index' );
 
@@ -254,7 +254,7 @@ class RoleController extends ReadController {
 
 		if($role->delete()):
 
-			self::setSuccess('security_role_delete','Rol Eliminado','El rol ' . $role->title . ' fue eliminado exitosamente');
+			self::setSuccess('security_role_delete','Rol Eliminado','El rol ' . $role->title . ' fue eliminado exitósamente');
 
 			return self::go( 'index' );
 

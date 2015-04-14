@@ -161,7 +161,7 @@ class ReadController extends \Coordinators\ReadController {
 			
 			if( $teacher->save() ):
 	
-				self::setSuccess('coordinators_teachers_create', 'Profesor Agregado', 'El profesor ' . $teacher->display_name . ' fue agregado exitosamente');
+				self::setSuccess('coordinators_teachers_create', 'Profesor Agregado', 'El profesor ' . $teacher->display_name . ' fue agregado exitósamente');
 
 				return self::go( 'index' );
 
@@ -246,7 +246,7 @@ class ReadController extends \Coordinators\ReadController {
 
 			if( $teacher->save() ):
 
-				self::setSuccess('coordinators_teachers_update', 'Profesor actualizado', 'El profesor ' . $teacher->display_name . ' fue actualizado exitosamente');
+				self::setSuccess('coordinators_teachers_update', 'Profesor actualizado', 'El profesor ' . $teacher->display_name . ' fue actualizado exitósamente');
 
 				return self::go( 'inactive' );
 
@@ -291,7 +291,7 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($teacher->delete()):
 
-			self::setSuccess('coordinators_teachers_delete', 'Profesor Eliminado', 'El profesor ' . $teacher->display_name . ' fue eliminado exitosamente');
+			self::setSuccess('coordinators_teachers_delete', 'Profesor Eliminado', 'El profesor ' . $teacher->display_name . ' fue eliminado exitósamente');
 
 			return self::go( 'index' );
 
@@ -321,7 +321,7 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($teacher->save()):
 
-			self::setSuccess('coordinators_teachers_activate', 'Profesor Activado', 'El profesor ' . $teacher->display_name . ' fue activado exitosamente');
+			self::setSuccess('coordinators_teachers_activate', 'Profesor Activado', 'El profesor ' . $teacher->display_name . ' fue activado exitósamente');
 
 			return self::go( 'index' );
 
@@ -351,7 +351,7 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($teacher->save()):
 
-			self::setSuccess('coordinators_teachers_deactivate', 'Profesor Desactivado', 'El profesor ' . $teacher->display_name . ' fue desactivado exitosamente');
+			self::setSuccess('coordinators_teachers_deactivate', 'Profesor Desactivado', 'El profesor ' . $teacher->display_name . ' fue desactivado exitósamente');
 
 			return self::go( 'index' );
 

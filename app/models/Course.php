@@ -15,6 +15,8 @@ class Course extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    protected $slug_counter = 0;
+
     public function contributors(){
 
     	return $this->belongsToMany('User', 'contributors', 'course_id', 'user_id');
@@ -102,6 +104,56 @@ class Course extends \Eloquent {
     public function achievements(){
 
     	return $this->hasMany('CourseAchievement', 'course_id');
+
+    }
+
+    public static function findPermalinkCounter( $name ){
+
+        $slug = $name.'-'.(++$slug_counter);
+
+        if( $course = self::where('name', '=', $slug)->get() ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $slug;
+
+        endif;
+
+    }
+
+    public static function setPermalink( $title ){
+
+        $name = Str::slug( $title );
+
+        if( $counter = count(self::where('name', '=', $name)->get()) ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $name;
+
+        endif;
+
+    }
+
+    public static function _get( $status = 'active' ){
+
+        return self::where( 'status', '=', $status )->get();
+
+    }
+
+    public static function actives(){
+
+        return self::_get('active');
+
+    }
+
+    public static function inactives(){
+
+        return self::_get('inactive');
 
     }
 

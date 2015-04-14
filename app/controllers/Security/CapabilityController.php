@@ -91,7 +91,7 @@ class CapabilityController extends ReadController {
 			
 			if( $capability->save() ):
 
-				self::setSuccess('security_capabitlity_create', 'Capacidad Agregada', 'La capacidad ' . $capability->title . ' fue agregada exitosamente');
+				self::setSuccess('security_capabitlity_create', 'Capacidad Agregada', 'La capacidad ' . $capability->title . ' fue agregada exitósamente');
 
 				return self::go( 'index' );
 
@@ -167,7 +167,7 @@ class CapabilityController extends ReadController {
 			
 			if( $capability->save() ):
 
-				self::setSuccess('security_capabiltiy_update', 'Capacidad Editada', 'La capacidad ' . $capability->title . ' fue editada exitosamente');
+				self::setSuccess('security_capabiltiy_update', 'Capacidad Editada', 'La capacidad ' . $capability->title . ' fue editada exitósamente');
 
 				return self::go( 'index' );
 
@@ -234,7 +234,7 @@ class CapabilityController extends ReadController {
 
 		if($capability->delete()):
 
-			self::setSuccess('security_capability_delete', 'Capacidad Eliminada','La capacidad ' . $capability->title . ' fue eliminada exitosamente');
+			self::setSuccess('security_capability_delete', 'Capacidad Eliminada','La capacidad ' . $capability->title . ' fue eliminada exitósamente');
 
 			return self::go( 'index' );
 

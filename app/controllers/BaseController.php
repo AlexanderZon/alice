@@ -347,7 +347,33 @@ class BaseController extends Controller implements BaseInterface{
 
 	# --- Upload Image --- #
 
-	public function uploadImage($image){
+	public static function validateImage( $image ){
+
+		$validator = Validator::make(
+			array(
+				'image' => $image
+				), 
+			array(
+				'image' => 'required|mimes:png,jpeg,gif'
+				),
+			array(
+				'mimes' => 'Tipo de imagen inválido, solo se admite los formatos PNG, JPEG, y GIF'
+				)
+			);
+
+		if($validator->fails()):
+
+			return false;
+
+		else:
+
+			return true;
+
+		endif;
+
+	}
+
+	public static function uploadImage($image){
 
 		$info_image = getimagesize($image);
 		$width = array("100","200","400",$info_image[0]);
@@ -356,8 +382,8 @@ class BaseController extends Controller implements BaseInterface{
 		$names = array(
 			"thumb_".$filename => '100',
 			"small_".$filename => '200',
-			"medium_".$filename => '300',
-			"large_".$filename => $info_image[0],
+			"medium_".$filename => '400',
+			"normal_".$filename => $info_image[0],
 			);
 
 		foreach( $names as $name => $width ):
