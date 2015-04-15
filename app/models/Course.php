@@ -9,13 +9,15 @@ class Course extends \Eloquent {
 	 */
 	protected $table = 'courses';
 
-	protected $fillable = [];
+    protected $fillable = [];
 
     use SoftDeletingTrait;
 
     protected $dates = ['deleted_at'];
 
-    protected $slug_counter = 0;
+    protected static $slug_counter = 0;
+
+    protected static $upload_folder = '/uploads/courses/';
 
     public function contributors(){
 
@@ -23,7 +25,7 @@ class Course extends \Eloquent {
 
     }
 
-    public function author(){
+    public function teacher(){
 
     	return $this->belongsTo('User','author_id');
 
@@ -37,37 +39,37 @@ class Course extends \Eloquent {
 
     public function postulations(){
 
-    	return $this->hasMany('Inscription', 'course_id')->where('status','=','inactive')->get();
+    	return $this->hasMany('Inscription', 'course_id')->where('inscriptions.status','=','inactive');
 
     }
 
     public function accepted(){
 
-    	return $this->hasMany('Inscription', 'course_id')->where('status','=','active')->get();
+    	return $this->hasMany('Inscription', 'course_id')->where('inscriptions.status','=','active');
 
     }
 
     public function denied(){
 
-    	return $this->hasMany('Inscription', 'course_id')->where('status','=','rejected')->get();
+    	return $this->hasMany('Inscription', 'course_id')->where('inscriptions.status','=','rejected');
 
     }
 
     public function postulates(){
 
-    	return $this->belongsToMany('User', 'inscriptions')->where('status','=','inactive')->get();
+    	return $this->belongsToMany('User', 'inscriptions')->where('inscriptions.status','=','inactive');
 
     }
 
     public function students(){
 
-    	return $this->belongsToMany('User', 'inscriptions')->where('status','=','active')->get();
+    	return ( $this->belongsToMany('User', 'inscriptions')->where('inscriptions.status','=','active'));
 
     }
 
     public function rejected(){
 
-    	return $this->belongsToMany('User', 'inscriptions')->where('status','=','rejected')->get();
+    	return $this->belongsToMany('User', 'inscriptions')->where('inscriptions.status','=','rejected');
 
     }
 
@@ -109,9 +111,9 @@ class Course extends \Eloquent {
 
     public static function findPermalinkCounter( $name ){
 
-        $slug = $name.'-'.(++$slug_counter);
+        $slug = $name.'-'.(++self::$slug_counter);
 
-        if( $course = self::where('name', '=', $slug)->get() ):
+        if( count(self::where('name', '=', $slug)->get()) > 0 ):
 
             return self::findPermalinkCounter( $name );
 
@@ -155,6 +157,55 @@ class Course extends \Eloquent {
 
         return self::_get('inactive');
 
+    }
+
+    public static function makeFullDirectory( $name ){
+
+        $path = public_path().self::$upload_folder.$name;
+
+        File::makeDirectory($path.'/images', $mode = 0755, true, true);
+        File::makeDirectory($path.'/files', $mode = 0755, true, true);
+        File::makeDirectory($path.'/lessons', $mode = 0755, true, true);
+        File::makeDirectory($path.'/discussions', $mode = 0755, true, true);
+
+        return $path;
+
+    }
+
+    public static function uploadPicture( $image, $name, $width){
+        
+        $filename = self::$upload_folder.'/images/'.$name.'/'.GUID::generate().".".$image->getClientOriginalExtension();
+
+        $path = public_path($filename);
+        
+        return Image::make( $image->getRealPath() )->resize( 200, null, function ($constraint) { 
+            $constraint->aspectRatio(); 
+            })->save($path);
+
+    }
+
+    public static function uploadMainPicture($image, $name){
+
+        $picture = self::uploadPicture( $image, $name, 200);
+
+        return $picture;
+        
+    }
+
+    public static function uploadCoverPicture($image, $name){
+
+        $picture = self::uploadPicture( $image, $name, 1000);
+
+        return $filename;
+        
+    }
+
+    public static function uploadThumbnailPicture($image, $name){
+
+        $picture = self::uploadPicture( $image, $name, 100);
+
+        return $filename;
+        
     }
 
 }

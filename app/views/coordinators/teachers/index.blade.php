@@ -78,9 +78,7 @@
 								{{ $teacher->email }}
 							</td>
 							<td>
-							@if(Auth::user()->id == $teacher->id)
-								{{ $teacher->status == 'active' ? 'Activo' : 'Inactivo' }}
-							@elseif( $teacher->status == 'active' )
+							@if( $teacher->status == 'active' )
 								@if(Auth::user()->hasCap('coordinators_teachers_get_deactivate'))
 									<a href="{{ $route . '/deactivate/' . Hashids::encode($teacher->id) }}" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Desactivar"><span class="label bg-blue">{{ 'Activo' }}</span></a>
 								@else
@@ -189,7 +187,7 @@
 		            //"dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
 		            "tableTools": {
-		                "sSwfPath": "../../assets/global/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
+		                "sSwfPath": "/assets/global/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
 		                "aButtons": [{
 		                    "sExtends": "pdf",
 		                    "sButtonText": "PDF"

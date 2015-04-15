@@ -627,8 +627,9 @@
 						<i class="icon-graduation"></i>
 						<span class="title">
 						Profesores </span>
-						<span class="arrow"></span>
+						<!-- <span class="arrow"></span> -->
 						</a>
+						<!--
 						<ul class="sub-menu">
 
 							@if(Auth::user()->hasCap('coordinators_teachers_get_index'))
@@ -640,14 +641,15 @@
 							@endif
 
 							@if(Auth::user()->hasCap('coordinators_teachers_get_inactive'))
-							<!-- <li class="{{ $name == 'coordinators_teachers_inactive' ? 'active' : '' }}">
+							 <li class="{{ $name == 'coordinators_teachers_inactive' ? 'active' : '' }}">
 								<a href="/coordinators/teachers/inactive">
 								<i class="icon-ban"></i>
 								Inactivos</a>
-							</li> -->
+							</li> 
 							@endif
 
 						</ul>
+						-->
 					</li>
 					@endif
 
@@ -657,10 +659,10 @@
 						<i class="icon-emoticon-smile"></i>
 						<span class="title">
 						Estudiantes </span>
-						<span class="arrow"></span>
+						<!-- <span class="arrow"></span> -->
 						</a>
-						<ul class="sub-menu">
-
+						<!-- <ul class="sub-menu">
+						
 							@if(Auth::user()->hasCap('coordinators_students_get_index'))
 							<li class="{{ $name == 'coordinators_students_read' ? 'active' : '' }}">
 								<a href="/coordinators/students">
@@ -668,16 +670,16 @@
 								Listado</a>
 							</li>
 							@endif
-
+						
 							@if(Auth::user()->hasCap('coordinators_students_get_inactive'))
-							<!-- <li class="{{ $name == 'coordinators_students_inactive' ? 'active' : '' }}">
+							<li class="{{ $name == 'coordinators_students_inactive' ? 'active' : '' }}">
 								<a href="/coordinators/students/inactive">
 								<i class="icon-ban"></i>
 								Inactivos</a>
-							</li> -->
+							</li>
 							@endif
-
-						</ul>
+						
+						</ul> -->
 					</li>
 					@endif
 
@@ -687,10 +689,10 @@
 							<i class="icon-book-open"></i>
 							<span class="title">
 							Cursos </span>
-							<span class="arrow"></span>
+							<!-- <span class="arrow"></span> -->
 						</a>
-						<ul class="sub-menu">
-
+						<!-- <ul class="sub-menu">
+						
 							@if(Auth::user()->hasCap('coordinators_courses_get_index'))
 							<li class="{{ $name == 'coordinators_courses_read' ? 'active' : '' }}">
 								<a href="/coordinators/courses">
@@ -698,16 +700,16 @@
 								Listado</a>
 							</li>
 							@endif
-
+						
 							@if(Auth::user()->hasCap('coordinators_courses_get_inactive'))
-							<!-- <li class="{{ $name == 'coordinators_courses_inactive' ? 'active' : '' }}">
+							<li class="{{ $name == 'coordinators_courses_inactive' ? 'active' : '' }}">
 								<a href="/coordinators/courses/inactive">
 								<i class="icon-ban"></i>
 								Inactivos</a>
-							</li> -->
+							</li> 
 							@endif
-
-						</ul>
+						
+						</ul> -->
 					</li>
 					@endif
 

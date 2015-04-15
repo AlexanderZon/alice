@@ -31,7 +31,7 @@
 					<!-- BEGIN FORM-->
 					<form action="" method="post" class="form-horizontal">
 						<div class="form-body">
-							<h3 >¿Desea eliminar el profesor {{ $student->first_name }} {{ $student->last_name }}?</h3>
+							<h3 >¿Desea eliminar el estudiante {{ $student->first_name }} {{ $student->last_name }}?</h3>
 							<input type="hidden" name="id" value="{{ $student->id }}"/>
 							<!--/row-->
 						</div>

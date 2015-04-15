@@ -127,6 +127,8 @@ return array(
 		'Intervention\Image\ImageServiceProvider',
 		'Nathanmac\GUID\GUIDServiceProvider',
 		'Alexanderzon\Hashids\HashidsServiceProvider',
+		'Barryvdh\Debugbar\ServiceProvider',
+		'Chumper\Zipper\ZipperServiceProvider',
 
 	),
 
@@ -194,9 +196,11 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
-		'PDF'			  => 'Thujohn\Pdf\PdfFacade',
-		'Excel' 		  => 'Maatwebsite\Excel\Facades\Excel',
-		'Image'           => 'Intervention\Image\Facades\Image',
+		'PDF'			  	=> 'Thujohn\Pdf\PdfFacade',
+		'Excel' 		  	=> 'Maatwebsite\Excel\Facades\Excel',
+		'Image'           	=> 'Intervention\Image\Facades\Image',
+		'Debugbar'			=> 'Barryvdh\Debugbar\Facade',
+		'Zipper' 			=> 'Chumper\Zipper\Zipper',
 
 	),
 

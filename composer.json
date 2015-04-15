@@ -11,7 +11,9 @@
 		"maatwebsite/excel": "~1.2.1",
     	"intervention/image": "2.*",
     	"nathanmac/laravel-guid": "dev-master",
-    	"alexanderzon/laravel-hashids": "dev-master"
+    	"alexanderzon/laravel-hashids": "dev-master",
+    	"barryvdh/laravel-debugbar": "1.8.*@dev",
+    	"Chumper/Zipper": "0.5.x"
 	},
 	"autoload": {
 		"classmap": [

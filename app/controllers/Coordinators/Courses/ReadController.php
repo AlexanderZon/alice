@@ -1,8 +1,7 @@
 <?php namespace Coordinators\Courses;
 
 use \Course as Course;
-use \Role as Role;
-use \Capability as Capability;
+use \User as User;
 use \Input as Input;
 use \Hash as Hash;
 use \Hashids as Hashids;
@@ -98,7 +97,7 @@ class ReadController extends \Coordinators\ReadController {
 	public function getCreate()
 	{
 
-		self::addArgument('courses', Course::getTeachers());
+		self::addArgument('teachers', User::getTeachers());
 
 		return self::make('create');
 
@@ -127,10 +126,14 @@ class ReadController extends \Coordinators\ReadController {
 
 		else:
 
+			$name = Course::setPermalink(Input::get('title'));
+
+			$directory = Course::makeFullDirectory( $name );
+
 			$course = new Course();
 			$course->author_id = Input::get('author_id');
 			$course->title = Input::get('title');
-			$course->name = Course::setPermalink(Input::get('title'));
+			$course->name = $name;
 			$course->description = Input::get('description');
 			$course->status = 'inactive';
 			
@@ -138,7 +141,7 @@ class ReadController extends \Coordinators\ReadController {
 	
 				self::setSuccess('coordinators_courses_create', 'Curso Agregado', 'El curso ' . $course->title . ' fue agregado exitósamente');
 
-				return self::go( 'index' );
+				return self::go( 'inactive' );
 
 			else:
 
@@ -163,6 +166,8 @@ class ReadController extends \Coordinators\ReadController {
 	{
 
 		self::addArgument('course', Course::find( Hashids::decode($id) ));
+
+		self::addArgument('teachers', User::getTeachers());
 
 		return self::make('update');
 
@@ -203,7 +208,7 @@ class ReadController extends \Coordinators\ReadController {
 	
 				self::setSuccess('coordinators_courses_create', 'Curso Agregado', 'El curso ' . $course->title . ' fue actualizado exitósamente');
 
-				return self::go( 'index' );
+				return self::go( 'inactive' );
 
 			else:
 
@@ -247,7 +252,7 @@ class ReadController extends \Coordinators\ReadController {
 
 			self::setSuccess('coordinators_courses_delete', 'Curso Eliminado', 'El curso ' . $course->title . ' fue eliminado exitósamente');
 
-			return self::go( 'index' );
+			return self::go( 'inactive' );
 
 		else:
 

@@ -19,7 +19,9 @@ class CreateCoursesTable extends Migration {
 			$table->string('name');
 			$table->string('title');
 			$table->text('description');
-			$table->string('picture');
+			$table->string('main_picture');
+			$table->string('cover_picture');
+			$table->string('thumbnail_picture');
 			$table->string('status');
 			$table->timestamps();
 			$table->softDeletes();

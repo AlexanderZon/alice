@@ -1270,6 +1270,7 @@
 
       // toolbar
       toolbar: [
+        ['misc', ['undo', 'redo']],
         ['style', ['style']],
         ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
         ['fontname', ['fontname']],
@@ -1280,7 +1281,7 @@
         ['table', ['table']],
         ['insert', ['link', 'picture', 'video', 'hr']],
         ['view', ['fullscreen', 'codeview']],
-        ['help', ['help']]
+        ['help', ['help']],
       ],
 
       // air mode: inline editor
@@ -1435,108 +1436,108 @@
     lang: {
       'en-US': {
         font: {
-          bold: 'Bold',
-          italic: 'Italic',
-          underline: 'Underline',
-          strikethrough: 'Strikethrough',
-          subscript: 'Subscript',
-          superscript: 'Superscript',
-          clear: 'Remove Font Style',
-          height: 'Line Height',
-          name: 'Font Family',
-          size: 'Font Size'
+          bold: 'Negrita',
+          italic: 'Cursiva',
+          underline: 'Subrayado',
+          strikethrough: 'Tachado',
+          subscript: 'Subíndice',
+          superscript: 'Superíndice',
+          clear: 'Remover Estilo de Fuente',
+          height: 'Altura de Línea',
+          name: 'Estilo de Fuente',
+          size: 'Tamaño de Fuente'
         },
         image: {
-          image: 'Picture',
-          insert: 'Insert Image',
-          resizeFull: 'Resize Full',
-          resizeHalf: 'Resize Half',
-          resizeQuarter: 'Resize Quarter',
-          floatLeft: 'Float Left',
-          floatRight: 'Float Right',
-          floatNone: 'Float None',
-          shapeRounded: 'Shape: Rounded',
-          shapeCircle: 'Shape: Circle',
-          shapeThumbnail: 'Shape: Thumbnail',
-          shapeNone: 'Shape: None',
-          dragImageHere: 'Drag an image here',
-          selectFromFiles: 'Select from files',
-          url: 'Image URL',
-          remove: 'Remove Image'
+          image: 'Imagen',
+          insert: 'Insertar Imagen',
+          resizeFull: 'Tamaño Completo',
+          resizeHalf: 'Tamaño Medio',
+          resizeQuarter: 'Tamaño Pequeño',
+          floatLeft: 'A la Izquierda',
+          floatRight: 'A la derecha',
+          floatNone: 'Justificado',
+          shapeRounded: 'Forma: Redondeada',
+          shapeCircle: 'Forma: Circular',
+          shapeThumbnail: 'Forma: Muestra',
+          shapeNone: 'Forma: Ninguna',
+          dragImageHere: 'Arrastre una Imagen Aquí',
+          selectFromFiles: 'Seleccionar de los Archivos',
+          url: 'URL de la Imagen',
+          remove: 'Remover Imagen'
         },
         link: {
-          link: 'Link',
-          insert: 'Insert Link',
-          unlink: 'Unlink',
-          edit: 'Edit',
-          textToDisplay: 'Text to display',
-          url: 'To what URL should this link go?',
-          openInNewWindow: 'Open in new window'
+          link: 'Enlace',
+          insert: 'Insert Enlace',
+          unlink: 'Desenlazar',
+          edit: 'Editar',
+          textToDisplay: 'Texto para mostrar',
+          url: '¿A cuál URL debe direccionar el enlace?',
+          openInNewWindow: 'Abrir en una Nueva Ventana'
         },
         video: {
           video: 'Video',
-          videoLink: 'Video Link',
-          insert: 'Insert Video',
-          url: 'Video URL?',
-          providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion or Youku)'
+          videoLink: 'Enlace del Video',
+          insert: 'Insertar Video',
+          url: 'URL del Video',
+          providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion o Youku)'
         },
         table: {
-          table: 'Table'
+          table: 'Tabla'
         },
         hr: {
-          insert: 'Insert Horizontal Rule'
+          insert: 'Insertar Línea Horizontal'
         },
         style: {
-          style: 'Style',
+          style: 'Estilo',
           normal: 'Normal',
-          blockquote: 'Quote',
-          pre: 'Code',
-          h1: 'Header 1',
-          h2: 'Header 2',
-          h3: 'Header 3',
-          h4: 'Header 4',
-          h5: 'Header 5',
-          h6: 'Header 6'
+          blockquote: 'Cita',
+          pre: 'Código',
+          h1: 'Cabecera 1',
+          h2: 'Cabecera 2',
+          h3: 'Cabecera 3',
+          h4: 'Cabecera 4',
+          h5: 'Cabecera 5',
+          h6: 'Cabecera 6'
         },
         lists: {
-          unordered: 'Unordered list',
-          ordered: 'Ordered list'
+          unordered: 'Lista Desordenada',
+          ordered: 'Lista Ordenada'
         },
         options: {
-          help: 'Help',
-          fullscreen: 'Full Screen',
-          codeview: 'Code View'
+          help: 'Ayuda',
+          fullscreen: 'Pantalla Completa',
+          codeview: 'Ver Código'
         },
         paragraph: {
-          paragraph: 'Paragraph',
-          outdent: 'Outdent',
-          indent: 'Indent',
-          left: 'Align left',
-          center: 'Align center',
-          right: 'Align right',
-          justify: 'Justify full'
+          paragraph: 'Párrafo',
+          outdent: 'Desidentar',
+          indent: 'Identar',
+          left: 'Alinear a la Izquierda',
+          center: 'Alinear al Centro',
+          right: 'Alinear a la Derecha',
+          justify: 'Justificado'
         },
         color: {
-          recent: 'Recent Color',
-          more: 'More Color',
-          background: 'Background Color',
-          foreground: 'Foreground Color',
-          transparent: 'Transparent',
-          setTransparent: 'Set transparent',
-          reset: 'Reset',
-          resetToDefault: 'Reset to default'
+          recent: 'Color Reciente',
+          more: 'Más Colores',
+          background: 'Color de Fondo',
+          foreground: 'Color Frontal',
+          transparent: 'Transparente',
+          setTransparent: 'Establecer Transparencia',
+          reset: 'Reajustar',
+          resetToDefault: 'Restauración por Defecto'
         },
         shortcut: {
-          shortcuts: 'Keyboard shortcuts',
-          close: 'Close',
-          textFormatting: 'Text formatting',
-          action: 'Action',
-          paragraphFormatting: 'Paragraph formatting',
-          documentStyle: 'Document Style'
+          shortcuts: 'Atajos de Teclado',
+          close: 'Cerrar',
+          textFormatting: 'Formato de Texto',
+          action: 'Acción',
+          paragraphFormatting: 'Formato de Párrafo',
+          documentStyle: 'Estilo de Documento'
         },
         history: {
-          undo: 'Undo',
-          redo: 'Redo'
+          undo: 'Deshacer',
+          redo: 'Rehacer'
         }
       }
     }
