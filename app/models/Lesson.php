@@ -111,5 +111,23 @@ class Lesson extends \Eloquent {
 
     }
 
+    public static function _get( $status = 'active' ){
+
+        return self::where( 'status', '=', $status )->get();
+
+    }
+
+    public static function actives(){
+
+        return self::_get('active');
+
+    }
+
+    public static function inactives(){
+
+        return self::_get('inactive');
+
+    }
+
 
 }

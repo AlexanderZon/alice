@@ -53,6 +53,9 @@
 								 Lecciones
 							</th>
 							<th>
+								 Discusiones
+							</th>
+							<th>
 								 Estado
 							</th>
 							@if(Auth::user()->hasCap('coordinators_courses_get_show') OR Auth::user()->hasCap('coordinators_courses_get_update') OR Auth::user()->hasCap('coordinators_courses_get_delete'))
@@ -76,6 +79,9 @@
 							</td>
 							<td>
 								{{ count($course->lessons) }}
+							</td>
+							<td>
+								{{ count($course->discussions) }}
 							</td>
 							<td>
 							@if( $course->status == 'active' )

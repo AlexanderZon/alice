@@ -19,6 +19,12 @@ class Course extends \Eloquent {
 
     protected static $upload_folder = '/uploads/courses/';
 
+    const DEFAULT_MAIN_PICTURE = '/uploads/courses/defaults/200x200.gif';
+
+    const DEFAULT_COVER_PICTURE = '/uploads/courses/defaults/1000x200.gif';
+
+    const DEFAULT_THUMBNAIL_PICTURE = '/uploads/courses/defaults/100x100.gif';
+
     public function contributors(){
 
     	return $this->belongsToMany('User', 'contributors', 'course_id', 'user_id');
@@ -109,6 +115,14 @@ class Course extends \Eloquent {
 
     }
 
+    public function average(){
+
+        # CODE: Average Calculating
+
+        return '0%';
+
+    }
+
     public static function findPermalinkCounter( $name ){
 
         $slug = $name.'-'.(++self::$slug_counter);
@@ -172,21 +186,57 @@ class Course extends \Eloquent {
 
     }
 
-    public static function uploadPicture( $image, $name, $width){
-        
-        $filename = self::$upload_folder.'/images/'.$name.'/'.GUID::generate().".".$image->getClientOriginalExtension();
+    public static function validatePicture( $image ){
 
-        $path = public_path($filename);
+        $validator = Validator::make(
+            array(
+                'image' => $image
+                ), 
+            array(
+                'image' => 'required|mimes:png,jpeg,gif'
+                ),
+            array(
+                'mimes' => 'Tipo de imagen inválido, solo se admite los formatos PNG, JPEG, y GIF'
+                )
+            );
+
+        if( $validator->fails() ):
+
+            return false;
+
+        else:
+
+            return true;
+
+        endif;
+
+    }
+
+    public static function uploadPicture( $image, $name, $width, $height){
         
-        return Image::make( $image->getRealPath() )->resize( 200, null, function ($constraint) { 
-            $constraint->aspectRatio(); 
-            })->save($path);
+        $filename = self::$upload_folder.$name.'/images/'.GUID::generate().".".$image->getClientOriginalExtension();
+
+        $path = public_path().$filename;
+
+        if( self::validatePicture( $image )):
+        
+            Image::make( $image->getRealPath() )->resize( $width, null, function ($constraint) { 
+                $constraint->aspectRatio(); 
+                })->crop($width, $height, 0, 0)->save($path);
+
+            return $filename;
+
+        else:
+
+            return false;
+
+        endif;  
 
     }
 
     public static function uploadMainPicture($image, $name){
 
-        $picture = self::uploadPicture( $image, $name, 200);
+        $picture = self::uploadPicture( $image, $name, 200, 200);
 
         return $picture;
         
@@ -194,17 +244,17 @@ class Course extends \Eloquent {
 
     public static function uploadCoverPicture($image, $name){
 
-        $picture = self::uploadPicture( $image, $name, 1000);
+        $picture = self::uploadPicture( $image, $name, 1000, 200);
 
-        return $filename;
+        return $picture;
         
     }
 
     public static function uploadThumbnailPicture($image, $name){
 
-        $picture = self::uploadPicture( $image, $name, 100);
+        $picture = self::uploadPicture( $image, $name, 100, 100);
 
-        return $filename;
+        return $picture;
         
     }
 

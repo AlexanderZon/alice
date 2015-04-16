@@ -88,11 +88,11 @@
 								<div class="form-group last">
 									<label class="control-label col-md-3">Imágenes</label>
 									<div class="col-md-9">
-										<div class="fileinput fileinput-new" data-provides="fileinput">
+										<div class="fileinput fileinput-new" data-provides="main_picture">
 											<div>Imagen Principal</div>
 											<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="/uploads/courses/defaults/200x200.gif" alt=""/>
+												<img src="{{Course::DEFAULT_MAIN_IMAGE}}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -104,15 +104,15 @@
 												Cambiar </span>
 												<input type="file" name="main_picture">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="main_picture">
 												Remover </a>
 											</div>
 										</div>
-										<div class="fileinput fileinput-new" data-provides="fileinput">
+										<div class="fileinput fileinput-new" data-provides="cover_picture">
 											<div>Imagen de Portada</div>
 											<div class="fileinput-new thumbnail" style="width: 200px; height: 50px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="/uploads/courses/defaults/1002x200.gif" alt=""/>
+												<img src="{{Course::DEFAULT_COVER_IMAGE}}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -124,15 +124,15 @@
 												Cambiar </span>
 												<input type="file" name="cover_picture">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="cover_picture">
 												Remover </a>
 											</div>
 										</div>
-										<div class="fileinput fileinput-new" data-provides="fileinput">
+										<div class="fileinput fileinput-new" data-provides="thumbnail_picture">
 											<div>Imagen Miniatura</div>
 											<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="/uploads/courses/defaults/100x100.gif" alt=""/>
+												<img src="{{Course::DEFAULT_THUMBNAIL_IMAGE}}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -144,7 +144,7 @@
 												Cambiar </span>
 												<input type="file" name="thumbnail_picture">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="thumbnail_picture">
 												Remover </a>
 											</div>
 										</div>
@@ -187,6 +187,8 @@
 	<script src="/assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js" type="text/javascript"></script>
 	<script src="/assets/global/plugins/bootstrap-summernote/summernote.js" type="text/javascript"></script>
 
+	<script src="/assets/admin/pages/scripts/components-form-tools.js" type="text/javascript"></script>
+
 	<script type="text/javascript">
 
 		var ComponentsEditors = function () {
@@ -214,6 +216,8 @@
 			Layout.init(); // init current layout
 			Demo.init(); // init demo features
 			ComponentsEditors.init();
+           ComponentsFormTools.init();
+
         });
 	</script>
 @stop

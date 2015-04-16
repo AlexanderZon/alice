@@ -200,9 +200,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 		if( $role = Role::getByName( 'teacher' ) ):
 
-			$users = self::where( 'role_id', '=', $role->id )->where( 'status', '=', $status )->get();
+			$users = self::where( 'role_id', '=', $role->id );
 
-			return $users;
+			if( $status != 'all' ) $user = $users->where( 'status', '=', $status );
+
+			return $users->get();
 
 		else:
 
@@ -216,9 +218,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 		if( $role = Role::getByName( 'student' ) ):
 
-			$users = self::where( 'role_id', '=', $role->id )->where( 'status', '=', $status )->get();
+			$users = self::where( 'role_id', '=', $role->id );
 
-			return $users;
+			if( $status != 'all' ) $user = $users->where( 'status', '=', $status );
+
+			return $users->get();
 
 		else:
 

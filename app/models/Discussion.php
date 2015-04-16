@@ -51,4 +51,62 @@ class Discussion extends \Eloquent {
 
     }
 
+    public static function _get( $type = 'Courses', $status = 'active' ){
+
+        $discussions = self::where( 'discussionable_type', '=', $type );
+
+        if( $status != 'all' ) $discussions = $discussions->where( 'status', '=', $status );
+        
+        return $discussions->get();
+
+    }
+
+    public static function fromCourses( $status = 'active' ){
+
+        return self::_get('Courses', $status);
+
+    }
+
+    public static function allFromCourses(){
+
+        return self::fromCourses('all');
+
+    }
+
+    public static function activesFromCourses(){
+
+        return self::fromCourses('active');
+
+    }
+
+    public static function inactivesFromCourses(){
+
+        return self::fromCourses('inactive');
+
+    }
+
+    public static function fromLessons( $status = 'active' ){
+
+        return self::_get('Lesson', $status);
+
+    }
+
+    public static function allFromLessons(){
+
+        return self::fromLessons('all');
+
+    }
+
+    public static function activesFromLessons(){
+
+        return self::fromLessons('active');
+
+    }
+
+    public static function inactivesFromLessons(){
+
+        return self::fromLessons('inactive');
+
+    }
+
 }

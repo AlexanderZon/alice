@@ -8,6 +8,7 @@ use \Hashids as Hashids;
 
 
 class ReadController extends \Coordinators\ReadController {
+
 	public function __construct(){
 
 		parent::__construct();
@@ -136,6 +137,9 @@ class ReadController extends \Coordinators\ReadController {
 			$course->name = $name;
 			$course->description = Input::get('description');
 			$course->status = 'inactive';
+			$course->main_picture = Input::file('main_picture') != null ? Course::uploadMainPicture( Input::file('main_picture'), $name ) : '';
+			$course->cover_picture = Input::file('cover_picture') != null ? Course::uploadCoverPicture( Input::file('cover_picture'), $name ) : '';
+			$course->thumbnail_picture = Input::file('thumbnail_picture') != null ? Course::uploadThumbnailPicture( Input::file('thumbnail_picture'), $name ) : '';
 			
 			if( $course->save() ):
 	
@@ -199,10 +203,16 @@ class ReadController extends \Coordinators\ReadController {
 
 		else:
 
+			// dd(Input::file('main_picture'));
+
+			// dd(Course::uploadMainPicture( Input::file('main_picture'), $course->name ));
+
 			$course->author_id = Input::get('author_id');
 			$course->title = Input::get('title');
 			$course->description = Input::get('description');
-			$course->status = 'inactive';
+			$course->main_picture = Input::file('main_picture') != null ? Course::uploadMainPicture( Input::file('main_picture'), $course->name ) : $course->main_picture;
+			$course->cover_picture = Input::file('cover_picture') != null ? Course::uploadCoverPicture( Input::file('cover_picture'), $course->name ) : $course->cover_picture;
+			$course->thumbnail_picture = Input::file('thumbnail_picture') != null ? Course::uploadThumbnailPicture( Input::file('thumbnail_picture'), $course->name ) : $course->thumbnail_picture;
 			
 			if( $course->save() ):
 	
@@ -282,13 +292,13 @@ class ReadController extends \Coordinators\ReadController {
 
 			self::setSuccess('coordinators_courses_activate', 'Curso Activado', 'El curso ' . $course->title . ' fue activado exitósamente');
 
-			return self::go( 'index' );
+			return self::go( 'inactive' );
 
 		else:
 
 			self::setDanger('coordinators_courses_activate_err', 'Error al activar curso', 'Hubo un error al activar el curso ' . $course->title);
 
-			return self::go( 'index' );
+			return self::go( 'inactive' );
 
 		endif;
 

@@ -7,7 +7,7 @@
 				<div class="dashboard-stat2">
 					<div class="display">
 						<div class="number">
-							<h3 class="font-green-sharp"><span class="currency">120</span> <small class="font-green-sharp"></small></h3>
+							<h3 class="font-green-sharp"><span class="currency">{{ count($all_teachers) }}</span> <small class="font-green-sharp"></small></h3>
 							<small>PROFESORES</small>
 						</div>
 						<div class="icon">
@@ -16,13 +16,13 @@
 					</div>
 					<div class="progress-info">
 						<div class="progress">
-							<span style="width: 3%;" class="progress-bar progress-bar-success green-sharp">
-							<span class="sr-only"><span class="currency">0</span> Activos</span>
+							<span style="width: {{ count($active_teachers) > 0 ? count($all_teachers)*100/count($active_teachers) : '0' }}%;" class="progress-bar progress-bar-success green-sharp">
+							<span class="sr-only"><span class="currency">{{ count($active_teachers) > 0 ? round(count($all_teachers)*100/count($active_teachers)) : '0' }}</span> Activos</span>
 							</span>
 						</div>
 						<div class="status">
 							<div class="status-title">porcentaje activo</div>
-							<div class="status-number">3%</div>
+							<div class="status-number">{{ count($active_teachers) > 0 ? round(count($all_teachers)*100/count($active_teachers)) : '0' }}%</div>
 						</div>
 					</div>
 				</div>
@@ -31,7 +31,7 @@
 				<div class="dashboard-stat2">
 					<div class="display">
 						<div class="number">
-							<h3 class="font-red-haze">1349<small class="font-red-haze"></small></h3>
+							<h3 class="font-red-haze">{{ count($all_students) }}<small class="font-red-haze"></small></h3>
 							<small>ESTUDIANTES</small>
 						</div>
 						<div class="icon">
@@ -40,13 +40,13 @@
 					</div>
 					<div class="progress-info">
 						<div class="progress">
-							<span style="width: 85%;" class="progress-bar progress-bar-success red-haze">
+							<span style="width: {{ count($active_students) > 0 ? round(count($all_students)*100/count($active_students)) : '0' }}%;" class="progress-bar progress-bar-success red-haze">
 							<span class="sr-only"></span>
 							</span>
 						</div>
 						<div class="status">
 							<div class="status-title">porcentaje activo</div>
-							<div class="status-number">85%</div>
+							<div class="status-number">{{ count($active_students) > 0 ? round(count($all_students)*100/count($active_students)) : '0' }}%</div>
 						</div>
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 				<div class="dashboard-stat2">
 					<div class="display">
 						<div class="number">
-							<h3 class="font-blue-sharp">153</h3>
+							<h3 class="font-blue-sharp">{{ count($all_courses) }}</h3>
 							<small>CURSOS</small>
 						</div>
 						<div class="icon">
@@ -64,13 +64,13 @@
 					</div>
 					<div class="progress-info">
 						<div class="progress">
-							<span style="width: 2%;" class="progress-bar progress-bar-success blue-sharp">
+							<span style="width: {{ count($active_courses) > 0 ? round(count($all_courses)*100/count($active_courses)) : '0' }}%;" class="progress-bar progress-bar-success blue-sharp">
 							<span class="sr-only">80% grow</span>
 							</span>
 						</div>
 						<div class="status">
 							<div class="status-title">en ejecución</div>
-							<div class="status-number">2%</div>
+							<div class="status-number">{{ count($active_courses) > 0 ? round(count($all_courses)*100/count($active_courses)) : '0' }}%</div>
 						</div>
 					</div>
 				</div>
@@ -79,8 +79,8 @@
 				<div class="dashboard-stat2">
 					<div class="display">
 						<div class="number">
-							<h3 class="font-purple-soft">456</h3>
-							<small>DISCUSIONES</small>
+							<h3 class="font-purple-soft">{{ count($all_discussions )}}</h3>
+							<small>DISCUSIONES</small> 
 						</div>
 						<div class="icon">
 							<i class="icon-speech"></i>
@@ -88,13 +88,13 @@
 					</div>
 					<div class="progress-info">
 						<div class="progress">
-							<span style="width: 26%;" class="progress-bar progress-bar-success purple-soft">
+							<span style="width: {{ count($active_discussions) > 0 ? round(count($all_discussions)*100/count($active_discussions)) : '0' }}%;" class="progress-bar progress-bar-success purple-soft">
 							<span class="sr-only">56% change</span>
 							</span>
 						</div>
 						<div class="status">
 							<div class="status-title">ACTIVAS</div>
-							<div class="status-number">26%</div>
+							<div class="status-number">{{ count($active_discussions) > 0 ? round(count($all_discussions)*100/count($active_discussions)) : '0' }}%</div>
 						</div>
 					</div>
 				</div>
@@ -235,7 +235,7 @@
 											Profesores
 										</div>
 										<div class="number">
-											5
+											{{ count($active_teachers) }}
 										</div>
 									</div>
 								</div>
@@ -251,7 +251,7 @@
 											Media de Lecciones por Curso
 										</div>
 										<div class="number">
-											14
+											{{ count($active_courses) > 0 ? count($active_lessons)/count($active_courses) : 0 }}
 										</div>
 									</div>
 								</div>
@@ -283,106 +283,28 @@
 										</th>
 									</tr>
 								</thead>
-								<tr>
-									<td class="fit">
-										<img class="user-pic" src="/uploads/courses/images/math.png">
-									</td>
-									<td>
-										<a href="javascript:;" class="primary-link">Matemática I</a>
-									</td>
-									<td>
-										Inés Cedeño
-									</td>
-									<td>
-										36
-									</td>
-									<td>
-										15
-									</td>
-									<td>
-										<span class="bold theme-font-color">62%</span>
-									</td>
-								</tr>
-								<tr>
-									<td class="fit">
-										<img class="user-pic" src="/uploads/courses/images/geometry.jpg">
-									</td>
-									<td>
-										<a href="javascript:;" class="primary-link">Geometría Analítica</a>
-									</td>
-									<td>
-										Yasmin Brito
-									</td>
-									<td>
-										28
-									</td>
-									<td>
-										19
-									</td>
-									<td>
-										<span class="bold theme-font-color">68%</span>
-									</td>
-								</tr>
-								<tr>
-									<td class="fit">
-										<img class="user-pic" src="/uploads/courses/images/operating_systems.png">
-									</td>
-									<td>
-										<a href="javascript:;" class="primary-link">Sistemas Operativos</a>
-									</td>
-									<td>
-										Luis Luna
-									</td>
-									<td>
-										22
-									</td>
-									<td>
-										14
-									</td>
-									<td>
-										<span class="bold theme-font-color">85%</span>
-									</td>
-								</tr>
-								<tr>
-									<td class="fit">
-										<img class="user-pic" src="/uploads/courses/images/database.png">
-									</td>
-									<td>
-										<a href="javascript:;" class="primary-link">Bases de Datos</a>
-									</td>
-									<td>
-										Maria Juana Castro
-									</td>
-									<td>
-										45
-									</td>
-									<td>
-										19
-									</td>
-									<td>
-										<span class="bold theme-font-color">73%</span>
-									</td>
-								</tr>
-								<tr>
-									<td class="fit">
-										<img class="user-pic" src="/uploads/courses/images/drawing.png">
-									</td>
-									<td>
-										<a href="javascript:;" class="primary-link">Dibujo Técnico</a>
-									</td>
-									<td>
-										Fulanito Detal
-									</td>
-									<td>
-										32
-									</td>
-									<td>
-										10
-									</td>
-									<td>
-										<span class="bold theme-font-color">88%</span>
-									</td>
-								</tr>
+								@foreach($active_courses as $course)
+									<tr>
+										<td class="fit">
+											<img class="user-pic" src="{{ $course->thumbnail_picture != '' ? $course->thumbnail_picture : Course::DEFAULT_THUMBNAIL_PICTURE }}">
+										</td>
+										<td>
+											<a href="javascript:;" class="primary-link">{{ $course->title }}</a>
+										</td>
+										<td>
+											{{ $course->teacher->first_name }} {{ $course->teacher->last_name }}
+										</td>
+										<td>
+											{{ count($course->students) }}
+										</td>
+										<td>
+											{{ count($course->lessons) }}
+										</td>
+										<td>
+											<span class="bold theme-font-color">{{ $course->average() }}</span>
+										</td>
+									</tr>
+								@endforeach
 							</table>
 						<!-- </div> -->
 						</div>

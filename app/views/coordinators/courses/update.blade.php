@@ -37,7 +37,7 @@
 				</div>
 				<div class="portlet-body form">
 					<!-- BEGIN FORM-->
-					<form action="" method="post" class="form-horizontal">
+					<form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
 						<div class="form-body">
 							<h3 class="form-section">Datos del Curso</h3>
 							<div class="row">
@@ -89,11 +89,11 @@
 								<div class="form-group last">
 									<label class="control-label col-md-3">Imágenes</label>
 									<div class="col-md-9">
-										<div class="fileinput fileinput-new" data-provides="fileinput">
+										<div class="fileinput fileinput-new" data-provides="main_picture">
 											<div>Imagen Principal</div>
 											<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="/uploads/courses/defaults/200x200.gif" alt=""/>
+												<img src="{{ $course->main_picture != '' ? $course->main_picture : Course::DEFAULT_MAIN_IMAGE }}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -103,17 +103,17 @@
 												Seleccionar Imagen </span>
 												<span class="fileinput-exists">
 												Cambiar </span>
-												<input type="file" name="main_picture" value="{{ $course->main_picture }}">
+												<input type="file" name="main_picture">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="main_picture">
 												Remover </a>
 											</div>
 										</div>
-										<div class="fileinput fileinput-new" data-provides="fileinput">
+										<div class="fileinput fileinput-new" data-provides="cover_picture">
 											<div>Imagen de Portada</div>
 											<div class="fileinput-new thumbnail" style="width: 200px; height: 50px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="/uploads/courses/defaults/1002x200.gif" alt=""/>
+												<img src="{{ $course->cover_picture != '' ? $course->cover_picture : Course::DEFAULT_COVER_IMAGE }}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -123,17 +123,17 @@
 												Seleccionar Imagen </span>
 												<span class="fileinput-exists">
 												Cambiar </span>
-												<input type="file" name="cover_picture" value="{{ $course->cover_picture }}">
+												<input type="file" name="cover_picture">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="cover_picture">
 												Remover </a>
 											</div>
 										</div>
-										<div class="fileinput fileinput-new" data-provides="fileinput">
+										<div class="fileinput fileinput-new" data-provides="thumbnail_picture">
 											<div>Imagen Miniatura</div>
 											<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="/uploads/courses/defaults/100x100.gif" alt=""/>
+												<img src="{{ $course->thumbnail_picture != '' ? $course->thumbnail_picture : Course::DEFAULT_THUMBNAIL_IMAGE  }}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -143,9 +143,9 @@
 												Seleccionar Imagen </span>
 												<span class="fileinput-exists">
 												Cambiar </span>
-												<input type="file" name="thumbnail_picture" value="{{ $course->thumbnail_picture }}">
+												<input type="file" name="thumbnail_picture">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="thumbnail_picture">
 												Remover </a>
 											</div>
 										</div>
