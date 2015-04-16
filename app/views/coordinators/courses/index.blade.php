@@ -25,7 +25,7 @@
 				<div class="portlet box green-haze">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="icon-book-open"></i>Listado de Cursos
+							<i class="icon-notebook"></i>Listado de Cursos
 						</div>
 						<div class="tools">
 							@if(Auth::user()->hasCap('coordinators_courses_get_inactive'))

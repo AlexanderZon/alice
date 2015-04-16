@@ -29,7 +29,7 @@
 			<div class="portlet box green-haze">
 				<div class="portlet-title">
 					<div class="caption">
-						<i class="icon-book-open"></i>Edición de Cursos
+						<i class="icon-notebook"></i>Edición de Cursos
 					</div>
 					<div class="tools">
 						<a href="{{ $route }}" class="label bg-green-haze"><i class="fa fa-arrow-circle-left"></i> Volver</a>

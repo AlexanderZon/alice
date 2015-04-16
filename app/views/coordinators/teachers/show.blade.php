@@ -20,10 +20,10 @@
 			<!-- END SIDEBAR USER TITLE -->
 			<!-- SIDEBAR BUTTONS -->
 			<div class="profile-userbuttons">
-				@if( Auth::user()->hasCap('security_user_get_update'))
+				@if( Auth::user()->hasCap('coordinators_teachers_get_update'))
 					<a href="{{ $route }}/update/{{ Hashids::encode($teacher->id) }}" type="button" class="btn btn-circle green-haze btn-sm">Editar</a>
 				@endif
-				@if( Auth::user()->hasCap('security_user_get_delete'))
+				@if( Auth::user()->hasCap('coordinators_teachers_get_delete'))
 					<a href="{{ $route }}/delete/{{ Hashids::encode($teacher->id) }}" type="button" class="btn btn-circle btn-danger btn-sm">Eliminar</a>
 				@endif
 			</div>

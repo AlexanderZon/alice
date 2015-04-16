@@ -686,7 +686,7 @@
 					@if(Auth::user()->hasCap('coordinators_courses_get_index'))
 					<li class="tooltips {{ $name == 'coordinators_courses_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
 						<a href="/coordinators/courses">
-							<i class="icon-book-open"></i>
+							<i class="icon-notebook"></i>
 							<span class="title">
 							Cursos </span>
 							<!-- <span class="arrow"></span> -->

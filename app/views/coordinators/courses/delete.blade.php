@@ -21,7 +21,7 @@
 			<div class="portlet box green-haze">
 				<div class="portlet-title">
 					<div class="caption">
-						<i class="icon-open-book"></i>Eliminación de Cursos
+						<i class="icon-notebook"></i>Eliminación de Cursos
 					</div>
 					<div class="tools">
 						<a href="{{ $route }}/inactive" class="label bg-green-haze"><i class="fa fa-arrow-circle-left"></i> Volver</a>
