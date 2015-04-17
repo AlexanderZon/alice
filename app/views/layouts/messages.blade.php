@@ -679,8 +679,8 @@
 		        $('#fileupload').fileupload({
 		            // Uncomment the following to send cross-domain cookies:
 		            //xhrFields: {withCredentials: true},
-		            // url: '{{$route}}/upload',
-		            url: '/uploads/messages/index.php',
+		            url: '{{$route}}/upload',
+		            // url: '/uploads/messages/index.php',
 		            // url: '/assets/global/plugins/jquery-file-upload/server/php/',
 		            autoUpload: true,
 		            success: function(data){
@@ -691,7 +691,7 @@
 		        // Upload server status check for browsers with CORS support:
 		        if ($.support.cors) {
 		            $.ajax({
-		                url: '/uploads/messages/index.php',
+		                url: '{{$route}}/upload',
 		                type: 'HEAD'
 		            }).fail(function () {
 		                $('<span class="alert alert-error"/>')

@@ -89,33 +89,29 @@ class ReadController extends \BaseController {
 
 		$files = Input::file('files');
 
+		$json = array(
+			'files' => array()
+			);
+
 		foreach( $files as $file ):
 
-	        $filename = self::$upload_folder.$name.'/images/'.GUID::generate().".".$image->getClientOriginalExtension();
+	        $filename = GUID::generate().".".$file->getClientOriginalExtension();
 
-	        $path = public_path().$filename;
+	    	$json['files'][] = array(
+				'name' => $filename,
+				'size' => $file->getSize(),
+				'type' => $file->getMimeType(),
+				'url' => public_path().'/uploads/messages/files/'.$filename,
+				'deleteType' => 'DELETE',
+				'deleteUrl' => self::$route.'/deleteFile/'.$filename,
+	    		);
 
-	        if( self::validatePicture( $image )):
-	        
-	            Image::make( $image->getRealPath() )->resize( $width, null, function ($constraint) { 
-	                $constraint->aspectRatio(); 
-	                })->crop($width, $height, 0, 0)->save($path);
+	    	$upload = $file->move( public_path().'/uploads/messages/files', $filename );
 
-	            return $filename;
-
-	        else:
-
-	            return false;
-
-	        endif;  
-
-			$file->getClientOriginalName();
-			$file->getClientOriginalExtension();
-			$file->getSize();
 
 		endforeach;
 
-		return Response::json(array($files));
+		return Response::json($json);
 
 	}
 

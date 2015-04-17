@@ -1,2 +1,0 @@
-- Memoria Llamar la atencion del usuario a las preguntas y luego a las respuestas
-- Colocar Fuentes Bibliograficas en los juegos
