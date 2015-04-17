@@ -15,50 +15,53 @@ if(Auth::check()):
 
 	switch(Auth::user()->role->name){
 
-			case 'superadmin':
+		case 'superadmin':
+		
+			# Routes for administrator
+
+			# Ancestors Modules
+
+			Route::controller('/ancestors/{ancestor}/parents/{parent}/children','\Ancestors\Parents\Children\ReadController');
+			Route::controller('/ancestors/{ancestor}/parents','\Ancestors\Parents\ReadController');
+			Route::controller('/ancestors','\Ancestors\ReadController');				
+
+			# Security Module 
 			
-				# Routes for administrator
+			Route::controller('/security/users','\Security\UserController');
+			Route::controller('/security/roles','\Security\RoleController');
+			Route::controller('/security/capabilities','\Security\CapabilityController');
+			Route::controller('/security','\Security\ReadController');
+		
+			# Administrator Module
 
-				# Ancestors Modules
+			Route::controller('/administrators', '\Administrators\DashboardController');
+			Route::get('/administrators', '\Administrators\DashboardController@getIndex');
 
-				Route::controller('/ancestors/{ancestor}/parents/{parent}/children','\Ancestors\Parents\Children\ReadController');
-				Route::controller('/ancestors/{ancestor}/parents','\Ancestors\Parents\ReadController');
-				Route::controller('/ancestors','\Ancestors\ReadController');				
+		break;
+		case 'coordinator':
+		
+			# Routes for coordinator
 
-				# Security Module 
-				
-				Route::controller('/security/users','\Security\UserController');
-				Route::controller('/security/roles','\Security\RoleController');
-				Route::controller('/security/capabilities','\Security\CapabilityController');
-				Route::controller('/security','\Security\ReadController');
-			
-				# Administrator Module
+			Route::controller('/coordinators/courses', '\Coordinators\Courses\ReadController');
+			Route::controller('/coordinators/students', '\Coordinators\Students\ReadController');
+			Route::controller('/coordinators/teachers', '\Coordinators\Teachers\ReadController');
+			Route::controller('/coordinators', '\Coordinators\ReadController');
 
-				Route::controller('/administrators', '\Administrators\DashboardController');
-				Route::get('/administrators', '\Administrators\DashboardController@getIndex');
-
-			break;
-			case 'coordinator':
-			
-				# Routes for coordinator
-
-				Route::controller('/coordinators/courses', '\Coordinators\Courses\ReadController');
-				Route::controller('/coordinators/students', '\Coordinators\Students\ReadController');
-				Route::controller('/coordinators/teachers', '\Coordinators\Teachers\ReadController');
-				Route::controller('/coordinators', '\Coordinators\ReadController');
-
-			break;
-			case 'teacher':
-				# Routes for teacher
-			break;
-			case 'student':
-				# Routes for student
-			break;
-			default:
-				# Routes for unknown
-			break;
+		break;
+		case 'teacher':
+			# Routes for teacher
+		break;
+		case 'student':
+			# Routes for student
+		break;
+		default:
+			# Routes for unknown
+		break;
 
 	}
+
+	Route::controller('/messages', '\Users\Mails\ReadController');
+	Route::controller('/profile', '\Users\Profile\ReadController');
 
 	Route::controller('/rpsls', '\Games\RPSLS\ReadController');
 	Route::controller('/hangman', '\Games\Hangman\ReadController');

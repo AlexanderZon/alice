@@ -155,6 +155,7 @@
             },
             // Callback for successful uploads:
             done: function (e, data) {
+                console.log(data);
                 if (e.isDefaultPrevented()) {
                     return false;
                 }
