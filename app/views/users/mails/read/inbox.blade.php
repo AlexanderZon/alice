@@ -6,12 +6,12 @@
 		<input type="checkbox" class="mail-checkbox mail-group-checkbox">
 		<div class="btn-group">
 			<a class="btn btn-sm blue dropdown-toggle" href="javascript:;" data-toggle="dropdown">
-			More <i class="fa fa-angle-down"></i>
+			Más <i class="fa fa-angle-down"></i>
 			</a>
 			<ul class="dropdown-menu">
 				<li>
 					<a href="javascript:;">
-					<i class="fa fa-pencil"></i> Mark as Read </a>
+					<i class="fa fa-pencil"></i> Marcar como leído </a>
 				</li>
 				<li>
 					<a href="javascript:;">
@@ -21,7 +21,7 @@
 				</li>
 				<li>
 					<a href="javascript:;">
-					<i class="fa fa-trash-o"></i> Delete </a>
+					<i class="fa fa-trash-o"></i> Eliminar </a>
 				</li>
 			</ul>
 		</div>

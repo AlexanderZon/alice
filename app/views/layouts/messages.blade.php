@@ -503,8 +503,70 @@
 
 
 @section('after')
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<!-- BEGIN PAGE HEAD -->
+			<div class="page-head">
+				<!-- BEGIN PAGE TITLE -->
+				<div class="page-title">
+					<h1>{{ $title }} <small>{{ $description }}</small></h1>
+				</div>
+				<!-- END PAGE TITLE -->
+				<!-- BEGIN PAGE TOOLBAR -->
+
+				@yield('toolbar')
+				
+				<!-- END PAGE TOOLBAR -->
+			</div>
+			<!-- END PAGE HEAD -->
+			<!-- BEGIN PAGE BREADCRUMB -->
+			<ul class="page-breadcrumb breadcrumb">
+				@foreach( $breadcrumbs as $breadcrumb )
+				<li>
+					<a href="{{ $breadcrumb['route'] }}">{{ $breadcrumb['name'] }}</a><i class="fa fa-circle"></i>
+				</li>
+				@endforeach
+				<li class="active">
+					{{ $sections[$section] }}
+				</li>
+			</ul>
+			<!-- END PAGE BREADCRUMB -->
+			<!-- BEGIN PAGE CONTENT INNER -->
+			@if( $msg_danger != null )
+				<div class="note note-danger">
+					<h4>{{ $msg_danger['title'] }}</h4>
+					<p>{{ $msg_danger['description'] }}</p>
+				</div>
+			@endif
+
+			@if( $msg_warning != null )
+				<div class="note note-warning">
+					<h4>{{ $msg_warning['title'] }}</h4>
+					<p>{{ $msg_warning['description'] }}</p>
+				</div>
+			@endif
+
+			@if( $msg_success != null )
+				<div class="note note-success">
+					<h4>{{ $msg_success['title'] }}</h4>
+					<p>{{ $msg_success['description'] }}</p>
+				</div>
+			@endif
+			<!-- END PAGE CONTENT INNER -->
+
+			@if( $msg_active != null )
+				<div class="note note-active">
+					<h4>{{ $msg_active['title'] }}</h4>
+					<p>{{ $msg_active['description'] }}</p>
+				</div>
+			@endif
 	
-	@yield('content')
+			@yield('content')
+
+			</div>
+		</div>
 		<!-- END CONTENT -->
 	</div>
 	<!-- END CONTAINER -->
@@ -653,7 +715,7 @@
 		                if (resetMenu) {
 		                    $('.inbox-nav > li.active').removeClass('active');
 		                }
-		                $('.inbox-header > h1').text('View Message');
+		                $('.inbox-header > h1').text('Ver Mensaje');
 
 		                loading.hide();
 		                content.html(res);
@@ -695,7 +757,7 @@
 		                type: 'HEAD'
 		            }).fail(function () {
 		                $('<span class="alert alert-error"/>')
-		                    .text('Upload server currently unavailable - ' +
+		                    .text('Subida al servidor temporalmente no disponible - ' +
 		                    new Date())
 		                    .appendTo('#fileupload');
 		            });
@@ -720,7 +782,7 @@
 		                toggleButton(el);
 
 		                $('.inbox-nav > li.active').removeClass('active');
-		                $('.inbox-header > h1').text('Compose');
+		                $('.inbox-header > h1').text('Escribir');
 
 		                loading.hide();
 		                content.html(res);
@@ -759,7 +821,47 @@
 		                toggleButton(el);
 
 		                $('.inbox-nav > li.active').removeClass('active');
-		                $('.inbox-header > h1').text('Reply');
+		                $('.inbox-header > h1').text('Responder');
+
+		                loading.hide();
+		                content.html(res);
+		                $('[name="message"]').val($('#reply_email_content_body').html());
+
+		                handleCCInput(); // init "CC" input field
+
+		                initFileupload();
+		                initWysihtml5();
+		                Layout.fixContentHeight();
+		                Metronic.initUniform();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                toggleButton(el);
+		            },
+		            async: false
+		        });
+		    }
+
+		    var loadForward = function (el) {
+		        var messageid = $(el).attr("data-messageid");
+		        var url = '{{$route}}/forward?messageid=' + messageid;
+		        
+		        loading.show();
+		        content.html('');
+		        toggleButton(el);
+
+		        // load the form via ajax
+		        $.ajax({
+		            type: "GET",
+		            cache: false,
+		            url: url,
+		            dataType: "html",
+		            success: function(res) 
+		            {
+		                toggleButton(el);
+
+		                $('.inbox-nav > li.active').removeClass('active');
+		                $('.inbox-header > h1').text('Reenviar');
 
 		                loading.hide();
 		                content.html(res);
@@ -797,7 +899,7 @@
 		                toggleButton(el);
 
 		                $('.inbox-nav > li.active').removeClass('active');
-		                $('.inbox-header > h1').text('Search');
+		                $('.inbox-header > h1').text('Búsqueda');
 
 		                loading.hide();
 		                content.html(res);
@@ -866,6 +968,11 @@
 		                loadReply($(this));
 		            });
 
+		            // handle reply and forward button click
+		            $('.inbox').on('click', '.forward-btn', function () {
+		                loadForward($(this));
+		            });
+
 		            // handle view message
 		            $('.inbox-content').on('click', '.view-message', function () {
 		                loadMessage($(this));
@@ -926,14 +1033,6 @@
 	});
 	</script>
 	<!-- END JAVASCRIPTS -->
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	  ga('create', 'UA-37564768-1', 'keenthemes.com');
-	  ga('send', 'pageview');
-	</script>
 	</body>
 
 	<!-- END BODY -->

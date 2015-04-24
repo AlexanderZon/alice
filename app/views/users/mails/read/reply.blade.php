@@ -1,12 +1,31 @@
 
+<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/global/plugins/jquery-multi-select/css/multi-select.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/global/plugins/select2/select2.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-summernote/summernote.css">
+
 <form class="inbox-compose form-horizontal" id="fileupload" action="#" method="POST" enctype="multipart/form-data">
 	<div class="inbox-compose-btn">
-		<button class="btn blue"><i class="fa fa-check"></i>Send</button>
-		<button class="btn">Discard</button>
-		<button class="btn">Draft</button>
+		<button class="btn blue"><i class="fa fa-check"></i>Enviar</button>
+		<button class="btn">Descartar</button>
+		<button class="btn">Borrador</button>
 	</div>
-	<div class="inbox-form-group mail-to">
-		<label class="control-label">To:</label>
+	<div class="inbox-form-group mail'to">
+		<label class="control-label">Para</label>
+		<div class="controls">
+			<select class="bs-select form-control" name="to" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
+				@foreach($tousers as $user)
+					<option value="{{ Hashids::encode($user->id) }}" data-subtext="{{ $user->username }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+				@endforeach
+			</select>
+			<!-- <input type="hidden" id="loading-select" class="form-control select2"> -->
+		</div>
+	</div>
+
+	<!-- <div class="inbox-form-group mail-to">
+		<label class="control-label">Para:</label>
 		<div class="controls controls-to">
 			<input type="text" class="form-control" name="to" value="fiona.stone@arthouse.com, lisa.wong@pixel.com, jhon.doe@gmail.com">
 			<span class="inbox-cc-bcc">
@@ -16,8 +35,8 @@
 			Bcc </span>
 			</span>
 		</div>
-	</div>
-	<div class="inbox-form-group input-cc">
+	</div> -->
+	<!-- <div class="inbox-form-group input-cc">
 		<a href="javascript:;" class="close">
 		</a>
 		<label class="control-label">Cc:</label>
@@ -32,18 +51,20 @@
 		<div class="controls controls-bcc">
 			<input type="text" name="bcc" class="form-control">
 		</div>
-	</div>
+	</div> -->
 	<div class="inbox-form-group">
-		<label class="control-label">Subject:</label>
+		<label class="control-label">Asunto:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject" value="Urgent - Financial Report for May, 2013">
+			<input type="text" class="form-control" name="subject" value="{{'Urgent - Financial Report for May, 2013'}}">
 		</div>
 	</div>
 	<div class="inbox-form-group">
 		<div class="controls-row">
-			<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
+			<textarea class="form-control summernote" name="message" rows="12">
+				{{ 'Contenido del Correo' }}
+			</textarea>
 			<!--blockquote content for reply message, the inner html of reply_email_content_body element will be appended into wysiwyg body. Please refer Inbox.js loadReply() function. -->
-			<div id="reply_email_content_body" class="hide">
+			<!-- <div id="reply_email_content_body" class="hide">
 				<input type="text">
 				<br>
 				<br>
@@ -55,7 +76,7 @@
 					 All the best,<br>
 					 Lisa Nilson, CEO, Pixel Inc.
 				</blockquote>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div class="inbox-compose-attachment">
@@ -63,7 +84,7 @@
 		<span class="btn green fileinput-button">
 		<i class="fa fa-plus"></i>
 		<span>
-		Add files... </span>
+		Añadir Archivos... </span>
 		<input type="file" name="files[]" multiple>
 		</span>
 		<!-- The table listing the files available for upload/download -->
@@ -122,8 +143,95 @@
 {% } %}
 	</script>
 	<div class="inbox-compose-btn">
-		<button class="btn blue"><i class="fa fa-check"></i>Send</button>
-		<button class="btn">Discard</button>
-		<button class="btn">Draft</button>
+		<button class="btn blue"><i class="fa fa-check"></i>Enviar</button>
+		<button class="btn">Descartar</button>
+		<button class="btn">Borrador</button>
 	</div>
 </form>
+	
+<script type="text/javascript" src="/assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/assets/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="/assets/global/plugins/select2/select2_locale_es.js"></script>
+<script type="text/javascript" src="/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script src="/assets/admin/pages/scripts/components-dropdowns.js"></script>
+
+<script type="text/javascript" src="/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+<script type="text/javascript" src="/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+<script src="/assets/global/plugins/bootstrap-markdown/lib/markdown.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-summernote/summernote.js" type="text/javascript"></script>
+
+<script src="/assets/admin/pages/scripts/components-form-tools.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+	function userFormatResult(user) {
+        var markup = "<table class='user-result'><tr>";
+        if (user.posters !== undefined && user.posters.thumbnail !== undefined) {
+            markup += "<td valign='top'><img src='" + user.posters.thumbnail + "'/></td>";
+        }
+        markup += "<td valign='top'><h5>" + user.first_name + " " + user.last_name + " &lt;" + user.email + "&gt; " + "</h5>";
+        if (user.critics_consensus !== undefined) {
+            markup += "<div class='user-synopsis'>" + user.username + "</div>";
+        } else if (user.synopsis !== undefined) {
+            markup += "<div class='user-synopsis'>" + user.display_name + "</div>";
+        }
+        markup += "</td></tr></table>"
+        return markup;
+    }
+
+    function userFormatSelection(user) {
+        return user.title;
+    }
+    $('.summernote').summernote({
+    	height: 300,
+    });
+    $('.bs-select').select2({
+            iconBase: 'fa',
+            tickIcon: 'fa-check'
+        });
+    $("#loading-select").select2({
+        placeholder: "Busca un destinatario",
+        minimumInputLength: 1,
+        ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+            url: "{{$route}}/tousers",
+            type: "get",
+            // dataType: 'jsonp',
+            data: function (term, page) {
+                return {
+                    q: term, // search term
+                };
+            },
+            results: function (data, page) { // parse the results into the format expected by Select2.
+                // since we are using custom formatting functions we do not need to alter remote JSON data
+                console.log(data);
+                return {
+                    results: data.users
+                };
+            }
+        },
+        processResults: function (element, callback) {
+        	console.log('initSelection');
+            // the input tag has a value attribute preloaded that points to a preselected user's id
+            // this function resolves that id attribute to an object that select2 can render
+            // using its formatResult renderer - that way the user name is shown preselected
+            var id = $(element).val();
+            if (id !== "") {
+                $.ajax("{{$route}}/tousers", {
+                    data: {
+                    //     apikey: "ju6z9mjyajq2djue3gbvv26t"
+                    },
+                    // dataType: "jsonp"
+                }).done(function (data) {
+                    callback(data);
+                });
+            }
+        },
+        formatResult: userFormatResult, // omitted for brevity, see the source of this page
+        formatSelection: userFormatSelection, // omitted for brevity, see the source of this page
+        dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+        escapeMarkup: function (m) {
+            return m;
+        } // we do not want to escape markup since we are displaying html in results
+    });
+</script>

@@ -33,13 +33,15 @@ class ReadController extends \BaseController {
 
 		self::$description = 'Módulo de Correos del Sistema';
 
+		self::fixSection('index', 'Correo');
+
 		self::setArguments();
 
 	}
 
 	public function getIndex(){
 
-		return self::make('test');
+		return self::make('index');
 
 	}
 
@@ -63,7 +65,17 @@ class ReadController extends \BaseController {
 
 	public function getReply(){
 
+		self::addArgument('tousers', User::all());
+
 		return self::make('reply');
+
+	}
+
+	public function getForward(){
+
+		self::addArgument('tousers', User::all());
+
+		return self::make('forward');
 
 	}
 
@@ -85,6 +97,14 @@ class ReadController extends \BaseController {
 
 	}
 
+	public function getTousers(){
+
+		$users = User::where('username','LIKE', '%'.Input::get('q').'%')->orWhere('first_name','LIKE', '%'.Input::get('q').'%')->orWhere('last_name','LIKE', '%'.Input::get('q').'%')->orWhere('email','LIKE', '%'.Input::get('q').'%')->orWhere('display_name','LIKE', '%'.Input::get('q').'%')->take(5)->get();
+
+		return Response::json(array('users' => $users));
+
+	}
+
 	public function postUpload(){
 
 		$files = Input::file('files');
@@ -101,7 +121,7 @@ class ReadController extends \BaseController {
 				'name' => $filename,
 				'size' => $file->getSize(),
 				'type' => $file->getMimeType(),
-				'url' => public_path().'/uploads/messages/files/'.$filename,
+				'url' => '/uploads/messages/files/'.$filename,
 				'deleteType' => 'DELETE',
 				'deleteUrl' => self::$route.'/deleteFile/'.$filename,
 	    		);

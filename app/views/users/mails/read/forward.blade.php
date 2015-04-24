@@ -9,7 +9,7 @@
 <form class="inbox-compose form-horizontal" id="fileupload" action="#" method="POST" enctype="multipart/form-data">
 	<div class="inbox-compose-btn">
 		<button class="btn blue"><i class="fa fa-check"></i>Enviar</button>
-		<button class="btn inbox-discard-btn">Descartar</button>
+		<button class="btn">Descartar</button>
 		<button class="btn">Borrador</button>
 	</div>
 	<div class="inbox-form-group mail'to">
@@ -55,13 +55,13 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Asunto:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject">
+			<input type="text" class="form-control" name="subject" value="{{'Urgent - Financial Report for May, 2013'}}">
 		</div>
 	</div>
 	<div class="inbox-form-group">
 		<div class="controls-row">
 			<textarea class="form-control summernote" name="message" rows="12">
-				
+				{{ 'Contenido del Correo' }}
 			</textarea>
 			<!--blockquote content for reply message, the inner html of reply_email_content_body element will be appended into wysiwyg body. Please refer Inbox.js loadReply() function. -->
 			<!-- <div id="reply_email_content_body" class="hide">
@@ -113,7 +113,7 @@
         <td class="cancel" width="10%" align="right">{% if (!i) { %}
             <button class="btn btn-sm red cancel">
                        <i class="fa fa-ban"></i>
-                       <span>Cancelar</span>
+                       <span>Cancel</span>
                    </button>
         {% } %}</td>
     </tr>
@@ -148,6 +148,7 @@
 		<button class="btn">Borrador</button>
 	</div>
 </form>
+	
 <script type="text/javascript" src="/assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="/assets/global/plugins/select2/select2.min.js"></script>
 <script type="text/javascript" src="/assets/global/plugins/select2/select2_locale_es.js"></script>
