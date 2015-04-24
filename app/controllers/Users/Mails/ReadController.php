@@ -59,6 +59,8 @@ class ReadController extends \BaseController {
 
 	public function getCompose(){
 
+		self::addArgument('tousers', User::all());
+		
 		return self::make('compose');
 
 	}

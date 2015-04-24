@@ -738,7 +738,7 @@
 
 		    var initFileupload = function () {
 
-		        $('#fileupload').fileupload({
+		        $('#compose-mail').fileupload({
 		            // Uncomment the following to send cross-domain cookies:
 		            //xhrFields: {withCredentials: true},
 		            url: '{{$route}}/upload',
@@ -759,7 +759,7 @@
 		                $('<span class="alert alert-error"/>')
 		                    .text('Subida al servidor temporalmente no disponible - ' +
 		                    new Date())
-		                    .appendTo('#fileupload');
+		                    .appendTo('#compose-mail');
 		            });
 		        }
 		    }
@@ -882,6 +882,36 @@
 		        });
 		    }
 
+		    var loadSpam = function(el) {
+
+		    	//
+
+		    }
+
+		    var sendMail = function(el) {
+
+		    	// 
+		    	
+		    }
+
+		    var discardMail = function(el) {
+
+		    	// 
+		    	
+		    }
+
+		    var draftMail = function(el) {
+
+		    	// 
+
+		    }
+
+		    var deleteMail = function(el) {
+
+		    	// 
+
+		    }
+
 		    var loadSearchResults = function (el) {
 		        var url = '{{$route}}/search';
 
@@ -968,9 +998,34 @@
 		                loadReply($(this));
 		            });
 
-		            // handle reply and forward button click
+		            // handle forward and forward button click
 		            $('.inbox').on('click', '.forward-btn', function () {
 		                loadForward($(this));
+		            });
+
+		            // handle spam and forward button click
+		            $('.inbox').on('click', '.spam-btn', function () {
+		                loadSpam($(this));
+		            });
+
+		            // handle sned and forward button click
+		            $('.inbox').on('click', '.sned-btn', function () {
+		                sendMail($(this));
+		            });
+
+		            // handle discard and forward button click
+		            $('.inbox').on('click', '.discard-btn', function () {
+		                discardMail($(this));
+		            });
+
+		            // handle draft and forward button click
+		            $('.inbox').on('click', '.draft-btn', function () {
+		                draftMail($(this));
+		            });
+
+		            // handle delete and forward button click
+		            $('.inbox').on('click', '.delete-btn', function () {
+		                deleteMail($(this));
 		            });
 
 		            // handle view message

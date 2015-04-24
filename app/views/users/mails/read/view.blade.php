@@ -42,11 +42,11 @@
 					<li class="divider">
 					</li>
 					<li>
-						<a href="javascript:;">
+						<a href="javascript:;" data-messageid="{{ '23' }}" class="spam-btn">
 						<i class="fa fa-ban"></i> Spam </a>
 					</li>
 					<li>
-						<a href="javascript:;">
+						<a href="javascript:;" data-messageid="{{ '23' }}" class="delete-btn">
 						<i class="fa fa-trash-o"></i> Eliminar </a>
 					</li>
 					<li>

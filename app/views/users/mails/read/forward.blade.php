@@ -6,11 +6,11 @@
 <link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-summernote/summernote.css">
 
-<form class="inbox-compose form-horizontal" id="fileupload" action="#" method="POST" enctype="multipart/form-data">
+<form class="inbox-compose form-horizontal" id="compose-mail" action="#" method="POST" enctype="multipart/form-data">
 	<div class="inbox-compose-btn">
-		<button class="btn blue"><i class="fa fa-check"></i>Enviar</button>
-		<button class="btn">Descartar</button>
-		<button class="btn">Borrador</button>
+		<button class="send-btn btn blue"><i class="fa fa-check"></i>Enviar</button>
+		<button class="discard-btn btn">Descartar</button>
+		<button class="delete-btn btn">Borrador</button>
 	</div>
 	<div class="inbox-form-group mail'to">
 		<label class="control-label">Para</label>
@@ -143,9 +143,9 @@
 {% } %}
 	</script>
 	<div class="inbox-compose-btn">
-		<button class="btn blue"><i class="fa fa-check"></i>Enviar</button>
-		<button class="btn">Descartar</button>
-		<button class="btn">Borrador</button>
+		<button class="send-btn btn blue"><i class="fa fa-check"></i>Enviar</button>
+		<button class="discard-btn btn">Descartar</button>
+		<button class="delete-btn btn">Borrador</button>
 	</div>
 </form>
 	
