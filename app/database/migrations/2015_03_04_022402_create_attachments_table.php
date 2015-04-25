@@ -17,7 +17,7 @@ class CreateAttachmentsTable extends Migration {
 			$table->increments('id');
 			$table->integer('attachmentable_id');
 			$table->string('attachmentable_type');
-			$table->string('status');
+			$table->enum('status', array('uploaded','notuploaded','deleted','draft'));
 			$table->timestamps();
 			$table->softDeletes();
 		});

@@ -12,27 +12,38 @@
 		<div class="col-md-7">
 			<img src="{{'/assets/admin/layout4/img/avatar1_small.jpg'}}">
 			<span class="bold">
-			{{ 'Petronas IT' }} </span>
+			{{ $message->from->first_name }} {{ $message->from->last_name }} </span>
 			<span>
-			&#60;{{'support@go.com'}}&#62; </span>
+			&#60;{{ $message->from->email }}&#62; </span>
 			para <span class="bold">
-			yo </span>
-			a las {{'08:20PM 29 JAN 2013'}}
+			@foreach($message->to as $user)
+				@if(Auth::user()->id == $user->id) 
+					{{ 'yo; '}}
+				@else 
+					{{ $user->first_name }} {{ $user->last_name }}{{ '; ' }}
+				@endif
+			@endforeach
+			</span>
+			<spam class="moment-msg">
+				{{ $message->user_message(Auth::user())->created_at }} <!--- '08:20PM 29 JAN 2013' -->
+				
+			</spam> 
 		</div>
 		<div class="col-md-5 inbox-info-btn">
 			<div class="btn-group">
-				<button data-messageid="{{ '23' }}" class="btn blue reply-btn">
-				<i class="fa fa-reply"></i> Responder </button>
+				<button data-messageid="{{ Crypt::encrypt($message->id) }}" class="btn blue reply-btn">
+					<i class="fa fa-reply"></i> Responder 
+				</button>
 				<button class="btn blue dropdown-toggle" data-toggle="dropdown">
-				<i class="fa fa-angle-down"></i>
+					<i class="fa fa-angle-down"></i>
 				</button>
 				<ul class="dropdown-menu pull-right">
 					<li>
-						<a href="javascript:;" data-messageid="{{ '23' }}" class="reply-btn">
+						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="reply-btn">
 						<i class="fa fa-reply reply-btn"></i> Responder </a>
 					</li>
 					<li>
-						<a href="javascript:;" data-messageid="{{ '23' }}" class="forward-btn">
+						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="forward-btn">
 						<i class="fa fa-arrow-right reply-btn"></i> Reenviar </a>
 					</li>
 					<!-- <li>
@@ -42,33 +53,21 @@
 					<li class="divider">
 					</li>
 					<li>
-						<a href="javascript:;" data-messageid="{{ '23' }}" class="spam-btn">
+						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="spam-btn">
 						<i class="fa fa-ban"></i> Spam </a>
 					</li>
 					<li>
-						<a href="javascript:;" data-messageid="{{ '23' }}" class="delete-btn">
+						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="delete-btn">
 						<i class="fa fa-trash-o"></i> Eliminar </a>
 					</li>
-					<li>
+				</ul>
+
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="inbox-view">
-			{{'<p>
-				<strong>Lorem ipsum</strong>dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-			</p>
-			<p>
-				 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et <a href="javascript:;">
-				iusto odio dignissim </a>
-				qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.
-			</p>
-			<p>
-				 Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.
-			</p>
-			<p>
-				 Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.
-			</p>'}}
+			{{ $message->message }}
 		</div>
 		<hr>
 		<div class="inbox-attached">
@@ -81,6 +80,22 @@
 				Ver todas las imágenes </a>
 			</div>
 			<!--- Ciclo por cada Dato Adjunto -->
+			@if(count($message->attachments) > 0)
+				@foreach($message->attachments as $attachment)
+					<div class="margin-bottom-25">
+						<img src="{{'/assets/admin/pages/media/gallery/image4.jpg'}}">
+						<div>
+							<strong>image4.jpg</strong>
+							<span>
+							173K </span>
+							<a href="javascript:;">
+							Ver </a>
+							<a href="javascript:;">
+							Descargar </a>
+						</div>
+					</div>
+				@endforeach
+			@endif
 			<div class="margin-bottom-25">
 				<img src="/assets/admin/pages/media/gallery/image4.jpg">
 				<div>
@@ -118,3 +133,10 @@
 				</div>
 			</div>
 		</div>
+
+<script type="text/javascript">
+	moment.locale('es');
+ 	$('.moment-msg').each(function(e){
+ 		$(this).html(moment($(this).html()).fromNow());
+ 	});
+</script>

@@ -7,6 +7,9 @@
 <link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-summernote/summernote.css">
 
 <form class="inbox-compose form-horizontal" id="compose-mail" action="#" method="POST" enctype="multipart/form-data">
+	<input type="hidden" name="token" value="{{ $token }}">
+	<input type="hidden" name="type" value="compose">
+	<input type="hidden" name="action" value="send">
 	<div class="inbox-compose-btn">
 		<button class="send-btn btn blue"><i class="fa fa-check"></i>Enviar</button>
 		<button class="discard-btn btn inbox-discard-btn">Descartar</button>
@@ -15,9 +18,9 @@
 	<div class="inbox-form-group mail'to">
 		<label class="control-label">Para</label>
 		<div class="controls">
-			<select class="bs-select form-control" name="to" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
+			<select class="bs-select form-control" name="to[]" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
 				@foreach($tousers as $user)
-					<option value="{{ Hashids::encode($user->id) }}" data-subtext="{{ $user->username }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+					<option value="{{ Crypt::encrypt($user->id) }}" data-subtext="{{ $user->username }}">{{ $user->first_name }} {{ $user->last_name }}</option>
 				@endforeach
 			</select>
 			<!-- <input type="hidden" id="loading-select" class="form-control select2"> -->
@@ -163,30 +166,38 @@
 <script src="/assets/admin/pages/scripts/components-form-tools.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-
-	function userFormatResult(user) {
-        var markup = "<table class='user-result'><tr>";
-        if (user.posters !== undefined && user.posters.thumbnail !== undefined) {
-            markup += "<td valign='top'><img src='" + user.posters.thumbnail + "'/></td>";
-        }
-        markup += "<td valign='top'><h5>" + user.first_name + " " + user.last_name + " &lt;" + user.email + "&gt; " + "</h5>";
-        if (user.critics_consensus !== undefined) {
-            markup += "<div class='user-synopsis'>" + user.username + "</div>";
-        } else if (user.synopsis !== undefined) {
-            markup += "<div class='user-synopsis'>" + user.display_name + "</div>";
-        }
-        markup += "</td></tr></table>"
-        return markup;
-    }
-
-    function userFormatSelection(user) {
-        return user.title;
-    }
     $('.summernote').summernote({
     	height: 300,
     });
     $('.bs-select').select2({
-            iconBase: 'fa',
-            tickIcon: 'fa-check'
-        });
+        iconBase: 'fa',
+        tickIcon: 'fa-check'
+    });
+    $('#compose-mail').fileupload({
+	    // Uncomment the following to send cross-domain cookies:
+	    //xhrFields: {withCredentials: true},
+		formData: {
+			_id: '{{$token}}',
+		},
+	    url: '{{$route}}/upload',
+	    // url: '/uploads/messages/index.php',
+	    // url: '/assets/global/plugins/jquery-file-upload/server/php/',
+	    autoUpload: true,
+	    success: function(data){
+	    	console.log(data);
+	    }
+	});
+
+	// Upload server status check for browsers with CORS support:
+	if ($.support.cors) {
+	    $.ajax({
+	        url: '{{$route}}/upload',
+	        type: 'HEAD'
+	    }).fail(function () {
+	        $('<span class="alert alert-error"/>')
+	            .text('Subida al servidor temporalmente no disponible - ' +
+	            new Date())
+	            .appendTo('#compose-mail');
+	    });
+	}
 </script>

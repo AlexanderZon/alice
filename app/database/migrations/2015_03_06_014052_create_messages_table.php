@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration {
 			$table->integer('author_id');
 			$table->string('subject');
 			$table->longText('message');
+			$table->enum('status', array('draft', 'done'));
 			$table->timestamps();
 			$table->softDeletes();
 		});

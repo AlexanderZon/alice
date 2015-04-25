@@ -147,6 +147,10 @@ Inbox Page
   color: #fd7b12;
 }
 
+.inbox tr i.inbox-not-started {
+  color: gray;
+}
+
 .inbox .table th,
 .inbox .table td {
   border: none;

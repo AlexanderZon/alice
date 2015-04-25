@@ -168,13 +168,44 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function inbox(){
 
-		return $this->belongsToMany('Message','user_messages');
+		// return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read')->orWhere('user_messages.status', '=', 'unread');
+		return $this->belongsToMany('Message','user_messages')->whereRaw('( user_messages.status = ? OR user_messages.status = ? )', array('read', 'unread'));
+
+	}
+
+	public function unreadbox(){
+
+		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'unread');
+
+	}
+
+	public function readbox(){
+
+		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read');
+
+	}
+
+	public function spambox(){
+
+		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'spam');
+
+	}
+
+	public function deletedbox(){
+
+		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'deleted');
 
 	}
 
 	public function outbox(){
 
-		return $this->hasMany('Message','user_id');
+		return $this->hasMany('Message','user_id')->where('messages.status', '=', 'done');
+
+	}
+
+	public function draftbox(){
+
+		return $this->hasMany('Message','user_id')->where('messages.status', '=', 'draft');
 
 	}
 

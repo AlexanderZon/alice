@@ -39,6 +39,34 @@
 </tr>
 </thead>
 <tbody>
+@foreach(Auth::user()->inbox as $message)
+	<tr {{ $message->user_message()->status == 'unread' ? 'class="unread"' : '' }} data-messageid="{{ Crypt::encrypt($message->id) }}">
+		<td class="inbox-small-cells">
+			<input type="checkbox" class="mail-checkbox" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
+		</td>
+		<td class="inbox-small-cells">
+			<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}">
+				<i class="fa fa-star {{ $message->user_message()->favorite ? 'inbox-started' : 'inbox-not-started' }}"></i>				
+			</a>
+		</td>
+		<td class="view-message hidden-xs">
+			{{ $message->from->first_name }} {{ $message->from->last_name }}
+		</td>
+		<td class="view-message ">
+			 {{ $message->subject }}
+		</td>
+		<td class="view-message inbox-small-cells">
+			@if(count($message->attachments) > 0)
+				<i class="fa fa-paperclip"></i>
+			@endif
+		</td>
+		<td class="view-message text-right">
+			<spam class="moment-msg">
+				{{ $message->user_message()->created_at }}
+			</spam> 
+		</td>
+	</tr>
+@endforeach
 <tr class="unread" data-messageid="1">
 	<td class="inbox-small-cells">
 		<input type="checkbox" class="mail-checkbox">
@@ -409,3 +437,10 @@
 </tr>
 </tbody>
 </table>
+
+<script type="text/javascript">
+	moment.locale('es');
+ 	$('.moment-msg').each(function(e){
+ 		$(this).html(moment($(this).html()).fromNow());
+ 	});
+</script>
