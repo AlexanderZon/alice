@@ -1,4 +1,3 @@
-
 <div class="inbox-header inbox-view-header">
 	<h1 class="pull-left">{{ 'Este es el asunto del Correo' }} <a href="javascript:;">
 	Bandeja de Entrada </a>
@@ -24,9 +23,8 @@
 				@endif
 			@endforeach
 			</span>
-			<spam class="moment-msg">
+			<spam class="moment-fromnow">
 				{{ $message->user_message(Auth::user())->created_at }} <!--- '08:20PM 29 JAN 2013' -->
-				
 			</spam> 
 		</div>
 		<div class="col-md-5 inbox-info-btn">
@@ -136,7 +134,32 @@
 
 <script type="text/javascript">
 	moment.locale('es');
- 	$('.moment-msg').each(function(e){
- 		$(this).html(moment($(this).html()).fromNow());
+ 	$('.moment-fromnow').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).fromNow());
+ 	});
+ 	$('.moment-date').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('DD MMM'));
+ 	});
+ 	$('.moment-time').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('h:mm a'));
+ 	});
+ 	$('.moment-datetime').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('DD MMM h:mm a'));
+ 	});
+ 	$('.moment-date-fromnow').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('DD MMM') + '(' + moment(time).fromNow() + ')');
+ 	});
+ 	$('.moment-time-fromnow').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('h:mm a') + '(' + moment(time).fromNow() + ')');
+ 	});
+ 	$('.moment-datetime-fromnow').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('DD MMM h:mm a') + '(' + moment(time).fromNow() + ')');
  	});
 </script>

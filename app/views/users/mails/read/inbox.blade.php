@@ -61,7 +61,7 @@
 			@endif
 		</td>
 		<td class="view-message text-right">
-			<spam class="moment-msg">
+			<spam class="moment-fromnow">
 				{{ $message->user_message()->created_at }}
 			</spam> 
 		</td>
@@ -440,7 +440,32 @@
 
 <script type="text/javascript">
 	moment.locale('es');
- 	$('.moment-msg').each(function(e){
- 		$(this).html(moment($(this).html()).fromNow());
+ 	$('.moment-fromnow').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).fromNow());
+ 	});
+ 	$('.moment-date').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('DD MMM'));
+ 	});
+ 	$('.moment-time').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('h:mm a'));
+ 	});
+ 	$('.moment-datetime').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('DD MMM h:mm a'));
+ 	});
+ 	$('.moment-date-fromnow').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('DD MMM') + '(' + moment(time).fromNow() + ')');
+ 	});
+ 	$('.moment-time-fromnow').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('h:mm a') + '(' + moment(time).fromNow() + ')');
+ 	});
+ 	$('.moment-datetime-fromnow').each(function(e){
+ 		var time = $(this).html();
+ 		$(this).html(moment(time).format('DD MMM h:mm a') + '(' + moment(time).fromNow() + ')');
  	});
 </script>
