@@ -27,19 +27,12 @@
 		</div>
 	</th>
 	<th class="pagination-control" colspan="3">
-		<span class="pagination-info">
-		1-30 of 789 </span>
-		<a class="btn btn-sm blue">
-		<i class="fa fa-angle-left"></i>
-		</a>
-		<a class="btn btn-sm blue">
-		<i class="fa fa-angle-right"></i>
-		</a>
+		{{ $inbox->links('users.mails.read.paginate')->with('messages', $inbox) }}
 	</th>
 </tr>
 </thead>
 <tbody>
-@foreach(Auth::user()->inbox as $message)
+@foreach($inbox as $message)
 	<tr {{ $message->user_message()->status == 'unread' ? 'class="unread"' : '' }} data-messageid="{{ Crypt::encrypt($message->id) }}">
 		<td class="inbox-small-cells">
 			<input type="checkbox" class="mail-checkbox" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
@@ -50,7 +43,11 @@
 			</a>
 		</td>
 		<td class="view-message hidden-xs">
-			{{ $message->from->first_name }} {{ $message->from->last_name }}
+			@if($message->from->id == Auth::user()->id)
+				{{ 'Yo' }}
+			@else
+				{{ $message->from->first_name }} {{ $message->from->last_name }}
+			@endif
 		</td>
 		<td class="view-message ">
 			 {{ $message->subject }}
@@ -61,7 +58,7 @@
 			@endif
 		</td>
 		<td class="view-message text-right">
-			<spam class="moment-fromnow">
+			<spam class="{{ $message->user_message()->created_diff() > 0 ? 'moment-date' : 'moment-time' }}">
 				{{ $message->user_message()->created_at }}
 			</spam> 
 		</td>

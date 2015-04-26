@@ -169,43 +169,43 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function inbox(){
 
 		// return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read')->orWhere('user_messages.status', '=', 'unread');
-		return $this->belongsToMany('Message','user_messages')->whereRaw('( user_messages.status = ? OR user_messages.status = ? )', array('read', 'unread'));
+		return $this->belongsToMany('Message','user_messages')->whereRaw('( user_messages.status = ? OR user_messages.status = ? )', array('read', 'unread'))->orderBy('user_messages.created_at', 'DESC');
 
 	}
 
 	public function unreadbox(){
 
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'unread');
+		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'unread')->orderBy('user_messages.created_at', 'DESC');
 
 	}
 
 	public function readbox(){
 
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read');
+		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read')->orderBy('user_messages.created_at', 'DESC');
 
 	}
 
 	public function spambox(){
 
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'spam');
+		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'spam')->orderBy('user_messages.created_at', 'DESC');
 
 	}
 
-	public function deletedbox(){
+	public function trashbox(){
 
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'deleted');
+		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'deleted')->orderBy('user_messages.created_at', 'DESC');
 
 	}
 
 	public function outbox(){
 
-		return $this->hasMany('Message','user_id')->where('messages.status', '=', 'done');
+		return $this->hasMany('Message','author_id')->where('messages.status', '=', 'done')->orderBy('messages.created_at', 'DESC');
 
 	}
 
 	public function draftbox(){
 
-		return $this->hasMany('Message','user_id')->where('messages.status', '=', 'draft');
+		return $this->hasMany('Message','author_id')->where('messages.status', '=', 'draft')->orderBy('messages.created_at', 'DESC');
 
 	}
 

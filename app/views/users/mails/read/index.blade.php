@@ -21,7 +21,7 @@
 						</li>
 						<li class="inbox active">
 							<a href="javascript:;" class="btn" data-title="Bandeja de Entrada">
-							Entrada({{ '3' }}) </a>
+							Entrada ({{ count(Auth::user()->unreadbox) }}) </a>
 							<b></b>
 						</li>
 						<li class="sent">

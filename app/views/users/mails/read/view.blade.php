@@ -1,5 +1,5 @@
 <div class="inbox-header inbox-view-header">
-	<h1 class="pull-left">{{ 'Este es el asunto del Correo' }} <a href="javascript:;">
+	<h1 class="pull-left">{{ $message->subject }} <a href="javascript:;">
 	Bandeja de Entrada </a>
 	</h1>
 	<div class="pull-right">
@@ -24,7 +24,7 @@
 			@endforeach
 			</span>
 			<spam class="moment-fromnow">
-				{{ $message->user_message(Auth::user())->created_at }} <!--- '08:20PM 29 JAN 2013' -->
+				{{ $message->user_message()->created_at }} <!--- '08:20PM 29 JAN 2013' -->
 			</spam> 
 		</div>
 		<div class="col-md-5 inbox-info-btn">
@@ -80,20 +80,25 @@
 			<!--- Ciclo por cada Dato Adjunto -->
 			@if(count($message->attachments) > 0)
 				@foreach($message->attachments as $attachment)
-					<div class="margin-bottom-25">
-						<img src="{{'/assets/admin/pages/media/gallery/image4.jpg'}}">
-						<div>
-							<strong>image4.jpg</strong>
-							<span>
-							173K </span>
-							<a href="javascript:;">
+					<div class="col-md-3">
+						<div class="row">
+							<div class="col-md-1"></div>
+							<img class="col-md-10" src="{{ $attachment->image() }}">							
+							<div class="col-md-1"></div>
+						</div>
+						<div class="row">
+							<strong class="col-md-12">{{$attachment->name}}</strong>
+							<span class="col-md-4">
+							{{ $attachment->getSize() }} </span>
+							<a class="col-md-3" href="javascript:;">
 							Ver </a>
-							<a href="javascript:;">
+							<a class="col-md-4" href="javascript:;">
 							Descargar </a>
 						</div>
 					</div>
 				@endforeach
 			@endif
+			<!-- 
 			<div class="margin-bottom-25">
 				<img src="/assets/admin/pages/media/gallery/image4.jpg">
 				<div>
@@ -129,7 +134,8 @@
 					<a href="javascript:;">
 					Descargar </a>
 				</div>
-			</div>
+			</div> 
+			-->
 		</div>
 
 <script type="text/javascript">

@@ -17,7 +17,7 @@
 		<div class="controls">
 			<select class="bs-select form-control" name="to" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
 				@foreach($tousers as $user)
-					<option value="{{ Hashids::encode($user->id) }}" data-subtext="{{ $user->username }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+					<option value="{{ Hashids::encode($user->id) }}" data-subtext="{{ $user->username }}" {{ $message->hasTo($user) ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
 				@endforeach
 			</select>
 			<!-- <input type="hidden" id="loading-select" class="form-control select2"> -->
@@ -55,13 +55,13 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Asunto:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject" value="{{'Urgent - Financial Report for May, 2013'}}">
+			<input type="text" class="form-control" name="subject" value="{{ $message->subject }}">
 		</div>
 	</div>
 	<div class="inbox-form-group">
 		<div class="controls-row">
 			<textarea class="form-control summernote" name="message" rows="12">
-				{{ 'Contenido del Correo' }}
+				{{ $message->message }}
 			</textarea>
 			<!--blockquote content for reply message, the inner html of reply_email_content_body element will be appended into wysiwyg body. Please refer Inbox.js loadReply() function. -->
 			<!-- <div id="reply_email_content_body" class="hide">
@@ -90,9 +90,28 @@
 		<!-- The table listing the files available for upload/download -->
 		<table role="presentation" class="table table-striped margin-top-10">
 		<tbody class="files">
+			@if(count($message->attachments) > 0)
+				@foreach($message->attachments as $attachment)
+				    <tr class="template-download fade in">
+				        <td class="name" width="30%"><span href="{{ $attachment->route }}" title="{{ $attachment->name }}" data-gallery download="{{ $attachment->name }}">{{ $attachment->name }}</span></td>
+				        <td class="size" width="40%"><span>{{ $attachment->getSize() }}</span></td>
+				        @if ($attachment->status == 'error')
+				            <td class="error" width="20%" colspan="2"><span class="label label-danger">Error</span> {{ $attachment->route }}</td>
+				        @else
+				            <td colspan="2"></td>
+				        @endif
+				        <td class="cancel" width="10%" align="right">
+				            <button class="btn btn-sm red cancel" data-attachmentid="{{ Crypt::encrypt($attachment->id) }}">
+		                    	<i class="fa fa-times"></i>
+		                   </button>
+				        </td>
+				    </tr>
+				@endforeach
+			@endif 
 		</tbody>
 		</table>
 	</div>
+	<!--- DEFAULT -->
 	<script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">

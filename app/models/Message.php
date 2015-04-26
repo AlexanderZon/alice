@@ -51,4 +51,53 @@ class Message extends \Eloquent {
 
     }
 
+    public function user_messages(){
+
+        return UserMessage::where('message_id', '=', $this->id)->get();
+
+        return $this->hasMany('UserMessage', 'message_id');
+
+    }
+
+    public function make_diff( $from_datetime ){
+
+        $from_datetime = date_create($from_datetime);
+        $today_datetime = date_create(date('Y-m-d H:m:i'));
+        $interval = date_diff($from_datetime, $today_datetime);
+        return (int) $interval->format('%r%a');
+
+    }
+
+    public function created_diff(){
+
+        return $this->make_diff($this->created_at);
+
+    }
+
+    public function updated_diff(){
+
+        return $this->make_diff($this->updated_at);
+
+    }
+
+    public function deleted_diff(){
+
+        return $this->deleted_at != null ? $this->make_diff($this->deleted_at) : 0;
+
+    }
+
+    public function hasTo( $user ){
+
+        $bool = false;
+
+        if(count($this->to) > 0):
+            foreach($this->to as $to):
+                if($to->user_id == $user->id) $bool = true;
+            endforeach;
+        endif;
+
+        return $bool;
+
+    }
+
 }

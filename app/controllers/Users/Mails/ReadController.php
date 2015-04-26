@@ -85,15 +85,24 @@ class ReadController extends \BaseController {
 			$message->to()->sync($to);
 			$message->save();
 
-			$user_messages = UserMessage::where('message_id', '=', $message->id)->get();
+			// $user_messages = UserMessage::where('message_id', '=', $message->id)->get();
 
-			if(count($user_messages) > 0):
+			if(count($message->user_messages()) > 0):
 
-				foreach($user_messages as $user_message):
+				foreach($message->user_messages() as $user_message):
 					$user_message->status = 'unread';
 					$user_message->save();
-					$user_message->created_at = $user_message->updated_at();
+					$user_message->created_at = $user_message->updated_at;
 					$user_message->save();
+				endforeach;
+
+			endif;
+
+			if(count($message->attachments) > 0):
+
+				foreach($message->attachments as $attachment):
+					$attachment->status = 'uploaded';
+					$attachment->save();
 				endforeach;
 
 			endif;
@@ -112,6 +121,32 @@ class ReadController extends \BaseController {
 
 	public function getInbox(){
 
+		self::addArgument('inbox', Auth::user()->inbox()->paginate(50));
+
+		return self::make('inbox');
+
+	}
+
+	public function getDraft(){
+
+		self::addArgument('outbox', Auth::user()->draftbox()->paginate(50));
+
+		return self::make('draftbox');
+
+	}
+
+	public function getOutbox(){
+
+		self::addArgument('outbox', Auth::user()->outbox()->paginate(50));
+
+		return self::make('outbox');
+
+	}
+
+	public function getTrash(){
+
+		self::addArgument('inbox', Auth::user()->trashbox()->paginate(50));
+
 		return self::make('inbox');
 
 	}
@@ -127,6 +162,20 @@ class ReadController extends \BaseController {
 		self::addArgument('tousers', User::all());
 		
 		return self::make('compose');
+
+	}
+
+	public function getRecompose(){
+
+		$message = Message::find(Crypt::decrypt(Input::get('message_id')));
+
+		self::addArgument('token', Crypt::encrypt($message->id));
+
+		self::addArgument('message', $message);
+
+		self::addArgument('tousers', User::all());
+		
+		return self::make('forward');
 
 	}
 
@@ -157,6 +206,14 @@ class ReadController extends \BaseController {
 		self::addArgument('message', Message::find(Crypt::decrypt(Input::get('message_id'))));
 
 		return self::make('view');
+
+	}
+
+	public function getReview(){
+
+		self::addArgument('message', Message::find(Crypt::decrypt(Input::get('message_id'))));
+
+		return self::make('review');
 
 	}
 
@@ -193,6 +250,7 @@ class ReadController extends \BaseController {
 			$attachement->name = $file->getClientOriginalName();
 			$attachement->mime = $file->getMimeType();
 	    	$attachement->route = '/uploads/messages/files/'.$path;
+	    	$attachement->size = $file->getSize();
 	    	$attachement->save();
 
 

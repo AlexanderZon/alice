@@ -100,7 +100,7 @@
 		    var listListing = '';
 
 		    var loadInbox = function (el, name) {
-		        var url = '{{$route}}/inbox';
+		        var url = '{{$route}}/' + name;
 		        var title = $('.inbox-nav > li.' + name + ' a').attr('data-title');
 		        listListing = name;
 
@@ -146,8 +146,82 @@
 		        });
 		    }
 
-		    var loadMessage = function (el, name, resetMenu) {
+		    var viewMessage = function (el, name, resetMenu) {
 		        var url = '{{$route}}/view';
+
+		        loading.show();
+		        content.html('');
+		        toggleButton(el);
+
+		        var message_id = el.parent('tr').attr("data-messageid");  
+		        
+		        $.ajax({
+		            type: "GET",
+		            cache: false,
+		            url: url,
+		            dataType: "html",
+		            data: {'message_id': message_id},
+		            success: function(res) 
+		            {
+		                toggleButton(el);
+
+		                if (resetMenu) {
+		                    $('.inbox-nav > li.active').removeClass('active');
+		                }
+		                $('.inbox-header > h1').text('Ver Mensaje');
+
+		                loading.hide();
+		                content.html(res);
+		                Layout.fixContentHeight();
+		                Metronic.initUniform();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                toggleButton(el);
+		            },
+		            async: false
+		        });
+		    }
+
+		    var reviewMessage = function (el, name, resetMenu) {
+		        var url = '{{$route}}/review';
+
+		        loading.show();
+		        content.html('');
+		        toggleButton(el);
+
+		        var message_id = el.parent('tr').attr("data-messageid");  
+		        
+		        $.ajax({
+		            type: "GET",
+		            cache: false,
+		            url: url,
+		            dataType: "html",
+		            data: {'message_id': message_id},
+		            success: function(res) 
+		            {
+		                toggleButton(el);
+
+		                if (resetMenu) {
+		                    $('.inbox-nav > li.active').removeClass('active');
+		                }
+		                $('.inbox-header > h1').text('Ver Mensaje');
+
+		                loading.hide();
+		                content.html(res);
+		                Layout.fixContentHeight();
+		                Metronic.initUniform();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                toggleButton(el);
+		            },
+		            async: false
+		        });
+		    }
+
+		    var recomposeMessage = function (el, name, resetMenu) {
+		        var url = '{{$route}}/recompose';
 
 		        loading.show();
 		        content.html('');
@@ -498,7 +572,17 @@
 
 		            // handle view message
 		            $('.inbox-content').on('click', '.view-message', function () {
-		                loadMessage($(this));
+		                viewMessage($(this));
+		            });
+
+		            // handle review message
+		            $('.inbox-content').on('click', '.review-message', function () {
+		                reviewMessage($(this));
+		            });
+
+		            // handle recompose message
+		            $('.inbox-content').on('click', '.recompose-message', function () {
+		                recomposeMessage($(this));
 		            });
 
 		            // handle inbox listing
@@ -508,7 +592,7 @@
 
 		            // handle sent listing
 		            $('.inbox-nav > li.sent > a').click(function () {
-		                loadInbox($(this), 'sent');
+		                loadInbox($(this), 'outbox');
 		            });
 
 		            // handle draft listing
@@ -533,7 +617,7 @@
 
 		            //handle loading content based on URL parameter
 		            if (Metronic.getURLParameter("a") === "view") {
-		                loadMessage();
+		                viewMessage();
 		            } else if (Metronic.getURLParameter("a") === "compose") {
 		                loadCompose();
 		            } else {

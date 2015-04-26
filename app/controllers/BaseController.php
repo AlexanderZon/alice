@@ -399,4 +399,33 @@ class BaseController extends Controller implements BaseInterface{
 		
 	}
 
+	# Number Format
+
+	public static function numberFormat( $number ){
+
+		return number_format($number, 2, '.', ',');
+
+	}
+
+	public static function format($number) {
+
+	    $prefixes = 'kMGTPEZY';
+
+	    if ($number >= 1000):
+	        for ($i=-1; $number>=1000; ++$i):
+	            $number /= 1000;
+	        endfor;
+	        return self::numberFormat($number).$prefixes[$i];
+	    endif;
+
+    	return $number;
+	
+	}
+
+	public static function bitesFormat( $number ){
+
+		return self::format( $number ).'b';
+		
+	}
+
 }
