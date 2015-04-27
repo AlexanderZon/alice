@@ -46,6 +46,13 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 |
 */
 
+App::error(function(\Illuminate\Encryption\DecryptException $exception)
+{
+    Log::error($exception);
+
+    return View::make('security.auth.404');
+});
+
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);

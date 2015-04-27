@@ -1,5 +1,5 @@
 <div class="inbox-header inbox-view-header">
-	<h1 class="pull-left">{{ $message->subject }} <a href="javascript:;">
+	<h1 class="pull-left">{{ $message->subject 	}} <a href="javascript:;">
 	Bandeja de Entrada </a>
 	</h1>
 	<div class="pull-right">
@@ -24,8 +24,9 @@
 			@endforeach
 			</span>
 			<spam class="moment-fromnow">
-				{{ $message->created_at }} <!--- '08:20PM 29 JAN 2013' -->
+				{{ $message->created_at }} 
 			</spam> 
+				<!--- '08:20PM 29 JAN 2013' -->
 		</div>
 		<div class="col-md-5 inbox-info-btn">
 			<div class="btn-group">
@@ -71,8 +72,8 @@
 		<div class="inbox-attached">
 			<div class="margin-bottom-15">
 				<span>
-				{{ '3' }} Archivos Adjuntos — </span>
-				<a href="javascript:;">
+				{{ count($message->attachemnts) }} Archivos Adjuntos — </span>
+				<a href="javascript:;" class="download-all-btn" data-messageid="{{ Crypt::encrypt($message->id) }}">
 				Descargar todos los archivos adjuntos </a>
 				<a href="javascript:;">
 				Ver todas las imágenes </a>

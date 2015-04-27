@@ -7,6 +7,9 @@
 <link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-summernote/summernote.css">
 
 <form class="inbox-compose form-horizontal" id="compose-mail" action="#" method="POST" enctype="multipart/form-data">
+	<input type="hidden" name="token" value="{{ $token }}">
+	<input type="hidden" name="type" value="forward">
+	<input type="hidden" name="action" value="send">
 	<div class="inbox-compose-btn">
 		<button class="send-btn btn blue"><i class="fa fa-check"></i>Enviar</button>
 		<button class="discard-btn btn">Descartar</button>
@@ -15,7 +18,7 @@
 	<div class="inbox-form-group mail'to">
 		<label class="control-label">Para</label>
 		<div class="controls">
-			<select class="bs-select form-control" name="to" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
+			<select class="bs-select form-control" name="to[]" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
 				@foreach($tousers as $user)
 					<option value="{{ Hashids::encode($user->id) }}" data-subtext="{{ $user->username }}" {{ $message->hasTo($user) ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
 				@endforeach

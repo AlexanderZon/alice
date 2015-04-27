@@ -128,7 +128,7 @@ return array(
 		'Nathanmac\GUID\GUIDServiceProvider',
 		'Alexanderzon\Hashids\HashidsServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
-		'Chumper\Zipper\ZipperServiceProvider',
+		// 'Chumper\Zipper\ZipperServiceProvider',
 
 	),
 
@@ -200,7 +200,7 @@ return array(
 		'Excel' 		  	=> 'Maatwebsite\Excel\Facades\Excel',
 		'Image'           	=> 'Intervention\Image\Facades\Image',
 		'Debugbar'			=> 'Barryvdh\Debugbar\Facade',
-		'Zipper' 			=> 'Chumper\Zipper\Zipper',
+		// 'Zipper' 			=> 'Chumper\Zipper\Zipper',
 
 	),
 

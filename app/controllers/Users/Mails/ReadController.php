@@ -10,6 +10,8 @@ use \User as User;
 use \Message as Message;
 use \UserMessage as UserMessage;
 use \Attachment as Attachment;
+use \ZipArchive as ZipArchive;
+use \File as File;
 
 class ReadController extends \BaseController {
 
@@ -181,6 +183,10 @@ class ReadController extends \BaseController {
 
 	public function getReply(){
 
+		$message = Message::find(Crypt::decrypt(Input::get('message_id')));
+
+		self::addArgument('message', $message);
+		
 		self::addArgument('tousers', User::all());
 
 		return self::make('reply');
@@ -231,6 +237,126 @@ class ReadController extends \BaseController {
 
 	}
 
+	public function getViewall( $id ){
+
+		$message = Message::find(Crypt::decrypt($id));
+
+		$attachments = $message->attachments;
+
+		$images = array();
+
+		if(count($attachments) > 0):
+			
+			foreach($attachments as $attachment):
+
+				switch ($attachment->mime) {
+		    		case 'image/png':
+		    		case 'image/gif':
+		    		case 'image/jpeg':
+						$images[] = array(
+							'route' => $attachment->route,
+							'name' => $attachment->name
+							);
+						# code...
+						break;
+					
+					default:
+						# code...
+						break;
+				}		
+		
+			endforeach;
+
+			 return Response::json(array('images' => $images));
+
+		else:
+
+			return false;
+
+		endif;
+
+	}
+
+	public function getPrint( $id ){
+
+		$message = Message::find(Crypt::decrypt($id));
+
+    	\Debugbar::disable();
+
+		return $message->message;
+
+	}
+
+	public function getViewimage( $id ){
+
+		$attachment = Attachment::find(Crypt::decrypt($id));
+
+		switch ($attachment->mime) {
+    		case 'image/png':
+    		case 'image/gif':
+    		case 'image/jpeg':
+    			\Debugbar::disable();
+    			self::addArgument('attachment', $attachment);
+    			return self::make('viewimage');
+				// return '<img src="'.$attachment->route.'"/>';
+				# code...
+				break;
+			
+			default:
+				\Debugbar::disable();
+				return \View::make('security.auth.404');
+				# code...
+				break;
+		}		
+
+	}
+
+	public function getDownloadall( $id ){
+
+		$message = Message::find(Crypt::decrypt($id));
+
+		$attachments = $message->attachments;
+
+		$files = array();
+
+		if(count($attachments) > 0):
+			
+			foreach($attachments as $attachment):
+		
+				$files[] = array(
+					'route' => public_path().$attachment->route,
+					'name' => $attachment->name
+					);
+		
+			endforeach;
+
+			$file = 'attachments-'.GUID::generate().'.zip';
+
+			$destination = '/uploads/messages/compressed/';
+
+			File::cleanDirectory(public_path().$destination);
+
+			$zip_file = $this->createZip( $files, public_path().$destination.$file);
+
+			if($zip_file) return Response::json(array('destination' => $destination.$file));
+			else return false;
+
+		else:
+
+			return false;
+
+		endif;
+
+	}
+
+	public function getDownload( $id ){
+
+		$attachment = Attachment::find(Crypt::decrypt($id));
+
+		return Response::json(array('destination' => $attachment->route));
+
+	}
+
 	public function postUpload(){
 
 		$files = Input::file('files');
@@ -244,14 +370,14 @@ class ReadController extends \BaseController {
 	        $filename = $file->getClientOriginalName();
 	        $path = GUID::generate().".".$file->getClientOriginalExtension();
 
-			$attachement = new Attachment();
-			$attachement->attachmentable_id = Crypt::decrypt(Input::get('_id'));
-			$attachement->attachmentable_type = 'Message';
-			$attachement->name = $file->getClientOriginalName();
-			$attachement->mime = $file->getMimeType();
-	    	$attachement->route = '/uploads/messages/files/'.$path;
-	    	$attachement->size = $file->getSize();
-	    	$attachement->save();
+			$attachment = new Attachment();
+			$attachment->attachmentable_id = Crypt::decrypt(Input::get('_id'));
+			$attachment->attachmentable_type = 'Message';
+			$attachment->name = $file->getClientOriginalName();
+			$attachment->mime = $file->getMimeType();
+	    	$attachment->route = '/uploads/messages/files/'.$path;
+	    	$attachment->size = $file->getSize();
+	    	$attachment->save();
 
 
 	    	$json['files'][] = array(
@@ -268,6 +394,48 @@ class ReadController extends \BaseController {
 		endforeach;
 
 		return Response::json($json);
+
+	}
+
+	private function createZip($files = array(),$destination = '',$overwrite = false) {
+	//if the zip file already exists and overwrite is false, return false
+		if(file_exists($destination) && !$overwrite) return false;
+		//vars
+		$valid_files = array();
+		//if files were passed in...
+		if(is_array($files)):
+			//cycle through each file
+			foreach($files as $file):
+				//make sure the file exists
+				if(file_exists($file['route'])):
+					$valid_files[] = $file;
+				endif;
+			endforeach;
+		endif;
+		//if we have good files...
+		if(count($valid_files)):
+			//create the archive
+			$zip = new ZipArchive();
+			if($zip->open($destination,$overwrite ? ZIPARCHIVE::OVERWRITE : ZIPARCHIVE::CREATE) !== true):
+				return false;
+			endif;
+			//add the files
+			foreach($valid_files as $file):
+				$zip->addFile($file['route'],$file['name']);
+			endforeach;
+			//debug
+			//echo 'The zip archive contains ',$zip->numFiles,' files with a status of ',$zip->status;
+			
+			//close the zip -- done!
+			$zip->close();
+			
+			//check to make sure the file exists
+			return file_exists($destination);
+
+		else:
+
+			return false;
+		endif;
 
 	}
 

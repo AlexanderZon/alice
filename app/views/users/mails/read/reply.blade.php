@@ -17,7 +17,7 @@
 		<div class="controls">
 			<select class="bs-select form-control" name="to" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
 				@foreach($tousers as $user)
-					<option value="{{ Hashids::encode($user->id) }}" data-subtext="{{ $user->username }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+					<option value="{{ Hashids::encode($user->id) }}" data-subtext="{{ $user->username }}" {{ $user->id == $message->author_id ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
 				@endforeach
 			</select>
 			<!-- <input type="hidden" id="loading-select" class="form-control select2"> -->
@@ -55,7 +55,7 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Asunto:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject" value="{{'Urgent - Financial Report for May, 2013'}}">
+			<input type="text" class="form-control" name="subject" value="Re: {{ $message->subject }}">
 		</div>
 	</div>
 	<div class="inbox-form-group">

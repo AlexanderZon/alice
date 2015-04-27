@@ -257,6 +257,9 @@ var Demo = function () {
     var customInit = function(){
 
         $('.fancybox').fancybox();
+        $('.fancybox-close').click(function(event) {
+            $.fancybox.close();
+        });
 
     }
 

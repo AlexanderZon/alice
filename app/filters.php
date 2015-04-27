@@ -102,7 +102,7 @@ Route::filter('capabilities', function( $route, $request){
 	if( $capability = CapabilitY::getCapability( $request )):
 
 		if(!Auth::user()->hasCapability($capability) ):
-			return Redirect::to('/auth/notpermissions');
+			return Redirect::to('/auth/notpermission');
 		else:
 			//Si Tiene Permisos
 		endif;

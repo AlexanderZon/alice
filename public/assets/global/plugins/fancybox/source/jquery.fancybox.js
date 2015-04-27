@@ -76,9 +76,9 @@
 			wrapCSS   : '',
 
 			arrows     : true,
-			closeBtn   : true,
-			closeClick : false,
-			nextClick  : false,
+			closeBtn   : false,
+			closeClick : true,
+			nextClick  : true,
 			mouseWheel : true,
 			autoPlay   : false,
 			playSpeed  : 3000,

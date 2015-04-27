@@ -140,7 +140,19 @@ class AuthenticationController extends ReadController {
 
 	public function getNotpermissions(){
 
-		return self::make('notpermissions');
+		return self::make('403');
+
+	}
+
+	public function getNotfound(){
+
+		return self::make('404');
+
+	}
+
+	public function getSevererror(){
+
+		return self::make('500');
 
 	}
 

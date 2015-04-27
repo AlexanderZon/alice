@@ -93,11 +93,11 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="/assets/admin/layout4/scripts/layout.js" type="text/javascript"></script>
 <script src="/assets/admin/layout4/scripts/demo.js" type="text/javascript"></script>
 <script>
-jQuery(document).ready(function() {    
-   Metronic.init(); // init metronic core components
-Layout.init(); // init current layout
-Demo.init(); // init demo features
-});
+	jQuery(document).ready(function() {    
+	   	Metronic.init(); // init metronic core components
+		Layout.init(); // init current layout
+		Demo.init(); // init demo features
+	});
 </script>
 <!-- END JAVASCRIPTS -->
 </body>

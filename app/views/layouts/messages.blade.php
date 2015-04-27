@@ -50,7 +50,7 @@
 	<script src="/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
 	<!-- END CORE PLUGINS -->
 	<!-- BEGIN: Page level plugins -->
-	<script src="/assets/global/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
+	<script src="/assets/global/plugins/fancybox/source/jquery.fancybox.js" type="text/javascript"></script>
 	<script src="/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
 	<script src="/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
 	
@@ -248,6 +248,66 @@
 		                content.html(res);
 		                Layout.fixContentHeight();
 		                Metronic.initUniform();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                toggleButton(el);
+		            },
+		            async: false
+		        });
+		    }
+
+		    var downloadAll = function (el) {
+		        var message_id = el.attr("data-messageid"); 
+		        var url = '{{$route}}/downloadall/'+message_id;
+
+		        // loading.show();
+		        // content.html('');
+		        // toggleButton(el);
+
+
+		        console.log(message_id);
+		        
+		        $.ajax({
+		            type: "GET",
+		            cache: false,
+		            url: url,
+		            // dataType: "html",
+		            // data: {'message_id': message_id},
+		            success: function(res) 
+		            {
+		            	window.open(res.destination);
+		                // console.log(res);
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                toggleButton(el);
+		            },
+		            async: false
+		        });
+		    }
+
+		    var downloadFile = function (el) {
+		        var attachment_id = el.attr("data-attachmentid"); 
+		        var url = '{{$route}}/downloada/'+attachment_id;
+
+		        // loading.show();
+		        // content.html('');
+		        // toggleButton(el);
+
+
+		        console.log(message_id);
+		        
+		        $.ajax({
+		            type: "GET",
+		            cache: false,
+		            url: url,
+		            // dataType: "html",
+		            // data: {'message_id': message_id},
+		            success: function(res) 
+		            {
+		            	window.open(res.destination);
+		                // console.log(res);
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
@@ -583,6 +643,16 @@
 		            // handle recompose message
 		            $('.inbox-content').on('click', '.recompose-message', function () {
 		                recomposeMessage($(this));
+		            });
+
+		            // handle download-all attachments
+		            $('.inbox-content').on('click', '.download-all-btn', function () {
+		                downloadAll($(this));
+		            });
+
+		            // handle download-all attachments
+		            $('.inbox-content').on('click', '.download-btn', function () {
+		                downloadFile($(this));
 		            });
 
 		            // handle inbox listing

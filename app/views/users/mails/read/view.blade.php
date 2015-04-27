@@ -1,9 +1,9 @@
 <div class="inbox-header inbox-view-header">
-	<h1 class="pull-left">{{ $message->subject }} <a href="javascript:;">
-	Bandeja de Entrada </a>
+	<h1 class="pull-left">{{ $message->subject }} 
+	<!-- <a href="javascript:;">Bandeja de Entrada </a> -->
 	</h1>
 	<div class="pull-right">
-		<i class="fa fa-print"></i>
+		<a href="{{ $route }}/print/{{ Crypt::encrypt($message->id) }}" target="_blank"><i class="fa fa-print"></i></a>
 	</div>
 </div>
 <div class="inbox-view-info">
@@ -24,8 +24,9 @@
 			@endforeach
 			</span>
 			<spam class="moment-fromnow">
-				{{ $message->user_message()->created_at }} <!--- '08:20PM 29 JAN 2013' -->
+				{{ $message->user_message()->created_at }}
 			</spam> 
+				 <!--- '08:20PM 29 JAN 2013' -->
 		</div>
 		<div class="col-md-5 inbox-info-btn">
 			<div class="btn-group">
@@ -44,10 +45,10 @@
 						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="forward-btn">
 						<i class="fa fa-arrow-right reply-btn"></i> Reenviar </a>
 					</li>
-					<!-- <li>
-						<a href="javascript:;">
+					<li>
+						<a href="{{ $route }}/print/{{ Crypt::encrypt($message->id) }}" target="_blank">
 						<i class="fa fa-print"></i> Imprimir </a>
-					</li> -->
+					</li>
 					<li class="divider">
 					</li>
 					<li>
@@ -71,32 +72,49 @@
 		<div class="inbox-attached">
 			<div class="margin-bottom-15">
 				<span>
-				{{ '3' }} Archivos Adjuntos — </span>
-				<a href="javascript:;">
+				{{ count($message->attachments) }} Archivos Adjuntos — </span>
+				<a href="javascript:;" class="download-all-btn" data-messageid="{{ Crypt::encrypt($message->id) }}">
 				Descargar todos los archivos adjuntos </a>
-				<a href="javascript:;">
-				Ver todas las imágenes </a>
+				<!-- <a href="javascript:;" class="view-all-btn">
+				Ver todas las imágenes </a> -->
 			</div>
 			<!--- Ciclo por cada Dato Adjunto -->
-			@if(count($message->attachments) > 0)
-				@foreach($message->attachments as $attachment)
-					<div class="col-md-3">
-						<div class="row">
-							<div class="col-md-1"></div>
-							<img class="col-md-10" src="{{ $attachment->image() }}">							
-							<div class="col-md-1"></div>
+			@if(count($message->attachments) > 0 AND ($counter = 0) == 0)
+				<div class="row">
+					@foreach($message->attachments as $attachment)
+						@if((++$counter)%4 == 0)
+							<div class="row">
+						@endif
+						<div class="col-md-3">
+							<div class="row">
+								<div class="col-md-1"></div>
+								<img class="col-md-10 timeline-badge-userpic" src="{{ $attachment->image() }}">
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="row">
+									<div class="col-md-1"></div>
+									<p class="col-md-10">{{$attachment->name}}</p>
+									<div class="col-md-1"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-1"></div>
+									<span class="col-md-5">{{ $attachment->getSize() }} </span>
+									<a class="col-md-1 download-bt" href="javascript:;" data-attachmentid="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-download"></i></a>					
+									@if( $attachment->mime == 'image/png' || $attachment->mime == 'image/jpeg' || $attachment->mime == 'image/gif')
+									<a class="col-md-1 fancybox" data-fancybox-type="iframe" title="{{ $attachment->name }} ({{ $attachment->getSize() }})" href="{{ $route }}/viewimage/{{ Crypt::encrypt($attachment->id) }}" rel="view-images"><i class="fa fa-eye"></i></a>
+									@endif
+									<!-- <a class="col-md-3" href="javascript:;">Descargar</a>									
+									<a class="col-md-3" href="javascript:;">Ver</a> -->
+									<div class="col-md-1"></div>
+								</div>
+							</div>
 						</div>
-						<div class="row">
-							<strong class="col-md-12">{{$attachment->name}}</strong>
-							<span class="col-md-4">
-							{{ $attachment->getSize() }} </span>
-							<a class="col-md-3" href="javascript:;">
-							Ver </a>
-							<a class="col-md-4" href="javascript:;">
-							Descargar </a>
-						</div>
-					</div>
-				@endforeach
+						@if(($counter)%4 == 0)
+							</div>
+						@endif
+					@endforeach
+				</div>
 			@endif
 			<!-- 
 			<div class="margin-bottom-25">
@@ -168,4 +186,8 @@
  		var time = $(this).html();
  		$(this).html(moment(time).format('DD MMM h:mm a') + '(' + moment(time).fromNow() + ')');
  	});
+ 	$('.fancybox').fancybox();
+    $('.fancybox-close').click(function(event) {
+        $.fancybox.close();
+    });
 </script>
