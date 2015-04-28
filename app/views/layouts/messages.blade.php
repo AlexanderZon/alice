@@ -487,13 +487,123 @@
 
 		    var discardMail = function(el) {
 
-		    	// 
+		        var messageid = $(el).attr("data-messageid");
+		    	var url = '{{$route}}/discard/' + messageid;
+
+		    	$('input[name=action]').val('discard');
+
+		    	/*console.log($('#compose-mail').serializeArray());
+		    	console.log($('#compose-mail').serialize());*/
+
+		    	$('textarea[name=message]').html($('.note-editable').html());
+
+		    	var data = $('#compose-mail').serialize();
+
+		        /*var data = {
+		        	'token': $('input[name=token]').val(),
+		        	'subject': $('input[name=subject]').val(),
+		        	'to': $('select[name=to]').val(),
+		        	'message': $('textarea[name=message]').val(),
+		        }*/
+
+		        loading.show();
+		        content.html('');
+		        toggleButton(el);
+
+		        console.log(data);
+
+		        $.ajax({
+		            type: "POST",
+		            cache: false,
+		            url: url,
+		            data: data,
+		            dataType: "html",
+		            success: function(res) 
+		            {
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.initUniform();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                toggleButton(el);
+		            },
+		            async: false
+		        });
+
+		        // handle group checkbox:
+		        jQuery('body').on('change', '.mail-group-checkbox', function () {
+		            var set = jQuery('.mail-checkbox');
+		            var checked = jQuery(this).is(":checked");
+		            jQuery(set).each(function () {
+		                $(this).attr("checked", checked);
+		            });
+		            jQuery.uniform.update(set);
+		        });
 		    	
 		    }
 
 		    var draftMail = function(el) {
 
-		    	// 
+		    	var messageid = $(el).attr("data-messageid");
+		    	var url = '{{$route}}/draft/' + messageid;
+
+		    	$('input[name=action]').val('discard');
+
+		    	/*console.log($('#compose-mail').serializeArray());
+		    	console.log($('#compose-mail').serialize());*/
+
+		    	$('textarea[name=message]').html($('.note-editable').html());
+
+		    	var data = $('#compose-mail').serialize();
+
+		        /*var data = {
+		        	'token': $('input[name=token]').val(),
+		        	'subject': $('input[name=subject]').val(),
+		        	'to': $('select[name=to]').val(),
+		        	'message': $('textarea[name=message]').val(),
+		        }*/
+
+		        loading.show();
+		        content.html('');
+		        toggleButton(el);
+
+		        console.log(data);
+
+		        $.ajax({
+		            type: "POST",
+		            cache: false,
+		            url: url,
+		            data: data,
+		            dataType: "html",
+		            success: function(res) 
+		            {
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.initUniform();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                toggleButton(el);
+		            },
+		            async: false
+		        });
+
+		        // handle group checkbox:
+		        jQuery('body').on('change', '.mail-group-checkbox', function () {
+		            var set = jQuery('.mail-checkbox');
+		            var checked = jQuery(this).is(":checked");
+		            jQuery(set).each(function () {
+		                $(this).attr("checked", checked);
+		            });
+		            jQuery.uniform.update(set);
+		        });
 
 		    }
 
@@ -584,11 +694,12 @@
 		                loadCompose($(this));
 		            });
 
-		            // handle discard btn
+		            /*// handle discard btn
 		            $('.inbox').on('click', '.inbox-discard-btn', function(e) {
 		                e.preventDefault();
+		            	console.log($('#compose-mail').attr('action'));
 		                loadInbox($(this), listListing);
-		            });
+		            });*/
 
 		            // handle reply and forward button click
 		            $('.inbox').on('click', '.reply-btn', function () {
@@ -611,12 +722,14 @@
 		            });
 
 		            // handle discard and forward button click
-		            $('.inbox').on('click', '.discard-btn', function () {
+		            $('.inbox').on('click', '.discard-btn', function (e) {
+		            	e.preventDefault();
 		                discardMail($(this));
 		            });
 
 		            // handle draft and forward button click
-		            $('.inbox').on('click', '.draft-btn', function () {
+		            $('.inbox').on('click', '.draft-btn', function (e) {
+		            	e.preventDefault();
 		                draftMail($(this));
 		            });
 

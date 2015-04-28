@@ -237,6 +237,40 @@ class ReadController extends \BaseController {
 
 	}
 
+	public function postDiscard( $id ){
+
+		$message = Message::find($id);
+
+		$message->delete();
+
+		self::addArgument('inbox', Auth::user()->inbox()->paginate(50));
+
+		return self::make('inbox');
+
+	}
+
+	public function postDraft( $id ){
+
+		$message = Message::find(Crypt::decrypt($id));
+		$message->subject = Input::get('subject');
+		$message->message = Input::get('message');
+		$message->save();
+
+		$users = array();
+
+		foreach(Input::get('to') as $to):
+			$users[] = Crypt::decrypt($to);
+		endforeach;
+
+		$message->to()->sync($users);
+		$message->save();
+
+		self::addArgument('inbox', Auth::user()->inbox()->paginate(50));
+
+		return self::make('inbox');
+
+	}
+
 	public function getViewall( $id ){
 
 		$message = Message::find(Crypt::decrypt($id));

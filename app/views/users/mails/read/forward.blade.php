@@ -12,14 +12,17 @@
 	<input type="hidden" name="action" value="send">
 	<div class="inbox-compose-btn">
 		<button class="send-btn btn blue"><i class="fa fa-check"></i>Enviar</button>
-		<button class="discard-btn btn">Descartar</button>
-		<button class="delete-btn btn">Borrador</button>
+		<button class="discard-btn btn inbox-discard-btn" data-messageid="{{ $token }}">Descartar</button>
+		<button class="draft-btn btn" data-messageid="{{ $token }}">Borrador</button>
 	</div>
+				@foreach($message->to as $user)
+					{{ $message->hasTo($user) }}
+				@endforeach
 	<div class="inbox-form-group mail'to">
 		<label class="control-label">Para</label>
 		<div class="controls">
 			<select class="bs-select form-control" name="to[]" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
-				@foreach($tousers as $user)
+				@foreach($message->to as $user)
 					<option value="{{ Hashids::encode($user->id) }}" data-subtext="{{ $user->username }}" {{ $message->hasTo($user) ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
 				@endforeach
 			</select>
@@ -166,8 +169,8 @@
 	</script>
 	<div class="inbox-compose-btn">
 		<button class="send-btn btn blue"><i class="fa fa-check"></i>Enviar</button>
-		<button class="discard-btn btn">Descartar</button>
-		<button class="delete-btn btn">Borrador</button>
+		<button class="discard-btn btn inbox-discard-btn" data-messageid="{{ $token }}">Descartar</button>
+		<button class="draft-btn btn" data-messageid="{{ $token }}">Borrador</button>
 	</div>
 </form>
 	

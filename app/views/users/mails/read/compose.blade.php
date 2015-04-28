@@ -12,8 +12,8 @@
 	<input type="hidden" name="action" value="send">
 	<div class="inbox-compose-btn">
 		<button class="send-btn btn blue"><i class="fa fa-check"></i>Enviar</button>
-		<button class="discard-btn btn inbox-discard-btn">Descartar</button>
-		<button class="delete-btn btn">Borrador</button>
+		<button class="discard-btn btn inbox-discard-btn" data-messageid="{{ $token }}">Descartar</button>
+		<button class="draft-btn btn" data-messageid="{{ $token }}">Borrador</button>
 	</div>
 	<div class="inbox-form-group mail'to">
 		<label class="control-label">Para</label>
@@ -147,8 +147,8 @@
 	</script>
 	<div class="inbox-compose-btn">
 		<button class="send-btn btn blue"><i class="fa fa-check"></i>Enviar</button>
-		<button class="discard-btn btn">Descartar</button>
-		<button class="delete-btn btn">Borrador</button>
+		<button class="discard-btn btn" data-messageid="{{ $token }}">Descartar</button>
+		<button class="draft-btn btn" data-messageid="{{ $token }}">Borrador</button>
 	</div>
 </form>
 <script type="text/javascript" src="/assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
