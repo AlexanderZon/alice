@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-summernote/summernote.css">
 
 <form class="inbox-compose form-horizontal" id="compose-mail" action="#" method="POST" enctype="multipart/form-data">
-	<input type="hidden" name="token" value="{{ $token }}">
+	<input id="token" type="hidden" name="token" value="{{ $token }}">
 	<input type="hidden" name="type" value="forward">
 	<input type="hidden" name="action" value="send">
 	<div class="inbox-compose-btn">
@@ -15,15 +15,12 @@
 		<button class="discard-btn btn inbox-discard-btn" data-messageid="{{ $token }}">Descartar</button>
 		<button class="draft-btn btn" data-messageid="{{ $token }}">Borrador</button>
 	</div>
-				@foreach($message->to as $user)
-					{{ $message->hasTo($user) }}
-				@endforeach
 	<div class="inbox-form-group mail'to">
 		<label class="control-label">Para</label>
 		<div class="controls">
-			<select class="bs-select form-control" name="to[]" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
-				@foreach($message->to as $user)
-					<option value="{{ Hashids::encode($user->id) }}" data-subtext="{{ $user->username }}" {{ $message->hasTo($user) ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
+			<select id="to-select" class="bs-select form-control" name="to[]" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
+				@foreach($tousers as $user)
+					<option value="{{ Crypt::encrypt($user->id) }}" data-subtext="{{ $user->username }}" {{ $message->hasTo($user) ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
 				@endforeach
 			</select>
 			<!-- <input type="hidden" id="loading-select" class="form-control select2"> -->
@@ -61,12 +58,12 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Asunto:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject" value="{{ $message->subject }}">
+			<input id="message-subject" type="text" class="form-control" name="subject" value="{{ $message->subject }}">
 		</div>
 	</div>
 	<div class="inbox-form-group">
 		<div class="controls-row">
-			<textarea class="form-control summernote" name="message" rows="12">
+			<textarea id="message-content" class="form-control summernote" name="message" rows="12">
 				{{ $message->message }}
 			</textarea>
 			<!--blockquote content for reply message, the inner html of reply_email_content_body element will be appended into wysiwyg body. Please refer Inbox.js loadReply() function. -->
@@ -215,4 +212,31 @@
             iconBase: 'fa',
             tickIcon: 'fa-check'
         });
+    $('#compose-mail').fileupload({
+	    // Uncomment the following to send cross-domain cookies:
+	    //xhrFields: {withCredentials: true},
+		formData: {
+			_id: '{{$token}}',
+		},
+	    url: '{{$route}}/upload',
+	    // url: '/uploads/messages/index.php',
+	    // url: '/assets/global/plugins/jquery-file-upload/server/php/',
+	    autoUpload: true,
+	    success: function(data){
+	    	console.log(data);
+	    }
+	});
+
+	// Upload server status check for browsers with CORS support:
+	if ($.support.cors) {
+	    $.ajax({
+	        url: '{{$route}}/upload',
+	        type: 'HEAD'
+	    }).fail(function () {
+	        $('<span class="alert alert-error"/>')
+	            .text('Subida al servidor temporalmente no disponible - ' +
+	            new Date())
+	            .appendTo('#compose-mail');
+	    });
+	}
 </script>

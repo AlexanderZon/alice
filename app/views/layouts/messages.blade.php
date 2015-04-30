@@ -395,7 +395,7 @@
 
 		    var loadReply = function (el) {
 		        var messageid = $(el).attr("data-messageid");
-		        var url = '{{$route}}/reply?messageid=' + messageid;
+		        var url = '{{$route}}/reply?message_id=' + messageid;
 		        
 		        loading.show();
 		        content.html('');
@@ -551,21 +551,23 @@
 		    	var messageid = $(el).attr("data-messageid");
 		    	var url = '{{$route}}/draft/' + messageid;
 
-		    	$('input[name=action]').val('discard');
+		    	$('input[name=action]').val('draft');
 
 		    	/*console.log($('#compose-mail').serializeArray());
 		    	console.log($('#compose-mail').serialize());*/
 
+		    	console.log($('.note-editable').html());
+
 		    	$('textarea[name=message]').html($('.note-editable').html());
 
-		    	var data = $('#compose-mail').serialize();
+		    	// var data = $('#compose-mail').serialize();
 
-		        /*var data = {
-		        	'token': $('input[name=token]').val(),
-		        	'subject': $('input[name=subject]').val(),
-		        	'to': $('select[name=to]').val(),
-		        	'message': $('textarea[name=message]').val(),
-		        }*/
+		        var data = {
+		        	'token': $('#token').val(),
+		        	'subject': $('#message-subject').val(),
+		        	'to': $('#to-select').val(),
+		        	'message': $('#message-content').html(),
+		        };
 
 		        loading.show();
 		        content.html('');
@@ -581,6 +583,11 @@
 		            dataType: "html",
 		            success: function(res) 
 		            {
+
+		                $('.inbox-nav > li.active').removeClass('active');
+		                $('.inbox-nav > li.draft').addClass('active');
+		                $('.inbox-header > h1').text('Borradores');
+
 		                loading.hide();
 		                content.html(res);
 		                if (Layout.fixContentHeight) {
@@ -610,6 +617,67 @@
 		    var deleteMail = function(el) {
 
 		    	// 
+
+		    }
+
+		    var cancelAttachment = function(el) {
+
+		    	var attachmentid = $(el).attr("data-attachmentid");
+		    	var url = '{{$route}}/cancel/' + attachmentid;
+
+		    	$('input[name=action]').val('discard');
+
+		    	/*console.log($('#compose-mail').serializeArray());
+		    	console.log($('#compose-mail').serialize());*/
+
+		    	$('textarea[name=message]').html($('.note-editable').html());
+
+		    	// var data = $('#compose-mail').serialize();
+
+		        /*var data = {
+		        	'token': $('input[name=token]').val(),
+		        	'subject': $('input[name=subject]').val(),
+		        	'to': $('select[name=to]').val(),
+		        	'message': $('textarea[name=message]').val(),
+		        }*/
+
+		        /*loading.show();
+		        content.html('');
+		        toggleButton(el);*/
+
+		        // console.log(data);
+
+		        $.ajax({
+		            type: "POST",
+		            cache: false,
+		            url: url,
+		            // data: data,
+		            // dataType: "html",
+		            success: function(res) 
+		            {
+		                /*loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.initUniform();*/
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                // toggleButton(el);
+		            },
+		            async: false
+		        });
+
+		        // handle group checkbox:
+		        /*jQuery('body').on('change', '.mail-group-checkbox', function () {
+		            var set = jQuery('.mail-checkbox');
+		            var checked = jQuery(this).is(":checked");
+		            jQuery(set).each(function () {
+		                $(this).attr("checked", checked);
+		            });
+		            jQuery.uniform.update(set);
+		        });*/
 
 		    }
 
@@ -736,6 +804,11 @@
 		            // handle delete and forward button click
 		            $('.inbox').on('click', '.delete-btn', function () {
 		                deleteMail($(this));
+		            });
+
+		            // handle delete and forward button click
+		            $('.inbox').on('click', '.cancel', function () {
+		            	cancelAttachment($(this));
 		            });
 
 		            // handle favorite and forward button click

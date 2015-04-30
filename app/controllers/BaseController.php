@@ -409,7 +409,7 @@ class BaseController extends Controller implements BaseInterface{
 
 	public static function format($number) {
 
-	    $prefixes = 'kMGTPEZY';
+	    $prefixes = 'KMGTPEZY';
 
 	    if ($number >= 1000):
 	        for ($i=-1; $number>=1000; ++$i):
@@ -424,7 +424,7 @@ class BaseController extends Controller implements BaseInterface{
 
 	public static function bitesFormat( $number ){
 
-		return self::format( $number ).'b';
+		return self::format( $number ).'B';
 		
 	}
 

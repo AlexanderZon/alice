@@ -123,7 +123,7 @@ class ReadController extends \BaseController {
 
 	public function getInbox(){
 
-		self::addArgument('inbox', Auth::user()->inbox()->paginate(50));
+		self::addArgument('inbox', Auth::user()->inbox()->paginate(25));
 
 		return self::make('inbox');
 
@@ -131,7 +131,7 @@ class ReadController extends \BaseController {
 
 	public function getDraft(){
 
-		self::addArgument('outbox', Auth::user()->draftbox()->paginate(50));
+		self::addArgument('outbox', Auth::user()->draftbox()->paginate(25));
 
 		return self::make('draftbox');
 
@@ -139,7 +139,7 @@ class ReadController extends \BaseController {
 
 	public function getOutbox(){
 
-		self::addArgument('outbox', Auth::user()->outbox()->paginate(50));
+		self::addArgument('outbox', Auth::user()->outbox()->paginate(25));
 
 		return self::make('outbox');
 
@@ -147,7 +147,7 @@ class ReadController extends \BaseController {
 
 	public function getTrash(){
 
-		self::addArgument('inbox', Auth::user()->trashbox()->paginate(50));
+		self::addArgument('inbox', Auth::user()->trashbox()->paginate(25));
 
 		return self::make('inbox');
 
@@ -183,9 +183,24 @@ class ReadController extends \BaseController {
 
 	public function getReply(){
 
-		$message = Message::find(Crypt::decrypt(Input::get('message_id')));
+		$old = Message::find(Crypt::decrypt(Input::get('message_id')));
+
+		$message = new Message();
+		$message->author_id = Auth::user()->id;
+		$message->subject = 'Re: '.$old->subject;
+		$message->message = '
+                &lt;br&gt;
+                &lt;br&gt;
+				&lt;blockquote style="font-size:1em" &gt;'.$old->message.'&lt;/blockquote&gt;';
+		$message->save();
+		$message->to()->sync(array($message->author_id));
+		$message->save();
 
 		self::addArgument('message', $message);
+
+		self::addArgument('old', $old);
+
+		self::addArgument('token', Crypt::encrypt($message->id));
 		
 		self::addArgument('tousers', User::all());
 
@@ -243,15 +258,16 @@ class ReadController extends \BaseController {
 
 		$message->delete();
 
-		self::addArgument('inbox', Auth::user()->inbox()->paginate(50));
+		self::addArgument('inbox', Auth::user()->inbox()->paginate(25));
 
 		return self::make('inbox');
 
 	}
 
 	public function postDraft( $id ){
-
+		
 		$message = Message::find(Crypt::decrypt($id));
+
 		$message->subject = Input::get('subject');
 		$message->message = Input::get('message');
 		$message->save();
@@ -265,9 +281,18 @@ class ReadController extends \BaseController {
 		$message->to()->sync($users);
 		$message->save();
 
-		self::addArgument('inbox', Auth::user()->inbox()->paginate(50));
+		self::addArgument('outbox', Auth::user()->draftbox()->paginate(25));
 
-		return self::make('inbox');
+		return self::make('draftbox');
+
+	}
+
+	public function postCancel( $id ){
+
+		$attachment = Attachment::find(Crypt::decrypt($id));
+		$attachment->delete();
+
+		return true;
 
 	}
 

@@ -92,7 +92,7 @@ class Message extends \Eloquent {
 
         if(count($this->to) > 0):
             foreach($this->to as $to):
-                if($to->user_id == $user->id) $bool = true;
+                if($to->id == $user->id) $bool = true;
             endforeach;
         endif;
 

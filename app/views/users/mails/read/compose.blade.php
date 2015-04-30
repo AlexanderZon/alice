@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-summernote/summernote.css">
 
 <form class="inbox-compose form-horizontal" id="compose-mail" action="#" method="POST" enctype="multipart/form-data">
-	<input type="hidden" name="token" value="{{ $token }}">
+	<input id="token" type="hidden" name="token" value="{{ $token }}">
 	<input type="hidden" name="type" value="compose">
 	<input type="hidden" name="action" value="send">
 	<div class="inbox-compose-btn">
@@ -18,7 +18,7 @@
 	<div class="inbox-form-group mail'to">
 		<label class="control-label">Para</label>
 		<div class="controls">
-			<select class="bs-select form-control" name="to[]" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
+			<select id="to-select" class="bs-select form-control" name="to[]" multiple data-show-subtext="true" placeholder="Seleccione un destinatario">
 				@foreach($tousers as $user)
 					<option value="{{ Crypt::encrypt($user->id) }}" data-subtext="{{ $user->username }}">{{ $user->first_name }} {{ $user->last_name }}</option>
 				@endforeach
@@ -58,12 +58,12 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Asunto:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject">
+			<input id="message-subject" type="text" class="form-control" name="subject">
 		</div>
 	</div>
 	<div class="inbox-form-group">
 		<div class="controls-row">
-			<textarea class="form-control summernote" name="message" rows="12">
+			<textarea id="message-content" class="form-control summernote" name="message" rows="12">
 				
 			</textarea>
 			<!--blockquote content for reply message, the inner html of reply_email_content_body element will be appended into wysiwyg body. Please refer Inbox.js loadReply() function. -->
@@ -151,6 +151,7 @@
 		<button class="draft-btn btn" data-messageid="{{ $token }}">Borrador</button>
 	</div>
 </form>
+
 <script type="text/javascript" src="/assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="/assets/global/plugins/select2/select2.min.js"></script>
 <script type="text/javascript" src="/assets/global/plugins/select2/select2_locale_es.js"></script>
