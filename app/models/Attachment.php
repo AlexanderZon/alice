@@ -28,69 +28,83 @@ class Attachment extends \Eloquent {
     	switch($this->mime){
     		# Text Plain
     		case 'text/plain':
-    			return $path.'text-plain.png';
+    			return $path.'TEXT.png';
     			break;
     		# CSS
     		case 'text/css':
-    			return $path.'text-css.png';
+    			return $path.'CSS.png';
     			break;
     		# HTML
     		case 'text/html':
     		case 'text/x-server-parsed-html':
-    			return $path.'text-html.png';
+    			return $path.'HTML.png';
     			break;
     		# XML
     		case 'text/xml':
     		case 'application/xml':
-    			return $path.'text-plain.png';
+    			return $path.'XML.png';
     			break;
     		# C++
     		case 'text/x-c':
-    		case 'text/x-h':
-    			return $path.'text-plain.png';
+    			return $path.'C.png';
     			break;
+            case 'text/x-h':
+                return $path.'H.png';
+                break;
     		# Javascript
     		case 'text/javascript':
     		case 'text/ecmascript':
     		case 'application/x-javascript':
     		case 'application/javascript':
     		case 'application/ecmascript':
-    			return $path.'text-plain.png';
+    			return $path.'JS.png';
     			break;
     		# Java
     		case 'text/x-java-source':
     		case 'application/java':
     		case 'application/java-byte-code':
     		case 'application/x-java-class':
-    			return $path.'text-plain.png';
+    			return $path.'JAVA.png';
     			break;
     		# Bash
     		case 'application/x-bsh':    		
     		case 'application/x-sh':    		
     		case 'application/x-shar':    		
-    		case 'text/x-script.sh':    		
-    			return $path.'text-plain.png';
-    			break;
-    		# Images
-    		case 'image/png':
-    		case 'image/gif':
-    		case 'image/jpeg':
-    			return $this->route;
+    		case 'text/x-script.sh':          
+                return $path.'EXE.png';
+                break;		
+            # Images
+            case 'image/png':
+                return $path.'PNG.png';
+                break;
+            case 'image/gif':
+                return $path.'GIF.png';
+                break;
+            case 'image/jpeg':
+    			return $path.'JPG.png';
     			break;
     		# Audio
     		case 'audio/mpeg':
     		case 'audio/x-mpeg':
-    		case 'audio/mpeg3':
-    		case 'audio/x-mpeg-3':
-    		case 'audio/wav':
-    		case 'audio/x-wav':
-    		case 'audio/aiff':
-    		case 'audio/x-aiff':
-    		case 'audio/midi':
-    		case 'audio/x-mid':
-    		case 'audio/x-midi':
-    			return $path.'audio.png';
+                return $path.'MPEG.png';
+                break;
+            case 'audio/mpeg3':
+            case 'audio/x-mpeg-3':
+                return $path.'MP3.png';
+                break;
+            case 'audio/wav':
+            case 'audio/x-wav':
+                return $path.'WAV.png';
+                break;
+            case 'audio/aiff':
+            case 'audio/x-aiff':
+    			return $path.'AIFF.png';
     			break;
+            case 'audio/midi':
+            case 'audio/x-mid':
+            case 'audio/x-midi':
+                return $path.'MIDI.png';
+                break;
     		# Video
     		case 'video/animaflex':
     		case 'video/x-ms-asf':
@@ -104,62 +118,85 @@ class Attachment extends \Eloquent {
     		case 'video/dl':
     		case 'video/x-fli':
     		case 'video/fli':
-    		case 'video/mpeg':
-    		case 'video/x-mpeg':
-    		case 'video/x-mpeq2a':
-    		case 'video/quicktime':
-    		case 'video/x-qtc':
-    		case 'video/x-sgi-movie':
-    			return $path.'video.png';
+    			return $path.'AVI.png';
     			break;
+            case 'video/mpeg':
+            case 'video/x-mpeg':
+            case 'video/x-mpeq2a':
+                return $path.'MP4.png';
+                break;
+            case 'video/quicktime':
+            case 'video/x-qtc':
+            case 'video/x-sgi-movie':
+                return $path.'MOV.png';
+                break;
     		# PDF
     		case 'application/pdf':
-    			return $path.'pdf.png';
+    			return $path.'PDF.png';
     			break;
     		# Word
     		case 'application/msword':
     		case 'application/msword':
     		case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-    			return $path.'word.png';
-    			break;
-    		# Power Point
-    		case 'application/mspowerpoint':
-    		case 'application/vnd.ms-powerpoint':
-    		case 'application/powerpoint':
-    		case 'application/x-mspowerpoint':
-    		case 'application/mspowerpoint':
-    			return $path.'powerpoint.png';
-    			break;
-    		# Excel
-    		case 'application/excel':
-    		case 'application/x-excel':
-    		case 'application/x-msexcel':
-    		case 'application/vnd.ms-excel':
-    			return $path.'excel.png';
+                return $path.'word.png'; #less DOC DOCX
+                break;
+            # Power Point
+            case 'application/mspowerpoint':
+            case 'application/powerpoint':
+            case 'application/vnd.ms-powerpoint':
+            case 'application/x-mspowerpoint':
+                return $path.'powerpoint.png'; #PPT PPTX
+                break;
+            # Excel
+            case 'application/excel':
+            case 'application/x-excel':
+            case 'application/x-msexcel':
+            case 'application/vnd.ms-excel':
+                return $path.'excel.png'; #XLS XLSX
+                break;
+            # Libre Office
+            case 'application/vnd.oasis.opendocument.text':
+                return $path.'ODT.png';
+                break;
+            case 'application/vnd.oasis.opendocument.presentation':
+                return $path.'ODP.png'; #less
+                break;
+            case 'application/vnd.oasis.opendocument.spreadsheet':
+    			return $path.'ODS.png';
     			break;
     		# EXE
     		case 'application/octet-stream':
-    			return $path.'text-plain.png';
+    			return $path.'EXE.png';
     			break;
     		# SWF
     		case 'application/x-shockwave-flash':
-    			return $path.'text-plain.png';
+                return $path.'SWF.png'; #less
+                break;
+            # Compressed
+            case 'application/x-compressed':
+            case 'application/x-zip-compressed':
+            case 'application/zip':
+            case 'multipart/x-zip':
+                return $path.'ZIP.png';
+                break;
+            case 'application/x-gzip':
+            case 'multipart/x-gzip':
+                return $path.'GZ.png';
+                break;
+            case 'application/x-tar':
+                return $path.'TAR.png';
+                break;
+            case 'application/x-rar-compressed':
+    			return $path.'RAR.png';
+                break;
+            case 'application/x-gtar':
+    			return $path.'GTAR.png'; #less
     			break;
-    		# Compressed
-    		case 'application/zip':
-    		case 'application/x-gtar':
-    		case 'application/x-compressed':
-    		case 'application/x-zip-compressed':
-    		case 'application/x-gzip':
-    		case 'multipart/x-gzip':
-    		case 'multipart/x-zip':
-    		case 'application/x-tar':
-    		case 'application/gnutar':
-    		case 'application/x-compressed':
-    			return $path.'text-plain.png';
-    			break;
+            case 'application/gnutar':
+                return $path.'TGZ.png'; #less
+                break;
     		default:
-    			return $path.'text-plain.png';
+    			return $path.'UNKNOWN.png';
     			break;
 
     	}

@@ -265,8 +265,7 @@
 		        // content.html('');
 		        // toggleButton(el);
 
-
-		        console.log(message_id);
+		        // console.log(message_id);
 		        
 		        $.ajax({
 		            type: "GET",
@@ -295,8 +294,7 @@
 		        // content.html('');
 		        // toggleButton(el);
 
-
-		        console.log(message_id);
+		        // console.log(message_id);
 		        
 		        $.ajax({
 		            type: "GET",
@@ -510,7 +508,7 @@
 		        content.html('');
 		        toggleButton(el);
 
-		        console.log(data);
+		        // console.log(data);
 
 		        $.ajax({
 		            type: "POST",
@@ -556,7 +554,7 @@
 		    	/*console.log($('#compose-mail').serializeArray());
 		    	console.log($('#compose-mail').serialize());*/
 
-		    	console.log($('.note-editable').html());
+		    	// console.log($('.note-editable').html());
 
 		    	$('textarea[name=message]').html($('.note-editable').html());
 
@@ -573,7 +571,7 @@
 		        content.html('');
 		        toggleButton(el);
 
-		        console.log(data);
+		        // console.log(data);
 
 		        $.ajax({
 		            type: "POST",
