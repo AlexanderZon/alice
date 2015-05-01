@@ -28,7 +28,7 @@ class Attachment extends \Eloquent {
     	switch($this->mime){
     		# Text Plain
     		case 'text/plain':
-    			return $path.'TEXT.png';
+    			return $path.'TXT.png';
     			break;
     		# CSS
     		case 'text/css':

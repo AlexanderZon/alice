@@ -82,25 +82,26 @@
 			@if(count($message->attachments) > 0 AND ($counter = 0) == 0)
 				<div class="row">
 					@foreach($message->attachments as $attachment)
-						@if((++$counter)%4 == 0)
+						@if((($counter)%6 )== 0)
 							<div class="row">
 						@endif
-						<div class="col-md-3">
+
+						<div class="col-md-2">
 							<div class="row">
-								<div class="col-md-1"></div>
-								<img class="col-md-10 timeline-badge-userpic" src="{{ $attachment->image() }}">
+								<div class="col-md-1"><?php $counter++;?></div>
+								<img class="col-md-10 tooltips" src="{{ $attachment->image() }}" data-original-title="{{$attachment->name}}" data-container="body" data-placement="right" data-html="true">
 								<div class="col-md-1"></div>
 							</div>
 							<div class="row">
-								<div class="row">
+								<!-- <div class="row">
 									<div class="col-md-1"></div>
 									<p class="col-md-10">{{$attachment->name}}</p>
 									<div class="col-md-1"></div>
-								</div>
+								</div> -->
 								<div class="row">
 									<div class="col-md-1"></div>
 									<span class="col-md-5">{{ $attachment->getSize() }} </span>
-									<a class="col-md-1 download-bt" href="javascript:;" data-attachmentid="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-download"></i></a>					
+									<a class="col-md-1 download-btn" href="javascript:;" data-attachmentid="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-download"></i></a>					
 									@if( $attachment->mime == 'image/png' || $attachment->mime == 'image/jpeg' || $attachment->mime == 'image/gif')
 									<a class="col-md-1 fancybox" data-fancybox-type="iframe" title="{{ $attachment->name }} ({{ $attachment->getSize() }})" href="{{ $route }}/viewimage/{{ Crypt::encrypt($attachment->id) }}" rel="view-images"><i class="fa fa-eye"></i></a>
 									@endif
@@ -110,7 +111,8 @@
 								</div>
 							</div>
 						</div>
-						@if(($counter)%4 == 0)
+						@if(($counter)%6 == 0)
+
 							</div>
 						@endif
 					@endforeach

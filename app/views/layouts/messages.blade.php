@@ -288,13 +288,12 @@
 
 		    var downloadFile = function (el) {
 		        var attachment_id = el.attr("data-attachmentid"); 
-		        var url = '{{$route}}/downloada/'+attachment_id;
-
+		        var url = '{{$route}}/download/'+attachment_id;
 		        // loading.show();
 		        // content.html('');
 		        // toggleButton(el);
 
-		        // console.log(message_id);
+		        // console.log(attachment_id);
 		        
 		        $.ajax({
 		            type: "GET",
