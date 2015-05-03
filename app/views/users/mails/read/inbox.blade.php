@@ -38,7 +38,7 @@
 			<input type="checkbox" class="mail-checkbox" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
 		</td>
 		<td class="inbox-small-cells">
-			<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}">
+			<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}" data-favorite="{{ $message->user_message()->favorite }}">
 				<i class="fa fa-star {{ $message->user_message()->favorite ? 'inbox-started' : 'inbox-not-started' }}"></i>				
 			</a>
 		</td>

@@ -680,7 +680,36 @@
 
 		    var favoriteMail = function(el) {
 
-		    	// 
+		    	var url = '{{$route}}/favorite';
+
+		    	console.log($(el).attr("data-favorite"));
+
+		    	$.ajax({
+		    		url: url,
+		    		type: 'POST',
+		    		data: {
+		    			message_id: $(el).attr("data-messageid"),
+		    		},
+		    		success: function(data){
+		    			if(data.favorite == 1){
+		    				$(el).html('<i class="fa fa-star inbox-started"></i>');
+		    			}
+		    			else{
+		    				$(el).html('<i class="fa fa-star inbox-not-started"></i>');
+		    			}
+		    			console.log(data);
+		    		}
+		    	})
+		    	.done(function() {
+		    		console.log("success");
+		    	})
+		    	.fail(function() {
+		    		console.log("error");
+		    	})
+		    	.always(function() {
+		    		console.log("complete");
+		    	});
+		    	
 
 		    }
 

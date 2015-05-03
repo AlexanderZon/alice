@@ -224,7 +224,12 @@ class ReadController extends \BaseController {
 
 	public function getView(){
 
-		self::addArgument('message', Message::find(Crypt::decrypt(Input::get('message_id'))));
+		$message = Message::find(Crypt::decrypt(Input::get('message_id')));
+		$user_message = $message->user_message();
+		$user_message->status = 'read';
+		$user_message->save();
+
+		self::addArgument('message', $message);
 
 		return self::make('view');
 
@@ -413,6 +418,18 @@ class ReadController extends \BaseController {
 		$attachment = Attachment::find(Crypt::decrypt($id));
 
 		return Response::json(array('destination' => $attachment->route));
+
+	}
+
+	public function postFavorite(){
+
+		$message = Message::find(Crypt::decrypt(Input::get('message_id')));
+		$user_message = $message->user_message();
+		if($user_message->favorite == 1) $user_message->favorite = 0;
+		else $user_message->favorite = 1;
+		$user_message->save();
+
+		return Response::json($user_message);
 
 	}
 
