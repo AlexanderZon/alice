@@ -149,6 +149,52 @@
 		        });
 		    }
 
+		    var paginateBox = function (el) {
+		        var url = '{{$route}}/paginate?';
+		        
+		        listListing = name;
+
+		        loading.show();
+		        content.html('');
+		        toggleButton(el);
+
+		        $.ajax({
+		            type: "GET",
+		            cache: false,
+		            url: url,
+		            data: {
+		            	page: $(el).attr('data-paginateid'),
+		            	box: $(el).attr('data-box')
+		            },
+		            dataType: "html",
+		            success: function(res) 
+		            {
+
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.initUniform();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                toggleButton(el);
+		            },
+		            async: false
+		        });
+
+		        // handle group checkbox:
+		        jQuery('body').on('change', '.mail-group-checkbox', function () {
+		            var set = jQuery('.mail-checkbox');
+		            var checked = jQuery(this).is(":checked");
+		            jQuery(set).each(function () {
+		                $(this).attr("checked", checked);
+		            });
+		            jQuery.uniform.update(set);
+		        });
+		    }
+
 		    var viewMessage = function (el, name, resetMenu) {
 		        var url = '{{$route}}/view';
 
@@ -756,13 +802,70 @@
 
 		    var markAsSpam = function(el) {
 
-		    	//
+		    	var messages = [];
+
+		    	$('.ids:checked').each(function(){
+
+		    		messages.push($(this).val());
+
+		    	});
+
+		    	$('.ids:checked').parents('tr').remove();
+
+		    	$.ajax({
+		    		url: '{{ $route }}/markasspam',
+		    		type: 'GET',
+		    		data: {messages: messages},
+		    		success: function(data){
+		    			console.log(data);
+		    		}
+		    	});
 
 		    }
 
 		    var markAsDeleted = function(el) {
 
-		    	//
+		    	var messages = [];
+
+		    	$('.ids:checked').each(function(){
+
+		    		messages.push($(this).val());
+
+		    	});
+
+		    	$('.ids:checked').parents('tr').remove();
+
+		    	$.ajax({
+		    		url: '{{ $route }}/markasdeleted',
+		    		type: 'GET',
+		    		data: {messages: messages},
+		    		success: function(data){
+		    			console.log(data);
+		    		}
+		    	});
+
+		    }
+
+		    var markAsDiscard = function(el) {
+
+		    	var messages = [];
+
+		    	$('.ids:checked').each(function(){
+
+		    		messages.push($(this).val());
+
+		    	});
+
+		    	$('.ids:checked').parents('tr').remove();
+
+		    	$.ajax({
+		    		url: '{{ $route }}/markasdiscard',
+		    		type: 'GET',
+		    		data: {messages: messages},
+		    		success: function(data){
+		    			console.log(data);
+		    		}
+		    	});
 
 		    }
 
@@ -905,6 +1008,11 @@
 		                markAsDeleted($(this));
 		            });
 
+		            // handle mark as deleted and forward button click
+		            $('.inbox').on('click', '.markasdiscard-btn', function () {
+		                markAsDiscard($(this));
+		            });
+
 		            // handle delete and forward button click
 		            $('.inbox').on('click', '.cancel', function () {
 		            	cancelAttachment($(this));
@@ -938,6 +1046,11 @@
 		            // handle download-all attachments
 		            $('.inbox-content').on('click', '.download-btn', function () {
 		                downloadFile($(this));
+		            });
+
+		            // handle download-all attachments
+		            $('.inbox-content').on('click', '.paginate-btn', function () {
+		                paginateBox($(this));
 		            });
 
 		            // handle inbox listing

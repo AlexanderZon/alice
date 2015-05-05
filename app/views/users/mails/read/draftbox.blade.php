@@ -27,7 +27,7 @@
 		</div>
 	</th>
 	<th class="pagination-control" colspan="3">
-		{{ $outbox->links('users.mails.read.paginate')->with('messages', $outbox) }}
+		{{ $outbox->links('users.mails.read.paginate')->with(array('messages' => $outbox, 'box' => 'draftbox')) }}
 	</th>
 </tr>
 </thead>

@@ -147,9 +147,44 @@ class ReadController extends \BaseController {
 
 	public function getTrash(){
 
-		self::addArgument('inbox', Auth::user()->trashbox()->paginate(25));
+		self::addArgument('trashbox', Auth::user()->trashbox()->paginate(25));
 
-		return self::make('inbox');
+		return self::make('trashbox');
+
+	}
+
+	public function getPaginate(){
+
+		$box = null;
+		$view = Input::get('box');
+		$variable = null;
+
+		switch ($view) {
+			case 'inbox':
+				$variable = 'inbox';
+				$box = Auth::user()->inbox()->paginate(25);
+				break;
+			case 'draftbox':
+				$variable = 'outbox';
+				$box = Auth::user()->draftbox()->paginate(25);
+				break;
+			case 'outbox':
+				$variable = 'outbox';
+				$box = Auth::user()->outbox()->paginate(25);
+				break;
+			case 'trashbox':
+				$variable = 'trashbox';
+				$box = Auth::user()->trashbox()->paginate(25);
+				break;
+			default:
+				$variable = 'inbox';
+				$box = Auth::user()->inbox()->paginate(25);
+				break;
+		}
+
+		self::addArgument( $variable, $box);
+
+		return self::make($view);
 
 	}
 
@@ -240,12 +275,6 @@ class ReadController extends \BaseController {
 		self::addArgument('message', Message::find(Crypt::decrypt(Input::get('message_id'))));
 
 		return self::make('review');
-
-	}
-
-	public function getUpload(){
-
-		return "OK";
 
 	}
 
@@ -477,12 +506,30 @@ class ReadController extends \BaseController {
 
 	}
 
+	public function getMarkasdiscard(){
+
+		foreach (Input::get('messages') as $message_id):
+			# code...
+			$message = Message::find(Crypt::decrypt($id));
+			$message->delete();
+		endforeach;
+		
+		return Response::json(Input::get('messages'));
+
+	}
+
 	public static function markMessage( $id, $status ){
 
 		$message = Message::find(Crypt::decrypt($id));
 		$user_message = $message->user_message();
 		$user_message->status = $status;
 		$user_message->save();
+
+	}
+
+	public function getUpload(){
+
+		return "OK";
 
 	}
 
