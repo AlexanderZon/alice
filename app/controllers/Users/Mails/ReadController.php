@@ -433,6 +433,59 @@ class ReadController extends \BaseController {
 
 	}
 
+	public function getMarkasread(){
+
+		foreach (Input::get('messages') as $message_id):
+			# code...
+			self::markMessage($message_id, 'read');
+		endforeach;
+		
+		return Response::json(Input::get('messages'));
+
+	}
+
+	public function getMarkasnoneread(){
+
+		foreach (Input::get('messages') as $message_id):
+			# code...
+			self::markMessage($message_id, 'unread');
+		endforeach;
+		
+		return Response::json(Input::get('messages'));
+
+	}
+
+	public function getMarkasspam(){
+
+		foreach (Input::get('messages') as $message_id):
+			# code...
+			self::markMessage($message_id, 'spam');
+		endforeach;
+		
+		return Response::json(Input::get('messages'));
+
+	}
+
+	public function getMarkasdeleted(){
+
+		foreach (Input::get('messages') as $message_id):
+			# code...
+			self::markMessage($message_id, 'deleted');
+		endforeach;
+		
+		return Response::json(Input::get('messages'));
+
+	}
+
+	public static function markMessage( $id, $status ){
+
+		$message = Message::find(Crypt::decrypt($id));
+		$user_message = $message->user_message();
+		$user_message->status = $status;
+		$user_message->save();
+
+	}
+
 	public function postUpload(){
 
 		$files = Input::file('files');

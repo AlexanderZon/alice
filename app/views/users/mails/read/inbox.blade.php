@@ -10,17 +10,21 @@
 			</a>
 			<ul class="dropdown-menu">
 				<li>
-					<a href="javascript:;">
+					<a class="markasread-btn" href="javascript:;">
 					<i class="fa fa-pencil"></i> Marcar como leído </a>
 				</li>
 				<li>
-					<a href="javascript:;">
+					<a class="markasnoneread-btn" href="javascript:;">
+					<i class="fa fa-envelope-o"></i> Marcar como No leído </a>
+				</li>
+				<li>
+					<a class="markasspam-btn" href="javascript:;">
 					<i class="fa fa-ban"></i> Spam </a>
 				</li>
 				<li class="divider">
 				</li>
 				<li>
-					<a href="javascript:;">
+					<a class="markasdeleted-btn" href="javascript:;">
 					<i class="fa fa-trash-o"></i> Eliminar </a>
 				</li>
 			</ul>
@@ -35,7 +39,7 @@
 @foreach($inbox as $message)
 	<tr {{ $message->user_message()->status == 'unread' ? 'class="unread"' : '' }} data-messageid="{{ Crypt::encrypt($message->id) }}">
 		<td class="inbox-small-cells">
-			<input type="checkbox" class="mail-checkbox" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
+			<input type="checkbox" class="mail-checkbox ids" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
 		</td>
 		<td class="inbox-small-cells">
 			<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}" data-favorite="{{ $message->user_message()->favorite }}">
@@ -64,7 +68,7 @@
 		</td>
 	</tr>
 @endforeach
-<tr class="unread" data-messageid="1">
+<!-- <tr class="unread" data-messageid="1">
 	<td class="inbox-small-cells">
 		<input type="checkbox" class="mail-checkbox">
 	</td>
@@ -431,7 +435,7 @@
 	<td class="view-message text-right">
 		 March 15
 	</td>
-</tr>
+</tr> -->
 </tbody>
 </table>
 

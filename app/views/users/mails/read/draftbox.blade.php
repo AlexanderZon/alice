@@ -9,7 +9,7 @@
 			Más <i class="fa fa-angle-down"></i>
 			</a>
 			<ul class="dropdown-menu">
-				<li>
+				<!-- <li>
 					<a href="javascript:;">
 					<i class="fa fa-pencil"></i> Marcar como leído </a>
 				</li>
@@ -18,10 +18,10 @@
 					<i class="fa fa-ban"></i> Spam </a>
 				</li>
 				<li class="divider">
-				</li>
+				</li> -->
 				<li>
-					<a href="javascript:;">
-					<i class="fa fa-trash-o"></i> Eliminar </a>
+					<a class="markasdiscard-btn" href="javascript:;">
+					<i class="fa fa-trash-o"></i> Descartar </a>
 				</li>
 			</ul>
 		</div>

@@ -118,6 +118,9 @@
 		                toggleButton(el);
 
 		                $('.inbox-nav > li.active').removeClass('active');
+		                if(name == 'outbox'){
+		                	$('.inbox-nav > li.sent').addClass('active');		                	
+		                }
 		                $('.inbox-nav > li.' + name).addClass('active');
 		                $('.inbox-header > h1').text(title);
 
@@ -682,7 +685,14 @@
 
 		    	var url = '{{$route}}/favorite';
 
-		    	console.log($(el).attr("data-favorite"));
+		    	if($(el).attr("data-favorite") == 1){
+		    		$(el).attr("data-favorite", 0);
+    				$(el).html('<i class="fa fa-star inbox-not-started"></i>');
+    			}
+    			else{
+		    		$(el).attr("data-favorite", 1);
+    				$(el).html('<i class="fa fa-star inbox-started"></i>');
+    			}
 
 		    	$.ajax({
 		    		url: url,
@@ -691,25 +701,68 @@
 		    			message_id: $(el).attr("data-messageid"),
 		    		},
 		    		success: function(data){
-		    			if(data.favorite == 1){
-		    				$(el).html('<i class="fa fa-star inbox-started"></i>');
-		    			}
-		    			else{
-		    				$(el).html('<i class="fa fa-star inbox-not-started"></i>');
-		    			}
+		    			$(el).attr("data-favorite", data.favorite);
 		    			console.log(data);
 		    		}
-		    	})
-		    	.done(function() {
-		    		console.log("success");
-		    	})
-		    	.fail(function() {
-		    		console.log("error");
-		    	})
-		    	.always(function() {
-		    		console.log("complete");
 		    	});
-		    	
+
+		    }
+
+		    var markAsRead = function(el) {
+
+		    	var messages = [];
+
+		    	$('.ids:checked').each(function(){
+
+		    		messages.push($(this).val());
+
+		    	});
+
+		    	$('.ids:checked').parents('tr').removeClass('unread');
+
+		    	$.ajax({
+		    		url: '{{ $route }}/markasread',
+		    		type: 'GET',
+		    		data: {messages: messages},
+		    		success: function(data){
+		    			console.log(data);
+		    		}
+		    	});
+
+		    }
+
+		    var markAsNoneRead = function(el) {
+
+		    	var messages = [];
+
+		    	$('.ids:checked').each(function(){
+
+		    		messages.push($(this).val());
+
+		    	});
+
+		    	$('.ids:checked').parents('tr').addClass('unread');
+
+		    	$.ajax({
+		    		url: '{{ $route }}/markasnoneread',
+		    		type: 'GET',
+		    		data: {messages: messages},
+		    		success: function(data){
+		    			console.log(data);
+		    		}
+		    	});
+
+		    }
+
+		    var markAsSpam = function(el) {
+
+		    	//
+
+		    }
+
+		    var markAsDeleted = function(el) {
+
+		    	//
 
 		    }
 
@@ -830,6 +883,26 @@
 		            // handle delete and forward button click
 		            $('.inbox').on('click', '.delete-btn', function () {
 		                deleteMail($(this));
+		            });
+
+		            // handle mark as read and forward button click
+		            $('.inbox').on('click', '.markasread-btn', function () {
+		                markAsRead($(this));
+		            });
+
+		            // handle mark as read and forward button click
+		            $('.inbox').on('click', '.markasnoneread-btn', function () {
+		                markAsNoneRead($(this));
+		            });
+
+		            // handle mark as spam and forward button click
+		            $('.inbox').on('click', '.markasspam-btn', function () {
+		                markAsSpam($(this));
+		            });
+
+		            // handle mark as deleted and forward button click
+		            $('.inbox').on('click', '.markasdeleted-btn', function () {
+		                markAsDeleted($(this));
 		            });
 
 		            // handle delete and forward button click

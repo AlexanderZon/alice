@@ -3,8 +3,8 @@
 <thead>
 <tr>
 	<th colspan="3">
-		<input type="checkbox" class="mail-checkbox mail-group-checkbox">
-		<div class="btn-group">
+		<!-- <input type="checkbox" class="mail-checkbox mail-group-checkbox"> -->
+		<!-- <div class="btn-group">
 			<a class="btn btn-sm blue dropdown-toggle" href="javascript:;" data-toggle="dropdown">
 			Más <i class="fa fa-angle-down"></i>
 			</a>
@@ -24,7 +24,7 @@
 					<i class="fa fa-trash-o"></i> Eliminar </a>
 				</li>
 			</ul>
-		</div>
+		</div> -->
 	</th>
 	<th class="pagination-control" colspan="3">
 		{{ $outbox->links('users.mails.read.paginate')->with('messages', $outbox) }}
@@ -34,9 +34,9 @@
 <tbody>
 @foreach($outbox as $message)
 	<tr data-messageid="{{ Crypt::encrypt($message->id) }}">
-		<td class="inbox-small-cells">
+		<!-- <td class="inbox-small-cells">
 			<input type="checkbox" class="mail-checkbox" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
-		</td>
+		</td> -->
 		<td class="inbox-small-cells">
 			<!-- <i class="fa fa-star"></i> -->
 		</td>
