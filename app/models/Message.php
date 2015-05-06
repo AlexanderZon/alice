@@ -17,7 +17,7 @@ class Message extends \Eloquent {
 
     public function from(){
 
-    	return $this->belongsTo('User', 'author_id');
+    	return $this->belongsTo('User', 'author_id')->where('status','!=','deleted');
 
     }
 
@@ -55,8 +55,6 @@ class Message extends \Eloquent {
 
         return UserMessage::where('message_id', '=', $this->id)->get();
 
-        return $this->hasMany('UserMessage', 'message_id');
-
     }
 
     public function make_diff( $from_datetime ){
@@ -90,13 +88,46 @@ class Message extends \Eloquent {
 
         $bool = false;
 
-        if(count($this->to) > 0):
-            foreach($this->to as $to):
+        $recipients = $this->to;
+
+        if(count($recipients) > 0):
+            foreach($recipients as $to):
                 if($to->id == $user->id) $bool = true;
             endforeach;
         endif;
 
         return $bool;
+
+    }
+
+    public function recipientsText(){
+
+        $recipients = $this->to;
+
+        $counter = count($recipients);
+
+        $text = '';
+
+        if($counter > 2):
+            $tmp = 0;
+            foreach($recipients as $recipient):
+                $text .= $tmp < 3 ? ($recipient->id == Auth::user()->id ? 'mi' : $recipient->first_name) : '';
+                $text .= $tmp < 3 ? ', ' : '';
+                $text .= ($tmp == 3 AND $counter > 3) ? '...' : '';
+                $tmp++;
+            endforeach;
+        elseif($counter > 0):
+            $tmp = 0;
+            foreach($recipients as $recipient):
+                $text .= ($recipient->id == Auth::user()->id ? 'mi' : $recipient->first_name.' '.$recipient->last_name);
+                $text .= $tmp < 1 ? ', ' : '.';
+                $tmp++;
+            endforeach;
+        else:
+            $text = 'Sin destinatario';
+        endif;
+
+        return $text;
 
     }
 

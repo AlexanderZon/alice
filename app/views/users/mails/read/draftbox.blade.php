@@ -41,11 +41,7 @@
 			<!-- <i class="fa fa-star"></i> -->
 		</td>
 		<td class="recompose-message hidden-xs">
-			@if($message->from->id == Auth::user()->id)
-				{{ 'Yo' }}
-			@else
-				{{ $message->from->first_name }} {{ $message->from->last_name }}
-			@endif
+			Para: {{ $message->recipientsText() }}
 		</td>
 		<td class="recompose-message ">
 			 {{ $message->subject != '' ? $message->subject : '<em>(Sin Asunto)</em>' }}

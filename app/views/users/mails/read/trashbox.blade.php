@@ -10,41 +10,26 @@
 			</a>
 			<ul class="dropdown-menu">
 				<li>
-					<a class="markasread-btn" href="javascript:;">
-					<i class="fa fa-pencil"></i> Marcar como leído </a>
-				</li>
-				<li>
-					<a class="markasnoneread-btn" href="javascript:;">
-					<i class="fa fa-envelope-o"></i> Marcar como No leído </a>
-				</li>
-				<li>
-					<a class="markasspam-btn" href="javascript:;">
-					<i class="fa fa-ban"></i> Spam </a>
-				</li>
-				<li class="divider">
-				</li>
-				<li>
-					<a class="markasdeleted-btn" href="javascript:;">
-					<i class="fa fa-trash-o"></i> Eliminar </a>
+					<a class="markasnonedeleted-btn" href="javascript:;">
+					<i class="fa fa-pencil"></i> Devolver a la Bandeja </a>
 				</li>
 			</ul>
 		</div>
 	</th>
 	<th class="pagination-control" colspan="3">
-		{{ $inbox->links('users.mails.read.paginate')->with('messages', $inbox) }}
+		{{ $trashbox->links('users.mails.read.paginate')->with('messages', $trashbox) }}
 	</th>
 </tr>
 </thead>
 <tbody>
-@foreach($inbox as $message)
-	<?php $user_message = $message->user_message(); ?>
-	<tr {{ $user_message->status == 'unread' ? 'class="unread"' : '' }} data-messageid="{{ Crypt::encrypt($message->id) }}">
+@foreach($trashbox as $message)
+	<tr {{ $message->user_message()->status == 'unread' ? 'class="unread"' : '' }} data-messageid="{{ Crypt::encrypt($message->id) }}">
 		<td class="inbox-small-cells">
 			<input type="checkbox" class="mail-checkbox ids" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
 		</td>
 		<td class="inbox-small-cells">
-			<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}" data-favorite="{{ $user_message->favorite }}">
-				<i class="fa fa-star {{ $user_message->favorite ? 'inbox-started' : 'inbox-not-started' }}"></i>				
+			<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}" data-favorite="{{ $message->user_message()->favorite }}">
+				<i class="fa fa-star {{ $message->user_message()->favorite ? 'inbox-started' : 'inbox-not-started' }}"></i>				
 			</a>
 		</td>
 		<td class="view-message hidden-xs">
@@ -63,8 +48,8 @@
 			@endif
 		</td>
 		<td class="view-message text-right">
-			<spam class="{{ $user_message->created_diff() > 0 ? 'moment-date' : 'moment-time' }}">
-				{{ $user_message->created_at }}
+			<spam class="{{ $message->user_message()->created_diff() > 0 ? 'moment-date' : 'moment-time' }}">
+				{{ $message->user_message()->created_at }}
 			</spam> 
 		</td>
 	</tr>

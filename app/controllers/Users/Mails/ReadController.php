@@ -87,11 +87,11 @@ class ReadController extends \BaseController {
 			$message->to()->sync($to);
 			$message->save();
 
-			// $user_messages = UserMessage::where('message_id', '=', $message->id)->get();
+			$user_messages = $message->user_messages();
 
-			if(count($message->user_messages()) > 0):
+			if(count( $user_messages ) > 0):
 
-				foreach($message->user_messages() as $user_message):
+				foreach($user_messages as $user_message):
 					$user_message->status = 'unread';
 					$user_message->save();
 					$user_message->created_at = $user_message->updated_at;
@@ -100,9 +100,11 @@ class ReadController extends \BaseController {
 
 			endif;
 
-			if(count($message->attachments) > 0):
+			$attachments = $message->attachments;
 
-				foreach($message->attachments as $attachment):
+			if(count($attachments) > 0):
+
+				foreach($attachments as $attachment):
 					$attachment->status = 'uploaded';
 					$attachment->save();
 				endforeach;
@@ -288,9 +290,7 @@ class ReadController extends \BaseController {
 
 	public function postDiscard( $id ){
 
-		$message = Message::find($id);
-
-		$message->delete();
+		self::discardMessage($id);
 
 		self::addArgument('inbox', Auth::user()->inbox()->paginate(25));
 
@@ -506,12 +506,35 @@ class ReadController extends \BaseController {
 
 	}
 
+	public function getMarkasnonedeleted(){
+
+		foreach (Input::get('messages') as $message_id):
+			# code...
+			self::markMessage($message_id, 'read');
+		endforeach;
+		
+		return Response::json(Input::get('messages'));
+
+	}
+
 	public function getMarkasdiscard(){
 
 		foreach (Input::get('messages') as $message_id):
 			# code...
+			self::discardMessage($message_id);
+
+		endforeach;
+		
+		return Response::json(Input::get('messages'));
+
+	}
+
+	public function getDeleteformbox(){
+
+		foreach (Input::get('messages') as $message_id):
 			$message = Message::find(Crypt::decrypt($message_id));
-			$message->delete();
+			$message->status = 'deleted';
+			$message->save();
 		endforeach;
 		
 		return Response::json(Input::get('messages'));
@@ -524,6 +547,26 @@ class ReadController extends \BaseController {
 		$user_message = $message->user_message();
 		$user_message->status = $status;
 		$user_message->save();
+
+	}
+
+	public static function discardMessage( $id ){
+
+		$message = Message::find(Crypt::decrypt($id));
+
+		$user_messages = $message->user_messages();
+
+		$attachments = $message->attachments;
+
+		foreach($user_messages as $user_message):
+			$user_message->delete();
+		endforeach;
+
+		foreach ($attachments as $attachment):
+			$attachment->delete();
+		endforeach;
+
+		$message->delete();
 
 	}
 
@@ -611,6 +654,7 @@ class ReadController extends \BaseController {
 		else:
 
 			return false;
+
 		endif;
 
 	}

@@ -566,6 +566,10 @@
 		            dataType: "html",
 		            success: function(res) 
 		            {
+		            	$('.inbox-nav > li.active').removeClass('active');
+		                $('.inbox-nav > li.inbox').addClass('active');
+		                $('.inbox-header > h1').text('Bandeja de Entrada');
+
 		                loading.hide();
 		                content.html(res);
 		                if (Layout.fixContentHeight) {
@@ -854,6 +858,35 @@
 
 		    }
 
+		    var markAsNoneDeleted = function(el) {
+
+		    	var messages = [];
+
+		    	$('.ids:checked').each(function(){
+
+		    		messages.push($(this).val());
+
+		    	});
+
+		    	console.log(messages);
+
+		    	$('.ids:checked').parents('tr').remove();
+
+		    	$('#pagination-total').html(parseInt($('#pagination-total').html())-messages.length);
+
+		    	$('#pagination-to').html(parseInt($('#pagination-to').html())-messages.length);
+
+		    	$.ajax({
+		    		url: '{{ $route }}/markasnonedeleted',
+		    		type: 'GET',
+		    		data: {messages: messages},
+		    		success: function(data){
+		    			console.log(data);
+		    		}
+		    	});
+
+		    }
+
 		    var markAsDiscard = function(el) {
 
 		    	var messages = [];
@@ -874,6 +907,35 @@
 
 		    	$.ajax({
 		    		url: '{{ $route }}/markasdiscard',
+		    		type: 'GET',
+		    		data: {messages: messages},
+		    		success: function(data){
+		    			console.log(data);
+		    		}
+		    	});
+
+		    }
+
+		    var deleteFromBox = function(el) {
+
+		    	var messages = [];
+
+		    	$('.ids:checked').each(function(){
+
+		    		messages.push($(this).val());
+
+		    	});
+
+		    	console.log(messages);
+
+		    	$('.ids:checked').parents('tr').remove();
+
+		    	$('#pagination-total').html(parseInt($('#pagination-total').html())-messages.length);
+
+		    	$('#pagination-to').html(parseInt($('#pagination-to').html())-messages.length);
+
+		    	$.ajax({
+		    		url: '{{ $route }}/deletefrombox',
 		    		type: 'GET',
 		    		data: {messages: messages},
 		    		success: function(data){
@@ -1023,8 +1085,18 @@
 		            });
 
 		            // handle mark as deleted and forward button click
+		            $('.inbox').on('click', '.markasnonedeleted-btn', function () {
+		                markAsNoneDeleted($(this));
+		            });
+
+		            // handle mark as deleted and forward button click
 		            $('.inbox').on('click', '.markasdiscard-btn', function () {
 		                markAsDiscard($(this));
+		            });
+
+		            // handle mark as deleted and forward button click
+		            $('.inbox').on('click', '.deletefrombox-btn', function () {
+		                deleteFromBox($(this));
 		            });
 
 		            // handle delete and forward button click
