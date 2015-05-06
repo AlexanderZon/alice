@@ -812,6 +812,10 @@
 
 		    	$('.ids:checked').parents('tr').remove();
 
+		    	$('#pagination-total').html(parseInt($('#pagination-total').html())-messages.length);
+
+		    	$('#pagination-to').html(parseInt($('#pagination-to').html())-messages.length);
+
 		    	$.ajax({
 		    		url: '{{ $route }}/markasspam',
 		    		type: 'GET',
@@ -835,6 +839,10 @@
 
 		    	$('.ids:checked').parents('tr').remove();
 
+		    	$('#pagination-total').html(parseInt($('#pagination-total').html())-messages.length);
+
+		    	$('#pagination-to').html(parseInt($('#pagination-to').html())-messages.length);
+
 		    	$.ajax({
 		    		url: '{{ $route }}/markasdeleted',
 		    		type: 'GET',
@@ -856,7 +864,13 @@
 
 		    	});
 
+		    	console.log(messages);
+
 		    	$('.ids:checked').parents('tr').remove();
+
+		    	$('#pagination-total').html(parseInt($('#pagination-total').html())-messages.length);
+
+		    	$('#pagination-to').html(parseInt($('#pagination-to').html())-messages.length);
 
 		    	$.ajax({
 		    		url: '{{ $route }}/markasdiscard',

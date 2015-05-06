@@ -1,5 +1,5 @@
 <span class="pagination-info">
-	{{ $messages->getFrom() }} - {{ $messages->getTo() }} de {{ $messages->getTotal() }} 
+	<span id="pagination-from">{{ $messages->getFrom() }}</span> - <span id="pagination-to">{{ $messages->getTo() }}</span> de <span id="pagination-total">{{ $messages->getTotal() }}</span>
 </span>
 @if($messages->getCurrentPage() > 1)
 <a class="btn btn-sm blue paginate-btn" data-box="{{ $box }}" data-paginateid="{{ $messages->getCurrentPage() - 1 }}">

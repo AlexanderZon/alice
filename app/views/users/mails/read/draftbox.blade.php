@@ -35,7 +35,7 @@
 @foreach($outbox as $message)
 	<tr data-messageid="{{ Crypt::encrypt($message->id) }}">
 		<td class="inbox-small-cells">
-			<input type="checkbox" class="mail-checkbox" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
+			<input type="checkbox" class="mail-checkbox ids" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
 		</td>
 		<td class="inbox-small-cells">
 			<!-- <i class="fa fa-star"></i> -->

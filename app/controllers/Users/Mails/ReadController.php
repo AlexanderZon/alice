@@ -510,7 +510,7 @@ class ReadController extends \BaseController {
 
 		foreach (Input::get('messages') as $message_id):
 			# code...
-			$message = Message::find(Crypt::decrypt($id));
+			$message = Message::find(Crypt::decrypt($message_id));
 			$message->delete();
 		endforeach;
 		
