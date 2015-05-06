@@ -136,23 +136,27 @@ class Attachment extends \Eloquent {
     			break;
     		# Word
     		case 'application/msword':
-    		case 'application/msword':
+                return $path.'DOC.png'
     		case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                return $path.'word.png'; #less DOC DOCX
+                return $path.'DOCX.png'; #less DOC DOCX
                 break;
             # Power Point
             case 'application/mspowerpoint':
             case 'application/powerpoint':
+                return $path.'PPT.png'; #PPT PPTX
+                break;
             case 'application/vnd.ms-powerpoint':
             case 'application/x-mspowerpoint':
-                return $path.'powerpoint.png'; #PPT PPTX
+                return $path.'PPTX.png'; #PPT PPTX
                 break;
             # Excel
             case 'application/excel':
             case 'application/x-excel':
+                return $path.'XLS.png'; #XLS XLSX
+                break;
             case 'application/x-msexcel':
             case 'application/vnd.ms-excel':
-                return $path.'excel.png'; #XLS XLSX
+                return $path.'XLSX.png'; #XLS XLSX
                 break;
             # Libre Office
             case 'application/vnd.oasis.opendocument.text':
