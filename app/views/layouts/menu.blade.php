@@ -220,32 +220,33 @@
 						<!-- BEGIN INBOX DROPDOWN -->
 						<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
 						<li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+							<?php $unreadbox = Auth::user()->unreadbox ?>
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 							<i class="icon-envelope-open"></i>
-							<span class="badge badge-danger">
-							4 </span>
+							<span class="badge badge-danger"> {{ count($unreadbox)}} </span>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="external">
-									<h3>You have <span class="bold">7 New</span> Messages</h3>
-									<a href="/me/inbox">view all</a>
+									<h3>Tu Tienes <span class="bold">{{ count($unreadbox)}} Nuevos</span> Mensajes</h3>
+									<a href="/messages">ver todos</a>
 								</li>
 								<li>
 									<ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-										<li>
-											<a href="/me/inbox/{{ Hashids::encode('1') }}">
-											<span class="photo">
-											<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
-											</span>
-											<span class="subject">
-											<span class="from">
-											Lisa Wong </span>
-											<span class="time">Just Now </span>
-											</span>
-											<span class="message">
-											Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-											</a>
-										</li>
+										@foreach($unreadbox as $message)
+											<?php $from = $message->from; ?>
+											<li>
+												<a href="/messages">
+												<span class="photo">
+												<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
+												</span>
+												<span class="subject">
+												<span class="from">{{ $from->first_name}} {{ $from->last_name }} </span>
+												<span class="time moment-date">{{ $message->user_message()->created_at }}</span>
+												</span>
+												<span class="message">{{ $message->subject }} @if(count($message->attachments)>0) <i class="fa fa-paperclip"></i> @endif</span>
+												</a>
+											</li>
+										@endforeach
 										<li>
 											<a href="/me/inbox/{{ Hashids::encode('2') }}">
 											<span class="photo">
