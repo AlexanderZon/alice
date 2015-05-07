@@ -236,14 +236,14 @@
 											<?php $from = $message->from; ?>
 											<li>
 												<a href="/messages">
-												<span class="photo">
-												<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
-												</span>
-												<span class="subject">
-												<span class="from">{{ $from->first_name}} {{ $from->last_name }} </span>
-												<span class="time moment-date">{{ $message->user_message()->created_at }}</span>
-												</span>
-												<span class="message">{{ $message->subject }} @if(count($message->attachments)>0) <i class="fa fa-paperclip"></i> @endif</span>
+													<span class="photo">
+													<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
+													</span>
+													<span class="subject">
+													<span class="from">{{ $from->first_name}} {{ $from->last_name }} </span>
+													<span class="time moment-date">{{ $message->user_message()->created_at }}</span>
+													</span>
+													<span class="message">{{ $message->subject }} @if(count($message->attachments)>0) <i class="fa fa-paperclip"></i> @endif</span>
 												</a>
 											</li>
 										@endforeach

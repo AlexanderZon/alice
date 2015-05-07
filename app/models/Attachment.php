@@ -136,7 +136,8 @@ class Attachment extends \Eloquent {
     			break;
     		# Word
     		case 'application/msword':
-                return $path.'DOC.png'
+                return $path.'DOC.png';
+                break;
     		case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
                 return $path.'DOCX.png'; #less DOC DOCX
                 break;
