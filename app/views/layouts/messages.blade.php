@@ -121,6 +121,7 @@
 		                if(name == 'outbox'){
 		                	$('.inbox-nav > li.sent').addClass('active');		                	
 		                }
+		                $('#search-type').val(name);
 		                $('.inbox-nav > li.' + name).addClass('active');
 		                $('.inbox-header > h1').text(title);
 

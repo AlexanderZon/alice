@@ -529,7 +529,7 @@ class ReadController extends \BaseController {
 
 	}
 
-	public function getDeleteformbox(){
+	public function getDeletefrombox(){
 
 		foreach (Input::get('messages') as $message_id):
 			$message = Message::find(Crypt::decrypt($message_id));
