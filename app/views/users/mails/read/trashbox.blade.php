@@ -17,7 +17,7 @@
 		</div>
 	</th>
 	<th class="pagination-control" colspan="3">
-		{{ $trashbox->links('users.mails.read.paginate')->with('messages', $trashbox) }}
+		{{ $trashbox->links('users.mails.read.paginate')->with(array('messages' => $trashbox, 'box' => 'trashbox')) }}
 	</th>
 </tr>
 </thead>

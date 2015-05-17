@@ -255,7 +255,113 @@ class ReadController extends \BaseController {
 
 	public function getSearch(){
 
-		return self::make('search');
+		$q = Input::get('q');
+
+		$type = Input::get('type');
+
+		self::addArgument('type', $type);
+		self::addArgument('q', $q);
+
+		$matches = array();
+		
+		$perPage = 5;
+
+		$currentPage = Input::get('page') != null ? Input::get('page') - 1 : 0;
+
+		if($q != ''):
+
+			switch(Input::get('type')){
+
+				case 'inbox':
+
+					$users = User::search($q);
+
+					$quest = Auth::user()->inbox($q);
+
+					if(count($users) > 0):
+
+						$messages = Auth::user()->inbox()->get();
+
+						foreach($messages as $message):
+
+							foreach($users as $user):
+
+								if($message->author_id == $user->id):
+
+									$bool = false;
+
+									foreach($quest as $element):
+										if($element->id == $message->id) $bool = true;
+									endforeach;
+
+									if(!$bool) $quest[] = $message;
+
+								endif;
+
+							endforeach;
+
+						endforeach;
+
+					endif;
+
+					break;
+
+				case 'outbox':
+
+					$users = User::search($q);
+
+					$quest = Auth::user()->outbox($q);
+
+					if(count($users) > 0):
+
+						$messages = Auth::user()->outbox()->get();
+
+						foreach($messages as $message):
+
+							foreach($message->to as $destinatary):
+
+								foreach($users as $user):
+
+									if($destinatary->id == $user->id):
+
+										$bool = false;
+
+										foreach($quest as $element):
+											if($element->id == $message->id) $bool = true;
+										endforeach;
+
+										if(!$bool) $quest[] = $message;
+
+									endif;
+
+								endforeach;
+
+							endforeach;
+
+						endforeach;
+
+					endif;
+
+					break;
+				case 'draft':
+					break;
+				case 'trash':
+					break;
+			}
+
+			foreach($quest as $element):
+				$matches[] = $element;
+			endforeach;
+
+		endif;
+
+		$pagedData = array_slice($matches, $currentPage * $perPage, $perPage);
+
+		$matches = \Paginator::make($pagedData, count($matches), $perPage);
+
+		self::addArgument('matches', $matches);
+
+		return self::make('search-'.$type);
 
 	}
 

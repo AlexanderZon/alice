@@ -16,13 +16,14 @@
 			</ul>
 		</div>
 	</th>
-	<th class="pagination-control" colspan="3">
-		{{ $outbox->links('users.mails.read.paginate')->with(array('messages' => $outbox, 'box' => 'outbox')) }}
+	<th>Resultados de Búsqueda: "{{ $q }}"</th>
+	<th class="pagination-control" colspan="2">
+		{{ $matches->links('users.mails.read.paginate')->with(array('messages' => $matches, 'box' =>  'q-'.$type)) }}
 	</th>
 </tr>
 </thead>
 <tbody>
-@foreach($outbox as $message)
+@foreach($matches as $message)
 	<tr data-messageid="{{ Crypt::encrypt($message->id) }}">
 		<td class="inbox-small-cells">
 			<input type="checkbox" class="ids mail-checkbox" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
@@ -36,7 +37,7 @@
 		<td class="review-message ">
 			 {{ $message->subject != '' ? $message->subject : '<em>(Sin Asunto)</em>' }}
 		</td>
-		<td class="review-message inbox-small-cells">
+		<td class="review-message">
 			@if(count($message->attachments) > 0)
 				<i class="fa fa-paperclip"></i>
 			@endif

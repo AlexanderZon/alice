@@ -99,6 +99,45 @@
 		    var loading = $('.inbox-loading');
 		    var listListing = '';
 
+		    var searchForm = function (el){
+
+		    	console.log('submit');
+
+		    	var url = '{{$route}}/search';
+
+		        loading.show();
+		        content.html('');
+		        toggleButton(el);
+
+		    	$.ajax({
+		    		type: 'GET',
+		    		cache: false,
+		    		url: url,
+		    		data: el.serialize(),
+		    		dataType: 'html',
+		    		success: function(res)
+		    		{
+						toggleButton(el);/*
+
+		                $('.inbox-nav > li.active').removeClass('active');
+		                if(name == 'outbox'){
+		                	$('.inbox-nav > li.sent').addClass('active');		                	
+		                }
+		                $('#search-type').val(name);
+		                $('.inbox-nav > li.' + name).addClass('active');
+		                $('.inbox-header > h1').text(title);*/
+
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.initUniform();
+		    		},
+		    	})
+
+		    }
+
 		    var loadInbox = function (el, name) {
 		        var url = '{{$route}}/' + name;
 		        var title = $('.inbox-nav > li.' + name + ' a').attr('data-title');
@@ -151,7 +190,12 @@
 		    }
 
 		    var paginateBox = function (el) {
-		        var url = '{{$route}}/paginate?';
+		    	if($(el).attr('data-box') == 'q-inbox' || $(el).attr('data-box') == 'q-outbox' || $(el).attr('data-box') == 'q-draft' || $(el).attr('data-box') == 'q-trash'){
+		        	var url = '{{$route}}/search?';		    		
+		    	}
+		    	else{
+		        	var url = '{{$route}}/paginate?';		    		
+		    	}
 		        
 		        listListing = name;
 
@@ -165,12 +209,13 @@
 		            url: url,
 		            data: {
 		            	page: $(el).attr('data-paginateid'),
-		            	box: $(el).attr('data-box')
+		            	box: $(el).attr('data-box'),
+		            	q: $('input[name=q]').val(),
+		            	type: $('#search-type').val()
 		            },
 		            dataType: "html",
 		            success: function(res) 
 		            {
-
 		                loading.hide();
 		                content.html(res);
 		                if (Layout.fixContentHeight) {
@@ -1015,6 +1060,20 @@
 		    return {
 		        //main function to initiate the module
 		        init: function () {
+
+		        	$('.inbox').on('submit', '#search-form', function(event) {
+		        		event.preventDefault();
+		        		/* Act on the event */
+		        		if($('#search-form input[name=q]').val() != '') searchForm($(this));
+		        		return false;
+		        	});
+
+		        	/*$('.inbox').on('keyup', '#search-form input[name=q]', function(event) {
+		        		
+		        		console.log(event.keyCode);
+		        		if(event.keyCode == 8 || (event.keyCode >= 32 && event.keyCode <=))
+		        		searchForm($('#search-form'));
+		        	});*/
 
 		            // handle compose btn click
 		            $('.inbox').on('click', '.compose-btn a', function () {

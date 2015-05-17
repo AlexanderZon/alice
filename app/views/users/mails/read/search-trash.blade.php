@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/users/mails/read/search-trash.blade.php

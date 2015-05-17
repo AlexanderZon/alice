@@ -166,10 +166,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
-	public function inbox(){
+	public function inbox( $q = '' ){
 
+		$inbox = $this->belongsToMany('Message','user_messages')->whereRaw('( `user_messages`.`status` = ? OR `user_messages`.`status` = ? )', array('read', 'unread'))->orderBy('user_messages.created_at', 'DESC');
+
+		if($q != '') $inbox = $inbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
 		// return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read')->orWhere('user_messages.status', '=', 'unread');
-		return $this->belongsToMany('Message','user_messages')->whereRaw('( user_messages.status = ? OR user_messages.status = ? )', array('read', 'unread'))->orderBy('user_messages.created_at', 'DESC');
+		return $inbox;
 
 	}
 
@@ -197,9 +200,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
-	public function outbox(){
+	public function outbox( $q = '' ){
 
-		return $this->hasMany('Message','author_id')->where('messages.status', '=', 'done')->orderBy('messages.created_at', 'DESC');
+		$outbox = $this->hasMany('Message','author_id')->where('messages.status', '=', 'done')->orderBy('messages.created_at', 'DESC');
+
+		if($q != '') $outbox = $outbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+
+		return $outbox;
 
 	}
 
@@ -304,6 +311,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 			return true;
 
 		endif;
+
+	}
+
+	public static function search($q = ''){
+
+		return self::where('email','LIKE','%'.$q.'%')->orWhere('first_name','LIKE','%'.$q.'%')->orWhere('last_name','LIKE','%'.$q.'%')->orWhere('username','LIKE','%'.$q.'%')->orWhere('display_name','LIKE','%'.$q.'%')->get();
 
 	}
 
