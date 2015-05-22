@@ -232,22 +232,31 @@
 								</li>
 								<li>
 									<ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+										<?php $unreadbox_counter = 0; ?>
 										@foreach($unreadbox as $message)
-											<?php $from = $message->from; ?>
-											<li>
-												<a href="/messages">
-													<span class="photo">
-													<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
-													</span>
-													<span class="subject">
-													<span class="from">{{ $from->first_name}} {{ $from->last_name }} </span>
-													<span class="time moment-date">{{ $message->user_message()->created_at }}</span>
-													</span>
-													<span class="message">{{ $message->subject }} @if(count($message->attachments)>0) <i class="fa fa-paperclip"></i> @endif</span>
-												</a>
-											</li>
+											@if($unreadbox_counter <= 10)
+												<?php $from = $message->from; ?>
+												<li>
+													<a href="/messages">
+														<span class="photo">
+														<img src="{{ $from->profile->getAvatar() }}" class="img-circle" alt="">
+														</span>
+														<span class="subject">
+														<span class="from">{{ $from->first_name}} {{ $from->last_name }} </span>
+														<span class="time moment-date">{{ $message->user_message()->created_at }}</span>
+														</span>
+														<span class="message">{{ $message->subject }} @if(count($message->attachments)>0) <i class="fa fa-paperclip"></i> @endif</span>
+													</a>
+												</li>
+											@endif
+											<?php $unreadbox_counter++; ?>
 										@endforeach
-										<li>
+										@if($unreadbox_counter > 5)
+											<li class="external center">
+												<a href="/messages">Ver los demas Mensajes</a>
+											</li>
+										@endif
+										<!-- <li>
 											<a href="/me/inbox/{{ Hashids::encode('2') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar3.jpg" class="img-circle" alt="">
@@ -302,7 +311,7 @@
 											<span class="message">
 											Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
 											</a>
-										</li>
+										</li> -->
 									</ul>
 								</li>
 							</ul>
@@ -445,11 +454,11 @@
 								</span>
 								<!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
 								&nbsp;
-								<img alt="" class="img-circle" src="/assets/admin/layout4/img/avatar9.jpg"/>
+								<img alt="" class="img-circle" src="{{ Auth::user()->profile->getAvatar() }}"/>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-default">
 								<li>
-									<a href="/me">
+									<a href="/profile">
 									<i class="icon-user"></i> Mi Perfil </a>
 								</li>
 								<li>

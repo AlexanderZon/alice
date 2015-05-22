@@ -53,6 +53,13 @@ App::error(function(\Illuminate\Encryption\DecryptException $exception)
     return View::make('security.auth.404');
 });
 
+App::error(function(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception)
+{
+    Log::error($exception);
+
+    return View::make('security.auth.404');
+});
+
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);

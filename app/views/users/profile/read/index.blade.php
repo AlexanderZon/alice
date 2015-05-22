@@ -39,7 +39,7 @@
 				</div>
 				<div class="portlet-body form">
 					<!-- BEGIN FORM-->
-					<form action="" method="post" class="form-horizontal">
+					<form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
 						<div class="form-body">
 							<h3 class="form-section">Información Personal</h3>
 							<div class="row">
@@ -68,11 +68,11 @@
 								<div class="col-md-12">
 									<label class="control-label col-md-2">Imágenes</label>
 									<div class="col-md-10">
-										<div class="fileinput fileinput-new col-md-4" data-provides="main_picture">
+										<div class="fileinput fileinput-new col-md-4" data-provides="picture">
 											<div>Imagen Principal</div>
 											<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="{{ $profile->main_picture != '' ? $profile->main_picture : UserProfile::DEFAULT_MAIN_PICTURE }}" alt=""/>
+												<img src="{{ $profile->picture != '' ? $profile->picture : UserProfile::DEFAULT_MAIN_PICTURE }}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -82,17 +82,17 @@
 												Seleccionar Imagen </span>
 												<span class="fileinput-exists">
 												Cambiar </span>
-												<input type="file" name="main_picture">
+												<input type="file" name="picture">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="main_picture">
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="picture">
 												Remover </a>
 											</div>
 										</div>
-										<div class="fileinput fileinput-new col-md-8" data-provides="cover_picture">
+										<div class="fileinput fileinput-new col-md-8" data-provides="cover">
 											<div>Imagen de Portada</div>
 											<div class="fileinput-new thumbnail col-md-12">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="{{ $profile->cover_picture != '' ? $profile->cover_picture : UserProfile::DEFAULT_COVER_PICTURE }}" alt=""/>
+												<img src="{{ $profile->cover != '' ? $profile->cover : UserProfile::DEFAULT_COVER_PICTURE }}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -102,9 +102,9 @@
 												Seleccionar Imagen </span>
 												<span class="fileinput-exists">
 												Cambiar </span>
-												<input type="file" name="cover_picture">
+												<input type="file" name="cover">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="cover_picture">
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="cover">
 												Remover </a>
 											</div>
 										</div>
@@ -155,7 +155,7 @@
 										<div class="col-md-9">
 											<div class="input-icon right">
 												<i class="fa fa-map-marker"></i>
-												<input name="born_place" type="text" placeholder="Ingrese el Correo Electrónico" class="form-control"  value="{{ $profile->born_place }}" required>
+												<input name="born_place" type="text" placeholder="Ingrese el Correo Electrónico" class="form-control"  value="{{ $profile->born_place }}">
 											</div>
 										</div>
 									</div>
@@ -170,7 +170,7 @@
 												<span class="input-group-addon">
 												<i class="fa fa-user"></i>
 												</span>
-												<select name="sex" class="form-control select2me" data-placeholder="Seleccione un rol de usuario..." required>
+												<select name="sex" class="form-control select2me" data-placeholder="Seleccione un rol de usuario...">
 													<option value>--- SELECCIONE UN SEXO ---</option>
 													<option value="male" {{ $profile->sex == 'male' ? 'selected' : '' }}>Masculino</option>
 													<option value="female" {{ $profile->sex == 'female' ? 'selected' : '' }}>Femenino</option>
@@ -372,30 +372,30 @@
 	
 	<script type="text/javascript">
 
-	var ComponentsPickers = function () {
+		var ComponentsPickers = function () {
 
-	    var handleDatePickers = function () {
+		    var handleDatePickers = function () {
 
-	        if (jQuery().datepicker) {
-	            $('.date-picker').datepicker({
-	                rtl: Metronic.isRTL(),
-	                orientation: "right",
-	                language: "es",
-	                autoclose: true
-	            });
-	            //$('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
-	        }
+		        if (jQuery().datepicker) {
+		            $('.date-picker').datepicker({
+		                rtl: Metronic.isRTL(),
+		                orientation: "right",
+		                language: "es",
+		                autoclose: true
+		            });
+		            //$('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
+		        }
 
-	    }	   
+		    }	   
 
-	    return {
-	        //main function to initiate the module
-	        init: function () {
-	            handleDatePickers();
-	        }
-	    };
+		    return {
+		        //main function to initiate the module
+		        init: function () {
+		            handleDatePickers();
+		        }
+		    };
 
-	}();
+		}();
 
 		var ComponentsEditors = function () {
 

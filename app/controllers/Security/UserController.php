@@ -157,7 +157,6 @@ class UserController extends ReadController {
 
 			return self::go( 'create' );
 
-
 		elseif( Input::get('role_id') == null ):
 
 			self::setWarning('security_user_role_err', 'Error al agregar usuario', 'Debe indicar el rol del usuario');

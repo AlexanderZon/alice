@@ -21,7 +21,7 @@ class CreateUserProfilesTable extends Migration {
 			$table->longText('interests');
 			$table->date('born_date');
 			$table->string('born_place');
-			$table->string('sex', 15);
+			$table->enum('sex', array('male', 'female'))->default('male');
 			$table->string('picture');
 			$table->string('cover');
 			$table->string('website');
