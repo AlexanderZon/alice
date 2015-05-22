@@ -24,7 +24,7 @@
 	<link id="style_color" href="/assets/admin/layout4/css/themes/light.css" rel="stylesheet" type="text/css"/>
 	<link href="/assets/admin/layout4/css/custom.css" rel="stylesheet" type="text/css"/>
 	<!-- END THEME STYLES -->
-	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="shortcut icon" href="/favicon.ico"/>
 
 @stop
 

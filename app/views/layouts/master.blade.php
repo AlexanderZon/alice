@@ -49,7 +49,7 @@
 <link href="/assets/admin/layout4/css/custom.css" rel="stylesheet" type="text/css"/>
 
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="favicon.ico"/>
+<link rel="shortcut icon" href="/favicon.ico"/>
 
 @yield('css')
 

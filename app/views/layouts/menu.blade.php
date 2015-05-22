@@ -457,9 +457,13 @@
 									<i class="icon-calendar"></i> Mi Calendario </a>
 								</li>
 								<li>
-									<a href="/my/inbox">
-									<i class="icon-envelope-open"></i> Mi Buzón <span class="badge badge-danger">
-									3 </span>
+									<a href="/messages">
+									<i class="icon-envelope-open"></i> Mi Buzón 
+										@if(count($unreadbox) > 0)
+											<span class="badge badge-danger">
+												{{ count($unreadbox)}} 
+											</span>
+										@endif
 									</a>
 								</li>
 								<li>
@@ -517,52 +521,6 @@
 						<i class="icon-home"></i>
 						<span class="title">Escritorio</span>
 						</a>
-					</li>
-					@endif
-
-					@if(Auth::user()->hasCap('persons_view_get') || Auth::user()->hasCap('clients_view_get') || Auth::user()->hasCap('providers_view_get') || Auth::user()->hasCap('locations_view_get'))
-					<li class="tooltips {{ $module['name'] == 'persons' || $module['name'] == 'clients' || $module['name'] == 'providers' || $module['name'] == 'locations' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Personas">
-						<a href="/clients">
-						<i class="icon-user"></i>
-						<span class="title">
-						Personas </span>
-						<span class="arrow"></span>
-						</a>
-						<ul class="sub-menu">
-
-							@if(Auth::user()->hasCap('clients_view_get'))
-							<li class="{{ $module['name'] == 'clients' ? 'active' : '' }}">
-								<a href="/clients">
-								<i class="icon-emoticon-smile"></i>
-								Clientes</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('providers_view_get'))
-							<li class="{{ $module['name'] == 'providers' ? 'active' : '' }}">
-								<a href="/providers">
-								<i class="icon-briefcase"></i>
-								Proveedores</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('locations_view_get'))
-							<li class="{{ $module['name'] == 'locations' ? 'active' : '' }}">
-								<a href="/locations">
-								<i class="icon-pointer"></i>
-								Localidades</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('persons_view_get'))
-							<li class="{{ $module['name'] == 'persons' ? 'active' : '' }}">
-								<a href="/persons">
-								<i class="icon-list"></i>
-								Representantes</a>
-							</li>
-							@endif
-
-						</ul>
 					</li>
 					@endif
 
@@ -708,6 +666,30 @@
 						</ul>
 					</li>
 					@endif
+
+					<!-- Users Module -->
+
+					@if(Auth::user()->hasCap('users_mails_get_index'))
+					<li class="tooltips {{ $name == 'users_mails' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Correos">
+						<a href="/messages">
+						<i class="icon-envelope-open"></i>
+						<span class="title">
+						Correo </span>
+						</a>
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('users_profile_get_index'))
+					<li class="tooltips {{ $name == 'users_profile' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Mi Perfil">
+						<a href="/profile">
+						<i class="icon-user"></i>
+						<span class="title">
+						Perfil </span>
+						</a>
+					</li>
+					@endif
+
+
 					<!-- END ANGULARJS LINK -->
 					<!--
 					<li>

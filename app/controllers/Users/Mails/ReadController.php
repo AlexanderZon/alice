@@ -33,7 +33,7 @@ class ReadController extends \BaseController {
 
 		self::$route = '/messages';
 
-		self::$name = 'messages';
+		self::$name = 'users_mails';
 
 		self::$title = 'Correo';
 
@@ -344,8 +344,74 @@ class ReadController extends \BaseController {
 
 					break;
 				case 'draft':
+
+					$users = User::search($q);
+
+					$quest = Auth::user()->draftbox($q);
+
+					if(count($users) > 0):
+
+						$messages = Auth::user()->outbox()->get();
+
+						foreach($messages as $message):
+
+							foreach($message->to as $destinatary):
+
+								foreach($users as $user):
+
+									if($destinatary->id == $user->id):
+
+										$bool = false;
+
+										foreach($quest as $element):
+											if($element->id == $message->id) $bool = true;
+										endforeach;
+
+										if(!$bool) $quest[] = $message;
+
+									endif;
+
+								endforeach;
+
+							endforeach;
+
+						endforeach;
+
+					endif;
+
 					break;
 				case 'trash':
+
+					$users = User::search($q);
+
+					$quest = Auth::user()->trashbox($q);
+
+					if(count($users) > 0):
+
+						$messages = Auth::user()->inbox()->get();
+
+						foreach($messages as $message):
+
+							foreach($users as $user):
+
+								if($message->author_id == $user->id):
+
+									$bool = false;
+
+									foreach($quest as $element):
+										if($element->id == $message->id) $bool = true;
+									endforeach;
+
+									if(!$bool) $quest[] = $message;
+
+								endif;
+
+							endforeach;
+
+						endforeach;
+
+					endif;
+
 					break;
 			}
 

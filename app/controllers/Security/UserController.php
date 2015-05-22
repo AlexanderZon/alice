@@ -6,6 +6,7 @@ use \Capability as Capability;
 use \Input as Input;
 use \Hash as Hash;
 use \Hashids as Hashids;
+use \UserProfile as UserProfile;
 
 class UserController extends ReadController {
 
@@ -118,7 +119,13 @@ class UserController extends ReadController {
 	public function postCreate()
 	{
 
-		if( User::hasUsername(Input::get('username')) ):
+		if( !User::isValidUsername(Input::get('username')) ):
+
+			self::setWarning('security_user_username_err', 'Error al agregar estudiante', 'El nombre de usuario ' . Input::get('username') . ' no es Válido, por favor ingrese uno diferente');
+
+			return self::go( 'create' );
+
+		elseif( User::hasUsername(Input::get('username')) ):
 
 			self::setWarning('security_user_username_err', 'Error al agregar usuario', 'El usuario ' . Input::get('username') . ' ya existe, por favor ingrese uno diferente');
 
@@ -172,6 +179,10 @@ class UserController extends ReadController {
 			$user->status = 'inactive';
 			
 			if( $user->save() ):
+
+				$profile = new UserProfile();
+				$profile->user_id = $user->id;
+				$profile->save();
 	
 				self::setSuccess('security_user_create', 'Usuario Agregado', 'El usuario ' . $user->display_name . ' fue agregado exitósamente');
 

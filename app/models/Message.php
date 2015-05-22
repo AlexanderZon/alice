@@ -108,7 +108,7 @@ class Message extends \Eloquent {
 
         $text = '';
 
-        if($counter > 2):
+        if($counter > 3):
             $tmp = 0;
             foreach($recipients as $recipient):
                 $text .= $tmp < 3 ? ($recipient->id == Auth::user()->id ? 'mi' : $recipient->first_name) : '';
@@ -116,11 +116,26 @@ class Message extends \Eloquent {
                 $text .= ($tmp == 3 AND $counter > 3) ? '...' : '';
                 $tmp++;
             endforeach;
+        elseif($counter > 2):
+            $tmp = 0;
+            foreach($recipients as $recipient):
+                $text .= $tmp < 3 ? ($recipient->id == Auth::user()->id ? 'mi' : $recipient->first_name) : '';
+                $text .= $tmp < 2 ? ', ' : '';
+                $text .= ($tmp == 2) ? '.' : '';
+                $tmp++;
+            endforeach;
+        elseif($counter > 1):
+            $tmp = 0;
+            foreach($recipients as $recipient):
+                $text .= ($recipient->id == Auth::user()->id ? 'mi' : $recipient->first_name.' '.$recipient->last_name);
+                $text .= $tmp < 2 ? ', ' : '.';
+                $tmp++;
+            endforeach;
         elseif($counter > 0):
             $tmp = 0;
             foreach($recipients as $recipient):
                 $text .= ($recipient->id == Auth::user()->id ? 'mi' : $recipient->first_name.' '.$recipient->last_name);
-                $text .= $tmp < 1 ? ', ' : '.';
+                $text .= '.';
                 $tmp++;
             endforeach;
         else:

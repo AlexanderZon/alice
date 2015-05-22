@@ -138,7 +138,7 @@ class AuthenticationController extends ReadController {
 
 	}
 
-	public function getNotpermissions(){
+	public function getNotpermission(){
 
 		return self::make('403');
 

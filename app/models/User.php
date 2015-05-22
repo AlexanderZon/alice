@@ -86,7 +86,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function profile(){
 
-		return $this->hasOne('Profile','user_id');
+		return $this->hasOne('UserProfile','user_id');
 
 	}
 
@@ -176,27 +176,43 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
-	public function unreadbox(){
+	public function unreadbox( $q = '' ){
 
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'unread')->orderBy('user_messages.created_at', 'DESC');
+		$unreadbox = $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'unread')->orderBy('user_messages.created_at', 'DESC');
 
-	}
-
-	public function readbox(){
-
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read')->orderBy('user_messages.created_at', 'DESC');
+		if($q != '') $unreadbox = $unreadbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+		
+		return  $unreadbox;
 
 	}
 
-	public function spambox(){
+	public function readbox( $q = '' ){
 
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'spam')->orderBy('user_messages.created_at', 'DESC');
+		$readbox = $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read')->orderBy('user_messages.created_at', 'DESC');
+
+		if($q != '') $readbox = $readbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+		
+		return $readbox;
 
 	}
 
-	public function trashbox(){
+	public function spambox( $q = '' ){
 
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'deleted')->orderBy('user_messages.created_at', 'DESC');
+		$spambox = $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'spam')->orderBy('user_messages.created_at', 'DESC');
+		
+		if($q != '') $spambox = $spambox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+
+		return $spambox;
+
+	}
+
+	public function trashbox( $q = '' ){
+
+		$trashbox = $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'deleted')->orderBy('user_messages.created_at', 'DESC');
+
+		if($q != '') $trashbox = $trashbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+		
+		return $trashbox;
 
 	}
 
@@ -210,9 +226,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
-	public function draftbox(){
+	public function draftbox( $q = '' ){
 
-		return $this->hasMany('Message','author_id')->where('messages.status', '=', 'draft')->orderBy('messages.created_at', 'DESC');
+		$draftbox = $this->hasMany('Message','author_id')->where('messages.status', '=', 'draft')->orderBy('messages.created_at', 'DESC');
+
+		if($q != '') $draftbox = $draftbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+
+		return $draftbox;
 
 	}
 
@@ -271,6 +291,26 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	public static function hasUsername( $username, $id = '' ){
+
+		if( $id != '' ):
+
+			$user = self::where('username', '=', $username )->where('id', '!=', $id )->take(1)->get();
+
+		else:
+
+			$user = self::where('username', '=', $username )->take(1)->get();
+
+		endif;
+
+		if(empty($user[0])):
+			return false;
+		else:
+			return true;
+		endif;
+
+	}
+
+	public static function isValidUsername( $username, $id = '' ){
 
 		if( $id != '' ):
 
