@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/users/wall/read/teachers.blade.php
