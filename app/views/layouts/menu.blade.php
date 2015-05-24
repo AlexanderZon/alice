@@ -33,7 +33,7 @@
 <!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="page-header-fixed page-sidebar-closed-hide-logo ppage-sidebar-closed-hide-logo">
+<body class="page-header-fixed page-sidebar-closed-hide-logo ppage-sidebar-closed-hide-logo {{ isset($sidebar_closed) ? 'page-sidebar-closed' : '' }}">
 
 <!-- BEGIN HEADER -->
 	<div class="page-header navbar navbar-fixed-top">
@@ -520,7 +520,7 @@
 				<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 				<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
 				<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-				<ul class="page-sidebar-menu page-sidebar-menu-hover-submenu1" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				<ul class="page-sidebar-menu page-sidebar-menu-hover-submenu1 {{ isset($sidebar_closed) ? 'page-sidebar-menu-closed' : '' }}" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 					<li class="heading">
 						<h3>GENERAL</h3>
 					</li>

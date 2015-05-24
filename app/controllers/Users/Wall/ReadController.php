@@ -52,6 +52,7 @@ class ReadController extends \BaseController {
 			self::$description = $username;
 			self::fixSection('index', 'Perfil de '.$user->display_name);
 			self::setArguments();
+			self::addArgument('sidebar_closed', true);
 			self::addArgument('user', $user);
 			self::addArgument('profile', $user->profile);
 			self::addArgument('role', $user->role);
@@ -121,6 +122,12 @@ class ReadController extends \BaseController {
 					return Response::json(array(
 						'status' => Auth::user()->unblock($user)
 						));
+					break;
+				case 'followers':
+					self::addArgument('followers', $user->followers);
+					break;
+				case 'following':
+					self::addArgument('following', $user->followed);
 					break;
 			endswitch;
 
