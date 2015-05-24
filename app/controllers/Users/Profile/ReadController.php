@@ -69,6 +69,8 @@ class ReadController extends \BaseController {
 		$profile->born_place = Input::get('born_place');
 		$profile->sex = Input::get('sex');
 		$profile->website = Input::get('website');
+		$profile->facebook = Input::get('facebook');
+		$profile->twitter = Input::get('twitter');
 		$profile->address = Input::get('address');
 		$profile->phones = Input::get('phones');
 		// $profile->timezone = Input::get('timezone');

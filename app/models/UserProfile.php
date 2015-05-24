@@ -43,6 +43,47 @@ class UserProfile extends \Eloquent {
     	'/uploads/users/defaults/female_avatar_4.jpg',
     	);
 
+    public $DEFAULT_MALE_COVERS = array(
+    	'/uploads/users/defaults/male_cover_1.jpg',
+    	'/uploads/users/defaults/male_cover_2.jpg',
+    	);
+
+    public $DEFAULT_FEMALE_COVERS = array(
+    	'/uploads/users/defaults/female_cover_1.jpg',
+    	'/uploads/users/defaults/female_cover_2.jpg',
+    	);
+
+    public static $profile_sections = array(
+    	'superadmin' => array(
+    		'index',
+    		'followers',
+    		'following'
+    		),
+    	'coordinator' => array(
+    		'index',
+    		'discussions',
+    		'followers',
+    		'following'
+    		),
+    	'teacher' => array(
+    		'index',
+    		'teaching',
+    		'contributing',
+    		'discussions',
+    		'followers',
+    		'following'
+    		),
+    	'student' => array(
+    		'index',
+    		'learning',
+    		'discussions',
+    		'achievements',
+    		'statistics',
+    		'followers',
+    		'following'
+    		),
+    	);
+
     public function selectRandomAvatar( $sex ){
 
     	$picture = '';
@@ -63,6 +104,26 @@ class UserProfile extends \Eloquent {
 
     }
 
+    public function selectRandomCover( $sex ){
+
+    	$picture = '';
+
+    	switch( $sex ):
+    		case 'male':
+    			$picture = $this->DEFAULT_MALE_COVERS[rand(0,count($this->DEFAULT_MALE_COVERS)-1)];
+    			break;
+    		case 'female':
+    			$picture = $this->DEFAULT_FEMALE_COVERS[rand(0,count($this->DEFAULT_FEMALE_COVERS)-1)];
+    			break;
+    		default:
+    			$picture = $this->DEFAULT_MALE_COVERS[rand(0,count($this->DEFAULT_MALE_COVERS)-1)];
+    			break;
+    	endswitch;
+
+    	return $picture;
+
+    }
+
     public function getAvatar(){
 
     	if($this->picture == ''):
@@ -74,6 +135,94 @@ class UserProfile extends \Eloquent {
 
     	return $this->picture;
 
+    }
+
+    public function getCover(){
+
+    	if($this->cover == ''):
+
+    		$this->cover = $this->selectRandomCover($this->sex);
+    		$this->save();
+
+    	endif;
+
+    	return $this->cover;
+
+    }
+
+    public function getWebsiteName(){
+
+    	return str_replace(array('http://', 'https://', 'www.'), '', $this->website);
+
+    }
+
+    public function getWebsiteURL(){
+
+    	$bool = false;
+
+    	if(!(strpos($this->website, 'http://') === false)) $bool = true;
+    	if(!(strpos($this->website, 'https://') === false)) $bool = true;
+
+    	return !$bool ? 'http://'.$this->website : $this->website;
+
+    }
+
+    public function getTwitterName(){
+
+    	$twitter = $this->twitter;
+
+    	if(strpos($twitter, '@') === false) $twitter = '@'.$twitter;
+
+    	return str_replace(array('http://twitter.com/', 'www.twitter.com/', 'twitter.com/', 'http://www.twitter.com/', 'https://twitter.com/'), '', $twitter);
+
+    }
+
+    public function getTwitterURL(){
+
+    	$bool = false;
+
+    	$twitter = $this->twitter;
+
+    	if(!(strpos($twitter, '@') === false)) $bool = true; $twitter = str_replace(array('@'), '', $twitter);
+
+    	return !$bool ? 'http://twitter.com/'.$twitter : $twitter;
+
+    }
+
+    public function getFacebookName(){
+
+    	$facebook = $this->facebook;
+
+    	return str_replace(array('http://facebook.com/', 'https://facebook.com/', 'http://www.facebook.com/', 'www.facebook.com/', 'facebook.com/'), '', $facebook);
+
+    }
+
+    public function getFacebookURL(){
+
+    	$bool = false;
+
+    	if(!(strpos($this->facebook, 'http://facebook.com') === false)) $bool = true;
+    	if(!(strpos($this->facebook, 'https://facebook.com') === false)) $bool = true;
+    	if(!(strpos($this->facebook, 'http://www.facebook.com') === false)) $bool = true;
+    	if(!(strpos($this->facebook, 'www.facebook.com') === false)) $bool = true;
+    	if(!(strpos($this->facebook, 'facebook.com') === false)) $bool = true;
+
+    	return !$bool ? 'http://facebook.com/'.$this->facebook : $this->facebook;
+
+    }
+
+    /* -------- STATIC FUNCTIONS ---------- */
+
+    public static function hasSection( $section, $role ){
+
+    	$bool = false;
+
+    	foreach(self::$profile_sections[$role->name] as $sec):
+    		if($section == $sec) $bool = true;
+    	endforeach;
+
+    	return $bool;
+    	
     }
 
     public static function makeFullDirectory( $name ){

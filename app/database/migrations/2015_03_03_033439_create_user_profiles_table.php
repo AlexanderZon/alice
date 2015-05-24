@@ -25,6 +25,8 @@ class CreateUserProfilesTable extends Migration {
 			$table->string('picture');
 			$table->string('cover');
 			$table->string('website');
+			$table->string('facebook');
+			$table->string('twitter');
 			$table->text('address');
 			$table->longText('phones');
 			$table->string('timezone');

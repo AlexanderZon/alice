@@ -13,7 +13,7 @@
 
 if(Auth::check()):
 
-	switch(Auth::user()->role->name){
+	switch(Auth::user()->role->name):
 
 		case 'superadmin':
 		
@@ -58,7 +58,7 @@ if(Auth::check()):
 			# Routes for unknown
 		break;
 
-	}
+	endswitch;
 
 	Route::controller('/messages', '\Users\Mails\ReadController');
 	Route::controller('/profile', '\Users\Profile\ReadController');
@@ -68,6 +68,7 @@ if(Auth::check()):
 	Route::controller('/memory', '\Games\Memory\ReadController');
 	Route::controller('/roulette', '\Games\Roulette\ReadController');
 	Route::controller('/auth', '\Security\AuthenticationController');
+	Route::controller('{username}/{section?}/{action?}', '\Users\Wall\ReadController');
 	Route::controller('/', '\Security\AuthenticationController');
 
 else:

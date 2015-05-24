@@ -276,8 +276,32 @@
 										<label class="control-label col-md-3">Website</label>
 										<div class="col-md-9">
 											<div class="input-icon right">
-												<i class="fa fa-keyboard-o"></i>
+												<i class="fa fa-globe"></i>
 												<input name="website" type="text" placeholder="Ingrese la URL de su Página Web" class="form-control"  value="{{ $profile->website }}">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group {{ $msg_warning['name'] == 'users_profile_facebook_err' ? 'has-error' : '' }}">
+										<label class="control-label col-md-3">Facebook</label>
+										<div class="col-md-9">
+											<div class="input-icon right">
+												<i class="fa fa-facebook"></i>
+												<input name="facebook" type="text" placeholder="Ingrese su Nombre de Usuario en Facebook" class="form-control"  value="{{ $profile->facebook }}">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group {{ $msg_warning['name'] == 'users_profile_twitter_err' ? 'has-error' : '' }}">
+										<label class="control-label col-md-3">Twitter</label>
+										<div class="col-md-9">
+											<div class="input-icon right">
+												<i class="fa fa-twitter"></i>
+												<input name="twitter" type="text" placeholder="Ingrese su Nombre de Usuario en Twitter" class="form-control"  value="{{ $profile->twitter }}">
 											</div>
 										</div>
 									</div>

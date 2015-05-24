@@ -254,6 +254,22 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
+	public function hasMyFollow(){
+
+		$my_followed = Auth::user()->followed;
+
+		$bool = false;
+
+		foreach($my_followed as $followed):
+			if($followed->id == $this->id) $bool = true;
+		endforeach;
+
+		return $bool;
+		
+	}
+
+	/* -------- STATIC METHODS ----------- */
+
 	public static function getTeachers( $status = 'active' ){
 
 		if( $role = Role::getByName( 'teacher' ) ):
@@ -357,6 +373,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public static function search($q = ''){
 
 		return self::where('email','LIKE','%'.$q.'%')->orWhere('first_name','LIKE','%'.$q.'%')->orWhere('last_name','LIKE','%'.$q.'%')->orWhere('username','LIKE','%'.$q.'%')->orWhere('display_name','LIKE','%'.$q.'%')->get();
+
+	}
+
+	public static function retrieveByUsername( $username ){
+
+		$user = self::where('username','=',$username)->take(1)->get();
+
+		if(isset($user[0])) return $user[0];
+
+		else return null;
 
 	}
 
