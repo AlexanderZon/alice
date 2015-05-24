@@ -16,7 +16,7 @@
 
 @section ("content")
 
-	<div class="row">
+	<div class="row profile">
 
 		<div class="col-md-12">
 			<!-- BEGIN PROFILE SIDEBAR -->
@@ -41,8 +41,8 @@
 					<!-- SIDEBAR BUTTONS -->
 					<div class="profile-userbuttons">
 						
-						<a href="{{ $route }}/follow" type="button" class="btn btn-large green-haze btn-sm follow-btn {{ ($hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-up"></i> Seguir</a>
-						<a href="{{ $route }}/unfollow" type="button" class="btn btn-large btn-danger btn-sm unfollow-btn {{ (!$hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-down"></i> Dejar de Seguir</a>
+						<a href="javascript:;" type="button" class="btn btn-large green-haze btn-sm follow-btn {{ ($hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-up"></i> Seguir</a>
+						<a href="javascript:;" type="button" class="btn btn-large btn-danger btn-sm unfollow-btn {{ (!$hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-down"></i> Dejar de Seguir</a>
 						<!-- <a href="{{ $route }}/follow" type="button" class="btn green-haze btn-sm follow-btn"><i class="fa fa-thumbs-o-up"></i> Seguir</a>
 						<a href="{{ $route }}/unfollow" type="button" class="btn btn-danger btn-sm unfollow-btn"><i class="fa fa-thumbs-o-down"></i> Dejar de Seguir</a>  -->
 
@@ -149,15 +149,12 @@
 			<!-- END BEGIN PROFILE SIDEBAR -->
 			<!-- BEGIN PROFILE CONTENT -->
 			<div class="profile-content">
-				<div class="row">
-					<div class="col-md-12">
-						<!-- BEGIN PORTLET -->
 			
-						@yield('content_profile')
+				@yield('content_profile')
 
-						<!-- END PORTLET -->
-					</div>
-				</div>
+			</div>
+			<div class="profile-loading">
+				Cargando...
 			</div>
 			<!-- END PROFILE CONTENT -->
 		</div>
@@ -174,8 +171,8 @@
 	<script type="text/javascript">
 		var Wall = function () {
 
-		    var content = $('.inbox-content');
-		    var loading = $('.inbox-loading');
+		    var content = $('.profile-content');
+		    var loading = $('.profile-loading');
 		    var listListing = '';
 
 		    var searchForm = function (el){
@@ -198,13 +195,13 @@
 		    		{
 						toggleButton(el);/*
 
-		                $('.inbox-nav > li.active').removeClass('active');
+		                $('.profile-nav > li.active').removeClass('active');
 		                if(name == 'outbox'){
-		                	$('.inbox-nav > li.sent').addClass('active');		                	
+		                	$('.profile-nav > li.sent').addClass('active');		                	
 		                }
 		                $('#search-type').val(name);
-		                $('.inbox-nav > li.' + name).addClass('active');
-		                $('.inbox-header > h1').text(title);*/
+		                $('.profile-nav > li.' + name).addClass('active');
+		                $('.profile-header > h1').text(title);*/
 
 		                loading.hide();
 		                content.html(res);
@@ -219,7 +216,7 @@
 
 		    var loadWall = function (el, name) {
 		        var url = '{{$route}}/' + name;
-		        var title = $('.inbox-nav > li.' + name + ' a').attr('data-title');
+		        var title = $('.profile-nav > li.' + name + ' a').attr('data-title');
 		        listListing = name;
 
 		        loading.show();
@@ -235,13 +232,13 @@
 		            {
 		                toggleButton(el);
 
-		                $('.inbox-nav > li.active').removeClass('active');
+		                $('.profile-nav > li.active').removeClass('active');
 		                if(name == 'outbox'){
-		                	$('.inbox-nav > li.sent').addClass('active');		                	
+		                	$('.profile-nav > li.sent').addClass('active');		                	
 		                }
 		                $('#search-type').val(name);
-		                $('.inbox-nav > li.' + name).addClass('active');
-		                $('.inbox-header > h1').text(title);
+		                $('.profile-nav > li.' + name).addClass('active');
+		                $('.profile-header > h1').text(title);
 
 		                loading.hide();
 		                content.html(res);
@@ -269,7 +266,7 @@
 		    }
 
 		    var paginateBox = function (el) {
-		    	if($(el).attr('data-box') == 'q-inbox' || $(el).attr('data-box') == 'q-outbox' || $(el).attr('data-box') == 'q-draft' || $(el).attr('data-box') == 'q-trash'){
+		    	if($(el).attr('data-box') == 'q-profile' || $(el).attr('data-box') == 'q-outbox' || $(el).attr('data-box') == 'q-draft' || $(el).attr('data-box') == 'q-trash'){
 		        	var url = '{{$route}}/search?';		    		
 		    	}
 		    	else{
@@ -340,9 +337,9 @@
 		                toggleButton(el);
 
 		                if (resetMenu) {
-		                    $('.inbox-nav > li.active').removeClass('active');
+		                    $('.profile-nav > li.active').removeClass('active');
 		                }
-		                $('.inbox-header > h1').text('Ver Mensaje');
+		                $('.profile-header > h1').text('Ver Mensaje');
 
 		                loading.hide();
 		                content.html(res);
@@ -377,9 +374,9 @@
 		                toggleButton(el);
 
 		                if (resetMenu) {
-		                    $('.inbox-nav > li.active').removeClass('active');
+		                    $('.profile-nav > li.active').removeClass('active');
 		                }
-		                $('.inbox-header > h1').text('Ver Mensaje');
+		                $('.profile-header > h1').text('Ver Mensaje');
 
 		                loading.hide();
 		                content.html(res);
@@ -414,9 +411,9 @@
 		                toggleButton(el);
 
 		                if (resetMenu) {
-		                    $('.inbox-nav > li.active').removeClass('active');
+		                    $('.profile-nav > li.active').removeClass('active');
 		                }
-		                $('.inbox-header > h1').text('Ver Mensaje');
+		                $('.profile-header > h1').text('Ver Mensaje');
 
 		                loading.hide();
 		                content.html(res);
@@ -489,7 +486,7 @@
 		    }
 
 		    var initWysihtml5 = function () {
-		        $('.inbox-wysihtml5').wysihtml5({
+		        $('.profile-wysihtml5').wysihtml5({
 		            "stylesheets": ["/assets/global/plugins/bootstrap-wysihtml5/wysiwyg-color.css"]
 		        });
 		    }
@@ -543,8 +540,8 @@
 		            {
 		                toggleButton(el);
 
-		                $('.inbox-nav > li.active').removeClass('active');
-		                $('.inbox-header > h1').text('Escribir');
+		                $('.profile-nav > li.active').removeClass('active');
+		                $('.profile-header > h1').text('Escribir');
 
 		                loading.hide();
 		                content.html(res);
@@ -552,7 +549,7 @@
 		                initFileupload();
 		                initWysihtml5();
 
-		                $('.inbox-wysihtml5').focus();
+		                $('.profile-wysihtml5').focus();
 		                Layout.fixContentHeight();
 		                Metronic.initUniform();
 		            },
@@ -564,81 +561,63 @@
 		        });
 		    }
 
-		    var loadReply = function (el) {
-		        var messageid = $(el).attr("data-messageid");
-		        var url = '{{$route}}/reply?message_id=' + messageid;
-		        
-		        loading.show();
-		        content.html('');
-		        toggleButton(el);
+		    var follow = function (el) {
 
+		    	console.log('following');
+
+		    	var html_btn = $('.follow-btn').html();
+
+		    	$('.follow-btn').html('Siguiendo...');
+
+		        var url = '{{$route}}/follow';
 		        // load the form via ajax
 		        $.ajax({
-		            type: "GET",
+		            type: "POST",
 		            cache: false,
 		            url: url,
-		            dataType: "html",
+		            dataType: "json",
 		            success: function(res) 
 		            {
-		                toggleButton(el);
-
-		                $('.inbox-nav > li.active').removeClass('active');
-		                $('.inbox-header > h1').text('Responder');
-
-		                loading.hide();
-		                content.html(res);
-		                $('[name="message"]').val($('#reply_email_content_body').html());
-
-		                handleCCInput(); // init "CC" input field
-
-		                initFileupload();
-		                initWysihtml5();
-		                Layout.fixContentHeight();
-		                Metronic.initUniform();
+		            	if(res.status = 'active'){
+		            		$('.follow-btn').addClass('hidden');
+		            		$('.unfollow-btn').removeClass('hidden');
+							$('.follow-btn').html(html_btn);
+		            	}
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
-		                toggleButton(el);
+		                console.log(thrownError);
 		            },
 		            async: false
 		        });
 		    }
 
-		    var loadForward = function (el) {
-		        var messageid = $(el).attr("data-messageid");
-		        var url = '{{$route}}/forward?messageid=' + messageid;
-		        
-		        loading.show();
-		        content.html('');
-		        toggleButton(el);
+		    var unfollow = function (el) {
 
+		    	console.log('unfollowing');
+
+		    	var html_btn = $('.unfollow-btn').html();
+
+		    	$('.unfollow-btn').html('Siguiendo...');
+		    	
+		        var url = '{{$route}}/unfollow';
 		        // load the form via ajax
 		        $.ajax({
-		            type: "GET",
+		            type: "POST",
 		            cache: false,
 		            url: url,
-		            dataType: "html",
+		            dataType: "json",
 		            success: function(res) 
 		            {
-		                toggleButton(el);
-
-		                $('.inbox-nav > li.active').removeClass('active');
-		                $('.inbox-header > h1').text('Reenviar');
-
-		                loading.hide();
-		                content.html(res);
-		                $('[name="message"]').val($('#reply_email_content_body').html());
-
-		                handleCCInput(); // init "CC" input field
-
-		                initFileupload();
-		                initWysihtml5();
-		                Layout.fixContentHeight();
-		                Metronic.initUniform();
+		            	if(res.status = 'inactive'){
+		            		$('.unfollow-btn').addClass('hidden');
+		            		$('.follow-btn').removeClass('hidden');
+							$('.unfollow-btn').html(html_btn);
+		            	}
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
-		                toggleButton(el);
+		                console.log(thrownError);
 		            },
 		            async: false
 		        });
@@ -691,9 +670,9 @@
 		            dataType: "html",
 		            success: function(res) 
 		            {
-		            	$('.inbox-nav > li.active').removeClass('active');
-		                $('.inbox-nav > li.inbox').addClass('active');
-		                $('.inbox-header > h1').text('Bandeja de Entrada');
+		            	$('.profile-nav > li.active').removeClass('active');
+		                $('.profile-nav > li.profile').addClass('active');
+		                $('.profile-header > h1').text('Bandeja de Entrada');
 
 		                loading.hide();
 		                content.html(res);
@@ -759,9 +738,9 @@
 		            success: function(res) 
 		            {
 
-		                $('.inbox-nav > li.active').removeClass('active');
-		                $('.inbox-nav > li.draft').addClass('active');
-		                $('.inbox-header > h1').text('Borradores');
+		                $('.profile-nav > li.active').removeClass('active');
+		                $('.profile-nav > li.draft').addClass('active');
+		                $('.profile-header > h1').text('Borradores');
 
 		                loading.hide();
 		                content.html(res);
@@ -862,11 +841,11 @@
 
 		    	if($(el).attr("data-favorite") == 1){
 		    		$(el).attr("data-favorite", 0);
-    				$(el).html('<i class="fa fa-star inbox-not-started"></i>');
+    				$(el).html('<i class="fa fa-star profile-not-started"></i>');
     			}
     			else{
 		    		$(el).attr("data-favorite", 1);
-    				$(el).html('<i class="fa fa-star inbox-started"></i>');
+    				$(el).html('<i class="fa fa-star profile-started"></i>');
     			}
 
 		    	$.ajax({
@@ -1086,8 +1065,8 @@
 		            {
 		                toggleButton(el);
 
-		                $('.inbox-nav > li.active').removeClass('active');
-		                $('.inbox-header > h1').text('Búsqueda');
+		                $('.profile-nav > li.active').removeClass('active');
+		                $('.profile-header > h1').text('Búsqueda');
 
 		                loading.hide();
 		                content.html(res);
@@ -1103,8 +1082,8 @@
 		    }
 
 		    var handleCCInput = function () {
-		        var the = $('.inbox-compose .mail-to .inbox-cc');
-		        var input = $('.inbox-compose .input-cc');
+		        var the = $('.profile-compose .mail-to .profile-cc');
+		        var input = $('.profile-compose .input-cc');
 		        the.hide();
 		        input.show();
 		        $('.close', input).click(function () {
@@ -1115,8 +1094,8 @@
 
 		    var handleBCCInput = function () {
 
-		        var the = $('.inbox-compose .mail-to .inbox-bcc');
-		        var input = $('.inbox-compose .input-bcc');
+		        var the = $('.profile-compose .mail-to .profile-bcc');
+		        var input = $('.profile-compose .input-bcc');
 		        the.hide();
 		        input.show();
 		        $('.close', input).click(function () {
@@ -1140,171 +1119,159 @@
 		        //main function to initiate the module
 		        init: function () {
 
-		        	$('.inbox').on('submit', '#search-form', function(event) {
+		        	console.log('init');
+
+		        	$('.profile').on('submit', '#search-form', function(event) {
 		        		event.preventDefault();
 		        		/* Act on the event */
 		        		if($('#search-form input[name=q]').val() != '') searchForm($(this));
 		        		return false;
 		        	});
 
-		        	/*$('.inbox').on('keyup', '#search-form input[name=q]', function(event) {
-		        		
-		        		console.log(event.keyCode);
-		        		if(event.keyCode == 8 || (event.keyCode >= 32 && event.keyCode <=))
-		        		searchForm($('#search-form'));
-		        	});*/
-
-		            // handle compose btn click
-		            $('.inbox').on('click', '.compose-btn a', function () {
+		            /*// handle compose btn click
+		            $('.profile').on('click', '.follow-btn a', function () {
 		                loadCompose($(this));
-		            });
-
-		            /*// handle discard btn
-		            $('.inbox').on('click', '.inbox-discard-btn', function(e) {
-		                e.preventDefault();
-		            	console.log($('#compose-mail').attr('action'));
-		                loadWall($(this), listListing);
 		            });*/
 
 		            // handle reply and forward button click
-		            $('.inbox').on('click', '.reply-btn', function () {
-		                loadReply($(this));
+		            $('.profile').on('click', '.follow-btn', function () {
+		                follow($(this));
 		            });
 
 		            // handle forward and forward button click
-		            $('.inbox').on('click', '.forward-btn', function () {
-		                loadForward($(this));
+		            $('.profile').on('click', '.unfollow-btn', function () {
+		                unfollow($(this));
 		            });
 
 		            // handle spam and forward button click
-		            $('.inbox').on('click', '.spam-btn', function () {
+		            $('.profile').on('click', '.spam-btn', function () {
 		                loadSpam($(this));
 		            });
 
 		            // handle sned and forward button click
-		            $('.inbox').on('click', '.sned-btn', function () {
+		            $('.profile').on('click', '.sned-btn', function () {
 		                sendMail($(this));
 		            });
 
 		            // handle discard and forward button click
-		            $('.inbox').on('click', '.discard-btn', function (e) {
+		            $('.profile').on('click', '.discard-btn', function (e) {
 		            	e.preventDefault();
 		                discardMail($(this));
 		            });
 
 		            // handle draft and forward button click
-		            $('.inbox').on('click', '.draft-btn', function (e) {
+		            $('.profile').on('click', '.draft-btn', function (e) {
 		            	e.preventDefault();
 		                draftMail($(this));
 		            });
 
 		            // handle delete and forward button click
-		            $('.inbox').on('click', '.delete-btn', function () {
+		            $('.profile').on('click', '.delete-btn', function () {
 		                deleteMail($(this));
 		            });
 
 		            // handle mark as read and forward button click
-		            $('.inbox').on('click', '.markasread-btn', function () {
+		            $('.profile').on('click', '.markasread-btn', function () {
 		                markAsRead($(this));
 		            });
 
 		            // handle mark as read and forward button click
-		            $('.inbox').on('click', '.markasnoneread-btn', function () {
+		            $('.profile').on('click', '.markasnoneread-btn', function () {
 		                markAsNoneRead($(this));
 		            });
 
 		            // handle mark as spam and forward button click
-		            $('.inbox').on('click', '.markasspam-btn', function () {
+		            $('.profile').on('click', '.markasspam-btn', function () {
 		                markAsSpam($(this));
 		            });
 
 		            // handle mark as deleted and forward button click
-		            $('.inbox').on('click', '.markasdeleted-btn', function () {
+		            $('.profile').on('click', '.markasdeleted-btn', function () {
 		                markAsDeleted($(this));
 		            });
 
 		            // handle mark as deleted and forward button click
-		            $('.inbox').on('click', '.markasnonedeleted-btn', function () {
+		            $('.profile').on('click', '.markasnonedeleted-btn', function () {
 		                markAsNoneDeleted($(this));
 		            });
 
 		            // handle mark as deleted and forward button click
-		            $('.inbox').on('click', '.markasdiscard-btn', function () {
+		            $('.profile').on('click', '.markasdiscard-btn', function () {
 		                markAsDiscard($(this));
 		            });
 
 		            // handle mark as deleted and forward button click
-		            $('.inbox').on('click', '.deletefrombox-btn', function () {
+		            $('.profile').on('click', '.deletefrombox-btn', function () {
 		                deleteFromBox($(this));
 		            });
 
 		            // handle delete and forward button click
-		            $('.inbox').on('click', '.cancel', function () {
+		            $('.profile').on('click', '.cancel', function () {
 		            	cancelAttachment($(this));
 		            });
 
 		            // handle favorite and forward button click
-		            $('.inbox').on('click', '.favorite-btn', function () {
+		            $('.profile').on('click', '.favorite-btn', function () {
 		                favoriteMail($(this));
 		            });
 
 		            // handle view message
-		            $('.inbox-content').on('click', '.view-message', function () {
+		            $('.profile-content').on('click', '.view-message', function () {
 		                viewMessage($(this));
 		            });
 
 		            // handle review message
-		            $('.inbox-content').on('click', '.review-message', function () {
+		            $('.profile-content').on('click', '.review-message', function () {
 		                reviewMessage($(this));
 		            });
 
 		            // handle recompose message
-		            $('.inbox-content').on('click', '.recompose-message', function () {
+		            $('.profile-content').on('click', '.recompose-message', function () {
 		                recomposeMessage($(this));
 		            });
 
 		            // handle download-all attachments
-		            $('.inbox-content').on('click', '.download-all-btn', function () {
+		            $('.profile-content').on('click', '.download-all-btn', function () {
 		                downloadAll($(this));
 		            });
 
 		            // handle download-all attachments
-		            $('.inbox-content').on('click', '.download-btn', function () {
+		            $('.profile-content').on('click', '.download-btn', function () {
 		                downloadFile($(this));
 		            });
 
 		            // handle download-all attachments
-		            $('.inbox-content').on('click', '.paginate-btn', function () {
+		            $('.profile-content').on('click', '.paginate-btn', function () {
 		                paginateBox($(this));
 		            });
 
-		            // handle inbox listing
-		            $('.inbox-nav > li.inbox > a').click(function () {
-		                loadWall($(this), 'inbox');
+		            // handle profile listing
+		            $('.profile-nav > li.profile > a').click(function () {
+		                loadWall($(this), 'profile');
 		            });
 
 		            // handle sent listing
-		            $('.inbox-nav > li.sent > a').click(function () {
+		            $('.profile-nav > li.sent > a').click(function () {
 		                loadWall($(this), 'outbox');
 		            });
 
 		            // handle draft listing
-		            $('.inbox-nav > li.draft > a').click(function () {
+		            $('.profile-nav > li.draft > a').click(function () {
 		                loadWall($(this), 'draft');
 		            });
 
 		            // handle trash listing
-		            $('.inbox-nav > li.trash > a').click(function () {
+		            $('.profile-nav > li.trash > a').click(function () {
 		                loadWall($(this), 'trash');
 		            });
 
 		            //handle compose/reply cc input toggle
-		            $('.inbox-content').on('click', '.mail-to .inbox-cc', function () {
+		            $('.profile-content').on('click', '.mail-to .profile-cc', function () {
 		                handleCCInput();
 		            });
 
 		            //handle compose/reply bcc input toggle
-		            $('.inbox-content').on('click', '.mail-to .inbox-bcc', function () {
+		            $('.profile-content').on('click', '.mail-to .profile-bcc', function () {
 		                handleBCCInput();
 		            });
 
@@ -1314,7 +1281,7 @@
 		            } else if (Metronic.getURLParameter("a") === "compose") {
 		                loadCompose();
 		            } else {
-		               $('.inbox-nav > li.inbox > a').click();
+		               $('.profile-nav > li.profile > a').click();
 		            }
 
 		        }

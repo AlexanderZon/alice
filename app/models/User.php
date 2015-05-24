@@ -244,13 +244,66 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function followers(){
 
-		return $this->belongsToMany('User','follows','followed_id','follower_id');
+		return $this->belongsToMany('User','follows','followed_id','follower_id')->where('follows.status','=','active');
+		
+	}
+
+	public function follows(){
+
+		return $this->hasMany('Follow','follower_id','id');
+		
+	}
+
+	public function followsme(){
+
+		return $this->hasMany('Follow','followed_id','id');
 		
 	}
 
 	public function followed(){
 
-		return $this->belongsToMany('User','follows','follower_id','followed_id');
+		return $this->belongsToMany('User','follows','follower_id','followed_id')->where('follows.status','=','active');
+
+	}
+
+	public function _follows( $user, $status = 'active' ){
+
+		$follow = null;
+
+		if(!$follow = $user->getMyFollow()):
+
+			$follow = new Follow();
+
+		endif;
+
+		$follow->follower_id = $this->id;
+		$follow->followed_id = $user->id;
+		$follow->status = $status;
+		return $follow->save();
+
+	}
+
+	public function follow( $user ){
+
+		$this->_follows($user, 'active');
+
+	}
+
+	public function unfollow( $user ){
+
+		$this->_follows($user, 'inactive');
+
+	}
+
+	public function block( $user ){
+
+		$this->_follows($user, 'block');
+
+	}
+
+	public function unblock( $user ){
+
+		$this->_follows($user, 'active');
 
 	}
 
@@ -261,11 +314,51 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		$bool = false;
 
 		foreach($my_followed as $followed):
-			if($followed->id == $this->id) $bool = true;
+			if(($followed->id == $this->id)):
+				$follow = Follow::where('follower_id','=',Auth::user()->id)->where('followed_id','=',$this->id)->take(1)->get();
+				if(isset($follow[0]) AND $follow[0]->status == 'active'):
+			 		$bool = true;
+			 	endif;
+			 endif;
 		endforeach;
 
 		return $bool;
 		
+	}
+
+	public function getMyFollow(){
+
+		$my_followed = Auth::user()->follows;
+
+		$bool = false;
+
+		foreach($my_followed as $followed):
+			if(($followed->followed_id == $this->id)):
+			 	$bool = $followed;
+			endif;
+		endforeach;
+
+		return $bool;
+		
+	}
+
+	public function hasMyBlock(){
+
+		$my_followed = Auth::user()->followed;
+
+		$bool = false;
+
+		foreach($my_followed as $followed):
+			if(($followed->id == $this->id)):
+				$follow = Follow::where('follower_id','=',Auth::user()->id)->where('followed_id','=',$this->id)->take(1)->get();
+				if(isset($follow[0]) AND $follow[0]->status == 'block'):
+			 		$bool = true;
+			 	endif;
+			 endif;
+		endforeach;
+
+		return $bool;
+
 	}
 
 	/* -------- STATIC METHODS ----------- */
