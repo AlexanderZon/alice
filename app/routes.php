@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/test/getimagesize', function(){
+	dd(getimagesize(public_path().'/assets/admin/pages/media/blog/8.jpg'));
+});
+
 if(Auth::check()):
 
 	switch(Auth::user()->role->name):

@@ -153,15 +153,14 @@
 				@yield('content_profile')
 
 			</div>
-			<div class="profile-loading hidden">
-				Cargando...
-			</div>
 			<!-- END PROFILE CONTENT -->
 		</div>
 
 	</div>
 
 	<!-- END PAGE CONTENT INNER -->
+
+	
 
 @stop
 
@@ -173,13 +172,16 @@
 
 		    var content = $('.profile-content');
 		    var loading = $('.profile-loading');
+		    var loader = '<div class="portlet light"><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row"><div class="col-md-5">&nbsp;</div><img class="col-md-2" src="/assets/loaders/rubiks-cube.gif"/><div class="col-md-5">&nbsp;</div></div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div></div>';
 		    var listListing = '';
 
 		    var loadWall = function (el, name) {
 		        var url = '{{$route}}/' + name;
 
+		        console.log(el);
+
 		        loading.show();
-		        content.html('');
+		        content.html(loader);
 		        toggleButton(el);
 
 		        $.ajax({
@@ -189,7 +191,7 @@
 		            dataType: "html",
 		            success: function(res) 
 		            {
-
+		            	console.log(name);
 		                $('.profile-usermenu li').removeClass('active');
 		                el.parents('li').addClass('active');	
 
@@ -198,13 +200,13 @@
 		                if (Layout.fixContentHeight) {
 		                    Layout.fixContentHeight();
 		                }
-		                Metronic.initUniform();
+		                Metronic.init();
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -243,9 +245,12 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+	            		$('.unfollow-btn').addClass('hidden');
+	            		$('.follow-btn').removeClass('hidden');
+						$('.follow-btn').html(html_btn);
 		                console.log(thrownError);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -274,9 +279,12 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+	            		$('.unfollow-btn').removeClass('hidden');
+	            		$('.follow-btn').addClass('hidden');
+						$('.unfollow-btn').html(html_btn);
 		                console.log(thrownError);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -359,6 +367,7 @@
 		            // handle discard and forward button click
 		            $('.profile').on('click', '.learning-btn', function (e) {
 		            	e.preventDefault();
+		            	console.log('click');
 		                loadWall($(this),'learning');
 		            });
 

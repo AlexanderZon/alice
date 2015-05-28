@@ -4,9 +4,10 @@ use \Input as Input;
 use \Response as Response;
 use \Auth as Auth;
 use \Hash as Hash;
+use \View as View;
 use \UserProfile as UserProfile;
 use \User as User;
-use \View as View;
+use \Course as Course;
 
 class ReadController extends \BaseController {
 
@@ -79,9 +80,12 @@ class ReadController extends \BaseController {
 						'status' => Auth::user()->unblock($user)
 						));
 					break;
+				case 'learning':
+					self::addArgument('courses', Course::all());
+					break;
 			endswitch;
 
-			return self::make('index');
+			return self::make($section);
 
 		else:
 
@@ -128,6 +132,9 @@ class ReadController extends \BaseController {
 					break;
 				case 'following':
 					self::addArgument('following', $user->followed);
+					break;
+				case 'learning':
+					self::addArgument('courses', Course::all());
 					break;
 			endswitch;
 

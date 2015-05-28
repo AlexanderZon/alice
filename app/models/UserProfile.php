@@ -30,17 +30,19 @@ class UserProfile extends \Eloquent {
     const DEFAULT_THUMBNAIL_PICTURE = '/uploads/users/defaults/100x100.gif';
 
     public $DEFAULT_MALE_AVATARES = array(
-    	'/uploads/users/defaults/male_avatar_1.jpg',
-    	'/uploads/users/defaults/male_avatar_2.jpg',
-    	'/uploads/users/defaults/male_avatar_3.jpg',
-    	'/uploads/users/defaults/male_avatar_4.jpg',
+    	'/uploads/users/defaults/male_avatar_1.png',
+    	'/uploads/users/defaults/male_avatar_2.png',
+    	'/uploads/users/defaults/male_avatar_3.png',
+        '/uploads/users/defaults/male_avatar_4.png',
+    	'/uploads/users/defaults/male_avatar_5.png',
     	);
 
     public $DEFAULT_FEMALE_AVATARES = array(
-    	'/uploads/users/defaults/female_avatar_1.jpg',
-    	'/uploads/users/defaults/female_avatar_2.jpg',
-    	'/uploads/users/defaults/female_avatar_3.jpg',
-    	'/uploads/users/defaults/female_avatar_4.jpg',
+    	'/uploads/users/defaults/female_avatar_1.png',
+    	'/uploads/users/defaults/female_avatar_2.png',
+    	'/uploads/users/defaults/female_avatar_3.png',
+        '/uploads/users/defaults/female_avatar_4.png',
+    	'/uploads/users/defaults/female_avatar_5.png',
     	);
 
     public $DEFAULT_MALE_COVERS = array(
