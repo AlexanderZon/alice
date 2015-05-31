@@ -81,7 +81,7 @@ class ReadController extends \BaseController {
 						));
 					break;
 				case 'learning':
-					self::addArgument('courses', Course::all());
+					self::addArgument('courses', Course::paginate(10));
 					break;
 			endswitch;
 
@@ -134,7 +134,7 @@ class ReadController extends \BaseController {
 					self::addArgument('following', $user->followed);
 					break;
 				case 'learning':
-					self::addArgument('courses', Course::all());
+					self::addArgument('courses', Course::paginate(10));
 					break;
 			endswitch;
 

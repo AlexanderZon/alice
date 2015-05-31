@@ -253,13 +253,14 @@
 								</div>
 								<!--end col-md-12-->
 							</div>
-							<ul class="pagination pull-right">
+							{{ $courses->links('users.wall.read.paginate')->with(array('courses' => $courses, 'section' => 'learning')) }}
+							<!-- <ul class="pagination pull-right">
 								<li>
 									<a href="javascript:;">
 									<i class="fa fa-angle-left"></i>
 									</a>
 								</li>
-								<li>
+								<li class="disabled">
 									<a href="javascript:;">
 									1 </a>
 								</li>
@@ -288,7 +289,7 @@
 									<i class="fa fa-angle-right"></i>
 									</a>
 								</li>
-							</ul>
+							</ul> -->
 						</div>
 					</div>
 				</div>

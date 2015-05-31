@@ -182,7 +182,7 @@
 
 		        loading.show();
 		        content.html(loader);
-		        toggleButton(el);
+		        // toggleButton(el);
 
 		        $.ajax({
 		            type: "POST",
@@ -204,7 +204,55 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
-		                toggleButton(el);
+		                // toggleButton(el);
+		            },
+		            async: true
+		        });
+
+		        // handle group checkbox:
+		        /*jQuery('body').on('change', '.mail-group-checkbox', function () {
+		            var set = jQuery('.mail-checkbox');
+		            var checked = jQuery(this).is(":checked");
+		            jQuery(set).each(function () {
+		                $(this).attr("checked", checked);
+		            });
+		            jQuery.uniform.update(set);
+		        });*/
+		    }
+
+		    var loadPaginate = function (el) {
+		        var url = '{{$route}}/' + el.data('section');
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+		        // toggleButton(el);
+
+		        $.ajax({
+		            type: "POST",
+		            cache: false,
+		            url: url,
+		            data: {
+		            	page: el.data('page')
+		            },
+		            dataType: "html",
+		            success: function(res) 
+		            {
+		            	console.log(name);
+		                $('.profile-usermenu li').removeClass('active');
+		                el.parents('li').addClass('active');	
+
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.init();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                // toggleButton(el);
 		            },
 		            async: true
 		        });
@@ -378,28 +426,33 @@
 		            });
 
 		            // handle discussions and forward button click
-		            $('.profile').on('click', '.discussions-btn', function () {
+		            $('.profile').on('click', '.discussions-btn', function (e) {
 		                loadWall($(this), 'discussions');
 		            });
 
 		            // handleachievements button click
-		            $('.profile').on('click', '.achievements-btn', function () {
+		            $('.profile').on('click', '.achievements-btn', function (e) {
 		                loadWall($(this), 'achievements');
 		            });
 
 		            // handle statistics button click
-		            $('.profile').on('click', '.statistics-btn', function () {
+		            $('.profile').on('click', '.statistics-btn', function (e) {
 		                loadWall($(this), 'statistics');
 		            });
 
 		            // handle followers button click
-		            $('.profile').on('click', '.followers-btn', function () {
+		            $('.profile').on('click', '.followers-btn', function (e) {
 		                loadWall($(this), 'followers');
 		            });
 
 		            // handle following button click
-		            $('.profile').on('click', '.following-btn', function () {
+		            $('.profile').on('click', '.following-btn', function (e) {
 		                loadWall($(this), 'following');
+		            });
+
+		            // handle following button click
+		            $('.profile').on('click', '.paginate-btn', function (e) {
+		                loadPaginate($(this));
 		            });
 
 		            //handle loading content based on URL parameter
