@@ -97,6 +97,7 @@
 
 		    var content = $('.inbox-content');
 		    var loading = $('.inbox-loading');
+		    var loader = '<div class="portlet light"><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row"><div class="col-md-5">&nbsp;</div><img class="col-md-2" src="/assets/loaders/rubiks-cube.gif"/><div class="col-md-5">&nbsp;</div></div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div></div>';
 		    var listListing = '';
 
 		    var searchForm = function (el){
@@ -105,8 +106,8 @@
 
 		    	var url = '{{$route}}/search';
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		    	$.ajax({
@@ -143,8 +144,8 @@
 		        var title = $('.inbox-nav > li.' + name + ' a').attr('data-title');
 		        listListing = name;
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        $.ajax({
@@ -175,7 +176,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -199,8 +200,8 @@
 		        
 		        listListing = name;
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        $.ajax({
@@ -227,7 +228,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -244,8 +245,8 @@
 		    var viewMessage = function (el, name, resetMenu) {
 		        var url = '{{$route}}/view';
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        var message_id = el.parent('tr').attr("data-messageid");  
@@ -274,15 +275,15 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
 		    var reviewMessage = function (el, name, resetMenu) {
 		        var url = '{{$route}}/review';
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        var message_id = el.parent('tr').attr("data-messageid");  
@@ -311,15 +312,15 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
 		    var recomposeMessage = function (el, name, resetMenu) {
 		        var url = '{{$route}}/recompose';
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        var message_id = el.parent('tr').attr("data-messageid");  
@@ -348,7 +349,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -356,8 +357,8 @@
 		        var message_id = el.attr("data-messageid"); 
 		        var url = '{{$route}}/downloadall/'+message_id;
 
-		        // loading.show();
-		        // content.html('');
+		        loading.show();
+		        // content.html(loader);
 		        // toggleButton(el);
 
 		        // console.log(message_id);
@@ -377,15 +378,15 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
 		    var downloadFile = function (el) {
 		        var attachment_id = el.attr("data-attachmentid"); 
 		        var url = '{{$route}}/download/'+attachment_id;
-		        // loading.show();
-		        // content.html('');
+		        loading.show();
+		        // content.html(loader);
 		        // toggleButton(el);
 
 		        // console.log(attachment_id);
@@ -405,7 +406,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -450,8 +451,8 @@
 		    var loadCompose = function (el) {
 		        var url = '{{$route}}/compose';
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // load the form via ajax
@@ -481,7 +482,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -489,8 +490,8 @@
 		        var messageid = $(el).attr("data-messageid");
 		        var url = '{{$route}}/reply?message_id=' + messageid;
 		        
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // load the form via ajax
@@ -521,7 +522,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -529,8 +530,8 @@
 		        var messageid = $(el).attr("data-messageid");
 		        var url = '{{$route}}/forward?messageid=' + messageid;
 		        
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // load the form via ajax
@@ -561,7 +562,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -598,8 +599,8 @@
 		        	'message': $('textarea[name=message]').val(),
 		        }*/
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // console.log(data);
@@ -627,7 +628,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -665,8 +666,8 @@
 		        	'message': $('#message-content').html(),
 		        };
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // console.log(data);
@@ -695,7 +696,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -737,9 +738,9 @@
 		        	'message': $('textarea[name=message]').val(),
 		        }*/
 
-		        /*loading.show();
-		        content.html('');
-		        toggleButton(el);*/
+		        loading.show();
+		        content.html(loader);
+		        toggleButton(el);
 
 		        // console.log(data);
 
@@ -762,7 +763,7 @@
 		            {
 		                // toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -994,8 +995,8 @@
 		    var loadSearchResults = function (el) {
 		        var url = '{{$route}}/search';
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        $.ajax({
@@ -1019,7 +1020,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
