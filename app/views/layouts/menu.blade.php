@@ -237,7 +237,7 @@
 											@if($unreadbox_counter <= 10)
 												<?php $from = $message->from; ?>
 												<li>
-													<a href="/messages">
+													<a href="/messages?a=view&id={{ Crypt::encrypt( $message->id ) }}">
 														<span class="photo">
 														<img src="{{ $from->profile->getAvatar() }}" class="img-circle" alt="">
 														</span>

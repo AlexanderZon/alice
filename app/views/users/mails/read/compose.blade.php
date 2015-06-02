@@ -10,11 +10,20 @@
 	<input id="token" type="hidden" name="token" value="{{ $token }}">
 	<input type="hidden" name="type" value="compose">
 	<input type="hidden" name="action" value="send">
+	<input type="hidden" name="profile" value="{{ $profile }}">
 	<div class="inbox-compose-btn">
 		<button class="send-btn btn blue"><i class="fa fa-check"></i>Enviar</button>
 		<button class="discard-btn btn inbox-discard-btn" data-messageid="{{ $token }}">Descartar</button>
 		<button class="draft-btn btn" data-messageid="{{ $token }}">Borrador</button>
 	</div>
+	@if(($profile != ''))
+	<div class="inbox-form-group">
+		<label class="control-label">Dirigido a: </label>
+		<div class="controls">
+			<label class="control-label">{{User::find(Crypt::decrypt($profile))->display_name}}</label>
+		</div>
+	</div>
+	@else
 	<div class="inbox-form-group mail'to">
 		<label class="control-label">Para</label>
 		<div class="controls">
@@ -26,6 +35,7 @@
 			<!-- <input type="hidden" id="loading-select" class="form-control select2"> -->
 		</div>
 	</div>
+	@endif
 
 	<!-- <div class="inbox-form-group mail-to">
 		<label class="control-label">Para:</label>

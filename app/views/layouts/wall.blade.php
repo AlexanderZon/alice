@@ -52,8 +52,8 @@
 						<!-- <a href="{{ $route }}/follow" type="button" class="btn btn-circle green-haze btn-sm follow-btn {{ ($hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}">Seguir</a>
 						<a href="{{ $route }}/unfollow" type="button" class="btn btn-circle btn-danger btn-sm unfollow-btn {{ (!$hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}">Dejar de Seguir</a> -->
 						
-						<a href="{{ $route }}/block" type="button" class="btn btn-danger btn-sm block-btn"><i class="fa fa-ban"></i> Bloquear</a> 
-						<a href="{{ $route }}/message" type="button" class="btn green-haze btn-sm message-btn"><i class="fa fa-envelope-o"></i> Mensaje</a> 
+						<a href="javascript:;" type="button" class="btn btn-danger btn-sm block-btn"><i class="fa fa-ban"></i> Bloquear</a> 
+						<a href="/messages?a=compose&profile={{ Crypt::encrypt($user->id) }}" type="button" class="btn green-haze btn-sm message-btn"><i class="fa fa-envelope-o"></i> Mensaje</a> 
 
 					</div>
 					<!-- END SIDEBAR BUTTONS -->
@@ -220,6 +220,80 @@
 		        });*/
 		    }
 
+		    var loadCompose = function (el) {
+		        var url = '{{$route}}/compose';
+
+		        // loading.show();
+		        content.html(loader);
+
+		        // load the form via ajax
+		        $.ajax({
+		            type: "POST",
+		            cache: false,
+		            url: url,
+		            dataType: "html",
+		            success: function(res) 
+		            {
+		                toggleButton(el);
+
+		                $('.profile-nav > li.active').removeClass('active');
+		                $('.profile-header > h1').text('Escribir');
+
+		                content.html(res);
+
+		                initFileupload();
+		                initWysihtml5();
+
+		                $('.profile-wysihtml5').focus();
+		                Layout.fixContentHeight();
+		                Metronic.initUniform();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		            	console.log(xhr);
+		            },
+		            async: true
+		        });
+		    }
+
+		    var initWysihtml5 = function () {
+		        $('.inbox-wysihtml5').wysihtml5({
+		            "stylesheets": ["/assets/global/plugins/bootstrap-wysihtml5/wysiwyg-color.css"]
+		        });
+		    }
+
+		    var initFileupload = function () {
+
+		        /*$('#compose-mail').fileupload({
+		            // Uncomment the following to send cross-domain cookies:
+		            //xhrFields: {withCredentials: true},
+					formData: {
+						_id: 0,
+					},
+		            url: '{{$route}}/upload',
+		            // url: '/uploads/messages/index.php',
+		            // url: '/assets/global/plugins/jquery-file-upload/server/php/',
+		            autoUpload: true,
+		            success: function(data){
+		            	console.log(data);
+		            }
+		        });
+
+		        // Upload server status check for browsers with CORS support:
+		        if ($.support.cors) {
+		            $.ajax({
+		                url: '{{$route}}/upload',
+		                type: 'HEAD'
+		            }).fail(function () {
+		                $('<span class="alert alert-error"/>')
+		                    .text('Subida al servidor temporalmente no disponible - ' +
+		                    new Date())
+		                    .appendTo('#compose-mail');
+		            });
+		        }*/
+
+		    }
+
 		    var loadPaginate = function (el) {
 		        var url = '{{$route}}/' + el.data('section');
 
@@ -383,8 +457,9 @@
 		        		return false;
 		        	});
 
-		            /*// handle compose btn click
-		            $('.profile').on('click', '.follow-btn a', function () {
+		            // handle compose btn click
+		            /*$('.profile').on('click', '.message-btn', function () {
+		            	console.log('click');
 		                loadCompose($(this));
 		            });*/
 

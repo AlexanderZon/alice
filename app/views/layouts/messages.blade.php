@@ -242,14 +242,23 @@
 		        });
 		    }
 
-		    var viewMessage = function (el, name, resetMenu) {
+		    var viewMessage = function (el, id, resetMenu) {
 		        var url = '{{$route}}/view';
 
 		        // loading.show();
 		        content.html(loader);
-		        toggleButton(el);
+		        // toggleButton(el);
 
-		        var message_id = el.parent('tr').attr("data-messageid");  
+		        var message_id = null;  
+
+		        if(typeof id != "undefined"){
+		        	message_id = id;  
+		        }else{
+		        	
+		        	message_id = el.parent('tr').attr("data-messageid");  
+
+		        }
+
 		        
 		        $.ajax({
 		            type: "GET",
@@ -259,7 +268,7 @@
 		            data: {'message_id': message_id},
 		            success: function(res) 
 		            {
-		                toggleButton(el);
+		                // toggleButton(el);
 
 		                if (resetMenu) {
 		                    $('.inbox-nav > li.active').removeClass('active');
@@ -448,8 +457,12 @@
 
 		    }
 
-		    var loadCompose = function (el) {
+		    var loadCompose = function (el, profile) {
 		        var url = '{{$route}}/compose';
+
+		        if(typeof profile != "undefined"){
+		        	url += '?profile=' + profile;
+		        }
 
 		        // loading.show();
 		        content.html(loader);
@@ -1232,9 +1245,9 @@
 
 		            //handle loading content based on URL parameter
 		            if (Metronic.getURLParameter("a") === "view") {
-		                viewMessage();
+		                viewMessage($('.inbox'), Metronic.getURLParameter("id"));
 		            } else if (Metronic.getURLParameter("a") === "compose") {
-		                loadCompose();
+		                loadCompose($('.compose-btn a'), Metronic.getURLParameter("profile"));
 		            } else {
 		               $('.inbox-nav > li.inbox > a').click();
 		            }

@@ -5,9 +5,11 @@ use \Response as Response;
 use \Auth as Auth;
 use \Hash as Hash;
 use \View as View;
+use \Crypt as Crypt;
 use \UserProfile as UserProfile;
 use \User as User;
 use \Course as Course;
+use \Message as Message;
 
 class ReadController extends \BaseController {
 
@@ -134,6 +136,9 @@ class ReadController extends \BaseController {
 					self::addArgument('following', $user->followed);
 					break;
 				case 'learning':
+					self::addArgument('courses', Course::paginate(10));
+					break;
+				case 'teaching':
 					self::addArgument('courses', Course::paginate(10));
 					break;
 			endswitch;

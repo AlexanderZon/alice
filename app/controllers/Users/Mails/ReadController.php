@@ -78,6 +78,12 @@ class ReadController extends \BaseController {
 
 			$to = array();
 
+			if(Input::get('profile') != ''):
+
+				$to[] = Crypt::decrypt(Input::get('profile'));
+
+			endif;
+
 			if(count(Input::get('to')) > 0):
 				foreach(Input::get('to') as $user):
 					$to[] = Crypt::decrypt($user);
@@ -195,6 +201,9 @@ class ReadController extends \BaseController {
 		$message = new Message();
 		$message->author_id = Auth::user()->id;
 		$message->save();
+
+
+		self::addArgument('profile', Input::get('profile'));
 
 		self::addArgument('token', Crypt::encrypt($message->id));
 
