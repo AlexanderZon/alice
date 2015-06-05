@@ -14,7 +14,7 @@
 							<i class="icon-graduation"></i>
 						</div>
 					</div>
-					<div class="progress-info">
+					<!-- <div class="progress-info">
 						<div class="progress">
 							<span style="width: {{ '0' }}%;" class="progress-bar progress-bar-success green-sharp">
 							<span class="sr-only"><span class="currency">{{ '0' }}</span> Activos</span>
@@ -24,7 +24,7 @@
 							<div class="status-title">porcentaje activo</div>
 							<div class="status-number">{{ '0' }}%</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -38,7 +38,7 @@
 							<i class="icon-emoticon-smile"></i>
 						</div>
 					</div>
-					<div class="progress-info">
+					<!-- <div class="progress-info">
 						<div class="progress">
 							<span style="width: {{ '0' }}%;" class="progress-bar progress-bar-success red-haze">
 							<span class="sr-only"></span>
@@ -48,7 +48,7 @@
 							<div class="status-title">porcentaje activo</div>
 							<div class="status-number">{{ '0' }}%</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -62,7 +62,7 @@
 							<i class="icon-notebook"></i>
 						</div>
 					</div>
-					<div class="progress-info">
+					<!-- <div class="progress-info">
 						<div class="progress">
 							<span style="width: {{ '0' }}%;" class="progress-bar progress-bar-success blue-sharp">
 							<span class="sr-only">{{ '0' }}%</span>
@@ -72,7 +72,7 @@
 							<div class="status-title">en ejecución</div>
 							<div class="status-number">{{ '0' }}%</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -86,7 +86,7 @@
 							<i class="icon-speech"></i>
 						</div>
 					</div>
-					<div class="progress-info">
+					<!-- <div class="progress-info">
 						<div class="progress">
 							<span style="width: {{ '0' }}%;" class="progress-bar progress-bar-success purple-soft">
 							<span class="sr-only">56% change</span>
@@ -96,7 +96,7 @@
 							<div class="status-title">ACTIVAS</div>
 							<div class="status-number">{{ '0' }}%</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
