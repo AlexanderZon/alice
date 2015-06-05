@@ -54,6 +54,7 @@ if(Auth::check()):
 		break;
 		case 'teacher':
 			# Routes for teacher
+			Route::controller('/teachers', '\Teachers\ReadController');
 		break;
 		case 'student':
 			# Routes for student

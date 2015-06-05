@@ -36,39 +36,45 @@
 </tr>
 </thead>
 <tbody>
-@foreach($inbox as $message)
-	<?php $user_message = $message->user_message(); ?>
-	<tr {{ $user_message->status == 'unread' ? 'class="unread"' : '' }} data-messageid="{{ Crypt::encrypt($message->id) }}">
-		<td class="inbox-small-cells">
-			<input type="checkbox" class="mail-checkbox ids" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
-		</td>
-		<td class="inbox-small-cells">
-			<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}" data-favorite="{{ $user_message->favorite }}">
-				<i class="fa fa-star {{ $user_message->favorite ? 'inbox-started' : 'inbox-not-started' }}"></i>				
-			</a>
-		</td>
-		<td class="view-message hidden-xs">
-			@if($message->from->id == Auth::user()->id)
-				{{ 'Yo' }}
-			@else
-				{{ $message->from->first_name }} {{ $message->from->last_name }}
-			@endif
-		</td>
-		<td class="view-message ">
-			 {{ $message->subject }}
-		</td>
-		<td class="view-message inbox-small-cells">
-			@if(count($message->attachments) > 0)
-				<i class="fa fa-paperclip"></i>
-			@endif
-		</td>
-		<td class="view-message text-right">
-			<spam class="{{ $user_message->created_diff() > 0 ? 'moment-date' : 'moment-time' }}">
-				{{ $user_message->created_at }}
-			</spam> 
-		</td>
+@if($inbox->count() > 0)
+	@foreach($inbox as $message)
+		<?php $user_message = $message->user_message(); ?>
+		<tr {{ $user_message->status == 'unread' ? 'class="unread"' : '' }} data-messageid="{{ Crypt::encrypt($message->id) }}">
+			<td class="inbox-small-cells">
+				<input type="checkbox" class="mail-checkbox ids" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
+			</td>
+			<td class="inbox-small-cells">
+				<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}" data-favorite="{{ $user_message->favorite }}">
+					<i class="fa fa-star {{ $user_message->favorite ? 'inbox-started' : 'inbox-not-started' }}"></i>				
+				</a>
+			</td>
+			<td class="view-message hidden-xs">
+				@if($message->from->id == Auth::user()->id)
+					{{ 'Yo' }}
+				@else
+					{{ $message->from->first_name }} {{ $message->from->last_name }}
+				@endif
+			</td>
+			<td class="view-message ">
+				 {{ $message->subject }}
+			</td>
+			<td class="view-message inbox-small-cells">
+				@if(count($message->attachments) > 0)
+					<i class="fa fa-paperclip"></i>
+				@endif
+			</td>
+			<td class="view-message text-right">
+				<spam class="{{ $user_message->created_diff() > 0 ? 'moment-date' : 'moment-time' }}">
+					{{ $user_message->created_at }}
+				</spam> 
+			</td>
+		</tr>
+	@endforeach
+@else
+	<tr>
+		<td colspan="6">No existen mensajes en tu Bandeja de Entrada</td>
 	</tr>
-@endforeach
+@endif
 <!-- <tr class="unread" data-messageid="1">
 	<td class="inbox-small-cells">
 		<input type="checkbox" class="mail-checkbox">

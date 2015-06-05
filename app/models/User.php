@@ -126,7 +126,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function contributions(){
 
-		return $this->belongsToMany('Course', 'contributes');
+		return $this->belongsToMany('Course', 'contributors');
 
 	}
 
@@ -148,9 +148,55 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
-	public function iTeach(){
+	public function teaching(){
 
-		return $this->hasMany('Course','user_id');
+		return $this->hasMany('Course','author_id');
+
+	}
+
+	public function lessonsteaching(){
+
+		$lessons = array();
+
+		$courses = $this->teaching;
+
+		if($courses->count() > 0):
+
+			foreach($courses as $course):
+				$c_lessons = $course->lessons;
+				if($c_lessons->count() > 0):
+					foreach($c_lessons as $c_lesson):
+						$lessons[] = $c_lesson;
+					endforeach;
+				endif;
+			endforeach;
+
+		endif;
+
+		return $lessons;
+
+	}
+
+	public function studentsteaching(){
+
+		$students = array();
+
+		$courses = $this->teaching;
+
+		if($courses->count() > 0):
+
+			foreach($courses as $course):
+				$c_students = $course->students;
+				if($c_students->count() > 0):
+					foreach($c_students as $c_lesson):
+						$students[] = $c_lesson;
+					endforeach;
+				endif;
+			endforeach;
+
+		endif;
+
+		return $students;
 
 	}
 

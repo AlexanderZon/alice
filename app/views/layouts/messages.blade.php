@@ -142,7 +142,10 @@
 		    var loadInbox = function (el, name) {
 		        var url = '{{$route}}/' + name;
 		        var title = $('.inbox-nav > li.' + name + ' a').attr('data-title');
+		        if(name == 'outbox') title = $('.inbox-nav > li.sent a').attr('data-title');
 		        listListing = name;
+
+		        console.log(name);
 
 		        // loading.show();
 		        content.html(loader);

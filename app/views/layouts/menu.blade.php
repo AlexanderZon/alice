@@ -536,7 +536,7 @@
 					<!-- Coordanators Module -->
 
 					@if(Auth::user()->hasCap('coordinators_read_get_index'))
-					<li class="tooltips {{ $name == 'coordinators_read' ? 'active open' : '' }}">
+					<li class="tooltips {{ $name == 'coordinators' ? 'active open' : '' }}">
 						<a href="/">
 						<i class="icon-home"></i>
 						<span class="title">Escritorio</span>
@@ -673,6 +673,77 @@
 							@endif
 
 						</ul>
+					</li>
+					@endif
+
+					<!-- Teacehrs Module -->
+
+					@if(Auth::user()->hasCap('teachers_read_get_index'))
+					<li class="tooltips {{ $name == 'teachers' ? 'active open' : '' }}">
+						<a href="/">
+						<i class="icon-home"></i>
+						<span class="title">Escritorio</span>
+						</a>
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('teachers_courses_get_index'))
+					<li class="tooltips {{ $name == 'teachers_courses_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
+						<a href="/teachers/courses">
+							<i class="icon-notebook"></i>
+							<span class="title">
+							Cursos </span>
+							<!-- <span class="arrow"></span> -->
+						</a>
+						<!-- <ul class="sub-menu">
+						
+							@if(Auth::user()->hasCap('teachers_courses_get_index'))
+							<li class="{{ $name == 'teachers_courses_read' ? 'active' : '' }}">
+								<a href="/teachers/courses">
+								<i class="icon-list"></i>
+								Listado</a>
+							</li>
+							@endif
+						
+							@if(Auth::user()->hasCap('teachers_courses_get_inactive'))
+							<li class="{{ $name == 'teachers_courses_inactive' ? 'active' : '' }}">
+								<a href="/teachers/courses/inactive">
+								<i class="icon-ban"></i>
+								Inactivos</a>
+							</li> 
+							@endif
+						
+						</ul> -->
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('teachers_contributions_get_index'))
+					<li class="tooltips {{ $name == 'teachers_contributions_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Contribuciones">
+						<a href="/teachers/contributions">
+							<i class="icon-notebook"></i>
+							<span class="title">
+							Contribuciones </span>
+							<!-- <span class="arrow"></span> -->
+						</a>
+						<!-- <ul class="sub-menu">
+						
+							@if(Auth::user()->hasCap('teachers_contributions_get_index'))
+							<li class="{{ $name == 'teachers_contributions_read' ? 'active' : '' }}">
+								<a href="/teachers/contributions">
+								<i class="icon-list"></i>
+								Listado</a>
+							</li>
+							@endif
+						
+							@if(Auth::user()->hasCap('teachers_contributions_get_inactive'))
+							<li class="{{ $name == 'teachers_contributions_inactive' ? 'active' : '' }}">
+								<a href="/teachers/contributions/inactive">
+								<i class="icon-ban"></i>
+								Inactivos</a>
+							</li> 
+							@endif
+						
+						</ul> -->
 					</li>
 					@endif
 
