@@ -150,7 +150,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function teaching(){
 
-		return $this->hasMany('Course','author_id');
+		return $this->hasMany('Course','author_id')->where('courses.status','=','active');
 
 	}
 

@@ -1,4 +1,4 @@
-<?php namespace Teachers\Contributions;
+<?php namespace Teachers\Courses\Inscriptions;
 
 use \Course as Course;
 use \User as User;
@@ -7,7 +7,7 @@ use \Hash as Hash;
 use \Hashids as Hashids;
 
 
-class ReadController extends \Teachers\ReadController {
+class ReadController extends \Teachers\Courses\ReadController {
 
 	public function __construct(){
 
@@ -23,21 +23,21 @@ class ReadController extends \Teachers\ReadController {
 
 		$this->afterFilter('auditory');
 		
-		self::pushViews('contributions');    
+		self::pushViews('inscriptions');    
 
-		self::pushRoute('contributions');       
+		self::pushRoute('inscriptions');       
 
-		self::setModule('contributions');
+		self::setModule('inscriptions');
 
-		self::pushName('contributions');
+		self::pushName('inscriptions');
 
 		self::addSection('inactive', 'Inactivos');
 
-		self::$title = 'Contribuciones';
+		self::$title = 'Inscripciones';
 
-		self::$description = 'Gestión de Contribuciones de los Cursos';
+		self::$description = 'Gestión de Inscripciones de los Cursos';
 
-		self::pushBreadCrumb('Contribuciones', self::$route );
+		self::pushBreadCrumb('Inscripciones', self::$route );
 
 		# --- Put here your global args for this Controller --- #
 

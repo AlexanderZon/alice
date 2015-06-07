@@ -54,6 +54,14 @@ if(Auth::check()):
 		break;
 		case 'teacher':
 			# Routes for teacher
+			Route::controller('/teachers/courses/{id_course?}/achievements', '\Teachers\Courses\Achievements\ReadController');
+			Route::controller('/teachers/courses/{id_course?}/discussions', '\Teachers\Courses\Discussions\ReadController');
+			Route::controller('/teachers/courses/{id_course?}/inscriptions', '\Teachers\Courses\Inscriptions\ReadController');
+			Route::controller('/teachers/courses/{id_course?}/lessons', '\Teachers\Courses\Lessons\ReadController');
+			Route::controller('/teachers/courses/{id_course?}/questions', '\Teachers\Courses\Questions\ReadController');
+			Route::controller('/teachers/courses/{id_course?}/students', '\Teachers\Courses\Students\ReadController');
+			Route::controller('/teachers/courses', '\Teachers\Courses\ReadController');
+			Route::controller('/teachers/contributions', '\Teachers\Contributions\ReadController');
 			Route::controller('/teachers', '\Teachers\ReadController');
 		break;
 		case 'student':

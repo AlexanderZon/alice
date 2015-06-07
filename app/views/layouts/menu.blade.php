@@ -688,7 +688,7 @@
 					@endif
 
 					@if(Auth::user()->hasCap('teachers_courses_get_index'))
-					<li class="tooltips {{ $name == 'teachers_courses_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
+					<li class="tooltips {{ $name == 'teachers_courses' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
 						<a href="/teachers/courses">
 							<i class="icon-notebook"></i>
 							<span class="title">
@@ -718,9 +718,9 @@
 					@endif
 
 					@if(Auth::user()->hasCap('teachers_contributions_get_index'))
-					<li class="tooltips {{ $name == 'teachers_contributions_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Contribuciones">
+					<li class="tooltips {{ $name == 'teachers_contributions' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Contribuciones">
 						<a href="/teachers/contributions">
-							<i class="icon-notebook"></i>
+							<i class="icon-eyeglasses"></i>
 							<span class="title">
 							Contribuciones </span>
 							<!-- <span class="arrow"></span> -->
