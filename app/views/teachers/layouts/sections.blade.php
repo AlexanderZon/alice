@@ -158,7 +158,7 @@
 			<!-- BEGIN PROFILE CONTENT -->
 			<div class="profile-content">
 			
-				@yield('content_profile')
+				@yield('course_content')
 
 			</div>
 			<!-- END PROFILE CONTENT -->
@@ -352,72 +352,28 @@
 		        });*/
 		    }
 
-		    var follow = function (el) {
+		    var submitCourseForm = function (el){
 
-		    	console.log('following');
-
-		    	var html_btn = $('.follow-btn').html();
-
-		    	$('.follow-btn').html('Siguiendo...');
-
-		        var url = '{{$route}}/follow';
-		        // load the form via ajax
-		        $.ajax({
-		            type: "POST",
-		            cache: false,
-		            url: url,
-		            dataType: "json",
-		            success: function(res) 
-		            {
-		            	if(res.status = 'active'){
-		            		$('.follow-btn').addClass('hidden');
-		            		$('.unfollow-btn').removeClass('hidden');
-							$('.follow-btn').html(html_btn);
-		            	}
-		            },
-		            error: function(xhr, ajaxOptions, thrownError)
-		            {
-	            		$('.unfollow-btn').addClass('hidden');
-	            		$('.follow-btn').removeClass('hidden');
-						$('.follow-btn').html(html_btn);
-		                console.log(thrownError);
-		            },
-		            async: true
-		        });
-		    }
-
-		    var unfollow = function (el) {
-
-		    	console.log('unfollowing');
-
-		    	var html_btn = $('.unfollow-btn').html();
-
-		    	$('.unfollow-btn').html('Siguiendo...');
+		        content.html(loader);
 		    	
-		        var url = '{{$route}}/unfollow';
-		        // load the form via ajax
-		        $.ajax({
-		            type: "POST",
-		            cache: false,
-		            url: url,
-		            dataType: "json",
-		            success: function(res) 
-		            {
-		            	if(res.status = 'inactive'){
-		            		$('.unfollow-btn').addClass('hidden');
-		            		$('.follow-btn').removeClass('hidden');
-							$('.unfollow-btn').html(html_btn);
-		            	}
-		            },
-		            error: function(xhr, ajaxOptions, thrownError)
-		            {
-	            		$('.unfollow-btn').removeClass('hidden');
-	            		$('.follow-btn').addClass('hidden');
-						$('.unfollow-btn').html(html_btn);
-		                console.log(thrownError);
-		            },
-		            async: true
-		        });
+		    	var formData = new FormData(el[0]);
+
+			    $.ajax({
+			        url: '{{ $route }}/show/{{ $hashid }}',
+			        type: 'POST',
+			        data: formData,
+			        async: true,
+			        success: function (data) {
+			        	content.html(data);
+			            console.log(data);
+			        },
+			        cache: false,
+			        contentType: false,
+			        processData: false
+			    });
+
+			    return false;
+
 		    }
 
 		    var handleCCInput = function () {
@@ -460,12 +416,12 @@
 
 		        	console.log('init');
 
-		        	$('.profile').on('submit', '#search-form', function(event) {
-		        		event.preventDefault();
+		        	$('.profile').on('submit', '#course-form', function (e) {
 		        		/* Act on the event */
-		        		if($('#search-form input[name=q]').val() != '') searchForm($(this));
-		        		return false;
-		        	});
+		        		e.preventDefault();
+		        		submitCourseForm($(this));
+
+					});
 
 		            // handle compose btn click
 		            /*$('.profile').on('click', '.message-btn', function () {

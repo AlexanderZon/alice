@@ -3,6 +3,7 @@
 use \Course as Course;
 use \User as User;
 use \Input as Input;
+use \Response as Response;
 use \Hash as Hash;
 use \Hashids as Hashids;
 use \Auth as Auth;
@@ -70,11 +71,26 @@ class ReadController extends \Teachers\ReadController {
 	public function getShow( $id )
 	{
 
+		self::addArgument('hashid', Hashids::decode($id));
+
 		self::addArgument('course', Course::find(Hashids::decode($id)));
 		
 		self::addArgument('sidebar_closed', true);
 
 		return self::make('show');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /courses
+	 *
+	 * @return Response
+	 */
+	public function postShow( $id )
+	{
+
+		return Response::json(Input::all());
 
 	}
 

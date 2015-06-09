@@ -12,7 +12,7 @@
 
 @stop
 
-@section ("content_profile")
+@section ("course_content")
 
 	<div class="row">
 		<div class="col-md-12">
@@ -28,7 +28,7 @@
 						</div>
 						<div class="portlet-body form">
 							<!-- BEGIN FORM-->
-							<form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+							<form id="course-form" action="" method="post" class="form-horizontal" enctype="multipart/form-data">
 								<div class="form-body">
 									<div class="row">
 										<div class="col-md-6">
