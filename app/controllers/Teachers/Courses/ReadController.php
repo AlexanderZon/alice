@@ -71,7 +71,7 @@ class ReadController extends \Teachers\ReadController {
 	public function getShow( $id )
 	{
 
-		self::addArgument('hashid', Hashids::decode($id));
+		self::addArgument('hashid', $id);
 
 		self::addArgument('course', Course::find(Hashids::decode($id)));
 		
@@ -90,7 +90,20 @@ class ReadController extends \Teachers\ReadController {
 	public function postShow( $id )
 	{
 
-		return Response::json(Input::all());
+		$course = Course::find(Hashids::decode($id));
+		$course->title = Input::get('title');
+		$course->description = Input::get('description');
+		if(Input::file('main_picture') != null) $course->main_picture = Course::uploadMainPicture(Input::file('main_picture'), $course->name);
+		if(Input::file('cover_picture') != null) $course->cover_picture = Course::uploadCoverPicture(Input::file('cover_picture'), $course->name);
+		$course->save();
+
+		self::addArgument('hashid', Hashids::decode($id));
+
+		self::addArgument('course', Course::find(Hashids::decode($id)));
+		
+		self::addArgument('sidebar_closed', true);
+
+		return self::make('general.index');
 
 	}
 

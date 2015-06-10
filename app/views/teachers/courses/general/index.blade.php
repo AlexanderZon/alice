@@ -1,7 +1,4 @@
-@extends ('teachers.layouts.sections')
 
-@section('content_css')
-	
 	<!-- BEGIN PAGE LEVEL STYLES -->
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
@@ -9,10 +6,6 @@
 
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
 	<!-- END PAGE LEVEL STYLES -->
-
-@stop
-
-@section ("course_content")
 
 	<div class="row">
 		<div class="col-md-12">
@@ -136,10 +129,6 @@
 			<!-- END PORTLET -->
 		</div>
 	</div>		
-	
-@stop
-
-@section('content_javascripts')	
 
 	<script type="text/javascript" src="/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
 	<script type="text/javascript" src="/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
@@ -198,5 +187,9 @@
 		
 		ComponentsEditors.init();
 		ComponentsPickers.init();
+
+		$('#course-title').html('{{ $course->title }}');
+		$('#course-teacher').html('{{ $course->teacher->display_name }}');
+		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');
+
 	</script>
-@stop

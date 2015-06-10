@@ -30,16 +30,16 @@
 				<!-- PORTLET MAIN -->
 				<div class="portlet light profile-sidebar-portlet">
 					<!-- SIDEBAR USERPIC -->
-					<div class="profile-userpic">
+					<div id="course-main-image" class="profile-userpic">
 						<img src="{{ $course->main_picture }}" class="img-responsive" alt="">
 					</div>
 					<!-- END SIDEBAR USERPIC -->
 					<!-- SIDEBAR USER TITLE -->
 					<div class="profile-usertitle">
-						<div class="profile-usertitle-name">
+						<div id="course-title" class="profile-usertitle-name">
 							 {{ $course->title }}
 						</div>
-						<div class="profile-usertitle-job">
+						<div id="course-teacher-name" class="profile-usertitle-job">
 							 {{ $course->teacher->display_name }}
 						</div>
 					</div>
