@@ -62,8 +62,8 @@
 					<div class="profile-usermenu">
 						<ul class="nav">
 							@if(true)
-								<li class="{{ $section == 'index' ? 'active' : '' }}">
-									<a href="javascript:;" class="index-btn">
+								<li class="{{ $section == 'show' ? 'active' : '' }}">
+									<a href="javascript:;" class="general-btn">
 									<i class="icon-home"></i>
 									General </a>
 								</li>
@@ -186,7 +186,7 @@
 		    var listListing = '';
 
 		    var loadWall = function (el, name) {
-		        var url = '{{$route}}/' + name;
+		        var url = '{{$route}}/{{$hashid}}/' + name;
 
 		        console.log(el);
 
@@ -442,9 +442,9 @@
 		            });
 
 		            // handle spam and forward button click
-		            $('.profile').on('click', '.index-btn', function (e) {
+		            $('.profile').on('click', '.general-btn', function (e) {
 		            	e.preventDefault();
-		                loadWall($(this), 'index');
+		                loadWall($(this), 'general');
 		            });
 
 		            // handle sned and forward button click

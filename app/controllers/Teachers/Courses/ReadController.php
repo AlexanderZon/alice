@@ -25,7 +25,7 @@ class ReadController extends \Teachers\ReadController {
 
 		$this->afterFilter('auditory');
 		
-		self::pushViews('courses');    
+		self::pushViews('courses.read');    
 
 		self::pushRoute('courses');       
 
@@ -97,9 +97,9 @@ class ReadController extends \Teachers\ReadController {
 		if(Input::file('cover_picture') != null) $course->cover_picture = Course::uploadCoverPicture(Input::file('cover_picture'), $course->name);
 		$course->save();
 
-		self::addArgument('hashid', Hashids::decode($id));
+		self::addArgument('hashid', $id);
 
-		self::addArgument('course', Course::find(Hashids::decode($id)));
+		self::addArgument('course', $course);
 		
 		self::addArgument('sidebar_closed', true);
 

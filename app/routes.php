@@ -56,6 +56,7 @@ if(Auth::check()):
 			# Routes for teacher
 			Route::controller('/teachers/courses/{id_course?}/achievements', '\Teachers\Courses\Achievements\ReadController');
 			Route::controller('/teachers/courses/{id_course?}/discussions', '\Teachers\Courses\Discussions\ReadController');
+			Route::controller('/teachers/courses/{id_course?}/general', '\Teachers\Courses\General\ReadController');
 			Route::controller('/teachers/courses/{id_course?}/inscriptions', '\Teachers\Courses\Inscriptions\ReadController');
 			Route::controller('/teachers/courses/{id_course?}/lessons', '\Teachers\Courses\Lessons\ReadController');
 			Route::controller('/teachers/courses/{id_course?}/questions', '\Teachers\Courses\Questions\ReadController');
