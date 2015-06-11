@@ -111,22 +111,22 @@
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'followers' ? 'active' : '' }}">
-									<a href="javascript:;" class="followers-btn">
+								<li class="{{ $section == 'inscriptions' ? 'active' : '' }}">
+									<a href="javascript:;" class="inscriptions-btn">
 									<i class="icon-user-following"></i>
 									Inscripciones </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'following' ? 'active' : '' }}">
-									<a href="javascript:;" class="following-btn">
+								<li class="{{ $section == 'questions' ? 'active' : '' }}">
+									<a href="javascript:;" class="questions-btn">
 									<i class="icon-question"></i>
 									Preguntas </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'following' ? 'active' : '' }}">
-									<a href="javascript:;" class="following-btn">
+								<li class="{{ $section == 'activities' ? 'active' : '' }}">
+									<a href="javascript:;" class="activities-btn">
 									<i class="icon-chemistry"></i>
 									Actividades </a>
 								</li>
@@ -184,6 +184,48 @@
 		    var loading = $('.profile-loading');
 		    var loader = '<div class="portlet light"><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row"><div class="col-md-5">&nbsp;</div><img class="col-md-2" src="/assets/loaders/rubiks-cube.gif"/><div class="col-md-5">&nbsp;</div></div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div></div>';
 		    var listListing = '';
+
+		    var initWall = function (el, name) {
+		        var url = '{{$route}}/{{$hashid}}/' + name;
+
+		        console.log(el);
+		        // toggleButton(el);
+
+		        $.ajax({
+		            type: "POST",
+		            cache: false,
+		            url: url,
+		            dataType: "html",
+		            success: function(res) 
+		            {
+		            	console.log(name);
+		                $('.profile-usermenu li').removeClass('active');
+		                el.parents('li').addClass('active');	
+
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.init();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                // toggleButton(el);
+		            },
+		            async: true
+		        });
+
+		        // handle group checkbox:
+		        /*jQuery('body').on('change', '.mail-group-checkbox', function () {
+		            var set = jQuery('.mail-checkbox');
+		            var checked = jQuery(this).is(":checked");
+		            jQuery(set).each(function () {
+		                $(this).attr("checked", checked);
+		            });
+		            jQuery.uniform.update(set);
+		        });*/
+		    }
 
 		    var loadWall = function (el, name) {
 		        var url = '{{$route}}/{{$hashid}}/' + name;
@@ -461,9 +503,9 @@
 		            });
 
 		            // handle draft and forward button click
-		            $('.profile').on('click', '.contributing-btn', function (e) {
+		            $('.profile').on('click', '.contributors-btn', function (e) {
 		            	e.preventDefault();
-		                loadWall($(this), 'contributing');
+		                loadWall($(this), 'contributors');
 		            });
 
 		            // handle discussions and forward button click
@@ -502,7 +544,8 @@
 		            } else if (Metronic.getURLParameter("a") === "compose") {
 		                loadCompose();
 		            } else {
-		               $('.profile-nav > li.profile > a').click();
+
+		        		initWall($('.general-btn'), 'general');
 		            }
 
 		        }

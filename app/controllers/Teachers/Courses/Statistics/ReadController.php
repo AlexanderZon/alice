@@ -1,4 +1,4 @@
-<?php namespace Teachers\Courses\Inscriptions;
+<?php namespace Teachers\Courses\Statistics;
 
 use \Course as Course;
 use \User as User;
@@ -25,21 +25,21 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		self::setModule('read');  
 		
-		self::pushViews('inscriptions');    
+		self::pushViews('statistics');    
 
-		self::pushRoute('inscriptions');       
+		self::pushRoute('statistics');       
 
-		self::setModule('inscriptions');
+		self::setModule('statistics');
 
-		self::pushName('inscriptions');
+		self::pushName('statistics');
 
 		self::addSection('inactive', 'Inactivos');
 
-		self::$title = 'Inscripciones';
+		self::$title = 'Estadisticas';
 
-		self::$description = 'Gestión de Inscripciones de los Cursos';
+		self::$description = 'Gestión de Estadisticas de los Cursos';
 
-		self::pushBreadCrumb('Inscripciones', self::$route );
+		self::pushBreadCrumb('Estadisticas', self::$route );
 
 		# --- Put here your global args for this Controller --- #
 
@@ -54,7 +54,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 	public function postIndex( $id_course = '' )
 	{
 
-		self::addArgument('inscriptions', Course::find(Hashids::decode($id_course)));
+		self::addArgument('statistics', Course::find(Hashids::decode($id_course)));
 
 		return self::make('index');
 

@@ -1,4 +1,4 @@
-<?php namespace Teachers\Courses\Inscriptions;
+<?php namespace Teachers\Courses\Activities;
 
 use \Course as Course;
 use \User as User;
@@ -21,25 +21,25 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		$this->beforeFilter('arguments');
 
-		$this->afterFilter('auditory'); 
+		$this->afterFilter('auditory');   
 
-		self::setModule('read');  
+		self::setModule('read');
 		
-		self::pushViews('inscriptions');    
+		self::pushViews('activities');    
 
-		self::pushRoute('inscriptions');       
+		self::pushRoute('activities');       
 
-		self::setModule('inscriptions');
+		self::setModule('activities');
 
-		self::pushName('inscriptions');
+		self::pushName('activities');
 
 		self::addSection('inactive', 'Inactivos');
 
-		self::$title = 'Inscripciones';
+		self::$title = 'Lecciones';
 
-		self::$description = 'Gestión de Inscripciones de los Cursos';
+		self::$description = 'Gestión de Lecciones de los Cursos';
 
-		self::pushBreadCrumb('Inscripciones', self::$route );
+		self::pushBreadCrumb('Lecciones', self::$route );
 
 		# --- Put here your global args for this Controller --- #
 
@@ -54,7 +54,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 	public function postIndex( $id_course = '' )
 	{
 
-		self::addArgument('inscriptions', Course::find(Hashids::decode($id_course)));
+		self::addArgument('activities', Course::find(Hashids::decode($id_course)));
 
 		return self::make('index');
 

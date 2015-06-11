@@ -23,13 +23,15 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		$this->afterFilter('auditory');     
 
-		self::setModule('read');
+		self::setModule('read');  
 		
 		self::pushViews('general');    
 
 		self::pushRoute('general');
 
 		self::pushName('general');
+
+		self::setModule('general');
 
 		self::addSection('general', 'Informaciones Generales');
 
@@ -49,16 +51,16 @@ class ReadController extends \Teachers\Courses\ReadController {
 	 *
 	 * @return Response
 	 */
-	public function getIndex()
+	public function postIndex( $id_course = '' )
 	{
 
-		self::addArgument('hashid', Hashids::decode($id));
+		self::addArgument('hashid', Hashids::decode($id_course));
 
-		self::addArgument('course', Course::find(Hashids::decode($id)));
+		self::addArgument('course', Course::find(Hashids::decode($id_course)));
 		
 		self::addArgument('sidebar_closed', true);
 
-		return self::make('general.index');
+		return self::make('index');
 
 	}
 

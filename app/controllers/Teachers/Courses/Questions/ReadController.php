@@ -21,7 +21,9 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		$this->beforeFilter('arguments');
 
-		$this->afterFilter('auditory');
+		$this->afterFilter('auditory'); 
+
+		self::setModule('read');  
 		
 		self::pushViews('questions');    
 
@@ -49,10 +51,10 @@ class ReadController extends \Teachers\Courses\ReadController {
 	 *
 	 * @return Response
 	 */
-	public function getIndex()
+	public function postIndex( $id_course = '' )
 	{
 
-		self::addArgument('courses', Course::actives());
+		self::addArgument('questions', Course::find(Hashids::decode($id_course)));
 
 		return self::make('index');
 
