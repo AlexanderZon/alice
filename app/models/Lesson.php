@@ -21,7 +21,7 @@ class Lesson extends \Eloquent {
 
     }
 
-    public function discussionable(){
+    public function discussions(){
 
     	return $this->morphMany('Discussion', 'discussionable');
 

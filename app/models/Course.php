@@ -97,13 +97,13 @@ class Course extends \Eloquent {
 
     public function modules(){
 
-    	return $this->hasMany('Module', 'course_id');
+    	return $this->hasMany('Module', 'course_id')->orderBy('modules.order', 'ASC');
 
     }
 
     public function lessons(){
 
-    	return $this->hasManyThrough('Lesson', 'Module');
+    	return $this->hasManyThrough('Lesson', 'Module')->orderBy('lessons.order', 'ASC');
 
     }
 

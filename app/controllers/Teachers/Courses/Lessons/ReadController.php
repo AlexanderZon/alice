@@ -69,7 +69,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /courses
+	 * GET /addmodule
 	 *
 	 * @return Response
 	 */
@@ -86,7 +86,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /courses
+	 * POST /addmodule
 	 *
 	 * @return Response
 	 */
@@ -117,7 +117,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /courses
+	 * GET /editmodule
 	 *
 	 * @return Response
 	 */
@@ -136,14 +136,12 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /courses
+	 * POST /editmodule
 	 *
 	 * @return Response
 	 */
 	public function postEditmodule( $course_id = '' )
 	{
-
-		$course = Course::find(Hashids::decode($course_id));
 
 		$module = Module::find(Crypt::decrypt(Input::get('module_id')));
 		$module->title = Input::get('title');
@@ -152,6 +150,49 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$module->date_end = date('Y-m-d', strtotime(str_replace('/','-',str_replace(' - ','',strstr(Input::get('daterange'),' - ', false)))));
 		$module->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
 		$module->save();
+
+		$course = Course::find(Hashids::decode($course_id));
+
+		self::addArgument('course', $course);
+
+		self::addArgument('modules', $course->modules);
+
+		return self::make('index');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /deletemodule
+	 *
+	 * @return Response
+	 */
+	public function getDeletemodule( $course_id = '' )
+	{
+
+		$module = Module::find(Hashids::decode(Input::get('module_id')));
+
+		self::addArgument('course', $module->course);
+
+		self::addArgument('module', $module);
+
+		return self::make('deletemodule');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /deletemodule
+	 *
+	 * @return Response
+	 */
+	public function postDeletemodule( $course_id = '' )
+	{
+
+		$module = Module::find(Crypt::decrypt(Input::get('module_id')));
+		$module->delete();
+
+		$course = Course::find(Hashids::decode($course_id));
 
 		self::addArgument('course', $course);
 

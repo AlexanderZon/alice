@@ -483,7 +483,6 @@
 
 		        loading.show();
 		        content.html(loader);
-		        // toggleButton(el);
 
 		    	$.ajax({
 		    		url: '{{$route}}/' + course + '/lessons/addmodule',
@@ -513,7 +512,6 @@
 
 		        loading.show();
 		        content.html(loader);
-		        // toggleButton(el);
 
 		    	$.ajax({
 		    		url: '{{$route}}/' + course + '/lessons/editmodule',
@@ -529,6 +527,38 @@
 		                Metronic.init();
 		    			console.log(html);
 		    			console.log('Edit module Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsModuleDelete = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var module = el.parents('.timeline-yellow').data('module');
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/deletemodule',
+		    		type: 'GET',
+		    		data: {
+		    			module_id: module,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			console.log(html);
+		    			console.log('Delete module Form');
 		    		},
 		    		error: function(xhr) {
 		    			console.log(xhr);
@@ -640,6 +670,11 @@
 		            // handle edit module button click
 		            $('.profile').on('click', '.module-edit', function (e) {
 		                lessonsModuleEdit($(this));
+		            });
+
+		            // handle delete module button click
+		            $('.profile').on('click', '.module-delete', function (e) {
+		                lessonsModuleDelete($(this));
 		            });
 
 		            //handle loading content based on URL parameter

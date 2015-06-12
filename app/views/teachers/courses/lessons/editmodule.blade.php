@@ -34,7 +34,7 @@
 						</div>
 						<div class="portlet-body form">
 							<!-- BEGIN FORM-->
-							<form id="addmodule-form" action="" method="post" class="form-horizontal ajax-form" data-url="{{ $route }}/editmodule" enctype="multipart/form-data">
+							<form id="editmodule-form" action="" method="post" class="form-horizontal ajax-form" data-url="{{ $route }}/editmodule" enctype="multipart/form-data">
 								<input type="hidden" name="module_id" value="{{ Crypt::encrypt($module->id) }}">
 								<div class="form-body"> 
 									<div class="row">
