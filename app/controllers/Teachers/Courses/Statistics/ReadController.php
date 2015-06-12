@@ -51,10 +51,10 @@ class ReadController extends \Teachers\Courses\ReadController {
 	 *
 	 * @return Response
 	 */
-	public function postIndex( $id_course = '' )
+	public function postIndex( $course_id = '' )
 	{
 
-		self::addArgument('statistics', Course::find(Hashids::decode($id_course)));
+		self::addArgument('statistics', Course::find(Hashids::decode($course_id)));
 
 		return self::make('index');
 

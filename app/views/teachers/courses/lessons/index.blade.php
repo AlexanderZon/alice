@@ -9,6 +9,13 @@
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
 	<!-- END PAGE LEVEL STYLES -->
 
+	<style type="text/css">
+		.btn-center{
+			display:block;
+			text-align: center;
+		}
+	</style>
+
 	<div class="row">
 		<div class="col-md-12">
 			<!-- BEGIN PORTLET -->
@@ -25,72 +32,129 @@
 							
 							<ul class="timeline" data-course="{{ Hashids::encode($course->id) }}">
 
-								<li class="timeline-yellow" data-module="{{ 'MODULE' }}">
-									<div class="timeline-time">
-										<span class="date">
-										4/10/13 </span>
-										<span class="time">
-										10/3/14 </span>
-									</div>
-									<div class="timeline-icon">
-										<i class="fa fa-trophy"></i>
-									</div>
-									<div class="timeline-body">
-										<div class="timeline-footer">
-											<a href="javascript" class="nav-link course-module-edit" data-module="{{ '' }}" data-course="{{ '' }}">
-												<h2>{{'New Project Launch'}}</h2>
-											</a>
-											<a href="javascript" class="btn green-haze pull-right tooltips course-lesson-add" data-original-title="Agregar una nueva Lección" data-module="{{ '' }}" data-course="{{ '' }}">
-												<i class="fa fa-plus"></i>
-											</a>
-										</div>
+								@if($modules->count() > 0)
+									@foreach($modules as $module)
 
-									</div>
-								</li>
-								<li class="timeline-blue" data-module-parent="{{ 'MODULEPARENT' }}" data-lesson="{{ 'LESSON' }}">
-									<div class="timeline-body">
-										<h2>{{'New Project Launch'}}</h2>
-										<div class="timeline-content">
-											<img class="timeline-img pull-left" src="{{'/assets/admin/pages/media/blog/3.jpg'}}" alt="">
-											{{'Winter purslane courgette pumpkin quandong komatsuna fennel green bean cucumber watercress. Pea sprouts wattle seed rutabaga okra yarrow cress avocado grape radish bush tomato ricebean. Pea sprouts wattle seed rutabaga okra yarrow cress avocado grape radish bush tomato ricebean.'}}
-										</div>
-										<div class="timeline-footer">
-											<a href="javascript:;" class="btn green-haze tooltips course-lesson-comments" data-original-title="Hay {{ '0' }} comentario(s) en esta Lección">
-												<i class="fa fa-comments"></i> {{ '0' }}
-											</a>
-											<span>&nbsp;</span>
-											<a href="javascript:;" class="btn green-haze tooltips course-lesson-students" data-original-title="{{ '0' }} estudiante(s) han participado en esta Lección">
-												<i class="fa fa-users"></i> {{ '0' }}
-											</a>
-											<span>&nbsp;</span>
-											<a href="javascript:;" class="btn green-haze tooltips course-lesson-files" data-original-title="Hay {{ '0' }} archivo(s) en esta Lección">
-												<i class="fa fa-file"></i> {{ '0' }}
-											</a>
-											<span>&nbsp;</span>
-											<a href="javascript:;" class="btn green-haze tooltips course-lesson-files" data-original-title="Hay {{ '0' }} actividad(es) en esta Lección">
-												<i class="fa fa-hammer"></i> {{ '0' }}
-											</a>
+										<li class="timeline-yellow" data-module="{{ Hashids::encode($module->id) }}">
+											<div class="timeline-time">
+												<span class="time">{{ date('d/m/y',strtotime($module->date_start))}}</span>
+												<span class="date">{{ date('d/m/y',strtotime($module->date_end))}}</span>
+											</div>
+											<div class="timeline-icon">
+												<i class="fa fa-cube"></i>
+											</div>
+											<div class="timeline-body">
+												<div class="timeline-footer">
+													<a href="javascript:;" class="nav-link module-edit">
+														<h2>{{ $module->title }}</h2>
+													</a>
+													<a href="javascript:;" class="btn red pull-right tooltips module-delete" data-original-title="Eliminar Módulo">
+														<i class="fa fa-trash-o"></i>
+													</a>
+													<div  class="pull-right">&nbsp;</div>
+													<div  class="pull-right">&nbsp;</div>
+													<a href="javascript:;" class="btn green-haze pull-right tooltips module-edit" data-original-title="Editar Módulo">
+														<i class="fa fa-pencil"></i>
+													</a>
+													<div  class="pull-right">&nbsp;</div>
+													<div  class="pull-right">&nbsp;</div>
+													<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-add" data-original-title="Agregar una nueva Lección">
+														<i class="fa fa-plus"></i>
+													</a>
+												</div>
 
+											</div>
+										</li>
 
-											<span>&nbsp;</span>
-											<a href="javascript" class="btn red pull-right tooltips course-lesson-delete" data-original-title="Editar esta Lección">
-												<i class="fa fa-trash-o"></i>
-											</a>
-											<a href="javascript" class="btn yellow pull-right tooltips course-lesson-edit" data-original-title="Editar esta Lección">
-												<i class="fa fa-pencil"></i>
-											</a>
-											<span>&nbsp;</span>
+										@if($module->lessons->count() > 0)
+											@foreach($module->lessons as $lesson)
+												<li class="timeline-blue" data-module-parent="{{ 'MODULEPARENT' }}" data-lesson="{{ 'LESSON' }}">
+													<div class="timeline-body">
+														<h2>{{'Lección I'}}
+															<a href="javascript:;" class="pull-right" data-original-title="Editar esta Lección">
+																<input type="checkbox" class="make-switch" data-on-text="&nbsp;Activo&nbsp;&nbsp;" data-off-text="&nbsp;Inactivo&nbsp;" {{ (true) ? 'checked="checked"' : '' }}>
+															</a>											
+														</h2>
+														<div class="timeline-content">
+															<img class="timeline-img pull-left" src="{{'/assets/admin/pages/media/blog/3.jpg'}}" alt="">
+															{{'Winter purslane courgette pumpkin quandong komatsuna fennel green bean cucumber watercress. Pea sprouts wattle seed rutabaga okra yarrow cress avocado grape radish bush tomato ricebean. Pea sprouts wattle seed rutabaga okra yarrow cress avocado grape radish bush tomato ricebean.'}}
+														</div>
+														<div class="timeline-footer">
+															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-comments" data-original-title="Hay {{ '0' }} comentario(s) en esta Lección">
+																<i class="fa fa-comments"></i> {{ '0' }}
+															</a>
+															<div  class="pull-left">&nbsp;</div>
+															<div  class="pull-left">&nbsp;</div>
+															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-students" data-original-title="{{ '0' }} estudiante(s) han participado en esta Lección">
+																<i class="fa fa-users"></i> {{ '0' }}
+															</a>
+															<div  class="pull-left">&nbsp;</div>
+															<div  class="pull-left">&nbsp;</div>
+															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-files" data-original-title="Hay {{ '0' }} archivo(s) en esta Lección">
+																<i class="fa fa-file"></i> {{ '0' }}
+															</a>
+															<div  class="pull-left">&nbsp;</div>
+															<div  class="pull-left">&nbsp;</div>
+															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-files" data-original-title="Hay {{ '0' }} actividad(es) en esta Lección">
+																<i class="fa fa-flask"></i> {{ '0' }}
+															</a>
+
+															<a href="javascript:;" class="btn red-flamingo pull-right tooltips course-lesson-delete" data-original-title="Editar esta Lección">
+																<i class="fa fa-trash-o"></i>
+															</a>
+															<div  class="pull-right">&nbsp;</div>
+															<div  class="pull-right">&nbsp;</div>
+															<a href="javascript:;" class="btn yellow pull-right tooltips course-lesson-edit" data-original-title="Editar esta Lección">
+																<i class="fa fa-pencil"></i>
+															</a>
+														</div>
+													</div>
+												</li>
+											@endforeach
+										@endif
+
+										<li class="timeline-transparent" data-module-parent="{{ 'MODULEPARENT' }}">
+											<div class="timeline-body">
+												<div class="timeline-footer">
+													<a href="javascript:;" class="btn blue tooltips course-lesson-students" data-original-title="Añadir una nueva lección a este módulo">
+														<i class="fa fa-plus"></i>
+													</a>
+												</div>
+											</div>
+										</li>
+									@endforeach
+
+									<li class="timeline-transparent">
+										<div class="timeline-icon">
+											<i class="fa fa-cube"></i>
 										</div>
-									</div>
-								</li>
+										<div class="timeline-body">
+											<div class="timeline-footer">
+												<a href="javascript:;" class="btn blue tooltips module-add" data-original-title="Añadir un nuevo Módulo">
+													<i class="fa fa-plus"></i>
+												</a>
+											</div>
+										</div>
+									</li>
+
+								@else
+
+									<li class="timeline-transparent">
+										<div class="timeline-icon">
+											<i class="fa fa-cube"></i>
+										</div>
+										<div class="timeline-body">
+											<div class="timeline-footer">
+												<a href="javascript:;" class="btn blue tooltips module-add" data-original-title="Añadir un nuevo Módulo">
+													<i class="fa fa-plus"></i> Añade el primer módulo del curso
+												</a>
+											</div>
+										</div>
+									</li>
+								@endif
+
 							</ul>
-
-							@if($lessons->count() > 0)
-								@foreach($lessons as $lesson)
-								@endforeach
-							@else
-								<div class="col-md-12">Este curso aún no posee lecciones. Te invitamos a crear la primera leccion para este curso</div>
-							@endif
+							<div class="col-md-12"></div>
 							<!-- END FORM-->
 						</div>
 					</div>

@@ -51,12 +51,12 @@ class ReadController extends \Teachers\Courses\ReadController {
 	 *
 	 * @return Response
 	 */
-	public function postIndex( $id_course = '' )
+	public function postIndex( $course_id = '' )
 	{
 
-		self::addArgument('hashid', Hashids::decode($id_course));
+		self::addArgument('hashid', Hashids::decode($course_id));
 
-		self::addArgument('course', Course::find(Hashids::decode($id_course)));
+		self::addArgument('course', Course::find(Hashids::decode($course_id)));
 		
 		self::addArgument('sidebar_closed', true);
 

@@ -182,10 +182,11 @@
 
 		    var content = $('.profile-content');
 		    var loading = $('.profile-loading');
-		    var loader = '<div class="portlet light"><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row"><div class="col-md-5">&nbsp;</div><img class="col-md-2" src="/assets/loaders/rubiks-cube.gif"/><div class="col-md-5">&nbsp;</div></div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div></div>';
+		    var loader = '<div class="portlet light"><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row"><div class="col-md-5 col-sm-5 col-xs-5">&nbsp;</div><img class="col-md-2 col-sm-2 col-xs-2" src="/assets/loaders/rubiks-cube.gif"/><div class="col-md-5 col-sm-5 col-xs-5">&nbsp;</div></div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div></div>';
 		    var listListing = '';
 
 		    var initWall = function (el, name) {
+
 		        var url = '{{$route}}/{{$hashid}}/' + name;
 
 		        console.log(el);
@@ -216,18 +217,10 @@
 		            async: true
 		        });
 
-		        // handle group checkbox:
-		        /*jQuery('body').on('change', '.mail-group-checkbox', function () {
-		            var set = jQuery('.mail-checkbox');
-		            var checked = jQuery(this).is(":checked");
-		            jQuery(set).each(function () {
-		                $(this).attr("checked", checked);
-		            });
-		            jQuery.uniform.update(set);
-		        });*/
 		    }
 
 		    var loadWall = function (el, name) {
+
 		        var url = '{{$route}}/{{$hashid}}/' + name;
 
 		        console.log(el);
@@ -261,18 +254,10 @@
 		            async: true
 		        });
 
-		        // handle group checkbox:
-		        /*jQuery('body').on('change', '.mail-group-checkbox', function () {
-		            var set = jQuery('.mail-checkbox');
-		            var checked = jQuery(this).is(":checked");
-		            jQuery(set).each(function () {
-		                $(this).attr("checked", checked);
-		            });
-		            jQuery.uniform.update(set);
-		        });*/
 		    }
 
 		    var loadCompose = function (el) {
+
 		        var url = '{{$route}}/compose';
 
 		        // loading.show();
@@ -306,12 +291,15 @@
 		            },
 		            async: true
 		        });
+
 		    }
 
 		    var initWysihtml5 = function () {
+
 		        $('.inbox-wysihtml5').wysihtml5({
 		            "stylesheets": ["/assets/global/plugins/bootstrap-wysihtml5/wysiwyg-color.css"]
 		        });
+
 		    }
 
 		    var initFileupload = function () {
@@ -347,6 +335,7 @@
 		    }
 
 		    var loadPaginate = function (el) {
+
 		        var url = '{{$route}}/' + el.data('section');
 
 		        console.log(el);
@@ -383,15 +372,6 @@
 		            async: true
 		        });
 
-		        // handle group checkbox:
-		        /*jQuery('body').on('change', '.mail-group-checkbox', function () {
-		            var set = jQuery('.mail-checkbox');
-		            var checked = jQuery(this).is(":checked");
-		            jQuery(set).each(function () {
-		                $(this).attr("checked", checked);
-		            });
-		            jQuery.uniform.update(set);
-		        });*/
 		    }
 
 		    var submitCourseForm = function (el){
@@ -419,6 +399,7 @@
 		    }
 
 		    var handleCCInput = function () {
+
 		        var the = $('.profile-compose .mail-to .profile-cc');
 		        var input = $('.profile-compose .input-cc');
 		        the.hide();
@@ -427,6 +408,7 @@
 		            input.hide();
 		            the.show();
 		        });
+
 		    }
 
 		    var handleBCCInput = function () {
@@ -439,9 +421,11 @@
 		            input.hide();
 		            the.show();
 		        });
+
 		    }
 
 		    var toggleButton = function(el) {
+
 		        if (typeof el == 'undefined') {
 		            return;
 		        }
@@ -450,6 +434,107 @@
 		        } else {
 		            el.attr("disabled", true);
 		        }
+
+		    }
+
+		    /* Ajax Forms */
+
+		    var submitAjaxForm = function(el) {
+
+		        content.html(loader);
+
+		        var url = el.data('url');
+		        var method = el.attr('method');
+
+		        console.log(url);
+		    	
+		    	var formData = new FormData(el[0]);
+
+			    $.ajax({
+			        url: url,
+			        type: method,
+			        data: formData,
+			        async: true,
+			        success: function (html) {
+			        	content.html(html);
+			        	console.log(html);
+		                Metronic.init();
+			            console.log('Ajax Form Sent!');
+			        },
+			        error: function(xhr) {
+			        	console.log(xhr);
+			        },
+			        cache: false,
+			        contentType: false,
+			        processData: false
+			    });
+
+			    return false;
+
+		    }
+
+		    /* Lessons Function */
+
+		    var lessonsModuleAdd = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+		        // toggleButton(el);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/addmodule',
+		    		type: 'GET',
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			console.log(html);
+		    			console.log('Add module Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsModuleEdit = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var module = el.parents('.timeline-yellow').data('module');
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+		        // toggleButton(el);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/editmodule',
+		    		type: 'GET',
+		    		data: {
+		    			module_id: module,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			console.log(html);
+		    			console.log('Edit module Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
 		    }
 
 		    return {
@@ -462,6 +547,13 @@
 		        		/* Act on the event */
 		        		e.preventDefault();
 		        		submitCourseForm($(this));
+
+					});
+
+		        	$('.profile').on('submit', '.ajax-form', function (e) {
+		        		/* Act on the event */
+		        		e.preventDefault();
+		        		submitAjaxForm($(this));
 
 					});
 
@@ -536,6 +628,18 @@
 		            // handle following button click
 		            $('.profile').on('click', '.paginate-btn', function (e) {
 		                loadPaginate($(this));
+		            });
+
+		            /* Lessons Events */
+
+		            // handle add module button click
+		            $('.profile').on('click', '.module-add', function (e) {
+		                lessonsModuleAdd($(this));
+		            });
+
+		            // handle edit module button click
+		            $('.profile').on('click', '.module-edit', function (e) {
+		                lessonsModuleEdit($(this));
 		            });
 
 		            //handle loading content based on URL parameter

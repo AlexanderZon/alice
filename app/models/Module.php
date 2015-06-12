@@ -15,6 +15,8 @@ class Module extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    protected static $slug_counter = 0;
+
     public function course(){
 
     	return $this->belongsTo('Course','course_id');
@@ -24,6 +26,44 @@ class Module extends \Eloquent {
     public function lessons(){
 
     	return $this->hasMany('Lesson', 'module_id');
+
+    }
+
+    public static function findPermalinkCounter( $name ){
+
+        $slug = $name.'-'.(++self::$slug_counter);
+
+        if( count(self::where('name', '=', $slug)->get()) > 0 ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $slug;
+
+        endif;
+
+    }
+
+    public static function setPermalink( $title ){
+
+        $name = Str::slug( $title );
+
+        if( $counter = count(self::where('name', '=', $name)->get()) ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $name;
+
+        endif;
+
+    }
+
+    public static function getLastPosition( $course ){
+
+        return $course->modules->count() + 1;
 
     }
 

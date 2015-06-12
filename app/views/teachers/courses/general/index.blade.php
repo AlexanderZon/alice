@@ -24,13 +24,11 @@
 							<form id="course-form" action="" method="post" class="form-horizontal" enctype="multipart/form-data">
 								<div class="form-body">
 									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label col-md-3">Nombre del Curso</label>
-												<div class="col-md-9">
-													<input name="title" type="text" class="form-control" placeholder="Ingrese el nombre del Curso" value="{{ $course->title }}" required>
-													<!-- <span class="help-block">This is inline help</span> -->
-												</div>
+										<div class="col-md-12">
+											<label class="control-label col-md-2">Nombre del Curso</label>
+											<div class="col-md-8">
+												<input name="title" type="text" class="form-control" placeholder="Ingrese el nombre del Curso" value="{{ $course->title }}" required>
+												<!-- <span class="help-block">This is inline help</span> -->
 											</div>
 										</div>
 										<!--/span-->

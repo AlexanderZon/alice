@@ -54,16 +54,16 @@ if(Auth::check()):
 		break;
 		case 'teacher':
 			# Routes for teacher
-			Route::controller('/teachers/courses/{id_course}/achievements', '\Teachers\Courses\Achievements\ReadController');
-			Route::controller('/teachers/courses/{id_course}/activities', '\Teachers\Courses\Activities\ReadController');
-			Route::controller('/teachers/courses/{id_course}/contributors', '\Teachers\Courses\Contributors\ReadController');
-			Route::controller('/teachers/courses/{id_course}/discussions', '\Teachers\Courses\Discussions\ReadController');
-			Route::controller('/teachers/courses/{id_course}/general', '\Teachers\Courses\General\ReadController');
-			Route::controller('/teachers/courses/{id_course}/inscriptions', '\Teachers\Courses\Inscriptions\ReadController');
-			Route::controller('/teachers/courses/{id_course}/lessons', '\Teachers\Courses\Lessons\ReadController');
-			Route::controller('/teachers/courses/{id_course}/questions', '\Teachers\Courses\Questions\ReadController');
-			Route::controller('/teachers/courses/{id_course}/statistics', '\Teachers\Courses\Statistics\ReadController');
-			Route::controller('/teachers/courses/{id_course}/students', '\Teachers\Courses\Students\ReadController');
+			Route::controller('/teachers/courses/{course_id}/achievements', '\Teachers\Courses\Achievements\ReadController');
+			Route::controller('/teachers/courses/{course_id}/activities', '\Teachers\Courses\Activities\ReadController');
+			Route::controller('/teachers/courses/{course_id}/contributors', '\Teachers\Courses\Contributors\ReadController');
+			Route::controller('/teachers/courses/{course_id}/discussions', '\Teachers\Courses\Discussions\ReadController');
+			Route::controller('/teachers/courses/{course_id}/general', '\Teachers\Courses\General\ReadController');
+			Route::controller('/teachers/courses/{course_id}/inscriptions', '\Teachers\Courses\Inscriptions\ReadController');
+			Route::controller('/teachers/courses/{course_id}/lessons', '\Teachers\Courses\Lessons\ReadController');
+			Route::controller('/teachers/courses/{course_id}/questions', '\Teachers\Courses\Questions\ReadController');
+			Route::controller('/teachers/courses/{course_id}/statistics', '\Teachers\Courses\Statistics\ReadController');
+			Route::controller('/teachers/courses/{course_id}/students', '\Teachers\Courses\Students\ReadController');
 			Route::controller('/teachers/courses', '\Teachers\Courses\ReadController');
 			Route::controller('/teachers/contributions', '\Teachers\Contributions\ReadController');
 			Route::controller('/teachers', '\Teachers\ReadController');
