@@ -202,4 +202,40 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 * GET /ordermodule
+	 *
+	 * @return Response
+	 */
+	public function getOrdermodules( $course_id = '' )
+	{
+
+		$course = Course::find(Hashids::decode($course_id));
+
+		self::addArgument('course', $course);
+
+		return self::make('ordermodules');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /ordermodule
+	 *
+	 * @return Response
+	 */
+	public function postOrdermodules( $course_id = '' )
+	{
+
+		return Response::json(Input::all());
+
+		self::addArgument('course', $course);
+
+		self::addArgument('modules', $course->modules);
+
+		return self::make('index');
+
+	}
+
 }

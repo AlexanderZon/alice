@@ -26,13 +26,42 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="portlet-title">
-							<h4 class="profile-usertitle-name">Lecciones del Curso</h4>
+							<h4 class="profile-usertitle-name">Lecciones del Curso
+								<div  class="pull-right">&nbsp;</div>
+								<div  class="pull-right">&nbsp;</div>
+								<a href="javascript:;" class="btn blue-madison pull-right tooltips module-order" data-placement="left" data-original-title="Ordenar los Módulos" data-course="{{Hashids::encode($course->id)}}">
+									<i class="fa fa-list"></i>
+								</a>
+								<div  class="pull-right">&nbsp;</div>
+								<div  class="pull-right">&nbsp;</div>
+								<a href="javascript:;" class="btn blue-madison pull-right tooltips module-add" data-placement="left" data-original-title="Añadir un nuevo Módulo" data-course="{{Hashids::encode($course->id)}}">
+									<i class="fa fa-plus"></i>
+								</a>
+							</h4>
 						</div>
 						<div class="portlet-body">
+
+							<div  class="row">&nbsp;</div>
+							<div  class="row">&nbsp;</div>
+							<div  class="row">&nbsp;</div>
 							
 							<ul class="timeline" data-course="{{ Hashids::encode($course->id) }}">
 
+								<li class="timeline-grey-silver" >
+									<div class="timeline-time">
+										<span class="time">Inicio</span>
+									</div>
+									<div class="timeline-icon">
+										<i class="fa fa-flag"></i>
+									</div>
+									<div class="timeline-body">
+										<h2> Este punto marca el inicio del curso									
+										</h2>
+									</div>
+								</li>
+
 								@if($modules->count() > 0)
+
 									@foreach($modules as $module)
 
 										<li class="timeline-yellow" data-module="{{ Hashids::encode($module->id) }}">
@@ -60,12 +89,12 @@
 													</a>
 													<div  class="pull-right">&nbsp;</div>
 													<div  class="pull-right">&nbsp;</div>
-													<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-order" data-original-title="Ordenar las lecciones">
+													<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-order" data-original-title="Ordenar las lecciones de este módulo">
 														<i class="fa fa-list"></i>
 													</a>
 													<div  class="pull-right">&nbsp;</div>
 													<div  class="pull-right">&nbsp;</div>
-													<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-add" data-original-title="Agregar una nueva Lección" data-timeline="yellow">
+													<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-add" data-original-title="Añadir una nueva Lección a este módulo" data-timeline="yellow">
 														<i class="fa fa-plus"></i>
 													</a>
 												</div>
@@ -158,6 +187,19 @@
 										</div>
 									</li>
 								@endif
+
+								<li class="timeline-grey-silver" >
+									<div class="timeline-time">
+										<span class="time">Final</span>
+									</div>
+									<div class="timeline-icon">
+										<i class="fa fa-flag-checkered"></i>
+									</div>
+									<div class="timeline-body">
+										<h2> Y este otro punto marca el final	
+										</h2>
+									</div>
+								</li>
 
 							</ul>
 							<div class="col-md-12"></div>

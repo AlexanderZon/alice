@@ -479,6 +479,8 @@
 
 		    	var course = el.parents('.timeline').data('course');
 
+		    	if( typeof course == 'undefined') course = el.data('course');
+
 		        console.log(el);
 
 		        loading.show();
@@ -493,7 +495,7 @@
 				        loading.hide();
 				        content.html(html);
 		                Metronic.init();
-		    			console.log(html);
+		    			// console.log(html);
 		    			console.log('Add module Form');
 		    		},
 		    		error: function(xhr) {
@@ -559,6 +561,158 @@
 		                Metronic.init();
 		    			console.log(html);
 		    			console.log('Delete module Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsModuleOrder = function(el) {
+
+		    	var course = el.data('course');
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/ordermodules',
+		    		type: 'GET',
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			console.log(html);
+		    			console.log('Order modules Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonAdd = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/addlesson',
+		    		type: 'GET',
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			console.log(html);
+		    			console.log('Add lesson Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonEdit = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var lesson = el.parents('.timeline-yellow').data('lesson');
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/editlesson',
+		    		type: 'GET',
+		    		data: {
+		    			lesson_id: lesson,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			console.log(html);
+		    			console.log('Edit lesson Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonDelete = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var lesson = el.parents('.timeline-yellow').data('lesson');
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/deletelesson',
+		    		type: 'GET',
+		    		data: {
+		    			lesson_id: lesson,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			console.log(html);
+		    			console.log('Delete lesson Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonOrder = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var module = el.parents('.timeline-yellow').data('module');
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/orderlessons',
+		    		type: 'GET',
+		    		data: {
+		    			module_id: module,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			console.log(html);
+		    			console.log('Order lessons Form');
 		    		},
 		    		error: function(xhr) {
 		    			console.log(xhr);
@@ -675,6 +829,31 @@
 		            // handle delete module button click
 		            $('.profile').on('click', '.module-delete', function (e) {
 		                lessonsModuleDelete($(this));
+		            });
+
+		            // handle order module button click
+		            $('.profile').on('click', '.module-order', function (e) {
+		                lessonsModuleOrder($(this));
+		            });
+
+		            // handle add lesson button click
+		            $('.profile').on('click', '.lesson-add', function (e) {
+		                lessonsLessonAdd($(this));
+		            });
+
+		            // handle edit lesson button click
+		            $('.profile').on('click', '.lesson-edit', function (e) {
+		                lessonsLessonEdit($(this));
+		            });
+
+		            // handle delete lesson button click
+		            $('.profile').on('click', '.lesson-delete', function (e) {
+		                lessonsLessonDelete($(this));
+		            });
+
+		            // handle order lesson button click
+		            $('.profile').on('click', '.lesson-order', function (e) {
+		                lessonsLessonDelete($(this));
 		            });
 
 		            //handle loading content based on URL parameter

@@ -15,6 +15,17 @@ class Lesson extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    protected $defaults_avatar_url = '/uploads/discussions/defaults';
+
+    protected $defaults_avatar_colors = [
+        'blue',
+        'brown',
+        'green',
+        'orange',
+        'pink',
+        'purple'
+    ];
+
     public function attachments(){
 
     	return $this->morphMany('Attachment', 'attachmentable');
@@ -108,6 +119,26 @@ class Lesson extends \Eloquent {
     	foreach($this->approvedTests() as $test) $students = $students->orWhere('id','=',$test->user->id);
 
     	return $students->get();
+
+    }
+
+    public function getAvatar(){
+
+        $character = substr($this->title, 0, 1);
+
+        $color = rand(0, count($this->defaults_avatar_colors)-1);
+
+        return $this->defaults_avatar_url.$this->defaults_avatar_colors[$color];
+
+    }
+
+    public function getSummary( $length = 500 ){
+
+        $text = html_entity_decode(strip_tags( $this->content ));
+
+        if(strlen($text) > $length) return substr($text, 0, $length).'...';
+
+        return $text;
 
     }
 

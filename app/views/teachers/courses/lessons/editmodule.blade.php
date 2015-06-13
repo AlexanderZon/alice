@@ -69,16 +69,6 @@
 												</div>
 											</div>
 										</div>
-										<!-- <div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label col-md-5">Fecha de Culminación</label>
-												<div class="col-md-7">
-													<input name="date_end" type="text" class="form-control" placeholder="Ingrese el nombre del Curso" value="{{ $course->title }}" required>
-													<span class="help-block">This is inline help</span>
-												</div>
-											</div>
-										</div> -->
-										<!--/span-->
 									</div>
 								</div>
 								<div class="form-actions">
@@ -87,7 +77,7 @@
 											<div class="row">
 												<div class="col-md-offset-3 col-md-9">
 													<button type="submit" class="btn green">Enviar</button>
-													<a href="{{ $route }}" class="btn default">Volver</a>
+													<a href="javascript:;" class="btn default lessons-btn">Volver</a>
 												</div>
 											</div>
 										</div>
