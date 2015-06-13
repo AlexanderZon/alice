@@ -62,70 +62,70 @@
 					<div class="profile-usermenu">
 						<ul class="nav">
 							@if(true)
-								<li class="{{ $section == 'show' ? 'active' : '' }}">
+								<li id="general-section" class="{{ $section == 'show' ? 'active' : '' }}">
 									<a href="javascript:;" class="general-btn">
 									<i class="icon-home"></i>
 									General </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'lessons' ? 'active' : '' }}">
+								<li id="lessons-section" class="{{ $section == 'lessons' ? 'active' : '' }}">
 									<a href="javascript:;" class="lessons-btn">
 									<i class="icon-notebook"></i>
 									Lecciones </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'students' ? 'active' : '' }}">
+								<li id="students-section" class="{{ $section == 'students' ? 'active' : '' }}">
 									<a href="javascript:;" class="students-btn">
 									<i class="icon-graduation"></i>
 									Estudiantes </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'discussions' ? 'active' : '' }}">
+								<li id="discussions-section" class="{{ $section == 'discussions' ? 'active' : '' }}">
 									<a href="javascript:;" class="discussions-btn">
 									<i class="icon-bubbles"></i>
 									Discusiones </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'contributing' ? 'active' : '' }}">
+								<li id="contributors-section" class="{{ $section == 'contributing' ? 'active' : '' }}">
 									<a href="javascript:;" class="contributors-btn">
 									<i class="icon-eyeglasses"></i>
 									Contribuidores </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'achievements' ? 'active' : '' }}">
+								<li id="achievements-section" class="{{ $section == 'achievements' ? 'active' : '' }}">
 									<a href="javascript:;" class="achievements-btn">
 									<i class="icon-badge"></i>
 									Premiaciones </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'statistics' ? 'active' : '' }}">
+								<li id="statistics-section" class="{{ $section == 'statistics' ? 'active' : '' }}">
 									<a href="javascript:;" class="statistics-btn">
 									<i class="icon-graph"></i>
 									Estadísticas </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'inscriptions' ? 'active' : '' }}">
+								<li id="inscriptions-section" class="{{ $section == 'inscriptions' ? 'active' : '' }}">
 									<a href="javascript:;" class="inscriptions-btn">
 									<i class="icon-user-following"></i>
 									Inscripciones </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'questions' ? 'active' : '' }}">
+								<li id="questions-section" class="{{ $section == 'questions' ? 'active' : '' }}">
 									<a href="javascript:;" class="questions-btn">
 									<i class="icon-question"></i>
 									Preguntas </a>
 								</li>
 							@endif
 							@if(true)
-								<li class="{{ $section == 'activities' ? 'active' : '' }}">
+								<li id="activities-section" class="{{ $section == 'activities' ? 'active' : '' }}">
 									<a href="javascript:;" class="activities-btn">
 									<i class="icon-chemistry"></i>
 									Actividades </a>
@@ -239,6 +239,40 @@
 		            	console.log(name);
 		                $('.profile-usermenu li').removeClass('active');
 		                el.parents('li').addClass('active');	
+
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.init();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                // toggleButton(el);
+		            },
+		            async: true
+		        });
+
+		    }
+
+		    var backWall = function (el, name) {
+
+		        var url = '{{$route}}/{{$hashid}}/' + name;
+
+		        console.log(el);
+
+		        loading.show();
+		        content.html(loader);
+		        // toggleButton(el);
+
+		        $.ajax({
+		            type: "POST",
+		            cache: false,
+		            url: url,
+		            dataType: "html",
+		            success: function(res) 
+		            {	
 
 		                loading.hide();
 		                content.html(res);
@@ -527,7 +561,7 @@
 				        loading.hide();
 				        content.html(html);
 		                Metronic.init();
-		    			console.log(html);
+		    			// console.log(html);
 		    			console.log('Edit module Form');
 		    		},
 		    		error: function(xhr) {
@@ -559,7 +593,7 @@
 				        loading.hide();
 				        content.html(html);
 		                Metronic.init();
-		    			console.log(html);
+		    			// console.log(html);
 		    			console.log('Delete module Form');
 		    		},
 		    		error: function(xhr) {
@@ -587,7 +621,7 @@
 				        loading.hide();
 				        content.html(html);
 		                Metronic.init();
-		    			console.log(html);
+		    			// console.log(html);
 		    			console.log('Order modules Form');
 		    		},
 		    		error: function(xhr) {
@@ -765,17 +799,34 @@
 		                loadWall($(this), 'general');
 		            });
 
+		            // handle spam and forward button click
+		            $('.profile').on('click', '.general-back-btn', function (e) {
+		            	e.preventDefault();
+		                backWall($(this), 'general');
+		            });
+
 		            // handle sned and forward button click
 		            $('.profile').on('click', '.lessons-btn', function (e) {
 		            	e.preventDefault();
 		                loadWall($(this), 'lessons');
 		            });
 
+		            // handle sned and forward button click
+		            $('.profile').on('click', '.lessons-back-btn', function (e) {
+		            	e.preventDefault();
+		                backWall($(this), 'lessons');
+		            });
+
 		            // handle discard and forward button click
 		            $('.profile').on('click', '.students-btn', function (e) {
 		            	e.preventDefault();
-		            	console.log('click');
 		                loadWall($(this),'students');
+		            });
+
+		            // handle discard and forward button click
+		            $('.profile').on('click', '.students-back-btn', function (e) {
+		            	e.preventDefault();
+		                backWall($(this),'students');
 		            });
 
 		            // handle draft and forward button click
@@ -784,9 +835,20 @@
 		                loadWall($(this), 'contributors');
 		            });
 
+		            // handle draft and forward button click
+		            $('.profile').on('click', '.contributors-back-btn', function (e) {
+		            	e.preventDefault();
+		                backWall($(this), 'contributors');
+		            });
+
 		            // handle discussions and forward button click
 		            $('.profile').on('click', '.discussions-btn', function (e) {
 		                loadWall($(this), 'discussions');
+		            });
+
+		            // handle discussions and forward button click
+		            $('.profile').on('click', '.discussions-back-btn', function (e) {
+		                backWall($(this), 'discussions');
 		            });
 
 		            // handleachievements button click
@@ -794,9 +856,19 @@
 		                loadWall($(this), 'achievements');
 		            });
 
+		            // handleachievements button click
+		            $('.profile').on('click', '.achievements-back-btn', function (e) {
+		                backWall($(this), 'achievements');
+		            });
+
 		            // handle statistics button click
 		            $('.profile').on('click', '.statistics-btn', function (e) {
 		                loadWall($(this), 'statistics');
+		            });
+
+		            // handle statistics button click
+		            $('.profile').on('click', '.statistics-back-btn', function (e) {
+		                backWall($(this), 'statistics');
 		            });
 
 		            // handle followers button click

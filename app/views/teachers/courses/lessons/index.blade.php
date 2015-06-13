@@ -151,7 +151,7 @@
 										<li class="timeline-transparent" data-module="{{ Hashids::encode($module->id) }}">
 											<div class="timeline-body">
 												<div class="timeline-footer">
-													<a href="javascript:;" class="btn blue tooltips lesson-add" data-original-title="Añadir una nueva lección a este módulo" data-timeline="transparent">
+													<a href="javascript:;" class="btn blue-madison tooltips lesson-add" data-original-title="Añadir una nueva lección a este módulo" data-timeline="transparent">
 														<i class="fa fa-plus"></i>
 													</a>
 												</div>
@@ -165,7 +165,7 @@
 										</div>
 										<div class="timeline-body">
 											<div class="timeline-footer">
-												<a href="javascript:;" class="btn blue tooltips module-add" data-original-title="Añadir un nuevo Módulo">
+												<a href="javascript:;" class="btn blue-madison tooltips module-add" data-original-title="Añadir un nuevo Módulo">
 													<i class="fa fa-plus"></i>
 												</a>
 											</div>
@@ -180,7 +180,7 @@
 										</div>
 										<div class="timeline-body">
 											<div class="timeline-footer">
-												<a href="javascript:;" class="btn blue tooltips module-add" data-original-title="Añadir un nuevo Módulo">
+												<a href="javascript:;" class="btn blue-madison tooltips module-add" data-original-title="Añadir un nuevo Módulo">
 													<i class="fa fa-plus"></i> Añade el primer módulo del curso
 												</a>
 											</div>

@@ -228,13 +228,16 @@ class ReadController extends \Teachers\Courses\ReadController {
 	public function postOrdermodules( $course_id = '' )
 	{
 
-		return Response::json(Input::all());
+		$position = 0;
 
-		self::addArgument('course', $course);
+		foreach( Input::get('order') as $order ):
+			$module = Module::find(Hashids::decode($order['id']));
+			$module->order = $position;
+			$module->save();
+			$position++;
+		endforeach;
 
-		self::addArgument('modules', $course->modules);
-
-		return self::make('index');
+		return Response::json(Input::get('order'));
 
 	}
 

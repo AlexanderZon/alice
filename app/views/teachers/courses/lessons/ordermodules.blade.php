@@ -5,7 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
-	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"/>
 	<!-- END PICKERS LEVEL STYLES -->
 
 	<!-- BEGIN PAGE LEVEL STYLES -->
@@ -28,13 +28,20 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="portlet-title">
 							<h4 class="profile-usertitle-name">Ordenamiento de Módulos	
-								<a href="javascript:;" class="btn blue pull-right tooltips lessons-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
+								<a href="javascript:;" class="btn blue-madison pull-right tooltips lessons-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
 									<i class="fa fa-arrow-left"></i>
 								</a>
 							</h4>
 						</div>
 						<div class="portlet-body form">
 							<!-- BEGIN FORM-->
+							<div class="row">&nbsp;</div>
+							<div class="row">
+								<span class="col-md-1"></span>
+								<span class="col-md-10 dd-handle grey-silver" style="cursor: help">Arrastra los módulos a la posición que desee colocarlos</span>
+								<span class="col-md-1"></span>
+							</div>
+							<div class="row">&nbsp;</div>
 							<div class="col-md-12">
 								<div class="portlet-body ">
 									<div class="dd" id="nestable-list">
@@ -42,7 +49,7 @@
 											<ol class="dd-list">
 												@foreach($course->modules as $module)
 													<li class="dd-item dd-nochildren children" data-id="{{ Hashids::encode($module->id) }}">
-														<div class="dd-handle">
+														<div class="dd-handle yellow">
 															 {{ $module->title }}
 														</div>
 													</li>
@@ -154,6 +161,7 @@
 		        	type: 'POST',
 		        	data: {
 		        		'order': jQuery('#nestable-list').nestable('serialize'),
+		        		'course': '{{ Hashids::encode($course->id) }}',
 		        	},
 		        	success: function(data){
 		        		console.log(data);

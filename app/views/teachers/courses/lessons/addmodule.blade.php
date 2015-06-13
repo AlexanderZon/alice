@@ -5,7 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
-	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"/>
 	<!-- END PICKERS LEVEL STYLES -->
 
 	<!-- BEGIN PAGE LEVEL STYLES -->
@@ -27,7 +27,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="portlet-title">
 							<h4 class="profile-usertitle-name">Añadir Nuevo Módulo	
-								<a href="javascript:;" class="btn blue pull-right tooltips lessons-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
+								<a href="javascript:;" class="btn blue-madison pull-right tooltips lessons-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
 									<i class="fa fa-arrow-left"></i>
 								</a>
 							</h4>
