@@ -15,7 +15,7 @@ class Lesson extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
-    protected $defaults_avatar_url = '/uploads/discussions/defaults';
+    protected $defaults_avatar_url = '/uploads/discussions/defaults/';
 
     protected $defaults_avatar_colors = [
         'blue',
@@ -25,6 +25,10 @@ class Lesson extends \Eloquent {
         'pink',
         'purple'
     ];
+
+    protected $upload_folder = '/uploads/courses/';
+
+    protected static $slug_counter = 0;
 
     public function attachments(){
 
@@ -58,7 +62,7 @@ class Lesson extends \Eloquent {
 
     public function students(){
 
-    	return $this->belongsToMany('User','user_lessons')->orderBy('created_at','ASC')->get();
+    	return $this->belongsToMany('User','user_lessons')->orderBy('created_at','ASC');
 
     }
 
@@ -128,7 +132,7 @@ class Lesson extends \Eloquent {
 
         $color = rand(0, count($this->defaults_avatar_colors)-1);
 
-        return $this->defaults_avatar_url.$this->defaults_avatar_colors[$color];
+        return $this->defaults_avatar_url.$character.'_'.$this->defaults_avatar_colors[$color].'.png';
 
     }
 
@@ -142,6 +146,16 @@ class Lesson extends \Eloquent {
 
     }
 
+    public function makeFullDirectory(){
+
+        $path = public_path().$this->upload_folder.$this->module->course->name.'/lessons/'.$this->name;
+
+        File::makeDirectory($path.'/attachments', $mode = 0755, true, true);
+
+        return $path;
+
+    }
+    
     public static function _get( $status = 'active' ){
 
         return self::where( 'status', '=', $status )->get();
@@ -160,5 +174,42 @@ class Lesson extends \Eloquent {
 
     }
 
+    public static function findPermalinkCounter( $name ){
+
+        $slug = $name.'-'.(++self::$slug_counter);
+
+        if( count(self::where('name', '=', $slug)->get()) > 0 ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $slug;
+
+        endif;
+
+    }
+
+    public static function setPermalink( $title ){
+
+        $name = Str::slug( $title );
+
+        if( $counter = count(self::where('name', '=', $name)->get()) ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $name;
+
+        endif;
+
+    }
+
+    public static function getLastPosition( $modules ){
+
+        return $modules->lessons->count() + 1;
+
+    }
 
 }

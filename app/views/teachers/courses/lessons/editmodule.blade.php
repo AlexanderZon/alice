@@ -77,7 +77,7 @@
 											<div class="row">
 												<div class="col-md-offset-3 col-md-9">
 													<button type="submit" class="btn green">Enviar</button>
-													<a href="javascript:;" class="btn default lessons-btn">Volver</a>
+													<a href="javascript:;" class="btn default lessons-back-btn">Volver</a>
 												</div>
 											</div>
 										</div>

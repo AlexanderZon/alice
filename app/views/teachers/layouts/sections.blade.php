@@ -634,6 +634,9 @@
 		    var lessonsLessonAdd = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
+		    	var module = el.parents('.timeline-yellow').data('module');
+
+		    	if( typeof module == 'undefined') module = el.parents('.timeline-transparent').data('module');
 
 		        console.log(el);
 
@@ -643,13 +646,16 @@
 		    	$.ajax({
 		    		url: '{{$route}}/' + course + '/lessons/addlesson',
 		    		type: 'GET',
+		    		data: {
+		    			module_id: module
+		    		},
 		    		async: true,
 		    		success: function(html) {
 
 				        loading.hide();
 				        content.html(html);
 		                Metronic.init();
-		    			console.log(html);
+		    			// console.log(html);
 		    			console.log('Add lesson Form');
 		    		},
 		    		error: function(xhr) {
@@ -662,9 +668,11 @@
 		    var lessonsLessonEdit = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
-		    	var lesson = el.parents('.timeline-yellow').data('lesson');
+		    	var lesson = el.parents('.timeline-blue').data('lesson');
 
-		        console.log(el);
+		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
+
+		        console.log(lesson);
 
 		        loading.show();
 		        content.html(loader);
@@ -681,7 +689,7 @@
 				        loading.hide();
 				        content.html(html);
 		                Metronic.init();
-		    			console.log(html);
+		    			// console.log(html);
 		    			console.log('Edit lesson Form');
 		    		},
 		    		error: function(xhr) {
@@ -694,9 +702,11 @@
 		    var lessonsLessonDelete = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
-		    	var lesson = el.parents('.timeline-yellow').data('lesson');
+		    	var lesson = el.parents('.timeline-blue').data('lesson');
 
-		        console.log(el);
+		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
+
+		        console.log(lesson);
 
 		        loading.show();
 		        content.html(loader);
@@ -925,7 +935,7 @@
 
 		            // handle order lesson button click
 		            $('.profile').on('click', '.lesson-order', function (e) {
-		                lessonsLessonDelete($(this));
+		                lessonsLessonOrder($(this));
 		            });
 
 		            //handle loading content based on URL parameter

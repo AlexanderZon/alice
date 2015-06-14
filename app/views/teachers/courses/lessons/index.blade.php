@@ -27,11 +27,13 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="portlet-title">
 							<h4 class="profile-usertitle-name">Lecciones del Curso
-								<div  class="pull-right">&nbsp;</div>
-								<div  class="pull-right">&nbsp;</div>
-								<a href="javascript:;" class="btn blue-madison pull-right tooltips module-order" data-placement="left" data-original-title="Ordenar los Módulos" data-course="{{Hashids::encode($course->id)}}">
-									<i class="fa fa-list"></i>
-								</a>
+								@if($modules->count() > 1)
+									<div  class="pull-right">&nbsp;</div>
+									<div  class="pull-right">&nbsp;</div>
+									<a href="javascript:;" class="btn blue-madison pull-right tooltips module-order" data-placement="left" data-original-title="Ordenar los Módulos" data-course="{{Hashids::encode($course->id)}}">
+										<i class="fa fa-list"></i>
+									</a>
+								@endif
 								<div  class="pull-right">&nbsp;</div>
 								<div  class="pull-right">&nbsp;</div>
 								<a href="javascript:;" class="btn blue-madison pull-right tooltips module-add" data-placement="left" data-original-title="Añadir un nuevo Módulo" data-course="{{Hashids::encode($course->id)}}">
@@ -82,18 +84,20 @@
 															<i class="fa fa-trash-o"></i>
 														</a>
 													@endif
-													<div  class="pull-right">&nbsp;</div>
-													<div  class="pull-right">&nbsp;</div>
+													<div class="pull-right">&nbsp;</div>
+													<div class="pull-right">&nbsp;</div>
 													<a href="javascript:;" class="btn green-haze pull-right tooltips module-edit" data-original-title="Editar Módulo">
 														<i class="fa fa-pencil"></i>
 													</a>
-													<div  class="pull-right">&nbsp;</div>
-													<div  class="pull-right">&nbsp;</div>
-													<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-order" data-original-title="Ordenar las lecciones de este módulo">
-														<i class="fa fa-list"></i>
-													</a>
-													<div  class="pull-right">&nbsp;</div>
-													<div  class="pull-right">&nbsp;</div>
+													@if($module->lessons->count() > 1)
+														<div class="pull-right">&nbsp;</div>
+														<div class="pull-right">&nbsp;</div>
+														<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-order" data-original-title="Ordenar las lecciones de este módulo">
+															<i class="fa fa-list"></i>
+														</a>
+													@endif
+													<div class="pull-right">&nbsp;</div>
+													<div class="pull-right">&nbsp;</div>
 													<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-add" data-original-title="Añadir una nueva Lección a este módulo" data-timeline="yellow">
 														<i class="fa fa-plus"></i>
 													</a>
@@ -103,7 +107,7 @@
 
 										@if($module->lessons->count() > 0)
 											@foreach($module->lessons as $lesson)
-												<li class="timeline-blue" data-module="{{ Hashids::encode($module->id) }}" data-lesson="{{ Hashids::encode($lesson->id) }}">
+												<li class="timeline-{{ $lesson->status == 'active' ? 'blue' : 'grey-silver' }}" data-module="{{ Hashids::encode($module->id) }}" data-lesson="{{ Hashids::encode($lesson->id) }}">
 													<div class="timeline-body">
 														<h2>{{ $lesson->title }}
 															<a href="javascript:;" class="pull-right" data-original-title="Editar esta Lección">
@@ -118,18 +122,18 @@
 															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-comments" data-original-title="Hay {{ $lesson->discussions->count() }} comentario(s) en esta Lección">
 																<i class="fa fa-comments"></i> {{ $lesson->discussions->count() }}
 															</a>
-															<div  class="pull-left">&nbsp;</div>
-															<div  class="pull-left">&nbsp;</div>
+															<div class="pull-left">&nbsp;</div>
+															<div class="pull-left">&nbsp;</div>
 															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-students" data-original-title="{{ $lesson->students->count() }} estudiante(s) han participado en esta Lección">
 																<i class="fa fa-users"></i> {{ $lesson->students->count() }}
 															</a>
-															<div  class="pull-left">&nbsp;</div>
-															<div  class="pull-left">&nbsp;</div>
+															<div class="pull-left">&nbsp;</div>
+															<div class="pull-left">&nbsp;</div>
 															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-attachments" data-original-title="Hay {{ $lesson->attachments->count() }} archivo(s) en esta Lección">
 																<i class="fa fa-file"></i> {{ $lesson->attachments->count() }}
 															</a>
-															<div  class="pull-left">&nbsp;</div>
-															<div  class="pull-left">&nbsp;</div>
+															<div class="pull-left">&nbsp;</div>
+															<div class="pull-left">&nbsp;</div>
 															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-activities" data-original-title="Hay {{ $lesson->evaluations->count() }} actividad(es) en esta Lección">
 																<i class="fa fa-flask"></i> {{ $lesson->evaluations->count() }}
 															</a>
@@ -137,8 +141,8 @@
 															<a href="javascript:;" class="btn red-flamingo pull-right tooltips lesson-delete" data-original-title="Eliminar esta Lección">
 																<i class="fa fa-trash-o"></i>
 															</a>
-															<div  class="pull-right">&nbsp;</div>
-															<div  class="pull-right">&nbsp;</div>
+															<div class="pull-right">&nbsp;</div>
+															<div class="pull-right">&nbsp;</div>
 															<a href="javascript:;" class="btn yellow pull-right tooltips lesson-edit" data-original-title="Editar esta Lección">
 																<i class="fa fa-pencil"></i>
 															</a>

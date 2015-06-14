@@ -46,7 +46,7 @@
 											<div class="row">
 												<div class="col-md-offset-3 col-md-9">
 													<button type="submit" class="btn btn-danger">Si, Eliminar</button>
-													<a href="javascript:;" class="btn default lessons-btn">No, Volver</a>
+													<a href="javascript:;" class="btn default lessons-back-btn">No, Volver</a>
 												</div>
 											</div>
 										</div>

@@ -21,7 +21,7 @@ class Evaluation extends \Eloquent {
 
     }
 
-    public function tests();{
+    public function tests(){
 
     	return $this->hasMany('Test', 'evaluation_id');
 

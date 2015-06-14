@@ -25,7 +25,7 @@ class Module extends \Eloquent {
 
     public function lessons(){
 
-    	return $this->hasMany('Lesson', 'module_id');
+    	return $this->hasMany('Lesson', 'module_id')->orderBy('order', 'ASC');
 
     }
 

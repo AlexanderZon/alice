@@ -2,7 +2,7 @@
 
 use \Course as Course;
 use \Module as Module;
-use \Lessons as Lessons;
+use \Lesson as Lesson;
 use \User as User;
 use \Input as Input;
 use \Response as Response;
@@ -234,6 +234,193 @@ class ReadController extends \Teachers\Courses\ReadController {
 			$module = Module::find(Hashids::decode($order['id']));
 			$module->order = $position;
 			$module->save();
+			$position++;
+		endforeach;
+
+		return Response::json(Input::get('order'));
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /addlesson
+	 *
+	 * @return Response
+	 */
+	public function getAddlesson( $course_id = '' )
+	{
+
+		$module = Module::find(Hashids::decode(Input::get('module_id')));
+
+		self::addArgument('module', $module);
+
+		self::addArgument('course', $module->course);
+
+		return self::make('addlesson');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /addlesson
+	 *
+	 * @return Response
+	 */
+	public function postAddlesson( $course_id = '' )
+	{
+
+		$module = Module::find(Hashids::decode(Input::get('module_id')));
+
+		$lesson = new Lesson();
+		$lesson->module_id = $module->id;
+		$lesson->previous_id = Input::get('previous_id') != null ? Input::get('previous_id') : 0;
+		$lesson->title = Input::get('title');
+		$lesson->name = Lesson::setPermalink(Input::get('title'));
+		$lesson->approval_percentage = (Input::get('approval_percentage')/100);
+		$lesson->content = Input::get('content');
+		// $lesson->date_start = date('Y-m-d', strtotime(str_replace('/','-',strstr(Input::get('daterange'),' - ', true))));
+		// $lesson->date_end = date('Y-m-d', strtotime(str_replace('/','-',str_replace(' - ','',strstr(Input::get('daterange'),' - ', false)))));
+		$lesson->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
+		$lesson->order = Lesson::getLastPosition($module);
+		$lesson->save();
+
+		$directory = $lesson->makeFullDirectory();
+
+		$course = Course::find(Hashids::decode($course_id));
+
+		self::addArgument('course', $course);
+
+		self::addArgument('modules', $course->modules);
+
+		return self::make('index');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /editlesson
+	 *
+	 * @return Response
+	 */
+	public function getEditlesson( $course_id = '' )
+	{
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		self::addArgument('module', $lesson->module);
+
+		self::addArgument('lesson', $lesson);
+
+		self::addArgument('course', Course::find(Hashids::decode($course_id)));
+
+		return self::make('editlesson');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /editlesson
+	 *
+	 * @return Response
+	 */
+	public function postEditlesson( $course_id = '' )
+	{
+
+		$lesson = Lesson::find(Crypt::decrypt(Input::get('lesson_id')));
+		$lesson->previous_id = Input::get('previous_id') != null ? Input::get('previous_id') : 0;
+		$lesson->title = Input::get('title');
+		$lesson->approval_percentage = (Input::get('approval_percentage')/100);
+		$lesson->content = Input::get('content');
+		// $lesson->date_start = date('Y-m-d', strtotime(str_replace('/','-',strstr(Input::get('daterange'),' - ', true))));
+		// $lesson->date_end = date('Y-m-d', strtotime(str_replace('/','-',str_replace(' - ','',strstr(Input::get('daterange'),' - ', false)))));
+		$lesson->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
+		$lesson->save();
+
+		$course = Course::find(Hashids::decode($course_id));
+
+		self::addArgument('course', $course);
+
+		self::addArgument('modules', $course->modules);
+
+		return self::make('index');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /deletelesson
+	 *
+	 * @return Response
+	 */
+	public function getDeletelesson( $course_id = '' )
+	{
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		self::addArgument('course', Course::find(Hashids::decode( $course_id )));
+
+		self::addArgument('lesson', $lesson);
+
+		return self::make('deletelesson');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /deletelesson
+	 *
+	 * @return Response
+	 */
+	public function postDeletelesson( $course_id = '' )
+	{
+
+		$lesson = Lesson::find(Crypt::decrypt(Input::get('lesson_id')));
+		$lesson->delete();
+
+		$course = Course::find(Hashids::decode($course_id));
+
+		self::addArgument('course', $course);
+
+		self::addArgument('modules', $course->modules);
+
+		return self::make('index');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /orderlesson
+	 *
+	 * @return Response
+	 */
+	public function getOrderlessons( $course_id = '' )
+	{
+
+		$module = Module::find(Hashids::decode(Input::get('module_id')));
+
+		self::addArgument('module', $module);
+
+		self::addArgument('course', $module->course);
+
+		return self::make('orderlessons');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /orderlesson
+	 *
+	 * @return Response
+	 */
+	public function postOrderlessons( $course_id = '' )
+	{
+
+		$position = 0;
+
+		foreach( Input::get('order') as $order ):
+			$lesson = Lesson::find(Hashids::decode($order['id']));
+			$lesson->order = $position;
+			$lesson->save();
 			$position++;
 		endforeach;
 
