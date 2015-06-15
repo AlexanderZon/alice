@@ -3,11 +3,13 @@
 use \Course as Course;
 use \Module as Module;
 use \Lesson as Lesson;
+use \Attachment as Attachment;
 use \User as User;
 use \Input as Input;
 use \Response as Response;
 use \Hashids as Hashids;
 use \Crypt as Crypt;
+use \GUID as GUID;
 
 
 class ReadController extends \Teachers\Courses\ReadController {
@@ -440,11 +442,11 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /uploadattachments
+	 * GET /attachments
 	 *
 	 * @return Response
 	 */
-	public function getUploadattachments( $course_id = '' )
+	public function getAttachments( $course_id = '' )
 	{
 
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
@@ -455,7 +457,45 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		self::addArgument('course', Course::find(Hashids::decode($course_id)));
 
-		return self::make('uploadattachments');
+		return self::make('attachments');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /uploadattachments
+	 *
+	 * @return Response
+	 */
+	public function getUploadattachments( $course_id = '' )
+	{
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		$json = array(
+			'files' => array()
+			);
+
+
+		if($lesson->attachments->count() > 0):
+
+			foreach( $lesson->attachments as $file ):
+
+		    	$json['files'][] = array(
+					'name' => $file->name,
+					'size' => $file->size,
+					'type' => $file->mime,
+					'url' => $file->route,
+					'thumbnailUrl' => $file->image(),
+					'deleteType' => 'DELETE',
+					'deleteUrl' => self::$route.'/deleteFile/'.Hashids::encode($file->id),
+		    		);
+
+			endforeach;
+
+		endif;
+
+		return Response::json($json);
 
 	}
 
@@ -468,25 +508,44 @@ class ReadController extends \Teachers\Courses\ReadController {
 	public function postUploadattachments( $course_id = '' )
 	{
 
-		return Response::json(Input::all());
+		$files = Input::file('files');
 
-		$lesson = Lesson::find(Crypt::decrypt(Input::get('lesson_id')));
-		$lesson->previous_id = Input::get('previous_id') != null ? Input::get('previous_id') : 0;
-		$lesson->title = Input::get('title');
-		$lesson->approval_percentage = (Input::get('approval_percentage')/100);
-		$lesson->content = Input::get('content');
-		// $lesson->date_start = date('Y-m-d', strtotime(str_replace('/','-',strstr(Input::get('daterange'),' - ', true))));
-		// $lesson->date_end = date('Y-m-d', strtotime(str_replace('/','-',str_replace(' - ','',strstr(Input::get('daterange'),' - ', false)))));
-		$lesson->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
-		$lesson->save();
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 
-		$course = Course::find(Hashids::decode($course_id));
+		$course = $lesson->module->course;
 
-		self::addArgument('course', $course);
+		$json = array(
+			'files' => array()
+			);
 
-		self::addArgument('modules', $course->modules);
+		foreach( $files as $file ):
 
-		return self::make('index');
+	        $filename = $file->getClientOriginalName();
+	        $path = GUID::generate().".".$file->getClientOriginalExtension();
+
+			$attachment = new Attachment();
+			$attachment->attachmentable_id = $lesson->id;
+			$attachment->attachmentable_type = 'Lesson';
+			$attachment->name = $file->getClientOriginalName();
+			$attachment->mime = $file->getMimeType();
+	    	$attachment->route = '/uploads/courses/'.$course->name.'/lessons/attachments/'.$path;
+	    	$attachment->size = $file->getSize();
+	    	$attachment->save();
+
+	    	$json['files'][] = array(
+				'name' => $filename,
+				'size' => $file->getSize(),
+				'type' => $file->getMimeType(),
+				'url' => '/uploads/courses/'.$course->name.'/lessons/attachments/'.$path,
+				'deleteType' => 'DELETE',
+				'deleteUrl' => self::$route.'/deleteFile/'.Hashids::encode($attachment->id),
+	    		);
+
+	    	$upload = $file->move( public_path().'/uploads/courses/'.$course->name.'/lessons/attachments/', $path );
+
+		endforeach;
+
+		return Response::json($json);
 
 	}
 

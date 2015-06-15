@@ -27,6 +27,35 @@
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
 	<!-- END PAGE LEVEL STYLES -->
 
+	<style type="text/css">
+		#dropzone {
+		    width: 100%;
+		    height: 100px;
+		    line-height: 50px;
+		    text-align: center;
+		    font-weight: bold;
+		}
+		#dropzone.in {
+		    width: 100%;
+		    height: 120px;
+		    line-height: 200px;
+		    font-size: larger;
+		}
+		#dropzone.hover {
+		    background: #909090;
+		    padding: 1em;
+		    border: 2px dashed grey;
+		}
+		#dropzone.fade {
+		    -webkit-transition: all 0.3s ease-out;
+		    -moz-transition: all 0.3s ease-out;
+		    -ms-transition: all 0.3s ease-out;
+		    -o-transition: all 0.3s ease-out;
+		    transition: all 0.3s ease-out;
+		    opacity: 1;
+		}
+	</style>
+
 	<div class="row">
 		<div class="col-md-12">
 			<!-- BEGIN PORTLET -->
@@ -45,36 +74,35 @@
 						</div>
 						<div class="portlet-body form">
 							<!-- BEGIN FORM-->
-							<form id="fileupload" action="{{ $route }}/uploadattachments?lesson_id={{ Hashids::encode($lesson->id) }}" method="POST" enctype="multipart/form-data">
+							<!-- <form id="fileupload" action="/assets/global/plugins/jquery-file-upload/server/php/index.php" method="POST" enctype="multipart/form-data"> -->
+							<form id="fileupload" action="{{ $route }}/uploadattachments" method="POST" enctype="multipart/form-data">
 								<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
 								<div class="row fileupload-buttonbar">
-									<div class="col-lg-7">
+									<div class="col-lg-12 col-md-12 col-sm-12">
 										<!-- The fileinput-button span is used to style the file input field as button -->
 										<span class="btn green fileinput-button">
 										<i class="fa fa-plus"></i>
 										<span>
-										Add files... </span>
+										Añadir Archivos... </span>
 										<input type="file" name="files[]" multiple="">
 										</span>
 										<button type="submit" class="btn blue start">
 										<i class="fa fa-upload"></i>
 										<span>
-										Start upload </span>
+										Comenzar Subida </span>
 										</button>
 										<button type="reset" class="btn warning cancel">
 										<i class="fa fa-ban-circle"></i>
 										<span>
-										Cancel upload </span>
+										Cancelar Subida </span>
 										</button>
 										<button type="button" class="btn red delete">
 										<i class="fa fa-trash"></i>
 										<span>
-										Delete </span>
+										Eliminar </span>
 										</button>
 										<input type="checkbox" class="toggle">
 										<!-- The global file processing state -->
-										<span class="fileupload-process">
-										</span>
 									</div>
 									<!-- The global progress information -->
 									<div class="col-lg-5 fileupload-progress fade">
@@ -89,7 +117,14 @@
 										</div>
 									</div>
 								</div>
+
+								<div id="dropzone" class="fade well">Arrastre los Archivos Aquí</div>
 								<!-- The table listing the files available for upload/download -->
+								<div class="row">
+									<div class="col-md-4"></div>
+									<div class="col-md-4" style="text-align:center"><span class="fileupload-process"></span></div>
+									<div class="col-md-4"></div>
+								</div>
 								<table role="presentation" class="table table-striped clearfix">
 									<tbody class="files">
 									</tbody>
@@ -154,13 +189,13 @@
 							            {% if (!i && !o.options.autoUpload) { %}
 							                <button class="btn blue start" disabled>
 							                    <i class="fa fa-upload"></i>
-							                    <span>Start</span>
+							                    <span>Subir</span>
 							                </button>
 							            {% } %}
 							            {% if (!i) { %}
 							                <button class="btn red cancel">
 							                    <i class="fa fa-ban"></i>
-							                    <span>Cancel</span>
+							                    <span>Cancelar</span>
 							                </button>
 							            {% } %}
 							        </td>
@@ -174,7 +209,7 @@
 							                <td>
 							                    <span class="preview">
 							                        {% if (file.thumbnailUrl) { %}
-							                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+							                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}" style="max-height: 70px; max-width:100px"></a>
 							                        {% } %}
 							                    </span>
 							                </td>
@@ -197,13 +232,13 @@
 							                    {% if (file.deleteUrl) { %}
 							                        <button class="btn red delete btn-sm" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
 							                            <i class="fa fa-trash-o"></i>
-							                            <span>Delete</span>
+							                            <span>Eliminar</span>
 							                        </button>
 							                        <input type="checkbox" name="delete" value="1" class="toggle">
 							                    {% } else { %}
 							                        <button class="btn yellow cancel btn-sm">
 							                            <i class="fa fa-ban"></i>
-							                            <span>Cancel</span>
+							                            <span>Cancelar</span>
 							                        </button>
 							                    {% } %}
 							                </td>
@@ -292,12 +327,17 @@
 		        init: function () {
 
 		             // Initialize the jQuery File Upload widget:
+		             // This is used when the file is uploading
 		            $('#fileupload').fileupload({
 		                disableImageResize: false,
+    					dropZone: $('#dropzone'),
 		                autoUpload: false,
 		                disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent),
 		                maxFileSize: 5000000,
 		                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+						formData: {
+							lesson_id: '{{Hashids::encode($lesson->id)}}',
+						},
 		                // Uncomment the following to send cross-domain cookies:
 		                //xhrFields: {withCredentials: true},                
 		            });
@@ -331,13 +371,22 @@
 		                //xhrFields: {withCredentials: true},
 		                url: $('#fileupload').attr("action"),
 		                dataType: 'json',
+		                data: {
+		                	lesson_id: '{{ Hashids::encode($lesson->id)}}',
+		                },
+		                error: function(xhr){
+		                	console.log(xhr);
+		                },
 		                context: $('#fileupload')[0]
 		            }).always(function () {
 		                $(this).removeClass('fileupload-processing');
 		            }).done(function (result) {
 		                $(this).fileupload('option', 'done')
 		                .call(this, $.Event('done'), {result: result});
-		            });
+		            }).error(function(e) {
+		            	/* Act on the event */
+		            	console.log(e);
+		            });;
 		        }
 
 		    };
@@ -436,6 +485,43 @@
 		ComponentsPickers.init();
 		ComponentsIonSliders.init();
 		FormFileUpload.init();
+
+		$(document).bind('drop dragover', function (e) {
+		    e.preventDefault();
+		});
+
+		$(document).bind('dragover', function (e) {
+		    var dropZone = $('#dropzone'),
+		        timeout = window.dropZoneTimeout;
+		    if (!timeout) {
+		        dropZone.addClass('in');
+		    } else {
+		        clearTimeout(timeout);
+		    }
+		    var found = false,
+		        node = e.target;
+		    do {
+		        if (node === dropZone[0]) {
+		            found = true;
+		            break;
+		        }
+		        node = node.parentNode;
+		    } while (node != null);
+		    if (found) {
+		        dropZone.addClass('hover');
+		    } else {
+		        dropZone.removeClass('hover');
+		    }
+		    window.dropZoneTimeout = setTimeout(function () {
+		        window.dropZoneTimeout = null;
+		        dropZone.removeClass('in hover');
+		    }, 100);
+		});
+
+		$('#fileupload').bind('fileuploadprogress', function (e, data) {
+		    // Log the current bitrate for this upload:
+		    console.log(data.bitrate);
+		});
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

@@ -835,7 +835,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/uploadattachments',
+		    		url: '{{$route}}/' + course + '/lessons/attachments',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
