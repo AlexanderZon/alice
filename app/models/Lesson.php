@@ -132,7 +132,7 @@ class Lesson extends \Eloquent {
 
         $color = rand(0, count($this->defaults_avatar_colors)-1);
 
-        return $this->defaults_avatar_url.$character.'_'.$this->defaults_avatar_colors[$color].'.png';
+        return File::exists(public_path().$this->defaults_avatar_url.$character.'_'.$this->defaults_avatar_colors[$color].'.png') ? $this->defaults_avatar_url.$character.'_'.$this->defaults_avatar_colors[$color].'.png' : $this->defaults_avatar_url.'x_'.$this->defaults_avatar_colors[$color].'.png';
 
     }
 
@@ -155,7 +155,7 @@ class Lesson extends \Eloquent {
         return $path;
 
     }
-    
+
     public static function _get( $status = 'active' ){
 
         return self::where( 'status', '=', $status )->get();

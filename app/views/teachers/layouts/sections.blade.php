@@ -542,7 +542,7 @@
 		    var lessonsModuleEdit = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
-		    	var module = el.parents('.timeline-yellow').data('module');
+		    	var module = el.parents('.timeline-green-meadow').data('module');
 
 		        console.log(el);
 
@@ -574,7 +574,7 @@
 		    var lessonsModuleDelete = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
-		    	var module = el.parents('.timeline-yellow').data('module');
+		    	var module = el.parents('.timeline-green-meadow').data('module');
 
 		        console.log(el);
 
@@ -634,7 +634,7 @@
 		    var lessonsLessonAdd = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
-		    	var module = el.parents('.timeline-yellow').data('module');
+		    	var module = el.parents('.timeline-green-meadow').data('module');
 
 		    	if( typeof module == 'undefined') module = el.parents('.timeline-transparent').data('module');
 
@@ -668,7 +668,7 @@
 		    var lessonsLessonEdit = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
-		    	var lesson = el.parents('.timeline-blue').data('lesson');
+		    	var lesson = el.parents('.timeline-blue-steel').data('lesson');
 
 		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
 
@@ -702,7 +702,7 @@
 		    var lessonsLessonDelete = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
-		    	var lesson = el.parents('.timeline-blue').data('lesson');
+		    	var lesson = el.parents('.timeline-blue-steel').data('lesson');
 
 		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
 
@@ -723,7 +723,7 @@
 				        loading.hide();
 				        content.html(html);
 		                Metronic.init();
-		    			console.log(html);
+		    			// console.log(html);
 		    			console.log('Delete lesson Form');
 		    		},
 		    		error: function(xhr) {
@@ -736,7 +736,7 @@
 		    var lessonsLessonOrder = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
-		    	var module = el.parents('.timeline-yellow').data('module');
+		    	var module = el.parents('.timeline-green-meadow').data('module');
 
 		        console.log(el);
 
@@ -755,8 +755,99 @@
 				        loading.hide();
 				        content.html(html);
 		                Metronic.init();
-		    			console.log(html);
+		    			// console.log(html);
 		    			console.log('Order lessons Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonStatus = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var lesson = el.parents('.timeline-blue-steel').data('lesson');
+
+		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
+
+		        console.log(lesson);
+
+		        /*loading.show();
+		        content.html(loader);*/
+
+		    	el.removeClass('blue-steel');
+		    	el.removeClass('grey-silver');	
+		        el.html('<img src="/assets/loaders/rubiks-cube.gif" class="col-md-12"/>');
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/statuslesson',
+		    		type: 'POST',
+		    		data: {
+		    			lesson_id: lesson,
+		    		},
+		    		async: true,
+		    		success: function(res) {
+
+		    			el.html('<i class="fa fa-power-off"></i>');
+
+		    			if(res.status == 'active'){
+		    				console.log('active');
+		    				var parent = $(el.parents('.timeline-grey-silver'));
+		    				el.addClass('grey-silver');
+		    				el.attr('data-original-title', 'Desactivar esta Lección');
+		    				parent.removeClass('timeline-grey-silver');
+		    				parent.addClass('timeline-blue-steel');
+		    			}
+		    			else{
+		    				console.log('inactive');
+		    				var parent = $(el.parents('.timeline-blue-steel'));
+		    				el.addClass('blue-steel');
+		    				el.attr('data-original-title', 'Activar esta Lección');
+		    				parent.removeClass('timeline-blue-steel');
+		    				parent.addClass('timeline-grey-silver');
+		    			}
+
+				        /*loading.hide();
+				        content.html(html);
+		                Metronic.init();*/
+		    			console.log(res);
+		    			console.log('Status lesson Form');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonAttachments = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var lesson = el.parents('.timeline-blue-steel').data('lesson');
+
+		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
+
+		        console.log(lesson);
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/uploadattachments',
+		    		type: 'GET',
+		    		data: {
+		    			lesson_id: lesson,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Upload Attachments Form');
 		    		},
 		    		error: function(xhr) {
 		    			console.log(xhr);
@@ -938,13 +1029,23 @@
 		                lessonsLessonOrder($(this));
 		            });
 
+		            // handle order lesson button click
+		            $('.profile').on('click', '.lesson-status', function (e) {
+		                lessonsLessonStatus($(this));
+		            });
+
+		            // handle order lesson button click
+		            $('.profile').on('click', '.lesson-attachments', function (e) {
+		                lessonsLessonAttachments($(this));
+		            	console.log('Attachments');
+		            });
+
 		            //handle loading content based on URL parameter
 		            if (Metronic.getURLParameter("a") === "view") {
 		                viewMessage();
-		            } else if (Metronic.getURLParameter("a") === "compose") {
-		                loadCompose();
+		            } else if (Metronic.getURLParameter("section") === "lessons") {
+		        		initWall($('.lessons-btn'), 'lessons');
 		            } else {
-
 		        		initWall($('.general-btn'), 'general');
 		            }
 

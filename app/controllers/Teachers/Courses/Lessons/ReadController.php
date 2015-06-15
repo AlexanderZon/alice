@@ -428,4 +428,66 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	public function postStatuslesson( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+		$lesson->status = $lesson->status == 'active' ? 'inactive' : 'active';
+		$lesson->save();
+
+		return Response::json(array('status' => $lesson->status));
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /uploadattachments
+	 *
+	 * @return Response
+	 */
+	public function getUploadattachments( $course_id = '' )
+	{
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		self::addArgument('module', $lesson->module);
+
+		self::addArgument('lesson', $lesson);
+
+		self::addArgument('course', Course::find(Hashids::decode($course_id)));
+
+		return self::make('uploadattachments');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /uploadattachments
+	 *
+	 * @return Response
+	 */
+	public function postUploadattachments( $course_id = '' )
+	{
+
+		return Response::json(Input::all());
+
+		$lesson = Lesson::find(Crypt::decrypt(Input::get('lesson_id')));
+		$lesson->previous_id = Input::get('previous_id') != null ? Input::get('previous_id') : 0;
+		$lesson->title = Input::get('title');
+		$lesson->approval_percentage = (Input::get('approval_percentage')/100);
+		$lesson->content = Input::get('content');
+		// $lesson->date_start = date('Y-m-d', strtotime(str_replace('/','-',strstr(Input::get('daterange'),' - ', true))));
+		// $lesson->date_end = date('Y-m-d', strtotime(str_replace('/','-',str_replace(' - ','',strstr(Input::get('daterange'),' - ', false)))));
+		$lesson->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
+		$lesson->save();
+
+		$course = Course::find(Hashids::decode($course_id));
+
+		self::addArgument('course', $course);
+
+		self::addArgument('modules', $course->modules);
+
+		return self::make('index');
+
+	}
+
 }

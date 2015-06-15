@@ -49,7 +49,7 @@
 											<ol class="dd-list">
 												@foreach($course->modules as $module)
 													<li class="dd-item dd-nochildren children" data-id="{{ Hashids::encode($module->id) }}">
-														<div class="dd-handle yellow">
+														<div class="dd-handle green-meadow">
 															 {{ $module->title }}
 														</div>
 													</li>
