@@ -6,6 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"/>
+	<link href="/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+
 	<!-- END PICKERS LEVEL STYLES -->
 
 	<!-- BEGIN PAGE LEVEL STYLES -->
@@ -101,6 +103,7 @@
 										<span>
 										Eliminar </span>
 										</button>
+										<label>Seleccionar Todos los Archivos</label>
 										<input type="checkbox" class="toggle">
 										<!-- The global file processing state -->
 									</div>
@@ -121,9 +124,9 @@
 								<div id="dropzone" class="fade well">Arrastre los Archivos Aquí</div>
 								<!-- The table listing the files available for upload/download -->
 								<div class="row">
-									<div class="col-md-4"></div>
-									<div class="col-md-4" style="text-align:center"><span class="fileupload-process"></span></div>
-									<div class="col-md-4"></div>
+									<div class="col-lg-5 col-md-5 col-sm-4 col-xs-12">Listado de Archivos Cargados</div>
+									<div class="col-lg-2 col-md-2 col-sm-4 col-xs-12" style="text-align:center !important;"><span class="fileupload-process"></span></div>
+									<div class="col-lg-5 col-md-5 col-sm-4 col-xs-12"></div>
 								</div>
 								<table role="presentation" class="table table-striped clearfix">
 									<tbody class="files">
@@ -234,7 +237,7 @@
 							                            <i class="fa fa-trash-o"></i>
 							                            <span>Eliminar</span>
 							                        </button>
-							                        <input type="checkbox" name="delete" value="1" class="toggle">
+							                        <input type="checkbox" name="delete" value="{%=file._id %}" class="toggle">
 							                    {% } else { %}
 							                        <button class="btn yellow cancel btn-sm">
 							                            <i class="fa fa-ban"></i>
@@ -313,6 +316,8 @@
 	<script type="text/javascript" src="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<script type="text/javascript" src="/assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
 	<script type="text/javascript" src="/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
 	<!-- END PICKERS LEVEL PLUGINS -->
 
 
@@ -334,7 +339,7 @@
 		                autoUpload: false,
 		                disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent),
 		                maxFileSize: 5000000,
-		                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+		                // acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 						formData: {
 							lesson_id: '{{Hashids::encode($lesson->id)}}',
 						},
@@ -379,12 +384,17 @@
 		                },
 		                context: $('#fileupload')[0]
 		            }).always(function () {
+		                console.log('ALWAYS');
+		            	console.log('Uploading...');
 		                $(this).removeClass('fileupload-processing');
 		            }).done(function (result) {
 		                $(this).fileupload('option', 'done')
 		                .call(this, $.Event('done'), {result: result});
+		                console.log('DONE');
+		                console.log(result);
 		            }).error(function(e) {
 		            	/* Act on the event */
+		                console.log('ERROR');
 		            	console.log(e);
 		            });;
 		        }

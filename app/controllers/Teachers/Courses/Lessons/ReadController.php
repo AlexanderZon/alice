@@ -470,6 +470,8 @@ class ReadController extends \Teachers\Courses\ReadController {
 	public function getUploadattachments( $course_id = '' )
 	{
 
+		// sleep(150);
+
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 
 		$json = array(
@@ -482,13 +484,14 @@ class ReadController extends \Teachers\Courses\ReadController {
 			foreach( $lesson->attachments as $file ):
 
 		    	$json['files'][] = array(
+	    			'_id' => Hashids::encode($file->id),
 					'name' => $file->name,
 					'size' => $file->size,
 					'type' => $file->mime,
 					'url' => $file->route,
 					'thumbnailUrl' => $file->image(),
 					'deleteType' => 'DELETE',
-					'deleteUrl' => self::$route.'/deleteFile/'.Hashids::encode($file->id),
+					'deleteUrl' => self::$route.'/attachment/'.Hashids::encode($file->id),
 		    		);
 
 			endforeach;
@@ -523,29 +526,42 @@ class ReadController extends \Teachers\Courses\ReadController {
 	        $filename = $file->getClientOriginalName();
 	        $path = GUID::generate().".".$file->getClientOriginalExtension();
 
+	        $route = '/uploads/courses/'.$course->name.'/lessons/'.$lesson->name.'/attachments/';
+
 			$attachment = new Attachment();
 			$attachment->attachmentable_id = $lesson->id;
 			$attachment->attachmentable_type = 'Lesson';
 			$attachment->name = $file->getClientOriginalName();
 			$attachment->mime = $file->getMimeType();
-	    	$attachment->route = '/uploads/courses/'.$course->name.'/lessons/attachments/'.$path;
+	    	$attachment->route = $route.$path;
 	    	$attachment->size = $file->getSize();
 	    	$attachment->save();
 
 	    	$json['files'][] = array(
+	    		'_id' => Hashids::encode($attachment->id),
 				'name' => $filename,
 				'size' => $file->getSize(),
 				'type' => $file->getMimeType(),
-				'url' => '/uploads/courses/'.$course->name.'/lessons/attachments/'.$path,
+				'thumbnailUrl' => $attachment->image(),
+				'url' => $route.$path,
 				'deleteType' => 'DELETE',
-				'deleteUrl' => self::$route.'/deleteFile/'.Hashids::encode($attachment->id),
+				'deleteUrl' => self::$route.'/attachment/'.Hashids::encode($attachment->id),
 	    		);
 
-	    	$upload = $file->move( public_path().'/uploads/courses/'.$course->name.'/lessons/attachments/', $path );
+	    	$upload = $file->move( public_path().$route, $path );
 
 		endforeach;
 
 		return Response::json($json);
+
+	}
+
+	public function deleteAttachment( $course_id = '', $file = '' ){
+
+		$attachment = Attachment::find(Hashids::decode($file));
+		$attachment->delete();
+
+		return Response::json(Input::all());
 
 	}
 

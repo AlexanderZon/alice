@@ -26,8 +26,8 @@
 .fileupload-processing .fileupload-process,
 .files .processing .preview {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 70px;
+  height: 70px;
   background: url("/assets/loaders/rubiks-cube.gif") center no-repeat;
   background-size: contain;
 }
