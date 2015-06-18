@@ -856,6 +856,40 @@
 
 		    }
 
+		    var lessonsLessonActivities = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var lesson = el.parents('.timeline-blue-steel').data('lesson');
+
+		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
+
+		        console.log(lesson);
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/activities',
+		    		type: 'GET',
+		    		data: {
+		    			lesson_id: lesson,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Activities List');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1038,6 +1072,12 @@
 		            $('.profile').on('click', '.lesson-attachments', function (e) {
 		                lessonsLessonAttachments($(this));
 		            	console.log('Attachments');
+		            });
+
+		            // handle order lesson button click
+		            $('.profile').on('click', '.lesson-activities', function (e) {
+		                lessonsLessonActivities($(this));
+		            	console.log('Activities');
 		            });
 
 		            //handle loading content based on URL parameter

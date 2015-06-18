@@ -470,8 +470,6 @@ class ReadController extends \Teachers\Courses\ReadController {
 	public function getUploadattachments( $course_id = '' )
 	{
 
-		// sleep(150);
-
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 
 		$json = array(
@@ -562,6 +560,20 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$attachment->delete();
 
 		return Response::json(Input::all());
+
+	}
+
+	public function getActivities( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		self::addArgument('module', $lesson->module);
+
+		self::addArgument('lesson', $lesson);
+
+		self::addArgument('course', Course::find(Hashids::decode($course_id)));
+
+		return self::make('activities');
 
 	}
 

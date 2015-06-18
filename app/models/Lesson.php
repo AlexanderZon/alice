@@ -56,7 +56,7 @@ class Lesson extends \Eloquent {
 
     public function evaluations(){
 
-    	return $this->hasMany('Evaluation', 'evaluation_id');
+    	return $this->hasMany('Evaluation', 'lesson_id');
 
     }
 

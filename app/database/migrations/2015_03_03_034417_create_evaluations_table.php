@@ -15,9 +15,11 @@ class CreateEvaluationsTable extends Migration {
 		Schema::create('evaluations', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('lesson_id');
-			$table->integer('evaluation_id');
+			$table->integer('evaluationable_id');
+			$table->integer('evaluationable_type');
 			$table->string('model');
+			$table->string('title');
+			$table->string('description');
 			$table->timestamps();
 			$table->softDeletes();
 		});

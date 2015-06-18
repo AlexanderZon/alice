@@ -136,7 +136,7 @@
 															</a>
 															<div class="pull-left">&nbsp;</div>
 															<div class="pull-left">&nbsp;</div>
-															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-activities" data-original-title="Hay {{ $lesson->evaluations->count() }} actividad(es) en esta Lección">
+															<a href="javascript:;" class="btn green-haze pull-left tooltips lesson-activities" data-original-title="Hay {{ $lesson->evaluations->count() }} actividad(es) en esta Lección">
 																<i class="fa fa-flask"></i> {{ $lesson->evaluations->count() }}
 															</a>
 
