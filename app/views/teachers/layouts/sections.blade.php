@@ -178,6 +178,7 @@
 	
 	<!-- END PAGE LEVEL SCRIPTS -->
 	<script type="text/javascript">
+
 		var Wall = function () {
 
 		    var content = $('.profile-content');
@@ -863,13 +864,41 @@
 
 		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
 
-		        console.log(lesson);
-
 		        loading.show();
 		        content.html(loader);
 
 		    	$.ajax({
 		    		url: '{{$route}}/' + course + '/lessons/activities',
+		    		type: 'GET',
+		    		data: {
+		    			lesson_id: lesson,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Activities List');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonActivitiesAdd = function(el) {
+
+		    	var course = el.data('course');
+		    	var lesson = el.data('lesson');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/addactivity',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -1071,13 +1100,16 @@
 		            // handle order lesson button click
 		            $('.profile').on('click', '.lesson-attachments', function (e) {
 		                lessonsLessonAttachments($(this));
-		            	console.log('Attachments');
 		            });
 
 		            // handle order lesson button click
 		            $('.profile').on('click', '.lesson-activities', function (e) {
 		                lessonsLessonActivities($(this));
-		            	console.log('Activities');
+		            });
+
+		            // handle order lesson button click
+		            $('.profile').on('click', '.lesson-activities-add', function (e) {
+		                lessonsLessonActivitiesAdd($(this));
 		            });
 
 		            //handle loading content based on URL parameter

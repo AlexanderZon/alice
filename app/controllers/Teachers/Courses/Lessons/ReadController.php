@@ -440,6 +440,8 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/* ------------ ATTACHMENTS ----------- */
+
 	/**
 	 * Display a listing of the resource.
 	 * GET /attachments
@@ -554,12 +556,41 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+
+	/**
+	 * Display a listing of the resource.
+	 * DELETE /attachments
+	 *
+	 * @return Response
+	 */
 	public function deleteAttachment( $course_id = '', $file = '' ){
 
 		$attachment = Attachment::find(Hashids::decode($file));
 		$attachment->delete();
 
 		return Response::json(Input::all());
+
+	}
+
+	/* ------- ACTIVITIES -------- */
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /activities
+	 *
+	 * @return Response
+	 */
+	public function getActivities( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		self::addArgument('module', $lesson->module);
+
+		self::addArgument('lesson', $lesson);
+
+		self::addArgument('course', Course::find(Hashids::decode($course_id)));
+
+		return self::make('activities');
 
 	}
 

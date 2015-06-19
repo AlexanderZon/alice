@@ -47,7 +47,7 @@
 										<div class="add-portfolio">
 											<span>
 											Hay {{ $lesson->evaluations->count() }} Actividad(es) en esta lección </span>
-											<a href="javascript:;" class="btn icn-only green">
+											<a href="javascript:;" class="btn icn-only green lessons-activities-add" data-lesson="{{ Hashids::encode($lesson->id) }}" data-course="{{ Hashids::encode($course->id) }}">
 											Añadir una nueva <i class="fa fa-plus"></i>
 											</a>
 										</div>
