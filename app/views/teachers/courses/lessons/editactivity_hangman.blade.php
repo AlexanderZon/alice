@@ -93,7 +93,12 @@
 								<div class="row">&nbsp;</div>
 								<div class="row">
 									<div class="col-md-4">
-										<ul class="ver-inline-menu tabbable margin-bottom-10">
+										<ul id="questions_list" class="ver-inline-menu tabbable margin-bottom-10">
+											@if($evaluation->hangman->count() > 0)
+												@foreach($evaluation->hangman as $question)
+													
+												@endforeach
+											@endif;
 											<li class="active">
 												<a data-toggle="tab" href="#tab_1-1">
 												<i class="fa fa-cube"></i>Primera Pregunta...</a>

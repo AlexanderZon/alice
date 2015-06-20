@@ -45,7 +45,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="#" class="btn red">
+										<a href="javascript:;" class="btn red lesson-activity-new" data-type="rpsls">
 										<span>
 										Piedra, Papel, Tijeras, Iguana, Spock </span>
 										<em>Una pregunta y Cinco Posibles Respuestas</em>
@@ -58,7 +58,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="#" class="btn green">
+										<a href="javascript:;" class="btn green lesson-activity-new" data-type="roulette">
 										<span>
 										Corona del Ganador </span>
 										<em>Una pregunta y Cuatro posibles Respuestas</em>
@@ -71,7 +71,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="#" class="btn blue">
+										<a href="javascript:;" class="btn blue lesson-activity-new" data-type="memory">
 										<span>
 										La Taguara </span>
 										<em>Una PRegunta y una Respuesta</em>
@@ -84,7 +84,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="#" class="btn yellow">
+										<a href="javascript:;" class="btn yellow lesson-activity-new" data-type="hangman">
 										<span>
 										El nombre que dijo Carmini </span>
 										<em>Una pregunta y una respuesta</em>

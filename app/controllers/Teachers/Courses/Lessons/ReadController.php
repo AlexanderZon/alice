@@ -10,7 +10,12 @@ use \Response as Response;
 use \Hashids as Hashids;
 use \Crypt as Crypt;
 use \GUID as GUID;
-
+use \Games\Hangman\Question as Hangman;
+use \Games\Memory\Question as Memory;
+use \Games\Roulette\Question as Roulette;
+use \Games\Roulette\Answer as RouletteAnswer;
+use \Games\RPSLS\Question as RPSLS;
+use \Games\RPSLS\Answer as RPSLSAnswer;
 
 class ReadController extends \Teachers\Courses\ReadController {
 
@@ -594,6 +599,12 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 * GET /addactivity
+	 *
+	 * @return Response
+	 */
 	public function getAddactivity( $course_id = '' ){
 
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
@@ -608,6 +619,41 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 * GET /addactivity
+	 *
+	 * @return Response
+	 */
+	public function postAddactivity( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		$type = Input::get('type');
+
+		$evaluation = new Evaluation();
+		$evaluation->lesson_id = $lesson->id;
+		$evaluation->type = $type;
+		$evaluation->save();
+
+		self::addArgument('evaluation', $evaluation);
+
+		self::addArgument('module', $lesson->module);
+
+		self::addArgument('lesson', $lesson);
+
+		self::addArgument('course', Course::find(Hashids::decode($course_id)));
+
+		return self::make('editactivity_'.$type);
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /editactivity
+	 *
+	 * @return Response
+	 */
 	public function getEditactivity( $course_id = '' ){
 
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));

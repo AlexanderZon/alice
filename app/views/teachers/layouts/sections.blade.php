@@ -919,6 +919,38 @@
 
 		    }
 
+		    var lessonsLessonActivitiesNew = function(el) {
+
+		    	var course = el.parents('.portlet-body').data('course');
+		    	var lesson = el.parents('.portlet-body').data('lesson');
+		    	var type = el.data('type');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/addactivity',
+		    		type: 'POST',
+		    		data: {
+		    			lesson_id: lesson,
+		    			type: type,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Activities New');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    var lessonsLessonActivitiesEdit = function(el) {
 
 		    	var course = el.parents('.portlet-body').data('course');
@@ -1172,6 +1204,11 @@
 		            // handle order lesson button click
 		            $('.profile').on('click', '.lesson-activities-add', function (e) {
 		                lessonsLessonActivitiesAdd($(this));
+		            });
+
+		            // handle order lesson button click
+		            $('.profile').on('click', '.lesson-activities-new', function (e) {
+		                lessonsLessonActivitiesNew($(this));
 		            });
 
 		            // handle order lesson button click
