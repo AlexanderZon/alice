@@ -37,7 +37,7 @@
 								</a>
 							</h4>
 						</div>
-						<div class="portlet-body form">
+						<div class="portlet-body form" data-lesson="{{ Hashids::encode($lesson->id) }}" data-course="{{ Hashids::encode($course->id) }}">
 							<!-- BEGIN FORM-->
 							<div class="tab-pane" id="tab_1_4">
 								<div class="row">&nbsp;</div>
@@ -47,14 +47,14 @@
 										<div class="add-portfolio">
 											<span>
 											Hay {{ $lesson->evaluations->count() }} Actividad(es) en esta lección </span>
-											<a href="javascript:;" class="btn icn-only green lessons-activities-add" data-lesson="{{ Hashids::encode($lesson->id) }}" data-course="{{ Hashids::encode($course->id) }}">
+											<a href="javascript:;" class="btn icn-only green lesson-activities-add" data-lesson="{{ Hashids::encode($lesson->id) }}" data-course="{{ Hashids::encode($course->id) }}">
 											Añadir una nueva <i class="fa fa-plus"></i>
 											</a>
 										</div>
 									</div>
 								</div>
 								<!--end add-portfolio-->
-								<div class="row portfolio-block">
+								<div class="row portfolio-block activity-block" data-activity="{{ '1' }}">
 									<div class="col-md-5">
 										<div class="portfolio-text">
 											<img src="/assets/admin/pages/media/profile/logo_metronic.jpg" alt=""/>
@@ -83,7 +83,7 @@
 									</div>
 									<div class="col-md-2">
 										<div class="portfolio-btn">
-											<a href="javascript:;" class="btn bigicn-only">
+											<a href="javascript:;" class="btn bigicn-only lesson-activities-edit">
 											<span>
 											Gestionar </span>
 											</a>
@@ -91,7 +91,7 @@
 									</div>
 								</div>
 								<!--end row-->
-								<div class="row portfolio-block">
+								<div class="row portfolio-block activity-block" data-activity="{{ '2' }}">
 									<div class="col-md-5 col-sm-12 portfolio-text">
 										<img src="/assets/admin/pages/media/profile/logo_azteca.jpg" alt=""/>
 										<div class="portfolio-text-info">
@@ -117,14 +117,14 @@
 										</div>
 									</div>
 									<div class="col-md-2 col-sm-12 portfolio-btn">
-										<a href="javascript:;" class="btn bigicn-only">
+										<a href="javascript:;" class="btn bigicn-only lesson-activities-edit">
 										<span>
 										Gestionar </span>
 										</a>
 									</div>
 								</div>
 								<!--end row-->
-								<div class="row portfolio-block">
+								<div class="row portfolio-block activity-block" data-activity="{{ '3' }}">
 									<div class="col-md-5 portfolio-text">
 										<img src="/assets/admin/pages/media/profile/logo_conquer.jpg" alt=""/>
 										<div class="portfolio-text-info">
@@ -150,7 +150,7 @@
 										</div>
 									</div>
 									<div class="col-md-2 portfolio-btn">
-										<a href="javascript:;" class="btn bigicn-only">
+										<a href="javascript:;" class="btn bigicn-only lesson-activities-edit">
 										<span>
 										Gestionar </span>
 										</a>

@@ -910,6 +910,68 @@
 				        content.html(html);
 		                Metronic.init();
 		    			// console.log(html);
+		    			console.log('Activities Add');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonActivitiesEdit = function(el) {
+
+		    	var course = el.parents('.portlet-body').data('course');
+		    	var lesson = el.parents('.portlet-body').data('lesson');
+		    	var activity = el.parents('.activity-block').data('activity');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/editactivity',
+		    		type: 'GET',
+		    		data: {
+		    			lesson_id: lesson,
+		    			activity_id: activity,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Activities Edit');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonActivitiesBack = function(el) {
+
+		    	var course = el.data('course');
+		    	var lesson = el.data('lesson');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/activities',
+		    		type: 'GET',
+		    		data: {
+		    			lesson_id: lesson,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
 		    			console.log('Activities List');
 		    		},
 		    		error: function(xhr) {
@@ -1110,6 +1172,16 @@
 		            // handle order lesson button click
 		            $('.profile').on('click', '.lesson-activities-add', function (e) {
 		                lessonsLessonActivitiesAdd($(this));
+		            });
+
+		            // handle order lesson button click
+		            $('.profile').on('click', '.lesson-activities-edit', function (e) {
+		                lessonsLessonActivitiesEdit($(this));
+		            });
+
+		            // handle order lesson button click
+		            $('.profile').on('click', '.lesson-activities-back', function (e) {
+		                lessonsLessonActivitiesBack($(this));
 		            });
 
 		            //handle loading content based on URL parameter

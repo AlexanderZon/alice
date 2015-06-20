@@ -594,7 +594,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
-	public function getActivities( $course_id = '' ){
+	public function getAddactivity( $course_id = '' ){
 
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 
@@ -604,7 +604,23 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		self::addArgument('course', Course::find(Hashids::decode($course_id)));
 
-		return self::make('activities');
+		return self::make('addactivity');
+
+	}
+
+	public function getEditactivity( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		// $activity = Evaluations::find(Hashids::decode(Input::get('activity_id')));
+
+		self::addArgument('module', $lesson->module);
+
+		self::addArgument('lesson', $lesson);
+
+		self::addArgument('course', Course::find(Hashids::decode($course_id)));
+
+		return self::make('editactivity');
 
 	}
 
