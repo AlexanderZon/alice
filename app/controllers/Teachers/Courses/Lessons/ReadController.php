@@ -724,6 +724,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 			case 'memory':
 				$question = new Memory();
 				$question->question = 'Pregunta #'.($evaluation->memory->count()+1);
+				$question->answer = '';
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
 				break;
@@ -775,19 +776,20 @@ class ReadController extends \Teachers\Courses\ReadController {
 				break;
 			case 'memory':
 				$question = Memory::find(Hashids::decode(Input::get('id')));
-				$question->question = 'Pregunta #'.($evaluation->memory->count()+1);
+				$question->question = Input::get('question');
+				$question->answer = Input::get('answer');
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
 				break;
 			case 'rpsls':
 				$question = RPSLS::find(Hashids::decode(Input::get('id')));
-				$question->question = 'Pregunta #'.($evaluation->rpsls->count()+1);
+				$question->question = Input::get('question');
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
 				break;
 			case 'roulette':
 				$question = Roulette::find(Hashids::decode(Input::get('id')));
-				$question->question = 'Pregunta #'.($evaluation->roulette->count()+1);
+				$question->question = Input::get('question');
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
 				break;

@@ -34,4 +34,12 @@ class Question extends \Eloquent {
 
 	}
 
+	public function isIncomplete(){
+
+		if($this->question == '' OR $this->answer == '' ) return true;
+
+		return false;
+
+	}
+
 }

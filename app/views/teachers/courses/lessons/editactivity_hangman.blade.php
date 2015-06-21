@@ -121,7 +121,7 @@
 											@foreach($evaluation->hangman as $question)
 												<li class="{{ $counter++ == 0 ? 'active' : ''}}">
 													<a data-toggle="tab" href="#question_{{ Hashids::encode($question->id) }}">
-													<i class="fa fa-cube {{ $question->isIncomplete() ? 'font-red' : '' }}"></i><span>{{ substr($question->question, 0, 25).'...'}}</span><span class="badge badge-danger"></span></a>
+													<i class="fa fa-cube {{ $question->isIncomplete() ? 'font-red' : '' }}"></i><span>{{ substr($question->question, 0, 25).'...'}}</span></a>
 													<span class="after">
 
 													</span>
