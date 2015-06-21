@@ -10,6 +10,7 @@ use \Response as Response;
 use \Hashids as Hashids;
 use \Crypt as Crypt;
 use \GUID as GUID;
+use \Evaluation as Evaluation;
 use \Games\Hangman\Question as Hangman;
 use \Games\Memory\Question as Memory;
 use \Games\Roulette\Question as Roulette;
@@ -629,11 +630,15 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 
+		$module = $lesson->module;
+
 		$type = Input::get('type');
 
 		$evaluation = new Evaluation();
 		$evaluation->lesson_id = $lesson->id;
 		$evaluation->type = $type;
+		$evaluation->date_start = date('Y-m-d', strtotime($module->date_start));
+		$evaluation->date_end = date('Y-m-d', strtotime($module->date_end));
 		$evaluation->save();
 
 		self::addArgument('evaluation', $evaluation);
@@ -658,7 +663,9 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 
-		// $activity = Evaluations::find(Hashids::decode(Input::get('activity_id')));
+		$evaluation = Evaluation::find(Hashids::decode(Input::get('activity_id')));
+
+		self::addArgument('evaluation', $evaluation);
 
 		self::addArgument('module', $lesson->module);
 
@@ -666,7 +673,174 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		self::addArgument('course', Course::find(Hashids::decode($course_id)));
 
-		return self::make('editactivity');
+		return self::make('editactivity_'.$evaluation->type);
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /editactivity
+	 *
+	 * @return Response
+	 */
+	public function postEditactivity( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		$evaluation = Evaluation::find(Hashids::decode(Input::get('activity_id')));
+
+		$evaluation->title = Input::get('title');
+		$evaluation->description = Input::get('description');
+		$evaluation->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
+		$evaluation->date_start = date('Y-m-d', strtotime(str_replace('/','-',strstr(Input::get('daterange'),' - ', true))));
+		$evaluation->date_end = date('Y-m-d', strtotime(str_replace('/','-',str_replace(' - ','',strstr(Input::get('daterange'),' - ', false)))));
+		$evaluation->save();
+
+		return Response::json(array('evaluation' => $evaluation));
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /question
+	 *
+	 * @return Response
+	 */
+	public function postQuestion( $course_id = '' ){
+
+		$evaluation = Evaluation::find(Hashids::decode(Input::get('activity_id')));
+
+		$question = null;
+
+		switch($evaluation->type):
+			case 'hangman':
+				$question = new Hangman();
+				$question->question = 'Pregunta #'.($evaluation->hangman->count()+1);
+				$question->word = '';
+				$question->seconds = 0;
+				$question->evaluation_id = $evaluation->id;
+				$question->save();
+				break;
+			case 'memory':
+				$question = new Memory();
+				$question->question = 'Pregunta #'.($evaluation->memory->count()+1);
+				$question->evaluation_id = $evaluation->id;
+				$question->save();
+				break;
+			case 'rpsls':
+				$question = new RPSLS();
+				$question->question = 'Pregunta #'.($evaluation->rpsls->count()+1);
+				$question->evaluation_id = $evaluation->id;
+				$question->save();
+				break;
+			case 'roulette':
+				$question = new Roulette();
+				$question->question = 'Pregunta #'.($evaluation->roulette->count()+1);
+				$question->evaluation_id = $evaluation->id;
+				$question->save();
+				break;
+		endswitch;
+
+		$question->hashids = Hashids::encode($question->id);
+		$evaluation->hashids = Hashids::encode($evaluation->id);
+
+		$args = array(
+			'question' => $question,
+			'evaluation' => $evaluation,
+			);
+
+		return Response::json($args);
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * PUT /question
+	 *
+	 * @return Response
+	 */
+	public function putQuestion( $course_id = '' ){
+
+		$evaluation = Evaluation::find(Hashids::decode(Input::get('evaluation_id')));
+
+		$question = null;
+
+		switch($evaluation->type):
+			case 'hangman':
+				$question = Hangman::find(Hashids::decode(Input::get('id')));
+				$question->question = Input::get('question');
+				$question->word = Input::get('word');
+				$question->seconds = Input::get('seconds');
+				$question->save();
+				break;
+			case 'memory':
+				$question = Memory::find(Hashids::decode(Input::get('id')));
+				$question->question = 'Pregunta #'.($evaluation->memory->count()+1);
+				$question->evaluation_id = $evaluation->id;
+				$question->save();
+				break;
+			case 'rpsls':
+				$question = RPSLS::find(Hashids::decode(Input::get('id')));
+				$question->question = 'Pregunta #'.($evaluation->rpsls->count()+1);
+				$question->evaluation_id = $evaluation->id;
+				$question->save();
+				break;
+			case 'roulette':
+				$question = Roulette::find(Hashids::decode(Input::get('id')));
+				$question->question = 'Pregunta #'.($evaluation->roulette->count()+1);
+				$question->evaluation_id = $evaluation->id;
+				$question->save();
+				break;
+		endswitch;
+
+		$question->hashids = Hashids::encode($question->id);
+		$evaluation->hashids = Hashids::encode($evaluation->id);
+
+		$args = array(
+			'question' => $question,
+			'evaluation' => $evaluation,
+			);
+
+		return Response::json($args);
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * DELETE /question
+	 *
+	 * @return Response
+	 */
+	public function deleteQuestion( $course_id = '' ){
+
+		$evaluation = Evaluation::find(Hashids::decode(Input::get('evaluation_id')));
+
+		$question = null;
+
+		switch($evaluation->type):
+			case 'hangman':
+				$question = Hangman::find(Hashids::decode(Input::get('id')));
+				$question->delete();
+				break;
+			case 'memory':
+				$question = Memory::find(Hashids::decode(Input::get('id')));
+				$question->delete();
+				break;
+			case 'rpsls':
+				$question = RPSLS::find(Hashids::decode(Input::get('id')));
+				$question->delete();
+				break;
+			case 'roulette':
+				$question = Roulette::find(Hashids::decode(Input::get('id')));
+				$question->delete();
+				break;
+		endswitch;
+
+		$args = array(
+			'hashids' => Hashids::encode($question->id),
+			);
+
+		return Response::json($args);
 
 	}
 

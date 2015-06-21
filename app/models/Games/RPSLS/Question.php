@@ -12,7 +12,7 @@ class Question extends \Eloquent {
 
     public function evaluation(){
 
-    	return $this->morphMany('Evaluation', 'evaluationable');
+    	return $this->belongsTo('\\Evaluation');
 
     }
 

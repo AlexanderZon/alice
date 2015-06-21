@@ -416,13 +416,16 @@
 		    	var formData = new FormData(el[0]);
 
 			    $.ajax({
-			        url: '{{ $route }}/show/{{ $hashid }}',
+			        url: '{{ $route }}/{{ $hashid }}/general/save',
 			        type: 'POST',
 			        data: formData,
 			        async: true,
 			        success: function (data) {
 			        	content.html(data);
-			            console.log(data);
+			            // console.log(data);
+			        },
+			        error: function(xhr){
+			        	console.log(xhr);
 			        },
 			        cache: false,
 			        contentType: false,

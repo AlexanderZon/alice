@@ -64,4 +64,31 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /courses
+	 *
+	 * @return Response
+	 */
+	public function postSave( $course_id = '' )
+	{
+
+		$course = Course::find(Hashids::decode($course_id));
+		$course->title = Input::get('title');
+		$course->description = Input::get('description');
+		if(Input::file('main_picture') != null) $course->main_picture = Course::uploadMainPicture(Input::file('main_picture'), $course->name);
+		if(Input::file('cover_picture') != null) $course->cover_picture = Course::uploadCoverPicture(Input::file('cover_picture'), $course->name);
+		$course->save();
+
+		self::addArgument('hashid', $course_id);
+
+		self::addArgument('course', $course);
+		
+		self::addArgument('sidebar_closed', true);
+
+		return self::make('index');
+
+	}
+
 }

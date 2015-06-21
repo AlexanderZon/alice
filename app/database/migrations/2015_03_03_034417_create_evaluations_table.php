@@ -18,6 +18,7 @@ class CreateEvaluationsTable extends Migration {
 			$table->string('title');
 			$table->text('description');
 			$table->string('type');
+			$table->enum('status', array('active', 'inactive'))->default('inactive');
 			$table->date('date_start');
 			$table->date('date_end');
 			$table->timestamps();

@@ -57,7 +57,7 @@
 									<div class="row">
 										<div class="col-md-8">
 											<div class="form-group">
-												<label class="control-label col-md-5">Intervalo de Tiempo</label>
+												<label class="control-label col-md-5">Intérvalo de Tiempo</label>
 												<div class="col-md-7">
 													<div class="input-group" id="defaultrange">
 														<input type="text" class="form-control" name="daterange" value="">

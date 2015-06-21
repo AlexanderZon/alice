@@ -17,25 +17,25 @@ class Evaluation extends \Eloquent {
 
     public function hangman(){
 
-        return $this->hamsMany('\Games\Hangman\Question');
+        return $this->hasMany('\Games\Hangman\Question');
         
     }
 
     public function memory(){
 
-        return $this->hamsMany('\Games\Memory\Question');
+        return $this->hasMany('\Games\Memory\Question');
         
     }
 
     public function roulette(){
 
-        return $this->hamsMany('\Games\Roulette\Question');
+        return $this->hasMany('\Games\Roulette\Question');
         
     }
 
     public function rpsls(){
 
-        return $this->hamsMany('\Games\RPSLSL\Question');
+        return $this->hasMany('\Games\RPSLSL\Question');
 
     }
 
@@ -55,6 +55,26 @@ class Evaluation extends \Eloquent {
 
     	return $this->belongsTo('Lesson','lesson_id');
     	
+    }
+
+    public function average(){
+
+        if($this->tests->count() > 0):
+            $average = 0;
+            foreach( $this->tests as $test):
+                $average += ($test->percentage*100);
+            endforeach;
+
+            $average = $average/$this->tests->count();
+
+        else:
+
+            $average = 0;
+
+        endif;
+
+        return $average;
+
     }
 
 }

@@ -54,44 +54,52 @@
 									</div>
 								</div>
 								<!--end add-portfolio-->
-								<div class="row portfolio-block activity-block" data-activity="{{ '1' }}">
-									<div class="col-md-5">
-										<div class="portfolio-text">
-											<img src="/assets/admin/pages/media/profile/logo_metronic.jpg" alt=""/>
-											<div class="portfolio-text-info">
-												<h4>Actividad I</h4>
-												<p>
-													<em>(20/10/2015 - 28/10/2015)</em>
-													Lorem ipsum dolor sit consectetuer adipiscing elit.
-												</p>
+								@if($lesson->evaluations->count() > 0)
+									@foreach($lesson->evaluations as $evaluation)
+										<div class="row portfolio-block activity-block" data-activity="{{ Hashids::encode($evaluation->id) }}">
+											<div class="col-md-5">
+												<div class="portfolio-text">
+													<img src="/assets/admin/pages/media/profile/logo_metronic.jpg" alt=""/>
+													<div class="portfolio-text-info">
+														<h4>{{ $evaluation->title != '' ? $evaluation->title : 'Sin nombre' }}</h4>
+														<p>
+															<em>({{ date('d/m/Y', strtotime($evaluation->date_start) ) }} - {{ date('d/m/Y', strtotime($evaluation->date_end) ) }})</em>
+															{{ $evaluation->description != '' ? $evaluation->description : 'Sin descripción' }}
+														</p>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-5 portfolio-stat">
+												<div class="portfolio-info col-md-3">
+													Estudiantes <span>
+													{{ $evaluation->tests->count() }} </span>
+												</div>
+												<div class="portfolio-info col-md-3">
+													Promedio <span>
+													{{ $evaluation->average() }}% </span>
+												</div>
+												<div class="portfolio-info col-md-3">
+													Preguntas <span>
+													@if($evaluation->type == 'hangman') {{ $evaluation->hangman->count() }}
+													@elseif($evaluation->type == 'memory') {{ $evaluation->memory->count() }}
+													@elseif($evaluation->type == 'rpsls') {{ $evaluation->rpsls->count() }}
+													@elseif($evaluation->type == 'roulette') {{ $evaluation->roulette->count() }}
+													@endif
+													 </span>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="portfolio-btn">
+													<a href="javascript:;" class="btn bigicn-only lesson-activities-edit">
+													<span>
+													Gestionar </span>
+													</a>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="col-md-5 portfolio-stat">
-										<div class="portfolio-info col-md-3">
-											Estudiantes <span>
-											18 </span>
-										</div>
-										<div class="portfolio-info col-md-3">
-											Promedio <span>
-											75% </span>
-										</div>
-										<div class="portfolio-info col-md-3">
-											Preguntas <span>
-											25 </span>
-										</div>
-									</div>
-									<div class="col-md-2">
-										<div class="portfolio-btn">
-											<a href="javascript:;" class="btn bigicn-only lesson-activities-edit">
-											<span>
-											Gestionar </span>
-											</a>
-										</div>
-									</div>
-								</div>
-								<!--end row-->
-								<div class="row portfolio-block activity-block" data-activity="{{ '2' }}">
+									@endforeach
+								@endif
+								<!-- <div class="row portfolio-block activity-block" data-activity="{{ '2' }}">
 									<div class="col-md-5 col-sm-12 portfolio-text">
 										<img src="/assets/admin/pages/media/profile/logo_azteca.jpg" alt=""/>
 										<div class="portfolio-text-info">
@@ -123,7 +131,6 @@
 										</a>
 									</div>
 								</div>
-								<!--end row-->
 								<div class="row portfolio-block activity-block" data-activity="{{ '3' }}">
 									<div class="col-md-5 portfolio-text">
 										<img src="/assets/admin/pages/media/profile/logo_conquer.jpg" alt=""/>
@@ -155,8 +162,7 @@
 										Gestionar </span>
 										</a>
 									</div>
-								</div>
-								<!--end row-->
+								</div> -->
 							</div>
 
 							<!-- END FORM-->

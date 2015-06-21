@@ -25,7 +25,7 @@
 		<div class="col-md-12">
 			<!-- BEGIN PORTLET -->
 
-			<div class="portlet light">
+			<div class="portlet light" >
 				<!-- END PAGE CONTENT INNER -->
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -36,7 +36,7 @@
 								</a>
 							</h4>
 						</div>
-						<div class="portlet-body form">
+						<div class="portlet-body form" data-course="{{ Hashids::encode($course->id) }}" data-lesson="{{ Hashids::encode($lesson->id) }}">
 					
 							<!-- END PAGE CONTENT INNER -->
 							<div class="row">&nbsp;</div>
@@ -45,7 +45,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="javascript:;" class="btn red lesson-activity-new" data-type="rpsls">
+										<a href="javascript:;" class="btn red lesson-activities-new" data-type="rpsls">
 										<span>
 										Piedra, Papel, Tijeras, Iguana, Spock </span>
 										<em>Una pregunta y Cinco Posibles Respuestas</em>
@@ -58,7 +58,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="javascript:;" class="btn green lesson-activity-new" data-type="roulette">
+										<a href="javascript:;" class="btn green lesson-activities-new" data-type="roulette">
 										<span>
 										Corona del Ganador </span>
 										<em>Una pregunta y Cuatro posibles Respuestas</em>
@@ -71,7 +71,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="javascript:;" class="btn blue lesson-activity-new" data-type="memory">
+										<a href="javascript:;" class="btn blue lesson-activities-new" data-type="memory">
 										<span>
 										La Taguara </span>
 										<em>Una PRegunta y una Respuesta</em>
@@ -84,7 +84,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="javascript:;" class="btn yellow lesson-activity-new" data-type="hangman">
+										<a href="javascript:;" class="btn yellow lesson-activities-new" data-type="hangman">
 										<span>
 										El nombre que dijo Carmini </span>
 										<em>Una pregunta y una respuesta</em>

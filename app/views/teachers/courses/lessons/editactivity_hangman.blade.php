@@ -14,6 +14,10 @@
 	<!-- END PAGE LEVEL STYLES -->
 
 	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
+	<!-- END PAGE LEVEL STYLES -->
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-summernote/summernote.css">
@@ -25,7 +29,7 @@
 		<div class="col-md-12">
 			<!-- BEGIN PORTLET -->
 
-			<div class="portlet light">
+			<div class="portlet light evaluation">
 				<!-- END PAGE CONTENT INNER -->
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -36,23 +40,23 @@
 								</a>
 							</h4>
 						</div>
-						<div class="portlet-body form">
-							<form id="editactivity-form" action="" method="post" class="form-horizontal ajax-form" data-url="{{ $route }}/editactivity" enctype="multipart/form-data">
-								<input type="hidden" name="activity_id" value="{{ '1' }}">
+						<div class="portlet-body form" data-activity="{{ Hashids::encode($evaluation->id) }}">
+							<form id="editactivity-form" action="" method="post" class="form-horizontal evaluation-ajax-form" data-url="{{ $route }}/editactivity" enctype="multipart/form-data">
+								<input type="hidden" name="activity_id" value="{{ Hashids::encode($evaluation->id) }}">
 								<div class="form-body"> 
 									<div class="row">
 										<div class="col-md-8">
 											<div class="form-group">
 												<label class="control-label col-md-5">Nombre de la Actividad</label>
 												<div class="col-md-7">
-													<input name="title" type="text" class="form-control" placeholder="Ingrese el nombre del Curso" value="{{ 'Este es el nombre de la actividad'}}" required>
+													<input name="title" type="text" class="form-control" placeholder="Ingrese el nombre del Curso" value="{{ $evaluation->title }}" required>
 													<!-- <span class="help-block">This is inline help</span> -->
 												</div>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="col-md-12">
-												<input name="status" value="active" type="checkbox" class="make-switch" data-on-text="&nbsp;Activo&nbsp;&nbsp;" data-off-text="&nbsp;Inactivo&nbsp;" {{ ($module->status == 'active') ? 'checked="checked"' : '' }}>
+												<input name="status" value="active" type="checkbox" class="make-switch" data-on-text="&nbsp;Activo&nbsp;&nbsp;" data-off-text="&nbsp;Inactivo&nbsp;" {{ ($evaluation->status == 'active') ? 'checked="checked"' : '' }}>
 												<!-- <span class="help-block">This is inline help</span> -->
 											</div>
 										</div>
@@ -61,10 +65,10 @@
 									<div class="row">
 										<div class="col-md-8">
 											<div class="form-group">
-												<label class="control-label col-md-5">Intervalo de Tiempo</label>
+												<label class="control-label col-md-5">Intérvalo de Tiempo</label>
 												<div class="col-md-7">
 													<div class="input-group" id="defaultrange">
-														<input type="text" class="form-control" name="daterange" value="{{ date('d/m/Y') . ' - ' . date('d/m/Y')}}">
+														<input type="text" class="form-control" name="daterange" value="{{ date('d/m/Y', strtotime($evaluation->date_start)) . ' - ' . date('d/m/Y', strtotime($evaluation->date_end))}}">
 														<span class="input-group-btn">
 														<button class="btn default date-range-toggle" type="button"><i class="fa fa-calendar"></i></button>
 														</span>
@@ -73,197 +77,108 @@
 											</div>
 										</div>
 									</div>
-
 									<div class="row">
 										<div class="col-md-8">
 											<div class="form-group">
 												<label class="control-label col-md-5">Descripción de la Actividad</label>
 												<div class="col-md-7">
-													<input name="title" type="text" class="form-control" placeholder="Ingrese el nombre del Curso" value="{{ 'Esta es la descripción de esta Actividad' }}" required>
+													<input name="description" type="text" class="form-control" placeholder="Ingrese el nombre del Curso" value="{{ $evaluation->description }}" required>
 													<!-- <span class="help-block">This is inline help</span> -->
 												</div>
 											</div>
 										</div>
-									</div>
-								<!-- END PAGE CONTENT INNER -->
-								<div class="row">&nbsp;</div>
-								<div class="row">
-									<div class="col-md-4"><h3>Lista de Preguntas <div class="btn green tooltips" data-original-title="Añadir Nueva Pregunta"><i class="fa fa-plus"></i></div> </h3></div>
-								</div>
-								<div class="row">&nbsp;</div>
-								<div class="row">
-									<div class="col-md-4">
-										<ul id="questions_list" class="ver-inline-menu tabbable margin-bottom-10">
-											@if($evaluation->hangman->count() > 0)
-												@foreach($evaluation->hangman as $question)
-													
-												@endforeach
-											@endif;
-											<li class="active">
-												<a data-toggle="tab" href="#tab_1-1">
-												<i class="fa fa-cube"></i>Primera Pregunta...</a>
-												<span class="after">
-												</span>
-											</li>
-											<li>
-												<a data-toggle="tab" href="#tab_2-2">
-												<i class="fa fa-cube"></i>Segunda Pregunta...</a>
-											</li>
-											<li>
-												<a data-toggle="tab" href="#tab_3-3">
-												<i class="fa fa-cube"></i>Tercera Pregunta... </a>
-											</li>
-											<li>
-												<a data-toggle="tab" href="#tab_4-4">
-												<i class="fa fa-cube"></i>Cuarta Pregunta... </a>
-											</li>
-										</ul>
-									</div>
-									<div class="col-md-8">
-										<div class="tab-content">
-											<div id="tab_1-1" class="tab-pane active">
-												<form role="form" action="#">
-													<div class="form-group">
-														<label class="control-label">Pregunta</label>
-														<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" value="Primera pregunta de esta Actividad" />
-													</div>
-													<div class="form-group">
-														<label class="control-label">Respuesta Correcta</label>
-														<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" value="Esta es la respuesta correcta" />
-													</div>
-													<div class="form-group">
-														<label class="control-label">Respuesta Incorrecta #1</label>
-														<input type="text" placeholder="Indique una Opción Errónea" class="form-control" value="Esta respuesta esta mal" />
-													</div>
-													<div class="form-group">
-														<label class="control-label">Respuesta Incorrecta #2</label>
-														<input type="text" placeholder="Indique una Opción Errónea" class="form-control" value="No has estudiado" />
-													</div>
-													<div class="form-group">
-														<label class="control-label">Respuesta Incorrecta #3</label>
-														<input type="text" placeholder="Indique una Opción Errónea" class="form-control" value="NO, :(" />
-													</div>
-												</form>
+										<div class="col-md-4">
+											<div class="col-md-6">
+												<input type="submit" class="btn blue-madison" value="Guardar">
 											</div>
-											<div id="tab_2-2" class="tab-pane">
-												<p>
-													Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-												</p>
-												<form action="#" role="form">
-													<div class="form-group">
-														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-																<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/>
-															</div>
-															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;">
-															</div>
-															<div>
-																<span class="btn default btn-file">
-																<span class="fileinput-new">
-																Select image </span>
-																<span class="fileinput-exists">
-																Change </span>
-																<input type="file" name="...">
-																</span>
-																<a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">
-																Remove </a>
-															</div>
-														</div>
-														<div class="clearfix margin-top-10">
-															<span class="label label-danger">
-															NOTE! </span>
-															<span>
-															Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only </span>
-														</div>
-													</div>
-													<div class="margin-top-10">
-														<a href="#" class="btn green">
-														Submit </a>
-														<a href="#" class="btn default">
-														Cancel </a>
-													</div>
-												</form>
-											</div>
-											<div id="tab_3-3" class="tab-pane">
-												<form action="#">
-													<div class="form-group">
-														<label class="control-label">Current Password</label>
-														<input type="password" class="form-control"/>
-													</div>
-													<div class="form-group">
-														<label class="control-label">New Password</label>
-														<input type="password" class="form-control"/>
-													</div>
-													<div class="form-group">
-														<label class="control-label">Re-type New Password</label>
-														<input type="password" class="form-control"/>
-													</div>
-													<div class="margin-top-10">
-														<a href="#" class="btn green">
-														Change Password </a>
-														<a href="#" class="btn default">
-														Cancel </a>
-													</div>
-												</form>
-											</div>
-											<div id="tab_4-4" class="tab-pane">
-												<form action="#">
-													<table class="table table-bordered table-striped">
-													<tr>
-														<td>
-															 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..
-														</td>
-														<td>
-															<label class="uniform-inline">
-															<input type="radio" name="optionsRadios1" value="option1"/>
-															Yes </label>
-															<label class="uniform-inline">
-															<input type="radio" name="optionsRadios1" value="option2" checked/>
-															No </label>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															 Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-														</td>
-														<td>
-															<label class="uniform-inline">
-															<input type="checkbox" value=""/> Yes </label>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															 Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-														</td>
-														<td>
-															<label class="uniform-inline">
-															<input type="checkbox" value=""/> Yes </label>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															 Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-														</td>
-														<td>
-															<label class="uniform-inline">
-															<input type="checkbox" value=""/> Yes </label>
-														</td>
-													</tr>
-													</table>
-													<!--end profile-settings-->
-													<div class="margin-top-10">
-														<a href="#" class="btn green">
-														Save Changes </a>
-														<a href="#" class="btn default">
-														Cancel </a>
-													</div>
-												</form>
+											<div class="col-md-6">
+												<img id="evaluation-form-loader" class="col-md-8 hidden" src="/assets/loaders/rubiks-cube.gif">
 											</div>
 										</div>
 									</div>
 								</div>
-								<!-- END PAGE CONTENT INNER -->
 							</form>
+							<!-- END PAGE CONTENT INNER -->
+							<div class="row">&nbsp;</div>
+							<div class="row">
+								<div class="col-md-8">
+									<h3 class="col-md-6">Lista de Preguntas 
+										<div class="btn green tooltips activity-questions-add" data-original-title="Añadir Nueva Pregunta">
+											<i class="fa fa-plus"></i>
+										</div>
+									</h3>
+									 
+									<div class="col-md-4">
+										<img id="questions-form-loader" class="col-md-8 hidden" src="/assets/loaders/rubiks-cube.gif">
+									</div>
+								</div>
+							</div>
+							<div class="row">&nbsp;</div>
+							<div class="row">
+								<div class="col-md-4">
+									<ul id="questions-list" class="ver-inline-menu tabbable margin-bottom-10">
+										@if($evaluation->hangman->count() > 0 AND ($counter = 0) == 0)
+											@foreach($evaluation->hangman as $question)
+												<li class="{{ $counter++ == 0 ? 'active' : ''}}">
+													<a data-toggle="tab" href="#question_{{ Hashids::encode($question->id) }}">
+													<i class="fa fa-cube"></i><span>{{ substr($question->question, 0, 25).'...'}}</span></a>
+													<span class="after">
+													</span>
+												</li>
+											@endforeach
+										@endif
+										<!-- <li class="active">
+											<a data-toggle="tab" href="#tab_1-1">
+											<i class="fa fa-cube"></i>Primera Pregunta...</a>
+											<span class="after">
+											</span>
+										</li>
+										<li>
+											<a data-toggle="tab" href="#tab_2-2">
+											<i class="fa fa-cube"></i>Segunda Pregunta...</a>
+										</li>
+										<li>
+											<a data-toggle="tab" href="#tab_3-3">
+											<i class="fa fa-cube"></i>Tercera Pregunta... </a>
+										</li>
+										<li>
+											<a data-toggle="tab" href="#tab_4-4">
+											<i class="fa fa-cube"></i>Cuarta Pregunta... </a>
+										</li> -->
+									</ul>
+								</div>
+								<div class="col-md-8">
+									<div id="questions-content" class="tab-content">
+										@if($evaluation->hangman->count() > 0 AND ($counter = 0) == 0)
+											@foreach($evaluation->hangman as $question)
+												<div id="question_{{ Hashids::encode($question->id) }}" class="tab-pane question-pane {{ $counter++ == 0 ? 'active' : ''}}">
+													<form role="form" action="#" class="question-ajax-form">
+														<input type="hidden" name="evaluation_id" value="{{ Hashids::encode($question->evaluation_id) }}">
+														<input type="hidden" name="id" value="{{ Hashids::encode($question->id) }}">
+														<div class="form-group">
+															<label class="control-label">Pregunta</label>
+															<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="{{ $question->question }}" required/>
+														</div>
+														<div class="form-group">
+															<label class="control-label">Palabra</label>
+															<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="word" value="{{ $question->word }}" maxlength="254" required/>
+														</div>
+														<div class="form-group">
+															<label class="control-label">Segundos</label>
+															<input type="text" placeholder="Indique una Opción Errónea" class="form-control" name="seconds" value="{{ $question->seconds }}" required/>
+														</div>
+														<div class="form-group">
+															<input type="submit" placeholder="Indique una Opción Errónea" class="btn green" value="Guardar" />
+															<div class="btn red delete-question">Eliminar</div>
+														</div>
+													</form>
+												</div>
+											@endforeach
+										@endif
+									</div>
+								</div>
+							</div>
+								<!-- END PAGE CONTENT INNER -->
 						</div>
 					</div>
 				</div>
@@ -289,15 +204,216 @@
 	<script type="text/javascript" src="/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 	<!-- END PICKERS LEVEL PLUGINS -->	
 
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="/assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+	<!-- END PAGE LEVEL SCRIPTS -->
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script src="/assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+
 	<script type="text/javascript" src="/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	
 	<script type="text/javascript">
 
+		toastr.options = {
+		  "closeButton": true,
+		  "debug": false,
+		  "positionClass": "toast-top-right",
+		  "onclick": null,
+		  "showDuration": "1000",
+		  "hideDuration": "1000",
+		  "timeOut": "5000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}
+
 		var QuestionsManager = function() {
+
+			var submitEvaluationForm = function(el){
+
+				$('#evaluation-form-loader').removeClass('hidden');
+
+				$.ajax({
+					url: '{{ $route }}/editactivity',
+					type: 'POST',
+					datatype: 'json',
+					data: el.serialize(),
+					success: function(data){
+						$('#evaluation-form-loader').addClass('hidden');
+						toastr['success']("Los datos de la actividad han sido modificados con éxito!", "Actividad Modificada");
+						console.log(data);
+					},
+					error: function(xhr){
+						toastr['error']("No se han podido guardar los datos de la actividad", "ERROR")
+						console.log(xhr);
+					}
+				});
+			}
+
+			var submitQuestionForm = function(el){
+
+				console.log('Submit Question Form');
+
+				var data = el.serialize();
+
+				console.log(data);
+
+				$('#questions-form-loader').removeClass('hidden');
+
+				$.ajax({
+					url: '{{ $route }}/question',
+					type: 'PUT',
+					datatype: 'json',
+					data: data,
+					success: function(data){
+						console.log(data);
+						$('#questions-form-loader').addClass('hidden');
+						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > span').html(data.question.question);
+						toastr['success']("Los datos de la pregunta han sido modificados con éxito!", "Pregunta Modificada");
+					},
+					error: function(xhr){
+						toastr['error']("No se han podido guardar los datos de la pregunta", "ERROR");
+						console.log(xhr);
+					}
+				});
+			}
+
+			var deleteQuestionConfirm = function(el){
+
+				var data = $(el.parents('form')[0]).serialize();
+
+                bootbox.confirm("¿Está usted seguro que desea eliminar esta pregunta?", function(result) {
+                	if(result){
+
+						$('#questions-form-loader').removeClass('hidden');
+
+                		$.ajax({
+                			url: '{{ $route }}/question',
+                			type: 'DELETE',
+                			datatype: 'json',
+                			data: data,
+                			async: true,
+                			success: function(data){
+								$('#questions-form-loader').addClass('hidden');
+								$($('ul#questions-list > li > a[href=#question_' + data.hashids + ']').parents('li')[0]).remove();
+								$('div#question_' + data.hashids).remove();
+								$('div.question-pane').last().addClass('active');
+								$('ul#questions-list li').last().addClass('active');
+								console.log(data);
+								toastr['success']("La pregunta ha sido eliminada con éxito!", "Pregunta Eliminada");
+                			},
+                			error: function(xhr){
+                				console.log(xhr);
+								toastr['error']("No se han podido eliminar la pregunta", "ERROR");
+                			}
+                		})
+                	}
+                	else{
+
+                	}
+                   console.log(result);
+                }); 
+
+			}
+
+			var activityQuestionAdd = function(el){
+
+				var activity = el.parents('.portlet-body').data('activity');
+
+				$('#questions-form-loader').removeClass('hidden');
+
+				$.ajax({
+					url: '{{ $route }}/question',
+					type: 'POST',
+					datatype: 'json',
+					async: true,
+					data: {
+						activity_id: activity,
+					},
+					success: function(data){
+
+						$('ul#questions-list > li').removeClass('active');
+
+						$('.question-pane').removeClass('active');
+
+						$('#questions-form-loader').addClass('hidden');
+
+						$('#questions-list').append(''+
+							'<li class="active">' +
+								'<a data-toggle="tab" href="#question_' + data.question.hashids + '">'+
+									'<i class="fa fa-cube"></i><span>' + data.question.question + '</span></a>' +
+								'<span class="after">' +
+								'</span>' +
+							'</li>');
+						
+						$('#questions-content').append('' +
+
+							'<div id="question_' + data.question.hashids + '" class="tab-pane question-pane active">' +
+								'<form role="form" action="#" class="question-ajax-form">' +
+									'<input type="hidden" name="evaluation_id" value="' + data.evaluation.hashids + '">' +
+									'<input type="hidden" name="id" value="' + data.question.hashids + '">' +
+									'<div class="form-group">' +
+										'<label class="control-label">Pregunta</label>' +
+										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="' + data.question.question + '"  required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="control-label">Palabra</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="word" value="' + data.question.word + '" maxlength="254" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="control-label">Segundos</label>' +
+										'<input type="text" placeholder="Indique una Opción Errónea" class="form-control" name="seconds" value="' + data.question.seconds + '" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<div class="btn green submit-question-form">Guardar</div>' +
+										'<div class="btn red delete-question" style="margin-left:3px">Eliminar</div>' +
+									'</div>' +
+								'</form>' +
+							'</div>');
+						
+						Metronic.init();
+
+					}
+				});
+
+			}
 
 			return {
 
 				init: function (){
+
+					$('.evaluation').on('submit', '.evaluation-ajax-form', function(event) {
+						event.preventDefault();
+						submitEvaluationForm($(this));
+						/* Act on the event */
+					});
+
+					$('.evaluation').on('submit', '.question-ajax-form', function(event) {
+						event.preventDefault();
+						submitQuestionForm($(this));
+						/* Act on the event */
+					});
+
+					$('.evaluation').on('click', '.submit-question-form', function(event) {
+						event.preventDefault();
+						$($(this).parents('form')[0]).submit();
+						/* Act on the event */
+					});
+
+					$('.evaluation').on('click', '.delete-question', function(event) {
+						event.preventDefault();
+						deleteQuestionConfirm($(this));
+						/* Act on the event */
+					});
+
+					$('.evaluation').on('click', '.activity-questions-add', function(event) {
+						activityQuestionAdd($(this));
+						/* Act on the event */
+					});
 
 				}
 			}
@@ -328,10 +444,10 @@
 			                firstDay: moment.localeData()._week.dow
 			            },
 		                separator: ' to ',
-		                startDate: moment("{{ date('Ymd') }}", "YYYYMMDD" ),
-		                endDate: moment("{{ date('Ymd') }}", "YYYYMMDD" ),
-		                minDate: moment(),
-		                maxDate: moment().subtract('days', -365),
+		                startDate: moment("{{ date('Ymd', strtotime($evaluation->date_start)) }}", "YYYYMMDD" ),
+		                endDate: moment("{{ date('Ymd', strtotime($evaluation->date_end)) }}", "YYYYMMDD" ),
+		                minDate: moment("{{ date('Ymd', strtotime($module->date_start)) }}", "YYYYMMDD" ),
+		                maxDate: moment("{{ date('Ymd', strtotime($module->date_end)) }}", "YYYYMMDD" ),
 		            },
 		            function (start, end) {
 		            	console.log('change;');
