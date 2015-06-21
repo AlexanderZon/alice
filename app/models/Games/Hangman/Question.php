@@ -33,4 +33,13 @@ class Question extends \Eloquent {
 		return json_encode($questions);
 
 	}
+
+	public function isIncomplete(){
+
+		if($this->question == '' OR $this->word == '' OR $this->seconds == '' ) return true;
+
+		return false;
+
+	}
+	
 }

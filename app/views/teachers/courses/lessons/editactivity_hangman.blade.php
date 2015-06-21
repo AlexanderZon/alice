@@ -121,8 +121,9 @@
 											@foreach($evaluation->hangman as $question)
 												<li class="{{ $counter++ == 0 ? 'active' : ''}}">
 													<a data-toggle="tab" href="#question_{{ Hashids::encode($question->id) }}">
-													<i class="fa fa-cube"></i><span>{{ substr($question->question, 0, 25).'...'}}</span></a>
+													<i class="fa fa-cube {{ $question->isIncomplete() ? 'font-red' : '' }}"></i><span>{{ substr($question->question, 0, 25).'...'}}</span><span class="badge badge-danger"></span></a>
 													<span class="after">
+
 													</span>
 												</li>
 											@endforeach
@@ -272,7 +273,7 @@
 					success: function(data){
 						console.log(data);
 						$('#questions-form-loader').addClass('hidden');
-						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > span').html(data.question.question);
+						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > span').html(data.question.question.slice(0, 25) + '...');
 						toastr['success']("Los datos de la pregunta han sido modificados con éxito!", "Pregunta Modificada");
 					},
 					error: function(xhr){
@@ -345,7 +346,7 @@
 						$('#questions-list').append(''+
 							'<li class="active">' +
 								'<a data-toggle="tab" href="#question_' + data.question.hashids + '">'+
-									'<i class="fa fa-cube"></i><span>' + data.question.question + '</span></a>' +
+									'<i class="fa fa-cube"></i><span>' + data.question.question.slice(0, 25) + '</span></a>' +
 								'<span class="after">' +
 								'</span>' +
 							'</li>');
