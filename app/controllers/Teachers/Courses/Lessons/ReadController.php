@@ -739,6 +739,14 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question->question = 'Pregunta #'.($evaluation->roulette->count()+1);
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
+
+				for( $i = 0 ; $i < 4 ; $i++):
+					$answer = new Answer();
+					$answer->question_id = $question->id;
+					$answer->answer = '';
+					$answer->is_correct = $i == 0 ? true : false;
+					$answer->save();
+				endfor;
 				break;
 		endswitch;
 
