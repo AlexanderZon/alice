@@ -73,4 +73,35 @@ class Question extends \Eloquent {
 
 	}
 
+	public function isIncomplete(){
+
+		$bool = false;
+
+		if($this->question == '') $bool = true;
+
+		if($this->answers->count() == 5):
+			foreach($this->answers as $answer):
+				if($answer->answer == '') $bool = true;
+			endforeach;
+		else:
+			if($this->answers->count() > 0):
+				foreach($this->answers as $answer):
+					$answer->delete();
+				endforeach;
+			endif;
+			for($i = 0 ; $i < 5 ; $i++):
+				$answer = new Answer();
+				$answer->question_id = $this->id;
+				$answer->answer = '';
+				$answer->save();
+			endfor;
+
+			$bool = true;
+
+		endif;
+
+		return $bool;
+
+	}
+
 }

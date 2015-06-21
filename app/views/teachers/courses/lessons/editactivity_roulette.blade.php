@@ -117,8 +117,8 @@
 							<div class="row">
 								<div class="col-md-4">
 									<ul id="questions-list" class="ver-inline-menu tabbable margin-bottom-10">
-										@if($evaluation->memory->count() > 0 AND ($counter = 0) == 0)
-											@foreach($evaluation->memory as $question)
+										@if($evaluation->roulette->count() > 0 AND ($counter = 0) == 0)
+											@foreach($evaluation->roulette as $question)
 												<li class="{{ $counter++ == 0 ? 'active' : ''}}">
 													<a data-toggle="tab" href="#question_{{ Hashids::encode($question->id) }}">
 													<i class="fa fa-cube {{ $question->isIncomplete() ? 'font-red' : '' }}"></i><span>{{ substr($question->question, 0, 25).'...'}}</span></a>
@@ -150,8 +150,8 @@
 								</div>
 								<div class="col-md-8">
 									<div id="questions-content" class="tab-content">
-										@if($evaluation->memory->count() > 0 AND ($counter = 0) == 0)
-											@foreach($evaluation->memory as $question)
+										@if($evaluation->roulette->count() > 0 AND ($counter = 0) == 0)
+											@foreach($evaluation->roulette as $question)
 												<div id="question_{{ Hashids::encode($question->id) }}" class="tab-pane question-pane {{ $counter++ == 0 ? 'active' : ''}}">
 													<form role="form" action="#" class="question-ajax-form">
 														<input type="hidden" name="evaluation_id" value="{{ Hashids::encode($question->evaluation_id) }}">
@@ -164,12 +164,15 @@
 															<label class="control-label">Respuesta</label>
 															<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="{{ $question->answer }}" maxlength="254" required/>
 														</div> -->
-														@foreach($question->answers as $answer)
-															<div class="form-group">
-																<label class="control-label">Respuesta</label>
-																<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="{{ $answer->is_correct ? 'answer' : 'incorrect[]' }}" value="{{ $answer->answer }}" maxlength="254" required/>
-															</div>
-														@endforeach
+														@if($question->answers->count() > 0 AND ($counter = 0) == 0)
+															@foreach($question->answers as $answer)
+																<div class="form-group">
+																	<label class="control-label">Respuesta {{ $counter == 0 ? 'Correcta' : 'Incorrecta #'.$counter }}</label>
+																	<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="{{ $answer->is_correct ? 'correct' : 'incorrect[]' }}" value="{{ $answer->answer }}" maxlength="254" required/>
+																</div>
+																<?php $counter++ ?>
+															@endforeach
+														@endif
 														<div class="form-group">
 															<input type="submit" placeholder="Indique una Opción Errónea" class="btn green" value="Guardar" />
 															<div class="btn red delete-question">Eliminar</div>
@@ -365,20 +368,20 @@
 										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="' + data.question.question + '" maxlength="254" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="control-label">Respuesta</label>' +
-										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="' + data.question.answer + '" maxlength="254" required/>' +
+										'<label class="control-label">Respuesta Correcta</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="correct" value="' + data.question.correct + '" maxlength="254" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="control-label">Respuesta</label>' +
+										'<label class="control-label">Respuesta Incorrecta #1</label>' +
 										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[0] + '" maxlength="254" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="control-label">Respuesta</label>' +
-										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[2] + '" maxlength="254" required/>' +
+										'<label class="control-label">Respuesta Incorrecta #2</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[1] + '" maxlength="254" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="control-label">Respuesta</label>' +
-										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[3] + '" maxlength="254" required/>' +
+										'<label class="control-label">Respuesta Incorrecta #3</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[2] + '" maxlength="254" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
 										'<div class="btn green submit-question-form">Guardar</div>' +
@@ -389,6 +392,9 @@
 						
 						Metronic.init();
 
+					},
+					error: function(xhr){
+						console.log(xhr);
 					}
 				});
 

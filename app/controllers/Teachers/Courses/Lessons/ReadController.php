@@ -720,6 +720,8 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question->seconds = 0;
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
+				$question->hashids = Hashids::encode($question->id);
+				$evaluation->hashids = Hashids::encode($evaluation->id);
 				break;
 			case 'memory':
 				$question = new Memory();
@@ -727,31 +729,64 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question->answer = '';
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
+				$question->hashids = Hashids::encode($question->id);
+				$evaluation->hashids = Hashids::encode($evaluation->id);
 				break;
 			case 'rpsls':
 				$question = new RPSLS();
 				$question->question = 'Pregunta #'.($evaluation->rpsls->count()+1);
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
+				$tmp = array(
+					'id' => $question->id,
+					'hashids' => Hashids::encode($question->id),
+					'question' => $question->question,
+					'correct' => '',
+					'incorrect' => array(),
+					);
+				for( $i = 0 ; $i < 5 ; $i++):
+					$answer = new RPSLSAnswer();
+					$answer->question_id = $question->id;
+					$answer->answer = '';
+					$answer->is_correct = $i == 0 ? true : false;
+					$answer->save();
+					if($i == 0):
+						$tmp['correct'] = $answer->answer;
+					else:
+						$tmp['incorrect'][] = $answer->answer;
+					endif;
+				endfor;
+				$question = $tmp;
+				$evaluation->hashids = Hashids::encode($evaluation->id);
 				break;
 			case 'roulette':
 				$question = new Roulette();
 				$question->question = 'Pregunta #'.($evaluation->roulette->count()+1);
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
-
+				$tmp = array(
+					'id' => $question->id,
+					'hashids' => Hashids::encode($question->id),
+					'question' => $question->question,
+					'correct' => '',
+					'incorrect' => array(),
+					);
 				for( $i = 0 ; $i < 4 ; $i++):
-					$answer = new Answer();
+					$answer = new RouletteAnswer();
 					$answer->question_id = $question->id;
 					$answer->answer = '';
 					$answer->is_correct = $i == 0 ? true : false;
 					$answer->save();
+					if($i == 0):
+						$tmp['correct'] = $answer->answer;
+					else:
+						$tmp['incorrect'][] = $answer->answer;
+					endif;
 				endfor;
+				$question = $tmp;
+				$evaluation->hashids = Hashids::encode($evaluation->id);
 				break;
 		endswitch;
-
-		$question->hashids = Hashids::encode($question->id);
-		$evaluation->hashids = Hashids::encode($evaluation->id);
 
 		$args = array(
 			'question' => $question,
@@ -781,6 +816,8 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question->word = Input::get('word');
 				$question->seconds = Input::get('seconds');
 				$question->save();
+				$question->hashids = Hashids::encode($question->id);
+				$evaluation->hashids = Hashids::encode($evaluation->id);
 				break;
 			case 'memory':
 				$question = Memory::find(Hashids::decode(Input::get('id')));
@@ -788,23 +825,74 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question->answer = Input::get('answer');
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
+				$question->hashids = Hashids::encode($question->id);
+				$evaluation->hashids = Hashids::encode($evaluation->id);
 				break;
 			case 'rpsls':
 				$question = RPSLS::find(Hashids::decode(Input::get('id')));
 				$question->question = Input::get('question');
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
+				$tmp = array(
+					'id' => $question->id,
+					'hashids' => Hashids::encode($question->id),
+					'question' => $question->question,
+					'correct' => '',
+					'incorrect' => array(),
+					);
+				$incorrect = Input::get('incorrect');
+				$correct = Input::get('correct');
+				$counter = 0;
+				foreach($question->answers as $answer):
+					if($counter == 0):
+						$answer->answer = $correct;
+					else:
+						$answer->answer = $incorrect[$counter-1];
+					endif;
+					$answer->save();
+					if($counter == 0):
+						$tmp['correct'] = $answer->answer;
+					else:
+						$tmp['incorrect'][] = $answer->answer;
+					endif;
+					$counter++;
+				endforeach;
+				$question = $tmp;
+				$evaluation->hashids = Hashids::encode($evaluation->id);
 				break;
 			case 'roulette':
 				$question = Roulette::find(Hashids::decode(Input::get('id')));
 				$question->question = Input::get('question');
 				$question->evaluation_id = $evaluation->id;
 				$question->save();
+				$tmp = array(
+					'id' => $question->id,
+					'hashids' => Hashids::encode($question->id),
+					'question' => $question->question,
+					'correct' => '',
+					'incorrect' => array(),
+					);
+				$incorrect = Input::get('incorrect');
+				$correct = Input::get('correct');
+				$counter = 0;
+				foreach($question->answers as $answer):
+					if($counter == 0):
+						$answer->answer = $correct;
+					else:
+						$answer->answer = $incorrect[$counter-1];
+					endif;
+					$answer->save();
+					if($counter == 0):
+						$tmp['correct'] = $answer->answer;
+					else:
+						$tmp['incorrect'][] = $answer->answer;
+					endif;
+					$counter++;
+				endforeach;
+				$question = $tmp;
+				$evaluation->hashids = Hashids::encode($evaluation->id);
 				break;
 		endswitch;
-
-		$question->hashids = Hashids::encode($question->id);
-		$evaluation->hashids = Hashids::encode($evaluation->id);
 
 		$args = array(
 			'question' => $question,

@@ -35,7 +35,7 @@ class Evaluation extends \Eloquent {
 
     public function rpsls(){
 
-        return $this->hasMany('\Games\RPSLSL\Question');
+        return $this->hasMany('\Games\RPSLS\Question');
 
     }
 
