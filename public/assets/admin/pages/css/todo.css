@@ -243,6 +243,86 @@ div .todo-tasklist-item:hover {
   font-weight: 400;
 }
 
+.todo-reply-head {
+  padding-top: 3px;
+}
+
+.todo-reply {
+  position: relative;
+}
+
+.todo-reply:hover > .todo-reply-btn {
+  display: block;
+}
+
+.todo-reply-btn {
+  display: none;
+  position: absolute;
+  top: 1px;
+  right: 0px;
+  font-size: 12px;
+  color: #566e7c;
+  border-color: #a2aeb5;
+}
+
+.todo-reply-btn:hover {
+  color: #fff;
+  background-color: #a1b6c2;
+  border-color: #a1b6c2;
+}
+
+.todo-reply-username {
+  font-size: 14px;
+  color: #2b4a5c;
+  font-weight: 600;
+}
+
+.todo-reply-date {
+  font-size: 12px;
+  color: #2b4a5c;
+  font-weight: 400;
+}
+
+.todo-like-head {
+  padding-top: 3px;
+}
+
+.todo-like {
+  position: relative;
+}
+
+.todo-like:hover > .todo-like-btn {
+  display: block;
+}
+
+.todo-like-btn {
+  display: none;
+  position: absolute;
+  top: 1px;
+  right: 20px;
+  font-size: 12px;
+  color: #566e7c;
+  border-color: #a2aeb5;
+}
+
+.todo-like-btn:hover {
+  color: #fff;
+  background-color: #a1b6c2;
+  border-color: #a1b6c2;
+}
+
+.todo-like-username {
+  font-size: 14px;
+  color: #2b4a5c;
+  font-weight: 600;
+}
+
+.todo-like-date {
+  font-size: 12px;
+  color: #2b4a5c;
+  font-weight: 400;
+}
+
 .todo-username-btn {
   margin: 14px 0 0 15px;
   color: #566e7c;

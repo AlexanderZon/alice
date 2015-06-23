@@ -942,4 +942,18 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	public function getComments( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		self::addArgument('module', $lesson->module);
+
+		self::addArgument('lesson', $lesson);
+
+		self::addArgument('course', Course::find(Hashids::decode($course_id)));
+
+		return self::make('comments');
+
+	}
+
 }

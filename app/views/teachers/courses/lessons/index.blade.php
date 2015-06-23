@@ -121,12 +121,12 @@
 															{{ $lesson->getSummary() }}
 														</div>
 														<div class="timeline-footer">
-															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-comments" data-original-title="Hay {{ $lesson->discussions->count() }} comentario(s) en esta Lección">
+															<a href="javascript:;" class="btn green-haze pull-left tooltips lesson-comments" data-original-title="Hay {{ $lesson->discussions->count() }} comentario(s) en esta Lección">
 																<i class="fa fa-comments"></i> {{ $lesson->discussions->count() }}
 															</a>
 															<div class="pull-left">&nbsp;</div>
 															<div class="pull-left">&nbsp;</div>
-															<a href="javascript:;" class="btn green-haze pull-left tooltips course-lesson-students" data-original-title="{{ $lesson->students->count() }} estudiante(s) han participado en esta Lección">
+															<a href="javascript:;" class="btn green-haze pull-left tooltips lesson-students" data-original-title="{{ $lesson->students->count() }} estudiante(s) han participado en esta Lección">
 																<i class="fa fa-users"></i> {{ $lesson->students->count() }}
 															</a>
 															<div class="pull-left">&nbsp;</div>
