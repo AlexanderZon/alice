@@ -55,25 +55,46 @@
 												<ul class="media-list">
 													<li class="media">
 														<a class="pull-left" href="javascript:;">
-														<img class="todo-userpic" src="/assets/admin/layout4/img/avatar8.jpg" width="27px" height="27px">
+														<img class="todo-userpic" src="/assets/admin/layout4/img/avatar8.jpg" width="45px" height="45px">
 														</a>
 														<div class="media-body todo-comment">
-															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs">&nbsp; Responder &nbsp;</button>
-															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
 															<p class="todo-comment-head">
-																<span class="todo-comment-username">Christina Aguilera</span> &nbsp; <span class="todo-comment-date">17 Sep 2014 at 2:05pm</span>
+																<span class="todo-comment-username">Christina Aguilera</span> &nbsp; 
+																<span class="todo-comment-date">17 Sep 2014 at 2:05pm</span> &nbsp; 
+																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar {{ '2' }} archivos"><i class="fa fa-file"></i> 2</a> &nbsp; 
+																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '2' }} Me gustas"><i class="fa fa-thumbs-up"></i> 2</a> &nbsp; 
+																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '1' }} Respuestas"><i class="fa fa-mail-reply"></i> 1</a>
 															</p>
 															<p class="todo-text-color">
 																 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
 															</p>
+															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs">&nbsp; Responder &nbsp;</button>
+															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
 															<!-- Nested media object -->
 															<div class="media">
 																<a class="pull-left" href="javascript:;">
-																<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="27px" height="27px">
+																<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
 																</a>
 																<div class="media-body">
 																	<p class="todo-comment-head">
-																		<span class="todo-comment-username">Carles Puyol</span> &nbsp; <span class="todo-comment-date">17 Sep 2014 at 4:30pm</span>
+																		<span class="todo-comment-username">Carles Puyol</span> &nbsp; 
+																		<span class="todo-comment-date">17 Sep 2014 at 4:30pm</span> &nbsp; 
+																		<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '4' }} Me gustas"><i class="fa fa-thumbs-up"></i> 4</a> &nbsp; 
+																	</p>
+																	<p class="todo-text-color">
+																		 Thanks so much my dear!
+																	</p>
+																</div>
+															</div>
+															<div class="media">
+																<a class="pull-left" href="javascript:;">
+																<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
+																</a>
+																<div class="media-body">
+																	<p class="todo-comment-head">
+																		<span class="todo-comment-username">Carles Puyol</span> &nbsp; 
+																		<span class="todo-comment-date">17 Sep 2014 at 4:30pm</span> &nbsp; 
+																		<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '4' }} Me gustas"><i class="fa fa-thumbs-up"></i> 4</a> &nbsp; 
 																	</p>
 																	<p class="todo-text-color">
 																		 Thanks so much my dear!
@@ -84,30 +105,39 @@
 													</li>
 													<li class="media">
 														<a class="pull-left" href="javascript:;">
-														<img class="todo-userpic" src="/assets/admin/layout4/img/avatar5.jpg" width="27px" height="27px">
+														<img class="todo-userpic" src="/assets/admin/layout4/img/avatar5.jpg" width="45px" height="45px">
 														</a>
 														<div class="media-body todo-comment">
-															<button type="button" class="todo-comment-btn btn btn-circle btn-default btn-xs">&nbsp; Responder &nbsp;</button>
 															<p class="todo-comment-head">
-																<span class="todo-comment-username">Andres Iniesta</span> &nbsp; <span class="todo-comment-date">18 Sep 2014 at 9:22am</span>
+																<span class="todo-comment-username">Andres Iniesta</span> &nbsp; 
+																<span class="todo-comment-date">18 Sep 2014 at 9:22am</span> &nbsp;
+																<!-- <a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar {{ '2' }} archivos"><i class="fa fa-file"></i> 2</a> &nbsp;  -->
+																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '1' }} Me gustas"><i class="fa fa-thumbs-up"></i> 1</a> &nbsp; 
+																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '0' }} Respuestas"><i class="fa fa-mail-reply"></i> 0</a>
 															</p>
 															<p class="todo-text-color">
 																 Cras sit amet nibh libero, in gravida nulla. Scelerisque ante sollicitudin commodo Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
 															</p>
+															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs">&nbsp; Responder &nbsp;</button>
+															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
 														</div>
 													</li>
 													<li class="media">
 														<a class="pull-left" href="javascript:;">
-														<img class="todo-userpic" src="/assets/admin/layout4/img/avatar6.jpg" width="27px" height="27px">
+														<img class="todo-userpic" src="/assets/admin/layout4/img/avatar6.jpg" width="45px" height="45px">
 														</a>
 														<div class="media-body todo-comment">
-															<button type="button" class="todo-comment-btn btn btn-circle btn-default btn-xs">&nbsp; Responder &nbsp;</button>
 															<p class="todo-comment-head">
-																<span class="todo-comment-username">Olivia Wilde</span> &nbsp; <span class="todo-comment-date">18 Sep 2014 at 11:50am</span>
+																<span class="todo-comment-username">Olivia Wilde</span> &nbsp; <span class="todo-comment-date">18 Sep 2014 at 11:50am</span> &nbsp;
+																<!-- <a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar {{ '2' }} archivos"><i class="fa fa-file"></i> 2</a> &nbsp;  -->
+																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '1' }} Me gustas"><i class="fa fa-thumbs-up"></i> 1</a> &nbsp; 
+																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '0' }} Respuestas"><i class="fa fa-mail-reply"></i> 0</a>
 															</p>
 															<p class="todo-text-color">
 																 Cras sit amet nibh libero, in gravida nulla. Scelerisque ante sollicitudin commodo Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
 															</p>
+															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs">&nbsp; Responder &nbsp;</button>
+															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
 														</div>
 													</li>
 												</ul>
@@ -119,9 +149,9 @@
 											<div class="col-md-12">
 												<ul class="media-list">
 													<li class="media">
-														<img class="todo-userpic pull-left" src="/assets/admin/layout4/img/avatar4.jpg" width="27px" height="27px">
+														<img class="todo-userpic todo-user-left" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
 														<div class="media-body">
-															<textarea class="form-control todo-taskbody-taskdesc" rows="4" placeholder="Type comment..."></textarea>
+															<textarea class="summernote" rows="4" placeholder="Type comment..."></textarea>
 														</div>
 													</li>
 												</ul>
@@ -150,9 +180,12 @@
 
 	<!-- BEGIN PAGE PLUGINS & SCRIPTS -->
 	<script type="text/javascript" src="/assets/global/plugins/select2/select2.min.js"></script>
+	<script src="/assets/global/plugins/bootstrap-summernote/summernote.js" type="text/javascript"></script>
 	<!-- END PAGE PLUGINS & SCRIPTS -->
 	
 	<script type="text/javascript">
+
+		//$('div.media:last').after('<div class="media"><a class="pull-left" href="javascript:;"><img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px"></a><div class="media-body"><textarea class="summernote" rows="1" placeholder="Type comment..."></textarea></div><div class="reply-submit-btn"><button type="button" class="pull-right btn btn-sm btn-circle green-haze"> &nbsp; Responder &nbsp; </button></div></div>');
 
 		/**
 		Todo Module
@@ -201,6 +234,27 @@
 
 		}();
 
+		var ComponentsEditors = function () {
+
+		    var handleSummernote = function () {
+		        $('.summernote').summernote({
+		        	height: 75,
+		        });
+		        //API:
+		        //var sHTML = $('#summernote_1').code(); // get code
+		        //$('#summernote_1').destroy(); // destroy
+		    }
+
+		    return {
+		        //main function to initiate the module
+		        init: function () {
+		            handleSummernote();
+		        }
+		    };
+
+		}();
+
+		ComponentsEditors.init();
 		Todo.init();
 
 		$('#course-title').html('{{ $course->title }}');

@@ -209,6 +209,8 @@ div .todo-tasklist-item:hover {
 
 .todo-comment {
   position: relative;
+  border-left: 2px solid #428BCA;
+  padding-left: 10px;
 }
 
 .todo-comment:hover > .todo-comment-btn {
@@ -251,14 +253,14 @@ div .todo-tasklist-item:hover {
   position: relative;
 }
 
-.todo-reply:hover > .todo-reply-btn {
+.todo-comment:hover > .todo-reply-btn {
   display: block;
 }
 
 .todo-reply-btn {
   display: none;
   position: absolute;
-  top: 1px;
+  top: 10px;
   right: 0px;
   font-size: 12px;
   color: #566e7c;
@@ -291,15 +293,15 @@ div .todo-tasklist-item:hover {
   position: relative;
 }
 
-.todo-like:hover > .todo-like-btn {
+.todo-comment:hover > .todo-like-btn {
   display: block;
 }
 
 .todo-like-btn {
   display: none;
   position: absolute;
-  top: 1px;
-  right: 20px;
+  top: 10px;
+  right: 90px;
   font-size: 12px;
   color: #566e7c;
   border-color: #a2aeb5;
@@ -321,6 +323,16 @@ div .todo-tasklist-item:hover {
   font-size: 12px;
   color: #2b4a5c;
   font-weight: 400;
+}
+
+.todo-user-left{
+  float: left;
+  padding-right: 0px;
+  margin-right: 10px;
+}
+
+.reply-submit-btn{
+  padding-top: 5px;
 }
 
 .todo-username-btn {
