@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
 	<!-- END PICKERS LEVEL STYLES -->
 
 	<!-- BEGIN PAGE LEVEL STYLES -->
@@ -42,7 +43,7 @@
 								</a>
 							</h4>
 						</div>
-						<div class="portlet-body form" data-lesson="{{ Hashids::encode($lesson->id) }}" data-course="{{ Hashids::encode($course->id) }}">
+						<div class="portlet-body form discussions" data-lesson="{{ Hashids::encode($lesson->id) }}" data-course="{{ Hashids::encode($course->id) }}">
 							<!-- BEGIN FORM-->
 							<div class="tab-pane" id="tab_1_4">
 								<div class="row">&nbsp;</div>
@@ -61,14 +62,14 @@
 															<p class="todo-comment-head">
 																<span class="todo-comment-username">Christina Aguilera</span> &nbsp; 
 																<span class="todo-comment-date">17 Sep 2014 at 2:05pm</span> &nbsp; 
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar {{ '2' }} archivos"><i class="fa fa-file"></i> 2</a> &nbsp; 
+																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo adjunto"><i class="fa fa-paperclip"></i></a> &nbsp; 
 																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '2' }} Me gustas"><i class="fa fa-thumbs-up"></i> 2</a> &nbsp; 
 																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '1' }} Respuestas"><i class="fa fa-mail-reply comment-reply-btn"></i> 1</a>
 															</p>
 															<p class="todo-text-color">
 																 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
 															</p>
-															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs">&nbsp; Responder &nbsp;</button>
+															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
 															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
 															<!-- Nested media object -->
 															<div class="media">
@@ -118,7 +119,7 @@
 															<p class="todo-text-color">
 																 Cras sit amet nibh libero, in gravida nulla. Scelerisque ante sollicitudin commodo Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
 															</p>
-															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs">&nbsp; Responder &nbsp;</button>
+															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
 															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
 														</div>
 													</li>
@@ -136,7 +137,7 @@
 															<p class="todo-text-color">
 																 Cras sit amet nibh libero, in gravida nulla. Scelerisque ante sollicitudin commodo Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
 															</p>
-															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs">&nbsp; Responder &nbsp;</button>
+															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
 															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
 														</div>
 													</li>
@@ -177,6 +178,7 @@
 	</div>		
 
 	<script type="text/javascript" src="/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
 
 	<!-- BEGIN PAGE PLUGINS & SCRIPTS -->
 	<script type="text/javascript" src="/assets/global/plugins/select2/select2.min.js"></script>
@@ -186,6 +188,165 @@
 	<script type="text/javascript">
 
 		//$('div.media:last').after('<div class="media"><a class="pull-left" href="javascript:;"><img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px"></a><div class="media-body"><textarea class="summernote" rows="1" placeholder="Type comment..."></textarea></div><div class="reply-submit-btn"><button type="button" class="pull-right btn btn-sm btn-circle green-haze"> &nbsp; Responder &nbsp; </button></div></div>');
+
+		/**
+		Comments Module
+		**/
+
+		var CommentsManager = function() {
+
+			var reply_form = '<div class="media"><a class="pull-left" href="javascript:;"><img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px"></a><div class="media-body"><textarea class="summernote" rows="1" placeholder="Type comment..."></textarea></div><div class="reply-submit-btn"><button type="button" class="pull-right btn btn-sm btn-circle green-haze"> &nbsp; Responder &nbsp; </button><span class="pull-right"> &nbsp; </span><div class="pull-right fileinput fileinput-new" data-provides="fileinput"><span class="btn default btn-file btn-sm btn-circle green-haze"><span class="fileinput-new">Añadir Adjunto </span><span class="fileinput-exists"> Cambiar </span><input type="file" name="..."></span><span class="fileinput-filename"></span>&nbsp; <a href="#" class="close fileinput-exists" data-dismiss="fileinput"></a></div></div></div>';
+
+			var discussionsReply = function(el){
+
+				var parent = $(el.parents('div.media-body')).children('div.media:last').after(reply_form);
+
+				$('#evaluation-form-loader').removeClass('hidden');
+				console.log('click');
+
+				ComponentsEditors.init();
+				
+			}
+
+			var submitQuestionForm = function(el){
+
+				console.log('Submit Question Form');
+
+				var data = el.serialize();
+
+				console.log(data);
+
+				$('#questions-form-loader').removeClass('hidden');
+
+				$.ajax({
+					url: '{{ $route }}/question',
+					type: 'PUT',
+					datatype: 'json',
+					data: data,
+					success: function(data){
+						console.log(data);
+						$('#questions-form-loader').addClass('hidden');
+						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > span').html(data.question.question.slice(0, 25) + '...');
+						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').removeClass('font-red');
+						toastr['success']("Los datos de la pregunta han sido modificados con éxito!", "Pregunta Modificada");
+					},
+					error: function(xhr){
+						toastr['error']("No se han podido guardar los datos de la pregunta", "ERROR");
+						console.log(xhr);
+					}
+				});
+			}
+
+			var deleteQuestionConfirm = function(el){
+
+				var data = $(el.parents('form')[0]).serialize();
+
+                bootbox.confirm("¿Está usted seguro que desea eliminar esta pregunta?", function(result) {
+                	if(result){
+
+						$('#questions-form-loader').removeClass('hidden');
+
+                		$.ajax({
+                			url: '{{ $route }}/question',
+                			type: 'DELETE',
+                			datatype: 'json',
+                			data: data,
+                			async: true,
+                			success: function(data){
+								$('#questions-form-loader').addClass('hidden');
+								$($('ul#questions-list > li > a[href=#question_' + data.hashids + ']').parents('li')[0]).remove();
+								$('div#question_' + data.hashids).remove();
+								$('div.question-pane').last().addClass('active');
+								$('ul#questions-list li').last().addClass('active');
+								console.log(data);
+								toastr['success']("La pregunta ha sido eliminada con éxito!", "Pregunta Eliminada");
+                			},
+                			error: function(xhr){
+                				console.log(xhr);
+								toastr['error']("No se han podido eliminar la pregunta", "ERROR");
+                			}
+                		})
+                	}
+                	else{
+
+                	}
+                   console.log(result);
+                }); 
+
+			}
+
+			var activityQuestionAdd = function(el){
+
+				var activity = el.parents('.portlet-body').data('activity');
+
+				$('#questions-form-loader').removeClass('hidden');
+
+				$.ajax({
+					url: '{{ $route }}/question',
+					type: 'POST',
+					datatype: 'json',
+					async: true,
+					data: {
+						activity_id: activity,
+					},
+					success: function(data){
+
+						$('ul#questions-list > li').removeClass('active');
+
+						$('.question-pane').removeClass('active');
+
+						$('#questions-form-loader').addClass('hidden');
+
+						$('#questions-list').append(''+
+							'<li class="active">' +
+								'<a data-toggle="tab" href="#question_' + data.question.hashids + '">'+
+									'<i class="fa fa-cube"></i><span>' + data.question.question.slice(0, 25) + '</span></a>' +
+								'<span class="after">' +
+								'</span>' +
+							'</li>');
+						
+						$('#questions-content').append('' +
+
+							'<div id="question_' + data.question.hashids + '" class="tab-pane question-pane active">' +
+								'<form role="form" action="#" class="question-ajax-form">' +
+									'<input type="hidden" name="evaluation_id" value="' + data.evaluation.hashids + '">' +
+									'<input type="hidden" name="id" value="' + data.question.hashids + '">' +
+									'<div class="form-group">' +
+										'<label class="control-label">Pregunta</label>' +
+										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="' + data.question.question + '" maxlength="254" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="control-label">Respuesta</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="' + data.question.answer + '" maxlength="254" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<div class="btn green submit-question-form">Guardar</div>' +
+										'<div class="btn red delete-question" style="margin-left:3px">Eliminar</div>' +
+									'</div>' +
+								'</form>' +
+							'</div>');
+						
+						Metronic.init();
+
+					}
+				});
+
+			}
+
+			return {
+
+				init: function (){
+
+					$('.discussions').on('click', '.comment-reply-btn', function(event) {
+						event.preventDefault();
+						discussionsReply($(this));
+						/* Act on the event */
+					});
+
+				}
+			}
+
+		}();
 
 		/**
 		Todo Module
@@ -256,6 +417,7 @@
 
 		ComponentsEditors.init();
 		Todo.init();
+		CommentsManager.init();
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
