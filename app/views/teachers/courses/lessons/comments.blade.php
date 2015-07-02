@@ -335,18 +335,18 @@
 				reply_html = '' +
 					'<li class="media">' +
 						'<a class="pull-left" href="javascript:;">' +
-						'<img class="todo-userpic" src="/assets/admin/layout4/img/avatar6.jpg" width="45px" height="45px">' +
+						'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
 						'</a>' +
 						'<div class="media-body todo-comment">' +
 							'<p class="todo-comment-head">' +
-								'<span class="todo-comment-username">Olivia Wilde</span> &nbsp; <span class="todo-comment-date">18 Sep 2014 at 11:50am</span> &nbsp;' +
-								'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar {{ '2' }} archivos"><i class="fa fa-file"></i> 2</a> &nbsp;' +
-								'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '1' }} Me gustas"><i class="fa fa-thumbs-up"></i> 1</a> &nbsp; ' +
-								'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '0' }} Respuestas"><i class="fa fa-mail-reply"></i> 0</a>' +
+								'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date">Justo ahora</span> &nbsp;' +
+								'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo"><i class="fa fa-file"></i></a> &nbsp;' +
+								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> 0</a> &nbsp; ' +
+								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-mail-reply"></i> 0</a>' +
 							'</p>' +
 							'<p class="todo-text-color" style="min-width:700px">' + comment + '</p>' +
 							'<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>' +
-							'<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>' +
+							'<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs comment-like-btn">&nbsp; Me gusta &nbsp;</button>' +
 							'<div class="children-comments">' +
 								'<!-- COMMENTS HERE -->' +
 							'</div>' +
