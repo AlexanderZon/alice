@@ -64,7 +64,7 @@
 																<span class="todo-comment-date">17 Sep 2014 at 2:05pm</span> &nbsp; 
 																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo adjunto"><i class="fa fa-paperclip"></i></a> &nbsp; 
 																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '2' }} Me gustas"><i class="fa fa-thumbs-up"></i> 2</a> &nbsp; 
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '1' }} Respuestas"><i class="fa fa-mail-reply comment-reply-btn"></i> 1</a>
+																<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ '1' }} Respuestas"><i class="fa fa-mail-reply"></i> 1</a>
 															</p>
 															<p class="todo-text-color">
 																 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
@@ -72,35 +72,37 @@
 															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
 															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
 															<!-- Nested media object -->
-															<div class="media">
-																<a class="pull-left" href="javascript:;">
-																<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
-																</a>
-																<div class="media-body">
-																	<p class="todo-comment-head">
-																		<span class="todo-comment-username">Carles Puyol</span> &nbsp; 
-																		<span class="todo-comment-date">17 Sep 2014 at 4:30pm</span> &nbsp; 
-																		<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '4' }} Me gustas"><i class="fa fa-thumbs-up"></i> 4</a> &nbsp; 
-																	</p>
-																	<p class="todo-text-color">
-																		 Thanks so much my dear!
-																	</p>
+															<div class="children-comments">
+																<div class="media">
+																	<a class="pull-left" href="javascript:;">
+																	<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
+																	</a>
+																	<div class="media-body">
+																		<p class="todo-comment-head">
+																			<span class="todo-comment-username">Carles Puyol</span> &nbsp; 
+																			<span class="todo-comment-date">17 Sep 2014 at 4:30pm</span> &nbsp; 
+																			<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '4' }} Me gustas"><i class="fa fa-thumbs-up"></i> 4</a> &nbsp; 
+																		</p>
+																		<p class="todo-text-color">
+																			 Thanks so much my dear!
+																		</p>
+																	</div>
 																</div>
-															</div>
-															<div class="media">
-																<a class="pull-left" href="javascript:;">
-																<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
-																</a>
-																<div class="media-body">
-																	<p class="todo-comment-head">
-																		<span class="todo-comment-username">Carles Puyol</span> &nbsp; 
-																		<span class="todo-comment-date">17 Sep 2014 at 4:30pm</span> &nbsp; 
-																		<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '4' }} Me gustas"><i class="fa fa-thumbs-up"></i> 4</a> &nbsp; 
-																	</p>
-																	<p class="todo-text-color">
-																		 Thanks so much my dear!
-																	</p>
-																</div>
+																<div class="media">
+																	<a class="pull-left" href="javascript:;">
+																	<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
+																	</a>
+																	<div class="media-body">
+																		<p class="todo-comment-head">
+																			<span class="todo-comment-username">Carles Puyol</span> &nbsp; 
+																			<span class="todo-comment-date">17 Sep 2014 at 4:30pm</span> &nbsp; 
+																			<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '4' }} Me gustas"><i class="fa fa-thumbs-up"></i> 4</a> &nbsp; 
+																		</p>
+																		<p class="todo-text-color">
+																			 Thanks so much my dear!
+																		</p>
+																	</div>
+																</div>																
 															</div>
 														</div>
 													</li>
@@ -121,6 +123,9 @@
 															</p>
 															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
 															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
+															<div class="children-comments">
+																<!-- COMMENTS HERE -->
+															</div>
 														</div>
 													</li>
 													<li class="media">
@@ -139,6 +144,34 @@
 															</p>
 															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
 															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
+															<div class="children-comments">
+																<!-- COMMENTS HERE -->
+															</div>
+														</div>
+													</li>
+													<li class="media">
+														<a class="pull-left" href="javascript:;">
+															<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">
+														</a>
+														<div class="media-body">
+															<form class="comment-form-ajax" enctype="multipart/form-data">
+																<div class="reply-textarea-content">
+																	<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment"></textarea>
+																</div>
+																<div class="reply-submit-btn">
+																	<button type="button" class="pull-right btn btn-sm btn-circle green-haze comment-form-btn"> &nbsp; Responder &nbsp; </button>
+																	<span class="pull-right"> &nbsp; </span>
+																	<div class="pull-right fileinput fileinput-new" data-provides="fileinput">
+																		<span class="btn default btn-file btn-sm btn-circle green-haze">
+																			<span class="fileinput-new">Añadir Adjunto </span>
+																			<span class="fileinput-exists"> Cambiar </span>
+																			<input type="file" name="attachment">
+																		</span>
+																		<span class="fileinput-filename"></span>&nbsp; 
+																		<a href="#" class="close fileinput-exists" data-dismiss="fileinput"></a>
+																	</div>
+																</div>
+															</form>
 														</div>
 													</li>
 												</ul>
@@ -146,19 +179,35 @@
 										</div>
 										<!-- END TASK COMMENTS -->
 										<!-- TASK COMMENT FORM -->
-										<div class="form-group">
+										<!-- <div class="form-group">
 											<div class="col-md-12">
-												<ul class="media-list">
-													<li class="media">
-														<img class="todo-userpic todo-user-left" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
-														<div class="media-body">
-															<textarea class="summernote" rows="4" placeholder="Type comment..."></textarea>
-														</div>
-													</li>
-												</ul>
-												<button type="button" class="pull-right btn btn-sm btn-circle green-haze"> &nbsp; Submit &nbsp; </button>
+												<div class="media">
+													<a class="pull-left" href="javascript:;">
+														<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">
+													</a>
+													<div class="media-body">
+														<form class="comment-form-ajax" enctype="multipart/form-data">
+															<div class="reply-textarea-content">
+																<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment"></textarea>
+															</div>
+															<div class="reply-submit-btn">
+																<button type="button" class="pull-right btn btn-sm btn-circle green-haze comment-form-btn"> &nbsp; Responder &nbsp; </button>
+																<span class="pull-right"> &nbsp; </span>
+																<div class="pull-right fileinput fileinput-new" data-provides="fileinput">
+																	<span class="btn default btn-file btn-sm btn-circle green-haze">
+																		<span class="fileinput-new">Añadir Adjunto </span>
+																		<span class="fileinput-exists"> Cambiar </span>
+																		<input type="file" name="attachment">
+																	</span>
+																	<span class="fileinput-filename"></span>&nbsp; 
+																	<a href="#" class="close fileinput-exists" data-dismiss="fileinput"></a>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
 											</div>
-										</div>
+										</div> -->
 										<!-- END TASK COMMENT FORM -->
 									</div>
 
@@ -195,141 +244,129 @@
 
 		var CommentsManager = function() {
 
-			var reply_form = '<div class="media"><a class="pull-left" href="javascript:;"><img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px"></a><div class="media-body"><textarea class="summernote" rows="1" placeholder="Type comment..."></textarea></div><div class="reply-submit-btn"><button type="button" class="pull-right btn btn-sm btn-circle green-haze"> &nbsp; Responder &nbsp; </button><span class="pull-right"> &nbsp; </span><div class="pull-right fileinput fileinput-new" data-provides="fileinput"><span class="btn default btn-file btn-sm btn-circle green-haze"><span class="fileinput-new">Añadir Adjunto </span><span class="fileinput-exists"> Cambiar </span><input type="file" name="..."></span><span class="fileinput-filename"></span>&nbsp; <a href="#" class="close fileinput-exists" data-dismiss="fileinput"></a></div></div></div>';
+			var reply_form = '' +
+			'<div class="media commenting">' +
+				'<a class="pull-left" href="javascript:;">' +
+					'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
+				'</a>' +
+				'<div class="media-body">' +
+					'<form class="comment-form-ajax" enctype="multipart/form-data">' +
+						'<div class="reply-textarea-content">' +
+							'<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment"></textarea>' +
+						'</div>' +
+						'<div class="reply-submit-btn">' +
+							'<button type="button" class="pull-right btn btn-sm btn-circle green-haze comment-reply-form-btn"> &nbsp; Responder &nbsp; </button>' +
+							'<span class="pull-right"> &nbsp; </span>' +
+							'<div class="pull-right fileinput fileinput-new" data-provides="fileinput">' +
+								'<span class="btn default btn-file btn-sm btn-circle green-haze">' +
+									'<span class="fileinput-new">Añadir Adjunto </span>' +
+									'<span class="fileinput-exists"> Cambiar </span>' +
+									'<input type="file" name="attachment">' +
+								'</span>' +
+								'<span class="fileinput-filename"></span>&nbsp; ' +
+								'<a href="#" class="close fileinput-exists" data-dismiss="fileinput"></a>' +
+							'</div>' +
+						'</div>' +
+					'</form>' +
+				'</div>' +
+			'</div>';
 
 			var discussionsReply = function(el){
 
-				var parent = $(el.parents('div.media-body')).children('div.media:last').after(reply_form);
+				$('div.commenting').remove();
+
+				if($(el.parents('div.media-body').children('div.children-comments')).children('div.media').length > 0){
+					$(el.parents('div.media-body').children('div.children-comments')).children('div.media:last').after(reply_form);
+				}
+				else{
+					$(el.parents('div.media-body')).children('div.children-comments').html(reply_form);
+				}
 
 				$('#evaluation-form-loader').removeClass('hidden');
-				console.log('click');
 
 				ComponentsEditors.init();
+				Metronic.init();
 				
 			}
 
-			var submitQuestionForm = function(el){
+			var discussionsReplySubmit = function(el){
 
-				console.log('Submit Question Form');
+				var form = $(el.parents('form.comment-form-ajax')[0]);
 
-				var data = el.serialize();
+				var comment = $(form.children('div.reply-textarea-content')).children('textarea.summernote').html();
 
-				console.log(data);
+				console.log(comment);
 
-				$('#questions-form-loader').removeClass('hidden');
+				var media_body = $(form.parents('div.media-body')[0]);
 
-				$.ajax({
-					url: '{{ $route }}/question',
-					type: 'PUT',
-					datatype: 'json',
-					data: data,
-					success: function(data){
-						console.log(data);
-						$('#questions-form-loader').addClass('hidden');
-						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > span').html(data.question.question.slice(0, 25) + '...');
-						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').removeClass('font-red');
-						toastr['success']("Los datos de la pregunta han sido modificados con éxito!", "Pregunta Modificada");
-					},
-					error: function(xhr){
-						toastr['error']("No se han podido guardar los datos de la pregunta", "ERROR");
-						console.log(xhr);
-					}
-				});
-			}
+				reply_html = '' +
+					'<p class="todo-comment-head">' +
+						'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
+						'<span class="todo-comment-date">Justo Ahora</span> &nbsp; ' +
+						'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> 0</a> &nbsp; ' +
+					'</p>' +
+					'<p class="todo-text-color">' +
+						 comment +
+					'</p>';
 
-			var deleteQuestionConfirm = function(el){
+				media_body.html(reply_html);
+				media_body.parents('div.media').removeClass('commenting');
 
-				var data = $(el.parents('form')[0]).serialize();
+				var formData = new FormData(form);
 
-                bootbox.confirm("¿Está usted seguro que desea eliminar esta pregunta?", function(result) {
-                	if(result){
-
-						$('#questions-form-loader').removeClass('hidden');
-
-                		$.ajax({
-                			url: '{{ $route }}/question',
-                			type: 'DELETE',
-                			datatype: 'json',
-                			data: data,
-                			async: true,
-                			success: function(data){
-								$('#questions-form-loader').addClass('hidden');
-								$($('ul#questions-list > li > a[href=#question_' + data.hashids + ']').parents('li')[0]).remove();
-								$('div#question_' + data.hashids).remove();
-								$('div.question-pane').last().addClass('active');
-								$('ul#questions-list li').last().addClass('active');
-								console.log(data);
-								toastr['success']("La pregunta ha sido eliminada con éxito!", "Pregunta Eliminada");
-                			},
-                			error: function(xhr){
-                				console.log(xhr);
-								toastr['error']("No se han podido eliminar la pregunta", "ERROR");
-                			}
-                		})
-                	}
-                	else{
-
-                	}
-                   console.log(result);
-                }); 
+				Metronic.init();
 
 			}
 
-			var activityQuestionAdd = function(el){
+			var discussionsSubmit = function(el){
 
-				var activity = el.parents('.portlet-body').data('activity');
+				var form = $(el.parents('form.comment-form-ajax')[0]);
 
-				$('#questions-form-loader').removeClass('hidden');
+				var comment = $(form.children('div.reply-textarea-content')).children('textarea.summernote').html();
 
-				$.ajax({
-					url: '{{ $route }}/question',
-					type: 'POST',
-					datatype: 'json',
-					async: true,
-					data: {
-						activity_id: activity,
-					},
-					success: function(data){
+				console.log('SUBMIT');
 
-						$('ul#questions-list > li').removeClass('active');
+				console.log(comment);
 
-						$('.question-pane').removeClass('active');
+				var media_body = form.parents('ul.media-list').children('li.media:last');
 
-						$('#questions-form-loader').addClass('hidden');
+				console.log(media_body);
 
-						$('#questions-list').append(''+
-							'<li class="active">' +
-								'<a data-toggle="tab" href="#question_' + data.question.hashids + '">'+
-									'<i class="fa fa-cube"></i><span>' + data.question.question.slice(0, 25) + '</span></a>' +
-								'<span class="after">' +
-								'</span>' +
-							'</li>');
-						
-						$('#questions-content').append('' +
+				reply_html = '' +
+					'<li class="media">' +
+						'<a class="pull-left" href="javascript:;">' +
+						'<img class="todo-userpic" src="/assets/admin/layout4/img/avatar6.jpg" width="45px" height="45px">' +
+						'</a>' +
+						'<div class="media-body todo-comment">' +
+							'<p class="todo-comment-head">' +
+								'<span class="todo-comment-username">Olivia Wilde</span> &nbsp; <span class="todo-comment-date">18 Sep 2014 at 11:50am</span> &nbsp;' +
+								'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar {{ '2' }} archivos"><i class="fa fa-file"></i> 2</a> &nbsp;' +
+								'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '1' }} Me gustas"><i class="fa fa-thumbs-up"></i> 1</a> &nbsp; ' +
+								'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '0' }} Respuestas"><i class="fa fa-mail-reply"></i> 0</a>' +
+							'</p>' +
+							'<p class="todo-text-color" style="min-width:700px">' + comment + '</p>' +
+							'<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>' +
+							'<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>' +
+							'<div class="children-comments">' +
+								'<!-- COMMENTS HERE -->' +
+							'</div>' +
+						'</div>' +
+					'</li>';
 
-							'<div id="question_' + data.question.hashids + '" class="tab-pane question-pane active">' +
-								'<form role="form" action="#" class="question-ajax-form">' +
-									'<input type="hidden" name="evaluation_id" value="' + data.evaluation.hashids + '">' +
-									'<input type="hidden" name="id" value="' + data.question.hashids + '">' +
-									'<div class="form-group">' +
-										'<label class="control-label">Pregunta</label>' +
-										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="' + data.question.question + '" maxlength="254" required/>' +
-									'</div>' +
-									'<div class="form-group">' +
-										'<label class="control-label">Respuesta</label>' +
-										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="' + data.question.answer + '" maxlength="254" required/>' +
-									'</div>' +
-									'<div class="form-group">' +
-										'<div class="btn green submit-question-form">Guardar</div>' +
-										'<div class="btn red delete-question" style="margin-left:3px">Eliminar</div>' +
-									'</div>' +
-								'</form>' +
-							'</div>');
-						
-						Metronic.init();
 
-					}
-				});
+				media_body.before(reply_html);
+				// media_body.parents('div.media').removeClass('commenting');
+
+				var formData = new FormData(form);
+
+				Metronic.init();
+
+			}
+
+			var updateSummernoteTextarea = function(el){
+
+				var textarea = $($(el.parents('div.note-editor')).siblings('textarea.summernote'));
+				textarea.html($.parseHTML(el.html()));
 
 			}
 
@@ -340,6 +377,24 @@
 					$('.discussions').on('click', '.comment-reply-btn', function(event) {
 						event.preventDefault();
 						discussionsReply($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('click', '.comment-reply-form-btn', function(event) {
+						event.preventDefault();
+						discussionsReplySubmit($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('click', '.comment-form-btn', function(event) {
+						event.preventDefault();
+						discussionsSubmit($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('keyup', '.note-editable', function(event) {
+						event.preventDefault();
+						updateSummernoteTextarea($(this));
 						/* Act on the event */
 					});
 
