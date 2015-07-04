@@ -80,9 +80,9 @@
 																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
 																		@endif
 																	</p>
-																	<p class="todo-text-color">
+																	<div class="todo-text-color">
 																		 {{ $comment->content }} <br>
-																	</p>
+																	</div>
 																	<!-- <button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
 																	<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button> -->
 																	<div class="children-comments">
@@ -111,9 +111,9 @@
 																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
 																							@endif
 																						</p>
-																						<p class="todo-text-color">
+																						<div class="todo-text-color">
 																							 {{ $reply->content }}
-																						</p>
+																						</div>
 																					</div>
 																				</div>
 																			@endforeach
@@ -215,6 +215,8 @@
 
 			var display_comment = null;
 
+			var image_loader = '<img src="/assets/loaders/rubiks-cube.gif" width="50px"/>';
+
 			var generateForm = function(parent){
 
 				var reply_form = '' +
@@ -299,6 +301,50 @@
 				
 			}
 
+			var discussionsDelete = function(el){
+
+				var like = {
+					user: '{{ Hashids::encode(Auth::user()->id) }}',
+					comment: 0
+				};
+
+				var reply_like = el.parents('div.media').data('comment');
+				var comment_like = el.parents('li.media').data('comment');
+
+				var parent = (typeof reply_like == "undefined") ? 'li.media' : 'div.media';
+				like.comment = (typeof reply_like == "undefined") ? comment_like : reply_like;
+
+				var container = el.parents(parent);
+				var media_body = el.parents(parent).children('div.media-body');
+
+				media_body.children('div.todo-text-color').html(image_loader);
+				media_body.children('p.todo-comment-head').children('span.todo-comment-date').html('Eliminando');
+				media_body.children('div.children-comments').remove();
+				media_body.children('p.todo-comment-head').children('a').remove();
+
+
+				$.ajax({
+					url: '{{ $route }}/comments',
+					type: 'DELETE',
+					dataType: 'json',
+					data: like,
+					async: true,
+					success: function(data){
+						console.log(container);
+						container.remove();
+						console.log(data);
+					},
+					error: function(xhr){
+						console.log(xhr);
+					}
+				});
+
+				ComponentsEditors.init();
+				MomentManager.init();
+				Metronic.init();
+				
+			}
+
 			var discussionsReply = function(el){
 
 				$('div.commenting').remove();
@@ -335,7 +381,7 @@
 						'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
 						'<span class="todo-comment-date">Enviando</span> &nbsp; ' +
 					'</p>' +
-					'<div class="todo-text-color"><img src="/assets/loaders/rubiks-cube.gif" width="50px"/></div>';
+					'<div class="todo-text-color">' + image_loader + '</div>';
 
 				media_body.html(reply_html);
 				media_body.parents('div.media').removeClass('commenting');
@@ -414,7 +460,7 @@
 							'<p class="todo-comment-head">' +
 								'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date">Enviando</span> &nbsp;' +
 							'</p>' +
-							'<div class="todo-text-color" style="min-width:700px"><img src="/assets/loaders/rubiks-cube.gif" width="50px"/></div>'
+							'<div class="todo-text-color" style="min-width:700px">' + image_loader + '</div>'
 							'<div class="children-comments">' +
 								'<!-- COMMENTS HERE -->' +
 							'</div>' +
@@ -497,6 +543,24 @@
 					$('.discussions').on('click', '.comment-like-btn', function(event) {
 						event.preventDefault();
 						discussionsLike($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('click', '.comment-delete-btn', function(event) {
+						event.preventDefault();
+						discussionsDelete($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('click', '.comment-edit-btn', function(event) {
+						event.preventDefault();
+						discussionsEdit($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('click', '.comment-ban-btn', function(event) {
+						event.preventDefault();
+						discussionsBan($(this));
 						/* Act on the event */
 					});
 

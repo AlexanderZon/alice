@@ -29,7 +29,19 @@ class Discussion extends \Eloquent {
 
     public function thumbsups(){
 
-    	return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','thumbsup');
+        return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','thumbsup');
+
+    }
+
+    public function banned(){
+
+        return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','banned');
+
+    }
+
+    public function favorites(){
+
+    	return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','favorite');
 
     }
 
@@ -44,6 +56,34 @@ class Discussion extends \Eloquent {
         endif;
 
         return false;
+
+    }
+
+    public function isBanned(){
+
+        if($this->banned->count() > 0) return true;
+        else return false;
+
+    }
+
+    public function hasFavorite($user_id){
+
+        $favorites = $this->favorites;
+
+        if($favorites->count() > 0 ):
+            foreach($favorites as $favorite):
+                if($favorite->user_id == $user_id) return $favorite;
+            endforeach;
+        endif;
+
+        return false;
+
+    }
+
+    public function isMyFavorite(){
+
+        if($this->hasFavorite(Auth::user()->id) != false) return true;
+        else return false;
 
     }
 
@@ -78,7 +118,7 @@ class Discussion extends \Eloquent {
         if($this->user_id == $user_id) return true;
 
         else return false;
-        
+
     }
 
     public static function _get( $type = 'Course', $status = 'active' ){

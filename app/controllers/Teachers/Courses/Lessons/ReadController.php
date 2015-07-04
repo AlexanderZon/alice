@@ -1011,6 +1011,18 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	public function putComments( $course_id = '' ){
+
+		return Response::json(Input::all());
+
+	}
+
+	public function deleteComments( $course_id = '' ){
+
+		return Response::json(Input::all());
+
+	}
+
 	public function postLike( $course_id = '' ){
 
 		$course = Course::find(Hashids::decode($course_id));
