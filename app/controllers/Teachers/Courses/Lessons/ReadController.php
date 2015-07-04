@@ -956,4 +956,10 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	public function postComments( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+	}
+
 }
