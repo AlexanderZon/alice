@@ -367,6 +367,57 @@
 				
 			}
 
+			var discussionsLike = function(el){
+
+				var like = {
+					user: '{{ Hashids::encode(Auth::user()->id) }}',
+					comment: 0
+				};
+
+				var reply_like = el.parents('div.media').data('comment');
+				var comment_like = el.parents('li.media').data('comment');
+
+				if(typeof reply_like == "undefined"){
+					like.comment = comment_like;
+				}
+				else{
+					like.comment = reply_comment;
+				}
+
+				$.ajax({
+					url: '{{ $route }}/like',
+					type: 'POST',
+					dataType: 'json',
+					data: like,
+					async: true,
+					success: function(data){
+						console.log(data);
+					},
+					error: function(xhr){
+						console.log(xhr);
+					}
+				});
+
+				/*$('div.commenting').remove();
+
+				var parent = el.parents('li.media').data('comment');
+
+				console.log(parent);
+
+				if($(el.parents('div.media-body').children('div.children-comments')).children('div.media').length > 0){
+					$(el.parents('div.media-body').children('div.children-comments')).children('div.media:last').after(generateForm(parent));
+				}
+				else{
+					$(el.parents('div.media-body')).children('div.children-comments').html(generateForm(parent));
+				}
+
+				$('#evaluation-form-loader').removeClass('hidden')*/;
+
+				ComponentsEditors.init();
+				MomentManager.init();
+				Metronic.init();
+				
+			}
 
 			var discussionsReply = function(el){
 
@@ -556,6 +607,12 @@
 					$('.discussions').on('click', '.comment-reply-btn', function(event) {
 						event.preventDefault();
 						discussionsReply($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('click', '.comment-like-btn', function(event) {
+						event.preventDefault();
+						discussionsLike($(this));
 						/* Act on the event */
 					});
 
