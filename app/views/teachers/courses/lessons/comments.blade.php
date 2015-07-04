@@ -54,102 +54,6 @@
 										<div class="form-group">
 											<div class="col-md-12">
 												<ul class="media-list">
-													<!-- 
-													<li class="btn yellow col-md-12 be-firts-comment" style="margin-bottom:15px">Sé el/la primero/a en hacer comentario en esta lección</li> -->
-													<!-- 
-													<li class="media" data-comment="">
-														<a class="pull-left" href="javascript:;">
-														<img class="todo-userpic" src="/assets/admin/layout4/img/avatar8.jpg" width="45px" height="45px">
-														</a>
-														<div class="media-body todo-comment">
-															<p class="todo-comment-head">
-																<span class="todo-comment-username">Christina Aguilera</span> &nbsp; 
-																<span class="todo-comment-date">17 Sep 2014 at 2:05pm</span> &nbsp; 
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo adjunto"><i class="fa fa-paperclip"></i></a> &nbsp; 
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '2' }} Me gustas"><i class="fa fa-thumbs-up"></i> 2</a> &nbsp; 
-																<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ '1' }} Respuestas"><i class="fa fa-mail-reply"></i> 1</a>
-															</p>
-															<p class="todo-text-color">
-																 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
-															</p>
-															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
-															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
-															<div class="children-comments">
-																<div class="media">
-																	<a class="pull-left" href="javascript:;">
-																	<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
-																	</a>
-																	<div class="media-body">
-																		<p class="todo-comment-head">
-																			<span class="todo-comment-username">Carles Puyol</span> &nbsp; 
-																			<span class="todo-comment-date">17 Sep 2014 at 4:30pm</span> &nbsp; 
-																			<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '4' }} Me gustas"><i class="fa fa-thumbs-up"></i> 4</a> &nbsp; 
-																		</p>
-																		<p class="todo-text-color">
-																			 Thanks so much my dear!
-																		</p>
-																	</div>
-																</div>
-																<div class="media">
-																	<a class="pull-left" href="javascript:;">
-																	<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
-																	</a>
-																	<div class="media-body">
-																		<p class="todo-comment-head">
-																			<span class="todo-comment-username">Carles Puyol</span> &nbsp; 
-																			<span class="todo-comment-date">17 Sep 2014 at 4:30pm</span> &nbsp; 
-																			<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '4' }} Me gustas"><i class="fa fa-thumbs-up"></i> 4</a> &nbsp; 
-																		</p>
-																		<p class="todo-text-color">
-																			 Thanks so much my dear!
-																		</p>
-																	</div>
-																</div>																
-															</div>
-														</div>
-													</li>
-													<li class="media">
-														<a class="pull-left" href="javascript:;">
-														<img class="todo-userpic" src="/assets/admin/layout4/img/avatar5.jpg" width="45px" height="45px">
-														</a>
-														<div class="media-body todo-comment">
-															<p class="todo-comment-head">
-																<span class="todo-comment-username">Andres Iniesta</span> &nbsp; 
-																<span class="todo-comment-date">18 Sep 2014 at 9:22am</span> &nbsp;
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar {{ '2' }} archivos"><i class="fa fa-paperclip"></i> 2</a> &nbsp;
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '1' }} Me gustas"><i class="fa fa-thumbs-up"></i> 1</a> &nbsp; 
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '0' }} Respuestas"><i class="fa fa-mail-reply"></i> 0</a>
-															</p>
-															<p class="todo-text-color">
-																 Cras sit amet nibh libero, in gravida nulla. Scelerisque ante sollicitudin commodo Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
-															</p>
-															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
-															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
-															<div class="children-comments">
-															</div>
-														</div>
-													</li>
-													<li class="media">
-														<a class="pull-left" href="javascript:;">
-														<img class="todo-userpic" src="/assets/admin/layout4/img/avatar6.jpg" width="45px" height="45px">
-														</a>
-														<div class="media-body todo-comment">
-															<p class="todo-comment-head">
-																<span class="todo-comment-username">Olivia Wilde</span> &nbsp; <span class="todo-comment-date">18 Sep 2014 at 11:50am</span> &nbsp;
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar {{ '2' }} archivos"><i class="fa fa-paperclip"></i> 2</a> &nbsp;
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '1' }} Me gustas"><i class="fa fa-thumbs-up"></i> 1</a> &nbsp; 
-																<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '0' }} Respuestas"><i class="fa fa-mail-reply"></i> 0</a>
-															</p>
-															<p class="todo-text-color">
-																 Cras sit amet nibh libero, in gravida nulla. Scelerisque ante sollicitudin commodo Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. <br>
-															</p>
-															<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
-															<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
-															<div class="children-comments">
-																COMMENTS HERE
-															</div>
-														</div>
-													</li> -->
 													@if($comments->count() > 0)
 														@foreach($comments as $comment)
 															<?php $comment_user = $comment->author; ?>
@@ -168,14 +72,19 @@
 																			<?php $attachment = $comment->attachments->first() ?>
 																			<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
 																		@endif
-																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
+																		<a href="javascript:;" class="btn {{ $comment->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
 																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">{{ $replies->count() }}</span></a>
+																		<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
+																		@if($comment->isMine())
+																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
+																		@endif
 																	</p>
 																	<p class="todo-text-color">
 																		 {{ $comment->content }} <br>
 																	</p>
-																	<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
-																	<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button>
+																	<!-- <button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
+																	<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button> -->
 																	<div class="children-comments">
 																		@if($replies->count() > 0)
 																			@foreach($replies as $reply)
@@ -195,7 +104,12 @@
 																								<?php $attachment = $reply->attachments->first() ?>
 																								<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
 																							@endif
-																							<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gustas"><i class="fa fa-thumbs-up"></i> {{ $reply->thumbsups->count() }}</a> &nbsp; 
+																							<a href="javascript:;" class="btn {{ $reply->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $reply->thumbsups->count() }}</span></a> &nbsp; 
+																							<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
+																							@if($comment->isMine())
+																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
+																							@endif
 																						</p>
 																						<p class="todo-text-color">
 																							 {{ $reply->content }}
@@ -243,35 +157,6 @@
 										</div>
 										<!-- END TASK COMMENTS -->
 										<!-- TASK COMMENT FORM -->
-										<!-- <div class="form-group">
-											<div class="col-md-12">
-												<div class="media">
-													<a class="pull-left" href="javascript:;">
-														<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">
-													</a>
-													<div class="media-body">
-														<form class="comment-form-ajax" enctype="multipart/form-data">
-															<div class="reply-textarea-content">
-																<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment"></textarea>
-															</div>
-															<div class="reply-submit-btn">
-																<button type="button" class="pull-right btn btn-sm btn-circle green-haze comment-form-btn"> &nbsp; Responder &nbsp; </button>
-																<span class="pull-right"> &nbsp; </span>
-																<div class="pull-right fileinput fileinput-new" data-provides="fileinput">
-																	<span class="btn default btn-file btn-sm btn-circle green-haze">
-																		<span class="fileinput-new">Añadir Adjunto </span>
-																		<span class="fileinput-exists"> Cambiar </span>
-																		<input type="file" name="attachment">
-																	</span>
-																	<span class="fileinput-filename"></span>&nbsp; 
-																	<a href="#" class="close fileinput-exists" data-dismiss="fileinput"></a>
-																</div>
-															</div>
-														</form>
-													</div>
-												</div>
-											</div>
-										</div> -->
 										<!-- END TASK COMMENT FORM -->
 									</div>
 
@@ -299,8 +184,6 @@
 	<!-- END PAGE PLUGINS & SCRIPTS -->
 	
 	<script type="text/javascript">
-
-		//$('div.media:last').after('<div class="media"><a class="pull-left" href="javascript:;"><img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px"></a><div class="media-body"><textarea class="summernote" rows="1" placeholder="Type comment..."></textarea></div><div class="reply-submit-btn"><button type="button" class="pull-right btn btn-sm btn-circle green-haze"> &nbsp; Responder &nbsp; </button></div></div>');
 
 		/**
 		Comments Module
@@ -377,12 +260,14 @@
 				var reply_like = el.parents('div.media').data('comment');
 				var comment_like = el.parents('li.media').data('comment');
 
-				if(typeof reply_like == "undefined"){
-					like.comment = comment_like;
-				}
-				else{
-					like.comment = reply_comment;
-				}
+				var parent = (typeof reply_like == "undefined") ? 'li.media' : 'div.media';
+				like.comment = (typeof reply_like == "undefined") ? comment_like : reply_like;
+
+				var comment_like_element = el.parents(parent).children('.media-body').children('.todo-comment-head').children('.comment-like-btn');
+
+				comment_like_element.removeClass('font-blue-chambray');
+				comment_like_element.removeClass('font-blue');
+				comment_like_element.addClass('font-grey');
 
 				$.ajax({
 					url: '{{ $route }}/like',
@@ -391,27 +276,22 @@
 					data: like,
 					async: true,
 					success: function(data){
-						console.log(data);
+						// console.log(data);
+						var counter = parseInt(comment_like_element.children('.thumbsups-counter').html());
+						console.log(counter);
+						var thumbsup_color = (data.thumbsup) ? 'font-blue' : 'font-blue-chambray';
+						var thumbsup_counter = (data.thumbsup) ? counter+1 : counter-1;
+						// console.log(thumbsup_counter);
+
+						comment_like_element.attr('data-original-title', thumbsup_counter + ' Me gusta');
+						comment_like_element.children('.thumbsups-counter').html(thumbsup_counter);
+						comment_like_element.addClass(thumbsup_color);
+						comment_like_element.removeClass('font-grey');
 					},
 					error: function(xhr){
 						console.log(xhr);
 					}
 				});
-
-				/*$('div.commenting').remove();
-
-				var parent = el.parents('li.media').data('comment');
-
-				console.log(parent);
-
-				if($(el.parents('div.media-body').children('div.children-comments')).children('div.media').length > 0){
-					$(el.parents('div.media-body').children('div.children-comments')).children('div.media:last').after(generateForm(parent));
-				}
-				else{
-					$(el.parents('div.media-body')).children('div.children-comments').html(generateForm(parent));
-				}
-
-				$('#evaluation-form-loader').removeClass('hidden')*/;
 
 				ComponentsEditors.init();
 				MomentManager.init();
@@ -478,6 +358,8 @@
 								'<span class="todo-comment-date moment-fromnow">' + data.created_at + '</span> &nbsp; ' + 
 								( data.attachment != null ? '<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
 								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
+								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
+								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
 							'</p>' +
 							'<div class="todo-text-color">' +
 								 comment +
@@ -561,10 +443,10 @@
 										( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
 										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
 										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">0</span></a>' +
+										'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
+										'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
 									'</p>' +
 									'<div class="todo-text-color" style="min-width:700px">' + data.content + '</div>' +
-									'<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>' +
-									'<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs comment-like-btn">&nbsp; Me gusta &nbsp;</button>' +
 									'<div class="children-comments">' +
 										'<!-- COMMENTS HERE -->' +
 									'</div>' +
@@ -575,6 +457,8 @@
 						comment_element.data('comment', data.id);
 						comment_element.removeClass('waiting_comment');
 						console.log(data);
+
+						el.parents('form.comment-form-ajax').children('div.reply-textarea-content').children('div.note-editor').children('div.note-editable').html('');
 
 						MomentManager.init();
 						Metronic.init();
@@ -692,9 +576,6 @@
 		        $('.summernote').summernote({
 		        	height: 75,
 		        });
-		        //API:
-		        //var sHTML = $('#summernote_1').code(); // get code
-		        //$('#summernote_1').destroy(); // destroy
 		    }
 
 		    return {

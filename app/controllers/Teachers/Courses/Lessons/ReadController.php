@@ -4,6 +4,7 @@ use \Course as Course;
 use \Module as Module;
 use \Lesson as Lesson;
 use \Discussion as Discussion;
+use \DiscussionKarma as DiscussionKarma;
 use \Attachment as Attachment;
 use \User as User;
 use \Input as Input;
@@ -1010,5 +1011,29 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	public function postLike( $course_id = '' ){
+
+		$course = Course::find(Hashids::decode($course_id));
+		$discussion = Discussion::find(Hashids::decode(Input::get('comment')));
+		$user = Hashids::decode(Input::get('user'));
+
+		$response = array(
+			'thumbsup' => true,
+			);
+
+		if($my_thumbsup = $discussion->hasThumbsup($user)):
+			$my_thumbsup->delete();
+			$response['thumbsup'] = false;
+		else:
+			$thumbsup = new DiscussionKarma();
+			$thumbsup->user_id = $user;
+			$thumbsup->discussion_id = $discussion->id;
+			$thumbsup->type = 'thumbsup';
+			$thumbsup->save();
+		endif;
+
+		return Response::json($response);
+
+	}
 
 }

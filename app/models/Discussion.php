@@ -33,6 +33,20 @@ class Discussion extends \Eloquent {
 
     }
 
+    public function hasThumbsup( $user_id ){
+
+        $thumbsups = $this->thumbsups;
+
+        if($thumbsups->count() > 0 ):
+            foreach($thumbsups as $thumbsup):
+                if($thumbsup->user_id == $user_id) return $thumbsup;
+            endforeach;
+        endif;
+
+        return false;
+
+    }
+
     public function karmater(){
 
     	return $this->belongsToMany('User','discussions_karma');
@@ -49,6 +63,22 @@ class Discussion extends \Eloquent {
 
     	return $this->morphMany('Discussion', 'discussionable');
 
+    }
+
+    public function isMine(){
+
+        if($this->user_id == Auth::user()->id) return true;
+
+        else return false;
+
+    }
+
+    public function isFrom( $user_id ){
+
+        if($this->user_id == $user_id) return true;
+
+        else return false;
+        
     }
 
     public static function _get( $type = 'Course', $status = 'active' ){
