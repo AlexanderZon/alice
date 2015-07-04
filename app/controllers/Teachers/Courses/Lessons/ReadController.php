@@ -974,6 +974,14 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$discussion->status = 'active';
 		$discussion->save();
 
+		$response = array(
+			'id' => Hashids::encode($discussion->id),
+			'user_id' => Hashids::encode($discussion->user_id),
+			'content' => $discussion->content,
+			'created_at' => $discussion->created_at,
+			'attachment' => null
+			);
+
 		$file = Input::file('attachment');
 
 		if($file):
@@ -994,10 +1002,13 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	    	$upload = $file->move( public_path().$route, $path );
 
+			$response['attachment'] = $attachment->getSize();
+
 		endif;
-		
-		return Response::json(Input::all());
+
+		return Response::json($response);
 
 	}
+
 
 }

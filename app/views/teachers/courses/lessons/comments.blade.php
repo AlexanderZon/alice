@@ -154,7 +154,7 @@
 														@foreach($comments as $comment)
 															<?php $comment_user = $comment->author; ?>
 															<?php $attachments = $comment->attachments; ?>
-															<?php $karma = $comment->karma; ?>
+															<?php $thumbsups = $comment->thumbsups; ?>
 															<?php $replies = $comment->children; ?>
 															<li class="media" data-comment="{{ Hashids::encode($comment->id) }}">
 																<a class="pull-left" href="javascript:;">
@@ -163,13 +163,13 @@
 																<div class="media-body todo-comment">
 																	<p class="todo-comment-head">
 																		<span class="todo-comment-username">{{ $comment_user->display_name }}</span> &nbsp; 
-																		<span class="todo-comment-date">{{ $comment->created_at }}</span> &nbsp; 
+																		<span class="todo-comment-date moment-fromnow">{{ $comment->created_at }}</span> &nbsp; 
 																		@if($attachments->count() > 0)
 																			<?php $attachment = $comment->attachments->first() ?>
 																			<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
 																		@endif
-																		<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ $karma->count() }} Me gustas"><i class="fa fa-thumbs-up"></i> {{ $karma->count() }}</a> &nbsp; 
-																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-mail-reply"></i> {{ $replies->count() }}</a>
+																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
+																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">{{ $replies->count() }}</span></a>
 																	</p>
 																	<p class="todo-text-color">
 																		 {{ $comment->content }} <br>
@@ -179,18 +179,26 @@
 																	<div class="children-comments">
 																		@if($replies->count() > 0)
 																			@foreach($replies as $reply)
-																				<div class="media">
+																				<?php $comment_user = $reply->author; ?>
+																				<?php $attachments = $reply->attachments; ?>
+																				<?php $thumbsups = $reply->thumbsups; ?>
+																				<?php $replies = $reply->children; ?>
+																				<div class="media" data-comment="{{ Hashids::encode($reply->id) }}">
 																					<a class="pull-left" href="javascript:;">
-																					<img class="todo-userpic" src="/assets/admin/layout4/img/avatar4.jpg" width="45px" height="45px">
+																					<img class="todo-userpic" src="{{ $comment_user->profile->getAvatar() }}" width="45px" height="45px">
 																					</a>
 																					<div class="media-body">
 																						<p class="todo-comment-head">
-																							<span class="todo-comment-username">Carles Puyol</span> &nbsp; 
-																							<span class="todo-comment-date">17 Sep 2014 at 4:30pm</span> &nbsp; 
-																							<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="{{ '4' }} Me gustas"><i class="fa fa-thumbs-up"></i> 4</a> &nbsp; 
+																							<span class="todo-comment-username">{{ $comment_user->display_name }}</span> &nbsp; 
+																							<span class="todo-comment-date moment-fromnow">{{ $reply->created_at }}</span> &nbsp; 
+																							@if($attachments->count() > 0)
+																								<?php $attachment = $reply->attachments->first() ?>
+																								<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
+																							@endif
+																							<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gustas"><i class="fa fa-thumbs-up"></i> {{ $reply->thumbsups->count() }}</a> &nbsp; 
 																						</p>
 																						<p class="todo-text-color">
-																							 Thanks so much my dear!
+																							 {{ $reply->content }}
 																						</p>
 																					</div>
 																				</div>
@@ -298,6 +306,28 @@
 		Comments Module
 		**/
 
+		var MomentManager = function(){
+
+			var fromNow = function(){
+				$('.moment-fromnow').each(function(e){
+					var time = $(this).html();
+					$(this).html(moment(time).fromNow());
+					$(this).removeClass('moment-fromnow');
+				});
+			}
+
+			return {
+
+				init: function (){
+
+					moment.locale('es');
+
+					fromNow();
+
+				}
+			}
+		}();
+
 		var CommentsManager = function() {
 
 			var display_comment = null;
@@ -344,6 +374,8 @@
 
 				var parent = el.parents('li.media').data('comment');
 
+				console.log(parent);
+
 				if($(el.parents('div.media-body').children('div.children-comments')).children('div.media').length > 0){
 					$(el.parents('div.media-body').children('div.children-comments')).children('div.media:last').after(generateForm(parent));
 				}
@@ -354,6 +386,7 @@
 				$('#evaluation-form-loader').removeClass('hidden');
 
 				ComponentsEditors.init();
+				MomentManager.init();
 				Metronic.init();
 				
 			}
@@ -378,7 +411,7 @@
 
 				console.log(form.serialize());
 
-				var formData = new FormData(form);
+				var formData = new FormData(el.parents('form.comment-form-ajax')[0]);
 
 				$.ajax({
 					url: '{{ $route }}/comments',
@@ -391,9 +424,9 @@
 						reply_html = '' +
 							'<p class="todo-comment-head">' +
 								'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
-								'<span class="todo-comment-date">Justo Ahora</span> &nbsp; ' + 
-								( data.attachment != null ? '<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
-								'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> 0</a> &nbsp; ' +
+								'<span class="todo-comment-date moment-fromnow">' + data.created_at + '</span> &nbsp; ' + 
+								( data.attachment != null ? '<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
+								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
 							'</p>' +
 							'<div class="todo-text-color">' +
 								 comment +
@@ -402,11 +435,18 @@
 						var comment_element = $('div.waiting_comment');
 						comment_element.html(reply_html);
 						comment_element.removeClass('waiting_comment');
+						comment_element.data('comment', data.id);
 
-						// media_body.before(comment_html);		
-						
-						// body...
-						console.log(data);
+						var replies_tooltip = comment_element.parents('li.media').children('.media-body').children('.todo-comment-head').children('.comment-reply-btn');
+						var replies = replies_tooltip.children('.replies-counter');
+						var counter_replies = parseInt(replies.html())+1;
+						replies.html(counter_replies);
+						replies_tooltip.attr('data-original-title', counter_replies + ' Respuestas');
+						console.log(counter_replies);
+
+						MomentManager.init();
+						Metronic.init();
+
 					},
 					error: function(xhr, status) {
 						console.log(xhr);
@@ -416,8 +456,6 @@
 			        contentType: false,
 			        processData: false
 				});
-
-				Metronic.init();
 
 			}
 
@@ -460,18 +498,20 @@
 					async: true,
 					success: function(data) {
 
+						$('li.be-firts-comment').remove();
+
 						comment_html = '' +
 								'<a class="pull-left" href="javascript:;">' +
 								'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
 								'</a>' +
 								'<div class="media-body todo-comment">' +
 									'<p class="todo-comment-head">' +
-										'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date">Justo ahora</span> &nbsp;' +
-										( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
-										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> 0</a> &nbsp; ' +
-										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-mail-reply"></i> 0</a>' +
+										'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at + '</span> &nbsp;' +
+										( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
+										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
+										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">0</span></a>' +
 									'</p>' +
-									'<div class="todo-text-color" style="min-width:700px">' + comment + '</div>' +
+									'<div class="todo-text-color" style="min-width:700px">' + data.content + '</div>' +
 									'<button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>' +
 									'<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs comment-like-btn">&nbsp; Me gusta &nbsp;</button>' +
 									'<div class="children-comments">' +
@@ -481,12 +521,13 @@
 
 						var comment_element = $('li.waiting_comment');
 						comment_element.html(comment_html);
+						comment_element.data('comment', data.id);
 						comment_element.removeClass('waiting_comment');
-
-						// media_body.before(comment_html);		
-						
-						// body...
 						console.log(data);
+
+						MomentManager.init();
+						Metronic.init();
+
 					},
 					error: function(xhr) {
 						console.log(xhr);
@@ -495,8 +536,6 @@
 			        contentType: false,
 			        processData: false
 				});
-
-				Metronic.init();
 
 			}
 
@@ -613,6 +652,7 @@
 		ComponentsEditors.init();
 		Todo.init();
 		CommentsManager.init();
+		MomentManager.init();
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

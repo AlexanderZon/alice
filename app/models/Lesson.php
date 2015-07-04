@@ -38,7 +38,7 @@ class Lesson extends \Eloquent {
 
     public function discussions(){
 
-    	return $this->morphMany('Discussion', 'discussionable');
+    	return $this->morphMany('Discussion', 'discussionable')->orderBy('created_at');
 
     }
 

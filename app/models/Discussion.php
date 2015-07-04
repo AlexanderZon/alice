@@ -27,21 +27,21 @@ class Discussion extends \Eloquent {
     	
     }
 
-    public function karma(){
+    public function thumbsups(){
 
-    	return $this->hasMany('DiscussionKarma', 'discussion_id');
-
-    }
-
-    public function author(){
-
-    	return $this->belongsTo('User', 'user_id');
+    	return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','thumbsup');
 
     }
 
     public function karmater(){
 
     	return $this->belongsToMany('User','discussions_karma');
+
+    }
+
+    public function author(){
+
+        return $this->belongsTo('User', 'user_id');
 
     }
 
