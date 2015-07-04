@@ -3,11 +3,13 @@
 use \Course as Course;
 use \Module as Module;
 use \Lesson as Lesson;
+use \Discussion as Discussion;
 use \Attachment as Attachment;
 use \User as User;
 use \Input as Input;
 use \Response as Response;
 use \Hashids as Hashids;
+use \Auth as Auth;
 use \Crypt as Crypt;
 use \GUID as GUID;
 use \Evaluation as Evaluation;
@@ -950,6 +952,8 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		self::addArgument('lesson', $lesson);
 
+		self::addArgument('comments', $lesson->discussions);
+
 		self::addArgument('course', Course::find(Hashids::decode($course_id)));
 
 		return self::make('comments');
@@ -958,7 +962,41 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	public function postComments( $course_id = '' ){
 
+		$course = Course::find(Hashids::decode($course_id));
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+		$parent = Hashids::decode(Input::get('parent_id'));
+
+		$discussion = new Discussion();
+		$discussion->user_id = Auth::user()->id;
+		$discussion->discussionable_id = $parent != 0 ? $parent : $lesson->id;
+		$discussion->discussionable_type = $parent != 0 ? 'Discussion' : 'Lesson';
+		$discussion->content = Input::get('comment');
+		$discussion->status = 'active';
+		$discussion->save();
+
+		$file = Input::file('attachment');
+
+		if($file):
+
+	        $filename = $file->getClientOriginalName();
+	        $path = GUID::generate().".".$file->getClientOriginalExtension();
+
+	        $route = '/uploads/courses/'.$course->name.'/lessons/'.$lesson->name.'/discussion/';
+
+			$attachment = new Attachment();
+			$attachment->attachmentable_type = 'Discussion';
+			$attachment->attachmentable_id = $discussion->id;
+			$attachment->name = $file->getClientOriginalName();
+			$attachment->mime = $file->getMimeType();
+	    	$attachment->route = $route.$path;
+	    	$attachment->size = $file->getSize();
+	    	$attachment->save();
+
+	    	$upload = $file->move( public_path().$route, $path );
+
+		endif;
+		
+		return Response::json(Input::all());
 
 	}
 

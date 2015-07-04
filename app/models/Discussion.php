@@ -39,7 +39,7 @@ class Discussion extends \Eloquent {
 
     }
 
-    public function users(){
+    public function karmater(){
 
     	return $this->belongsToMany('User','discussions_karma');
 
@@ -47,11 +47,11 @@ class Discussion extends \Eloquent {
 
     public function children(){
 
-    	return $this->morphMany('Discussions', 'discussionable');
+    	return $this->morphMany('Discussion', 'discussionable');
 
     }
 
-    public static function _get( $type = 'Courses', $status = 'active' ){
+    public static function _get( $type = 'Course', $status = 'active' ){
 
         $discussions = self::where( 'discussionable_type', '=', $type );
 
@@ -63,7 +63,7 @@ class Discussion extends \Eloquent {
 
     public static function fromCourses( $status = 'active' ){
 
-        return self::_get('Courses', $status);
+        return self::_get('Course', $status);
 
     }
 
