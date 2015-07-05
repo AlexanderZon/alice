@@ -142,6 +142,13 @@ class Discussion extends \Eloquent {
 
     public function isBanned(){
 
+        if($this->status == 'banned') return true;
+        else return false;
+
+    }
+
+    public function isMarkedAsBanned(){
+
         if($this->banned->count() > 0) return true;
         else return false;
 

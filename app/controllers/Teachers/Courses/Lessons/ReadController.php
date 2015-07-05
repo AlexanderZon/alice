@@ -1080,22 +1080,32 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$discussion = Discussion::find(Hashids::decode(Input::get('comment')));
 		$user = Hashids::decode(Input::get('user'));
 
-		$discussion->status = 'banned';
-		$discussion->save();
-
 		$response = array(
 			'banned' => true,
+			'banneders' => '',
 			);
 
-		if($my_thumbsup = $discussion->hasBanned($user)):
-			$my_thumbsup->delete();
+		if($discussion->isBanned()):
+
+			$discussion->status = 'active';
+			$discussion->save();
+
 			$response['banned'] = false;
+
 		else:
-			$thumbsup = new DiscussionKarma();
-			$thumbsup->user_id = $user;
-			$thumbsup->discussion_id = $discussion->id;
-			$thumbsup->type = 'banned';
-			$thumbsup->save();
+
+			$discussion->status = 'banned';
+			$discussion->save();
+
+			$banned = new DiscussionKarma();
+
+			if($my_banned = $discussion->hasBanned(Auth::user()->id)) $banned = $my_banned;
+			
+			$banned->user_id = $user;
+			$banned->discussion_id = $discussion->id;
+			$banned->type = 'banned';
+			$banned->save();
+
 		endif;
 
 		$response['banneders'] = $discussion->peopleBannedIt();

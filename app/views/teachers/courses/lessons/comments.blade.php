@@ -90,9 +90,9 @@
 																			<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
 																		@endif
 																		<a href="javascript:;" class="btn {{ $comment->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gusta. {{ $comment->peopleThumbsupIt() }}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
-																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">{{ $replies->count() }}</span></a>
-																		@if($comment->isBanned())
-																			<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="A {{ $comment->peopleBannedIt() }} no les gusta ver esto."><i class="fa fa-ban"></i></a>
+																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-comments-o"></i> <span class="replies-counter">{{ $replies->count() }}</span></a>
+																		@if($comment->isMarkedAsBanned())
+																			<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="Marcado como no deseado por {{ $comment->peopleBannedIt() }}."><i class="fa fa-ban"></i></a>
 																		@else
 																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
 																		@endif
@@ -124,8 +124,9 @@
 																								<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
 																							@endif
 																							<a href="javascript:;" class="btn {{ $reply->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gusta. {{$reply->peopleThumbsupIt()}}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $reply->thumbsups->count() }}</span></a> &nbsp; 
-																							@if($reply->isBanned())
-																								<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="A {{ $reply->peopleBannedIt() }} no les gusta ver esto."><i class="fa fa-ban"></i></a>
+																							@if($reply->isMarkedAsBanned())
+																								<!-- Solo los profesores pueden ver esto -->
+																								<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="Marcado como no deseado por {{ $reply->peopleBannedIt() }}"><i class="fa fa-ban"></i></a>
 																							@else
 																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
 																							@endif
@@ -475,15 +476,22 @@
 					comment: 0
 				};
 
-				var reply_delete = el.parents('div.media').data('comment');
-				var comment_delete = el.parents('li.media').data('comment');
+				var reply_ban = el.parents('div.media').data('comment');
+				var comment_ban = el.parents('li.media').data('comment');
 
-				var parent = (typeof reply_delete == "undefined") ? 'li.media' : 'div.media';
-				data.comment = (typeof reply_delete == "undefined") ? comment_delete : reply_delete;
+				var parent = (typeof reply_ban == "undefined") ? 'li.media' : 'div.media';
+				data.comment = (typeof reply_ban == "undefined") ? comment_ban : reply_ban;
 
 				var container = el.parents(parent);
 
-				container.addClass('banned');
+				if(container.hasClass('banned')){
+					el.addClass('font-grey-silver');
+					el.removeClass('font-red');
+				}
+				else{
+					el.removeClass('font-grey-silver');
+					el.addClass('font-red');
+				}
 
 				$.ajax({
 					url: '{{ $route }}/banned',
@@ -492,8 +500,17 @@
 					data: data,
 					async: true,
 					success: function(data){
+						if(data.banned){
+							container.addClass('banned');
+							el.attr('data-original-title', 'Marcado como no deseado por ' + data.banneders );
+						}
+						else{
+							container.removeClass('banned');
+							el.attr('data-original-title', 'Marcado como no deseado por ' + data.banneders);
+							el.removeClass('font-grey-silver');
+							el.addClass('font-red');
+						}
 						console.log(container);
-						container.remove();
 						console.log(data);
 					},
 					error: function(xhr){
@@ -650,7 +667,7 @@
 										'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp;' +
 										( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
 										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
-										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">0</span></a>' +
+										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-comments-o"></i> <span class="replies-counter">0</span></a>' +
 										'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
 										'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
 									'</p>' +
@@ -780,7 +797,7 @@
 							'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp;' +
 							( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
 							'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="' + data.thumbsups + ' Me gusta. ' + data.thumbsupers + '"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">' + data.thumbsups + '</span></a> &nbsp; ' +
-							'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="' + data.replies + ' Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">' + data.replies + '</span></a>' +
+							'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="' + data.replies + ' Respuestas"><i class="fa fa-comments-o"></i> <span class="replies-counter">' + data.replies + '</span></a>' +
 							'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
 							'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>';
 
