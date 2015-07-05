@@ -1028,6 +1028,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 			'thumbsups' => $discussion->thumbsups->count(),
 			'hasMyThumbsup' => $discussion->iThumbsupIt(),
 			'thumbsupers' => $discussion->peopleThumbsupIt(),
+			'replies' => $discussion->children->count(),
 			'created_at' => $discussion->created_at,
 			'attachment' => null
 			);
