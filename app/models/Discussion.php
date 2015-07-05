@@ -59,15 +59,7 @@ class Discussion extends \Eloquent {
 
     public function hasThumbsup( $user_id ){
 
-        $thumbsups = $this->thumbsups;
-
-        if($thumbsups->count() > 0 ):
-            foreach($thumbsups as $thumbsup):
-                if($thumbsup->user_id == $user_id) return $thumbsup;
-            endforeach;
-        endif;
-
-        return false;
+        return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','thumbsup')->where('discussions_karma.user_id','=',$user_id)->first();
 
     }
 
@@ -128,15 +120,7 @@ class Discussion extends \Eloquent {
 
     public function hasBanned($user_id){
 
-        $banned = $this->banned;
-
-        if($banned->count() > 0 ):
-            foreach($banned as $ban):
-                if($ban->user_id == $user_id) return $ban;
-            endforeach;
-        endif;
-
-        return false;
+        return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','banned')->where('discussions_karma.user_id','=',$user_id)->first();
 
     }
 
@@ -156,15 +140,7 @@ class Discussion extends \Eloquent {
 
     public function hasFavorite($user_id){
 
-        $favorites = $this->favorites;
-
-        if($favorites->count() > 0 ):
-            foreach($favorites as $favorite):
-                if($favorite->user_id == $user_id) return $favorite;
-            endforeach;
-        endif;
-
-        return false;
+        return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','favorite')->where('discussions_karma.user_id','=',$user_id)->first();
 
     }
 

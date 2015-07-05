@@ -1355,7 +1355,7 @@
 		            	}
 		            	var search = location.search.substring(1);
 						var data = search?JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) }):{}
-// section=lessons&action=comments&type=get&lesson_id=3B4727529D&focusable=true&focuskey=comment&focusvalue=58324AE2E7
+						// section=lessons&action=comments&type=get&lesson_id=3B4727529D&focusable=true&focuskey=comment&focusvalue=58324AE2E7
 		            	initAction($('.' + data.section + '-btn'), data.section, data.action, data, data.method, callback);
 
 		            }

@@ -1,3 +1,6 @@
+<!-- 
+	section=lessons&action=comments&type=get&lesson_id=LESSON_ID&focusable=true&focuskey=comment&focusvalue=COMMENT_ID
+	-->
 
 	<!-- BEGIN PICKERS LEVEL STYLES -->
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/clockface/css/clockface.css"/>
@@ -985,6 +988,9 @@
 		Todo.init();
 		CommentsManager.init();
 		MomentManager.init();
+
+		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=comments&lesson_id={{ Hashids::encode($lesson->id) }}');
+		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Comentarios';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

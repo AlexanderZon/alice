@@ -1122,7 +1122,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
-	public function getStudens( $course_id = '' ){
+	public function getStudents( $course_id = '' ){
 
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 

@@ -56,13 +56,25 @@ class Lesson extends \Eloquent {
 
     public function evaluations(){
 
-    	return $this->hasMany('Evaluation', 'lesson_id');
+        return $this->hasMany('Evaluation', 'lesson_id');
 
     }
 
     public function students(){
 
-    	return $this->belongsToMany('User','user_lessons')->orderBy('created_at','ASC');
+        return $this->belongsToMany('User','user_lessons')->orderBy('created_at','ASC');
+
+    }
+
+    public function views(){
+
+    	return $this->hasMany('UserLesson', 'lesson_id')->orderBy('created_at','ASC');
+
+    }
+
+    public function viewedBy( $user ){
+
+        return $this->hasMany('UserLesson', 'lesson_id')->where('user_lessons.user_id','=',$user->id)->first();
 
     }
 
