@@ -112,6 +112,9 @@
 	
 	<script type="text/javascript">
 
+		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=addactivity&lesson_id={{ Hashids::encode($lesson->id) }}');
+		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Añadir una nueva actividad';
+
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
 		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');

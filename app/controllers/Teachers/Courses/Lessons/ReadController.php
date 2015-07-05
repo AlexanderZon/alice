@@ -945,6 +945,15 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/* ------- COMMENTS -------- */
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /comments
+	 *
+	 * @return Response
+	 */
+
 	public function getComments( $course_id = '' ){
 
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
@@ -960,6 +969,13 @@ class ReadController extends \Teachers\Courses\ReadController {
 		return self::make('comments');
 
 	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /comments
+	 *
+	 * @return Response
+	 */
 
 	public function postComments( $course_id = '' ){
 
@@ -1011,6 +1027,13 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 * PUT /comments
+	 *
+	 * @return Response
+	 */
+
 	public function putComments( $course_id = '' ){
 
 		$course = Course::find(Hashids::decode($course_id));
@@ -1037,6 +1060,13 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 * DELETE /comments
+	 *
+	 * @return Response
+	 */
+
 	public function deleteComments( $course_id = '' ){
 
 		$discussion = Discussion::find(Hashids::decode(Input::get('comment')));
@@ -1045,6 +1075,13 @@ class ReadController extends \Teachers\Courses\ReadController {
 		return Response::json(Input::all());
 
 	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /like
+	 *
+	 * @return Response
+	 */
 
 	public function postLike( $course_id = '' ){
 
@@ -1073,6 +1110,13 @@ class ReadController extends \Teachers\Courses\ReadController {
 		return Response::json($response);
 
 	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /banned
+	 *
+	 * @return Response
+	 */
 
 	public function postBanned( $course_id = '' ){
 
@@ -1114,6 +1158,13 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 * GET /download
+	 *
+	 * @return Response
+	 */
+
 	public function getDownload( $course_id = '' ){
 
 		$attachment = Attachment::find(Crypt::decrypt(Input::get('attachment')));
@@ -1121,6 +1172,13 @@ class ReadController extends \Teachers\Courses\ReadController {
 		return Response::download(public_path().$attachment->route, $attachment->name);
 
 	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /students
+	 *
+	 * @return Response
+	 */
 
 	public function getStudents( $course_id = '' ){
 

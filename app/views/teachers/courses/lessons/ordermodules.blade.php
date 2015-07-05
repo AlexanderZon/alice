@@ -289,6 +289,9 @@
 		ComponentsPickers.init();
 		UINestable.init();
 
+		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=ordermodules');
+		document.title = 'Alice | {{ $course->title }} | Ordenar Módulos';
+
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
 		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');

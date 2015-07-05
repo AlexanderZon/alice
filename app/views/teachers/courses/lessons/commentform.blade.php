@@ -1,1 +1,0 @@
-C:\wamp\www\alice\app/views/teachers/courses/lessons/comment-form.blade.php

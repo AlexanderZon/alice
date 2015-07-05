@@ -187,6 +187,9 @@
 		ComponentsEditors.init();
 		ComponentsPickers.init();
 
+		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=addmodule');
+		document.title = 'Alice | {{ $course->title }} | Añadir Módulo';
+
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
 		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');
