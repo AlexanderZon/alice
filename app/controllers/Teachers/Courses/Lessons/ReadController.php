@@ -1013,11 +1013,32 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	public function putComments( $course_id = '' ){
 
-		return Response::json(Input::all());
+		$course = Course::find(Hashids::decode($course_id));
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+		$parent = Hashids::decode(Input::get('parent_id'));
+
+		$discussion = Discussion::find(Hashids::decode(Input::get('comment_id')));
+		$discussion->content = Input::get('comment');
+		$discussion->save();
+
+		$response = array(
+			'id' => Hashids::encode($discussion->id),
+			'user_id' => Hashids::encode($discussion->user_id),
+			'content' => $discussion->content,
+			'thumbsups' => $discussion->thumbsups,
+			'hasMyThumbsup' => $discussion->hasThumbsup(Auth::user()->id),
+			'created_at' => $discussion->created_at,
+			'attachment' => null
+			);
+
+		return Response::json($response);
 
 	}
 
 	public function deleteComments( $course_id = '' ){
+
+		$discussion = Discussion::find(Hashids::decode(Input::get('comment')));
+		$discussion->delete();
 
 		return Response::json(Input::all());
 
@@ -1031,6 +1052,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		$response = array(
 			'thumbsup' => true,
+			'thumbsupers' => '',
 			);
 
 		if($my_thumbsup = $discussion->hasThumbsup($user)):
@@ -1043,6 +1065,8 @@ class ReadController extends \Teachers\Courses\ReadController {
 			$thumbsup->type = 'thumbsup';
 			$thumbsup->save();
 		endif;
+
+		$response['thumbsupers'] = $discussion->peopleThumbsupIt();
 
 		return Response::json($response);
 

@@ -33,6 +33,12 @@ class Discussion extends \Eloquent {
 
     }
 
+    public function thumbsupers(){
+
+        return $this->belongsToMany('User','discussions_karma')->where('discussions_karma.type','=','thumbsup')->where('discussions_karma.deleted_at','=',null);
+
+    }
+
     public function banned(){
 
         return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','banned');
@@ -56,6 +62,49 @@ class Discussion extends \Eloquent {
         endif;
 
         return false;
+
+    }
+
+    public function iThumbsupIt(){
+
+        if($this->hasThumbsup(Auth::user()->id)) return true;
+
+        return false;
+
+    }
+
+    public function peopleThumbsupIt(){
+
+        $people = '';
+        $my = false;
+        $another = false;
+
+        foreach($this->thumbsupers as $user):
+            if($user->id != Auth::user()->id):
+                $people .= $user->display_name . ', ';
+                $another = true;
+            else:
+                $my = true;
+            endif;
+        endforeach;
+
+        if($my):
+            if($another):
+                $people = substr($people, 0, -2);
+                $people = ' y Yo.';
+            else:
+                $people = 'Solo Yo.';
+            endif;
+        else:
+            if($another):
+                $people = substr($people, 0, -2);
+                $people = '.';
+            else:
+                $people = '';
+            endif;
+        endif;
+
+        return $people;
 
     }
 

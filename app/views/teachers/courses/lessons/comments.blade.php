@@ -27,6 +27,21 @@
 	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
 	<!-- END PAGE LEVEL STYLES -->
 
+	<style type="text/css">
+		div.banned{
+			border: 2px solid #DD3333 !important;
+			padding: 10px;
+		}
+		li.banned > div.media-body{
+			border-left: 2px solid #DD3333 !important;
+		}
+		li.banned > div.media-body > div.todo-text-color{  
+			border: 2px solid #dd3333;
+			padding: 5px;
+			margin-bottom: 10px;
+		}
+	</style>
+
 	<div class="row">
 		<div class="col-md-12">
 			<!-- BEGIN PORTLET -->
@@ -56,11 +71,13 @@
 												<ul class="media-list">
 													@if($comments->count() > 0)
 														@foreach($comments as $comment)
+														    <!-- Vista Profesor puede visualizar todos los comentarios -->
+														    <!-- Vista Estudiante solo puede visualizar los comentarios no Banneados -->
 															<?php $comment_user = $comment->author; ?>
 															<?php $attachments = $comment->attachments; ?>
 															<?php $thumbsups = $comment->thumbsups; ?>
 															<?php $replies = $comment->children; ?>
-															<li class="media" data-comment="{{ Hashids::encode($comment->id) }}">
+															<li class="media {{ $comment->isBanned() ? 'banned' : '' }}" data-comment="{{ Hashids::encode($comment->id) }}">
 																<a class="pull-left" href="javascript:;">
 																<img class="todo-userpic" src="{{ $comment_user->profile->getAvatar() }}" width="45px" height="45px">
 																</a>
@@ -72,7 +89,7 @@
 																			<?php $attachment = $comment->attachments->first() ?>
 																			<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
 																		@endif
-																		<a href="javascript:;" class="btn {{ $comment->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
+																		<a href="javascript:;" class="btn {{ $comment->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gusta. {{ $comment->peopleThumbsupIt() }}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
 																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">{{ $replies->count() }}</span></a>
 																		<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
 																		@if($comment->isMine())
@@ -83,8 +100,6 @@
 																	<div class="todo-text-color">
 																		 {{ $comment->content }} <br>
 																	</div>
-																	<!-- <button type="button" class="todo-reply-btn btn btn-circle btn-default btn-xs comment-reply-btn">&nbsp; Responder &nbsp;</button>
-																	<button type="button" class="todo-like-btn btn btn-circle btn-default btn-xs">&nbsp; Me gusta &nbsp;</button> -->
 																	<div class="children-comments">
 																		@if($replies->count() > 0)
 																			@foreach($replies as $reply)
@@ -92,7 +107,7 @@
 																				<?php $attachments = $reply->attachments; ?>
 																				<?php $thumbsups = $reply->thumbsups; ?>
 																				<?php $replies = $reply->children; ?>
-																				<div class="media" data-comment="{{ Hashids::encode($reply->id) }}">
+																				<div class="media {{ $reply->isBanned() ? 'banned' : '' }}" data-comment="{{ Hashids::encode($reply->id) }}">
 																					<a class="pull-left" href="javascript:;">
 																					<img class="todo-userpic" src="{{ $comment_user->profile->getAvatar() }}" width="45px" height="45px">
 																					</a>
@@ -104,7 +119,7 @@
 																								<?php $attachment = $reply->attachments->first() ?>
 																								<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
 																							@endif
-																							<a href="javascript:;" class="btn {{ $reply->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $reply->thumbsups->count() }}</span></a> &nbsp; 
+																							<a href="javascript:;" class="btn {{ $reply->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gusta. {{$reply->peopleThumbsupIt()}}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $reply->thumbsups->count() }}</span></a> &nbsp; 
 																							<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
 																							@if($comment->isMine())
 																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
@@ -217,7 +232,7 @@
 
 			var image_loader = '<img src="/assets/loaders/rubiks-cube.gif" width="50px"/>';
 
-			var generateForm = function(parent){
+			var generatePostForm = function(parent){
 
 				var reply_form = '' +
 				'<div class="media commenting">' +
@@ -243,6 +258,41 @@
 									'<span class="fileinput-filename"></span>&nbsp; ' +
 									'<a href="#" class="close fileinput-exists" data-dismiss="fileinput"></a>' +
 								'</div>' +
+							'</div>' +
+						'</form>' +
+					'</div>' +
+				'</div>';
+
+				return reply_form;
+				
+			}
+
+			var generatePutForm = function(comment, content){
+
+				var reply_form = '' +
+				'<div class="media commenting">' +
+					'<a class="pull-left" href="javascript:;">' +
+						'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
+					'</a>' +
+					'<div class="media-body waiting_comment">' +
+						'<form class="comment-form-ajax" enctype="multipart/form-data">' +
+							'<input type="hidden" name="lesson_id" value="{{ Hashids::encode($lesson->id) }}"/>' +
+							'<input type="hidden" name="comment_id" value="' + comment + '"/>' +
+							'<div class="reply-textarea-content">' +
+								'<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment">' + content + '</textarea>' +
+							'</div>' +
+							'<div class="reply-submit-btn">' +
+								'<button type="button" class="pull-right btn btn-sm btn-circle green-haze comment-reply-put-btn"> &nbsp; Editar &nbsp; </button>' +
+								'<span class="pull-right"> &nbsp; </span>' +
+								'<!--<div class="pull-right fileinput fileinput-new" data-provides="fileinput">' +
+									'<span class="btn default btn-file btn-sm btn-circle green-haze">' +
+										'<span class="fileinput-new">Añadir Adjunto </span>' +
+										'<span class="fileinput-exists"> Cambiar </span>' +
+										'<input type="file" name="attachment">' +
+									'</span>' +
+									'<span class="fileinput-filename"></span>&nbsp; ' +
+									'<a href="#" class="close fileinput-exists" data-dismiss="fileinput"></a>' +
+								'</div>-->' +
 							'</div>' +
 						'</form>' +
 					'</div>' +
@@ -285,7 +335,7 @@
 						var thumbsup_counter = (data.thumbsup) ? counter+1 : counter-1;
 						// console.log(thumbsup_counter);
 
-						comment_like_element.attr('data-original-title', thumbsup_counter + ' Me gusta');
+						comment_like_element.attr('data-original-title', thumbsup_counter + ' Me gusta. ' + data.thumbsupers);
 						comment_like_element.children('.thumbsups-counter').html(thumbsup_counter);
 						comment_like_element.addClass(thumbsup_color);
 						comment_like_element.removeClass('font-grey');
@@ -301,18 +351,42 @@
 				
 			}
 
+			var discussionsEdit = function(el){
+
+				var data = {
+					user: '{{ Hashids::encode(Auth::user()->id) }}',
+					comment: 0,
+					content: '',
+				};
+
+				var reply_edit = el.parents('div.media').data('comment');
+				var comment_edit = el.parents('li.media').data('comment');
+
+				var parent = (typeof reply_edit == "undefined") ? 'li.media' : 'div.media';
+				data.comment = (typeof reply_edit == "undefined") ? comment_edit : reply_edit;
+
+				data.content = el.parents(parent).children('div.media-body').children('div.todo-text-color').html();
+
+				el.parents(parent).html(generatePutForm(data.comment, data.content));
+
+				ComponentsEditors.init();
+				MomentManager.init();
+				Metronic.init();
+				
+			}
+
 			var discussionsDelete = function(el){
 
-				var like = {
+				var data = {
 					user: '{{ Hashids::encode(Auth::user()->id) }}',
 					comment: 0
 				};
 
-				var reply_like = el.parents('div.media').data('comment');
-				var comment_like = el.parents('li.media').data('comment');
+				var reply_delete = el.parents('div.media').data('comment');
+				var comment_delete = el.parents('li.media').data('comment');
 
-				var parent = (typeof reply_like == "undefined") ? 'li.media' : 'div.media';
-				like.comment = (typeof reply_like == "undefined") ? comment_like : reply_like;
+				var parent = (typeof reply_delete == "undefined") ? 'li.media' : 'div.media';
+				data.comment = (typeof reply_delete == "undefined") ? comment_delete : reply_delete;
 
 				var container = el.parents(parent);
 				var media_body = el.parents(parent).children('div.media-body');
@@ -327,7 +401,7 @@
 					url: '{{ $route }}/comments',
 					type: 'DELETE',
 					dataType: 'json',
-					data: like,
+					data: data,
 					async: true,
 					success: function(data){
 						console.log(container);
@@ -354,10 +428,10 @@
 				console.log(parent);
 
 				if($(el.parents('div.media-body').children('div.children-comments')).children('div.media').length > 0){
-					$(el.parents('div.media-body').children('div.children-comments')).children('div.media:last').after(generateForm(parent));
+					$(el.parents('div.media-body').children('div.children-comments')).children('div.media:last').after(generatePostForm(parent));
 				}
 				else{
-					$(el.parents('div.media-body')).children('div.children-comments').html(generateForm(parent));
+					$(el.parents('div.media-body')).children('div.children-comments').html(generatePostForm(parent));
 				}
 
 				$('#evaluation-form-loader').removeClass('hidden');
@@ -401,7 +475,7 @@
 						reply_html = '' +
 							'<p class="todo-comment-head">' +
 								'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
-								'<span class="todo-comment-date moment-fromnow">' + data.created_at + '</span> &nbsp; ' + 
+								'<span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp; ' + 
 								( data.attachment != null ? '<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
 								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
 								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
@@ -485,7 +559,153 @@
 								'</a>' +
 								'<div class="media-body todo-comment">' +
 									'<p class="todo-comment-head">' +
-										'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at + '</span> &nbsp;' +
+										'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp;' +
+										( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
+										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
+										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">0</span></a>' +
+										'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
+										'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
+									'</p>' +
+									'<div class="todo-text-color" style="min-width:700px">' + data.content + '</div>' +
+									'<div class="children-comments">' +
+										'<!-- COMMENTS HERE -->' +
+									'</div>' +
+								'</div>';
+
+						var comment_element = $('li.waiting_comment');
+						comment_element.html(comment_html);
+						comment_element.data('comment', data.id);
+						comment_element.removeClass('waiting_comment');
+						console.log(data);
+
+						el.parents('form.comment-form-ajax').children('div.reply-textarea-content').children('div.note-editor').children('div.note-editable').html('');
+
+						MomentManager.init();
+						Metronic.init();
+
+					},
+					error: function(xhr) {
+						console.log(xhr);
+					},
+			        cache: false,
+			        contentType: false,
+			        processData: false
+				});
+
+			}
+
+			var discussionsReplyPutSubmit = function(el){
+
+				var form = $(el.parents('form.comment-form-ajax')[0]);
+
+				var comment = $(form.children('div.reply-textarea-content')).children('textarea.summernote').val();
+
+				var media_body = $(form.parents('div.media-body')[0]);
+
+				reply_html = '' +
+					'<p class="todo-comment-head">' +
+						'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
+						'<span class="todo-comment-date">Enviando</span> &nbsp; ' +
+					'</p>' +
+					'<div class="todo-text-color">' + image_loader + '</div>';
+
+				media_body.html(reply_html);
+				media_body.parents('div.media').removeClass('commenting');
+
+				console.log(form.serialize());
+
+				var formData = new FormData(el.parents('form.comment-form-ajax')[0]);
+
+				$.ajax({
+					url: '{{ $route }}/comments',
+					type: 'PUT',
+					dataType: 'json',
+					data: form.serialize(),
+					async: true,
+					success: function(data) {
+
+						console.log('submission');
+
+						console.log(data);
+
+						reply_html = '' +
+							'<p class="todo-comment-head">' +
+								'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
+								'<span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp; ' + 
+								( data.attachment != null ? '<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
+								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
+								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
+								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
+							'</p>' +
+							'<div class="todo-text-color">' +
+								 comment +
+							'</div>';
+
+						var comment_element = $('div.waiting_comment');
+						comment_element.html(reply_html);
+						comment_element.removeClass('waiting_comment');
+						// comment_element.data('comment', data.id);
+
+						MomentManager.init();
+						Metronic.init();
+
+					},
+					error: function(xhr, status) {
+						console.log(xhr);
+						console.log(xhr.status);
+					}
+				});
+
+			}
+
+			var discussionsPutSubmit = function(el){
+
+				var form = $(el.parents('form.comment-form-ajax')[0]);
+
+				var comment = $(form.children('div.reply-textarea-content')).children('textarea.summernote').val();
+
+				var media_body = form.parents('ul.media-list').children('li.media:last');
+
+				// media_body.parents('div.media').removeClass('commenting');
+				console.log(form.serialize());
+
+				var formData = new FormData(el.parents('form.comment-form-ajax')[0]);
+
+				comment_html = '' +
+					'<li class="media waiting_comment">' +
+						'<a class="pull-left" href="javascript:;">' +
+						'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
+						'</a>' +
+						'<div class="media-body todo-comment">' +
+							'<p class="todo-comment-head">' +
+								'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date">Enviando</span> &nbsp;' +
+							'</p>' +
+							'<div class="todo-text-color" style="min-width:700px">' + image_loader + '</div>'
+							'<div class="children-comments">' +
+								'<!-- COMMENTS HERE -->' +
+							'</div>' +
+						'</div>' +
+					'</li>';
+
+				media_body.before(comment_html);
+
+				$.ajax({
+					url: '{{ $route }}/comments',
+					type: 'PUT',
+					dataType: 'json',
+					data: formData,
+					async: true,
+					success: function(data) {
+
+						$('li.be-firts-comment').remove();
+
+						comment_html = '' +
+								'<a class="pull-left" href="javascript:;">' +
+								'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
+								'</a>' +
+								'<div class="media-body todo-comment">' +
+									'<p class="todo-comment-head">' +
+										'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp;' +
 										( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
 										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
 										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">0</span></a>' +
@@ -573,6 +793,18 @@
 					$('.discussions').on('click', '.comment-form-btn', function(event) {
 						event.preventDefault();
 						discussionsSubmit($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('click', '.comment-reply-put-btn', function(event) {
+						event.preventDefault();
+						discussionsReplyPutSubmit($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('click', '.comment-put-btn', function(event) {
+						event.preventDefault();
+						discussionsPutSubmit($(this));
 						/* Act on the event */
 					});
 
