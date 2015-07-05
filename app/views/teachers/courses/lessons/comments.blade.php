@@ -270,6 +270,36 @@
 			var generatePutForm = function(comment, content){
 
 				var reply_form = '' +
+				'<div class="commenting" style="margin-bottom:30px">' +
+					'<form class="comment-form-ajax" enctype="multipart/form-data">' +
+						'<input type="hidden" name="lesson_id" value="{{ Hashids::encode($lesson->id) }}"/>' +
+						'<input type="hidden" name="comment_id" value="' + comment + '"/>' +
+						'<div class="reply-textarea-content">' +
+							'<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment">' + content + '</textarea>' +
+						'</div>' +
+						'<div class="reply-submit-btn">' +
+							'<button type="button" class="pull-right btn btn-sm btn-circle green-haze comment-put-btn"> &nbsp; Editar &nbsp; </button>' +
+							'<span class="pull-right"> &nbsp; </span>' +
+							'<!--<div class="pull-right fileinput fileinput-new" data-provides="fileinput">' +
+								'<span class="btn default btn-file btn-sm btn-circle green-haze">' +
+									'<span class="fileinput-new">Añadir Adjunto </span>' +
+									'<span class="fileinput-exists"> Cambiar </span>' +
+									'<input type="file" name="attachment">' +
+								'</span>' +
+								'<span class="fileinput-filename"></span>&nbsp; ' +
+								'<a href="#" class="close fileinput-exists" data-dismiss="fileinput"></a>' +
+							'</div>-->' +
+						'</div>' +
+					'</form>' +
+				'</div>';
+
+				return reply_form;
+				
+			}
+
+			var generatePutReplyForm = function(comment, content){
+
+				var reply_form = '' +
 				'<div class="media commenting" data-comment="' + comment + '">' +
 					'<a class="pull-left" href="javascript:;">' +
 						'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
@@ -362,12 +392,23 @@
 				var reply_edit = el.parents('div.media').data('comment');
 				var comment_edit = el.parents('li.media').data('comment');
 
+				console.log(reply_edit);
+				console.log(comment_edit);
+
 				var parent = (typeof reply_edit == "undefined") ? 'li.media' : 'div.media';
 				data.comment = (typeof reply_edit == "undefined") ? comment_edit : reply_edit;
-
 				data.content = el.parents(parent).children('div.media-body').children('div.todo-text-color').html();
 
-				el.parents(parent).html(generatePutForm(data.comment, data.content));
+				if(typeof reply_edit == "undefined"){
+					console.log('PARENT');
+					var container = el.parents(parent).children('div.media-body');
+					container.children('div.children-comments').before(generatePutForm(data.comment, data.content));
+					container.children('p.todo-comment-head').remove();
+					container.children('div.todo-text-color').remove();
+				}
+				else{
+					el.parents(parent).html(generatePutReplyForm(data.comment, data.content));
+				}
 
 				ComponentsEditors.init();
 				MomentManager.init();
@@ -624,8 +665,6 @@
 					async: true,
 					success: function(data) {
 
-						console.log('submission');
-
 						console.log(data);
 
 						reply_html = '' +
@@ -664,7 +703,7 @@
 
 				var comment = $(form.children('div.reply-textarea-content')).children('textarea.summernote').val();
 
-				var media_body = form.parents('ul.media-list').children('li.media:last');
+				var media_body = el.parents('div.media-body');
 
 				// media_body.parents('div.media').removeClass('commenting');
 				console.log(form.serialize());
@@ -672,59 +711,36 @@
 				var formData = new FormData(el.parents('form.comment-form-ajax')[0]);
 
 				comment_html = '' +
-					'<li class="media waiting_comment">' +
-						'<a class="pull-left" href="javascript:;">' +
-						'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
-						'</a>' +
-						'<div class="media-body todo-comment">' +
-							'<p class="todo-comment-head">' +
-								'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date">Enviando</span> &nbsp;' +
-							'</p>' +
-							'<div class="todo-text-color" style="min-width:700px">' + image_loader + '</div>'
-							'<div class="children-comments">' +
-								'<!-- COMMENTS HERE -->' +
-							'</div>' +
-						'</div>' +
-					'</li>';
+					'<p class="todo-comment-head">' +
+						'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date">Enviando</span> &nbsp;' +
+					'</p>' +
+					'<div class="todo-text-color" style="min-width:700px">' + image_loader + '</div>';
 
-				media_body.before(comment_html);
+				media_body.children('div.children-comments').before(comment_html);
+				media_body.children('div.commenting').remove();
 
 				$.ajax({
 					url: '{{ $route }}/comments',
 					type: 'PUT',
 					dataType: 'json',
-					data: formData,
+					data: form.serialize(),
 					async: true,
 					success: function(data) {
 
-						$('li.be-firts-comment').remove();
+						console.log('submission');
 
-						comment_html = '' +
-								'<a class="pull-left" href="javascript:;">' +
-								'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
-								'</a>' +
-								'<div class="media-body todo-comment">' +
-									'<p class="todo-comment-head">' +
-										'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp;' +
-										( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
-										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
-										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">0</span></a>' +
-										'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
-										'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
-									'</p>' +
-									'<div class="todo-text-color" style="min-width:700px">' + data.content + '</div>' +
-									'<div class="children-comments">' +
-										'<!-- COMMENTS HERE -->' +
-									'</div>' +
-								'</div>';
+						var todo_comment_head = '' +
+							'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp;' +
+							( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
+							'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
+							'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">0</span></a>' +
+							'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
+							'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>';
 
-						var comment_element = $('li.waiting_comment');
-						comment_element.html(comment_html);
-						comment_element.data('comment', data.id);
-						comment_element.removeClass('waiting_comment');
-						console.log(data);
+						var todo_text_color = data.content;
 
-						el.parents('form.comment-form-ajax').children('div.reply-textarea-content').children('div.note-editor').children('div.note-editable').html('');
+						media_body.children('p.todo-comment-head').html(todo_comment_head);
+						media_body.children('div.todo-text-color').html(todo_text_color);
 
 						MomentManager.init();
 						Metronic.init();
@@ -732,10 +748,7 @@
 					},
 					error: function(xhr) {
 						console.log(xhr);
-					},
-			        cache: false,
-			        contentType: false,
-			        processData: false
+					}
 				});
 
 			}
