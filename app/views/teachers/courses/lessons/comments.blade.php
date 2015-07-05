@@ -91,7 +91,11 @@
 																		@endif
 																		<a href="javascript:;" class="btn {{ $comment->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gusta. {{ $comment->peopleThumbsupIt() }}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
 																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-mail-reply"></i> <span class="replies-counter">{{ $replies->count() }}</span></a>
-																		<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
+																		@if($comment->isBanned())
+																			<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="A {{ $comment->peopleBannedIt() }} no les gusta ver esto."><i class="fa fa-ban"></i></a>
+																		@else
+																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
+																		@endif
 																		@if($comment->isMine())
 																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
 																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
@@ -120,7 +124,11 @@
 																								<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
 																							@endif
 																							<a href="javascript:;" class="btn {{ $reply->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gusta. {{$reply->peopleThumbsupIt()}}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $reply->thumbsups->count() }}</span></a> &nbsp; 
-																							<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
+																							@if($reply->isBanned())
+																								<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="A {{ $reply->peopleBannedIt() }} no les gusta ver esto."><i class="fa fa-ban"></i></a>
+																							@else
+																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
+																							@endif
 																							@if($comment->isMine())
 																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
 																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
@@ -441,6 +449,45 @@
 				$.ajax({
 					url: '{{ $route }}/comments',
 					type: 'DELETE',
+					dataType: 'json',
+					data: data,
+					async: true,
+					success: function(data){
+						console.log(container);
+						container.remove();
+						console.log(data);
+					},
+					error: function(xhr){
+						console.log(xhr);
+					}
+				});
+
+				ComponentsEditors.init();
+				MomentManager.init();
+				Metronic.init();
+				
+			}
+
+			var discussionsBan = function(el){
+
+				var data = {
+					user: '{{ Hashids::encode(Auth::user()->id) }}',
+					comment: 0
+				};
+
+				var reply_delete = el.parents('div.media').data('comment');
+				var comment_delete = el.parents('li.media').data('comment');
+
+				var parent = (typeof reply_delete == "undefined") ? 'li.media' : 'div.media';
+				data.comment = (typeof reply_delete == "undefined") ? comment_delete : reply_delete;
+
+				var container = el.parents(parent);
+
+				container.addClass('banned');
+
+				$.ajax({
+					url: '{{ $route }}/banned',
+					type: 'POST',
 					dataType: 'json',
 					data: data,
 					async: true,

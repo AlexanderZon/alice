@@ -45,6 +45,12 @@ class Discussion extends \Eloquent {
 
     }
 
+    public function banneders(){
+
+        return $this->belongsToMany('User','discussions_karma')->where('discussions_karma.type','=','banned')->where('discussions_karma.deleted_at','=',null);
+
+    }
+
     public function favorites(){
 
     	return $this->hasMany('DiscussionKarma', 'discussion_id')->where('discussions_karma.type','=','favorite');
@@ -73,13 +79,13 @@ class Discussion extends \Eloquent {
 
     }
 
-    public function peopleThumbsupIt(){
+    public function peopleWho( $karmaters ){
 
         $people = '';
         $my = false;
         $another = false;
 
-        foreach($this->thumbsupers as $user):
+        foreach($karmaters as $user):
             if($user->id != Auth::user()->id):
                 $people .= $user->display_name . ', ';
                 $another = true;
@@ -105,6 +111,32 @@ class Discussion extends \Eloquent {
         endif;
 
         return $people;
+
+    }
+
+    public function peopleThumbsupIt(){
+
+        return $this->peopleWho($this->thumbsupers);
+
+    }
+
+    public function peopleBannedIt(){
+
+        return $this->peopleWho($this->banneders);
+
+    }
+
+    public function hasBanned($user_id){
+
+        $banned = $this->banned;
+
+        if($banned->count() > 0 ):
+            foreach($banned as $ban):
+                if($ban->user_id == $user_id) return $ban;
+            endforeach;
+        endif;
+
+        return false;
 
     }
 

@@ -1074,4 +1074,34 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	public function postBanned( $course_id = '' ){
+
+		$course = Course::find(Hashids::decode($course_id));
+		$discussion = Discussion::find(Hashids::decode(Input::get('comment')));
+		$user = Hashids::decode(Input::get('user'));
+
+		$discussion->status = 'banned';
+		$discussion->save();
+
+		$response = array(
+			'banned' => true,
+			);
+
+		if($my_thumbsup = $discussion->hasBanned($user)):
+			$my_thumbsup->delete();
+			$response['banned'] = false;
+		else:
+			$thumbsup = new DiscussionKarma();
+			$thumbsup->user_id = $user;
+			$thumbsup->discussion_id = $discussion->id;
+			$thumbsup->type = 'banned';
+			$thumbsup->save();
+		endif;
+
+		$response['banneders'] = $discussion->peopleBannedIt();
+
+		return Response::json($response);
+
+	}
+
 }
