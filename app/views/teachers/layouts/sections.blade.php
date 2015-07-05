@@ -220,6 +220,41 @@
 
 		    }
 
+		    var initAction = function (el, name, section, data, method, callback) {
+
+		        var url = '{{$route}}/{{$hashid}}/' + name + '/' + section;
+
+		        console.log(el);
+		        // toggleButton(el);
+
+		        $.ajax({
+		            type: method,
+		            cache: false,
+		            url: url,
+		            data: data,
+		            dataType: "html",
+		            success: function(res) 
+		            {
+		                $('.profile-usermenu li').removeClass('active');
+		                el.parents('li').addClass('active');	
+
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.init();
+		                callback();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                console.log(xhr);
+		            },
+		            async: true,
+		        });
+
+		    }
+
 		    var loadWall = function (el, name) {
 
 		        var url = '{{$route}}/{{$hashid}}/' + name;
@@ -1039,7 +1074,39 @@
 				        content.html(html);
 		                Metronic.init();
 		    			// console.log(html);
-		    			console.log('Activities List');
+		    			console.log('Comments List');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var lessonsLessonStudents = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var lesson = el.parents('.timeline-blue-steel').data('lesson');
+
+		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/lessons/students',
+		    		type: 'GET',
+		    		data: {
+		    			lesson_id: lesson,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Students List');
 		    		},
 		    		error: function(xhr) {
 		    			console.log(xhr);
@@ -1261,11 +1328,53 @@
 		                lessonsLessonComments($(this));
 		            });
 
+		            // handle order lesson button click
+		            $('.profile').on('click', '.lesson-students', function (e) {
+		                lessonsLessonStudents($(this));
+		            });
+
 		            //handle loading content based on URL parameter
 		            if (Metronic.getURLParameter("a") === "view") {
 		                viewMessage();
-		            } else if (Metronic.getURLParameter("section") === "lessons") {
-		        		initWall($('.lessons-btn'), 'lessons');
+		            }
+		            if (Metronic.getURLParameter("action") != null) {
+
+		            	var callback = function(){};
+
+		            	if(Metronic.getURLParameter("focusable") === "true"){
+		            		var focuskey = 'data-' + Metronic.getURLParameter("focuskey");
+		            		var focusvalue = Metronic.getURLParameter("focusvalue");
+		            		var element_highlight = $('['+focuskey+'='+focusvalue+']');
+		            		callback = function(){
+		            			$('html,body').animate({
+        							scrollTop: $('['+focuskey+'='+focusvalue+']').offset().top-100},
+        							'slow', function(){
+        								$('['+focuskey+'='+focusvalue+']').effect("highlight", {}, 3000);
+        							});
+		            		}
+		            	}
+		            	var search = location.search.substring(1);
+						var data = search?JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) }):{}
+// section=lessons&action=comments&type=get&lesson_id=3B4727529D&focusable=true&focuskey=comment&focusvalue=58324AE2E7
+		            	initAction($('.' + data.section + '-btn'), data.section, data.action, data, data.method, callback);
+
+		            }
+		            else if (Metronic.getURLParameter("section") != null) {
+		            	switch(Metronic.getURLParameter("section")){
+		            		case 'lesson':
+		        				initWall($('.lessons-btn'), 'lessons');
+		        				break;
+		            		case 'lessons':
+		        				initWall($('.lessons-btn'), 'lessons');
+		        				break;
+		            		case 'general':
+		        				initWall($('.lessons-btn'), 'general');
+		        				break;
+		        			default:
+		        				initWall($('.lessons-btn'), 'general');
+		        				break;
+		            	}
+		            } else if (Metronic.getURLParameter("section") === "general") {
 		            } else {
 		        		initWall($('.general-btn'), 'general');
 		            }
