@@ -87,7 +87,7 @@
 																		<span class="todo-comment-date moment-fromnow">{{ $comment->created_at }}</span> &nbsp; 
 																		@if($attachments->count() > 0)
 																			<?php $attachment = $comment->attachments->first() ?>
-																			<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
+																			<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment-btn" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})" data-attachment="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-paperclip"></i></a> &nbsp; 
 																		@endif
 																		<a href="javascript:;" class="btn {{ $comment->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gusta. {{ $comment->peopleThumbsupIt() }}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
 																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-comments-o"></i> <span class="replies-counter">{{ $replies->count() }}</span></a>
@@ -121,7 +121,7 @@
 																							<span class="todo-comment-date moment-fromnow">{{ $reply->created_at }}</span> &nbsp; 
 																							@if($attachments->count() > 0)
 																								<?php $attachment = $reply->attachments->first() ?>
-																								<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"><i class="fa fa-paperclip" data-route="{{ $attachment->route }}"></i></a> &nbsp; 
+																								<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment-btn" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"  data-attachment="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-paperclip"></i></a> &nbsp; 
 																							@endif
 																							<a href="javascript:;" class="btn {{ $reply->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gusta. {{$reply->peopleThumbsupIt()}}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $reply->thumbsups->count() }}</span></a> &nbsp; 
 																							@if($reply->isMarkedAsBanned())
@@ -827,6 +827,14 @@
 
 			}
 
+
+
+		    var downloadAttachment = function (el) {
+
+		        window.open('{{$route}}/download?attachment=' + el.attr("data-attachment"));
+
+		    }
+
 			return {
 
 				init: function (){
@@ -882,6 +890,12 @@
 					$('.discussions').on('click', '.comment-put-btn', function(event) {
 						event.preventDefault();
 						discussionsPutSubmit($(this));
+						/* Act on the event */
+					});
+
+					$('.discussions').on('click', '.download-attachment-btn', function(event) {
+						event.preventDefault();
+						downloadAttachment($(this));
 						/* Act on the event */
 					});
 

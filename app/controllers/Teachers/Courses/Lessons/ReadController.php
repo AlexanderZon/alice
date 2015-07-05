@@ -1100,7 +1100,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 			$banned = new DiscussionKarma();
 
 			if($my_banned = $discussion->hasBanned(Auth::user()->id)) $banned = $my_banned;
-			
+
 			$banned->user_id = $user;
 			$banned->discussion_id = $discussion->id;
 			$banned->type = 'banned';
@@ -1111,6 +1111,14 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$response['banneders'] = $discussion->peopleBannedIt();
 
 		return Response::json($response);
+
+	}
+
+	public function getDownload( $course_id = '' ){
+
+		$attachment = Attachment::find(Crypt::decrypt(Input::get('attachment')));
+
+		return Response::download(public_path().$attachment->route, $attachment->name);
 
 	}
 
