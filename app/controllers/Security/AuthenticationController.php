@@ -93,6 +93,11 @@ class AuthenticationController extends ReadController {
 
 			else:
 
+				$user = Auth::user();
+				$user->timestamps = false;
+				$user->last_login = date('Y-m-d H:m:i');
+				$user->save();
+
 				return self::go('index');
 
 			endif;

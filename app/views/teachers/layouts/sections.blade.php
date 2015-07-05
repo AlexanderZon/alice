@@ -286,6 +286,7 @@
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
 		                // toggleButton(el);
+		                console.log(xhr);
 		            },
 		            async: true
 		        });
@@ -1368,10 +1369,13 @@
 		        				initWall($('.lessons-btn'), 'lessons');
 		        				break;
 		            		case 'general':
-		        				initWall($('.lessons-btn'), 'general');
+		        				initWall($('.general-btn'), 'general');
+		        				break;
+		            		case 'students':
+		        				initWall($('.students-btn'), 'students');
 		        				break;
 		        			default:
-		        				initWall($('.lessons-btn'), 'general');
+		        				initWall($('.general-btn'), 'general');
 		        				break;
 		            	}
 		            } else if (Metronic.getURLParameter("section") === "general") {
