@@ -434,6 +434,7 @@
 
 				var reply_delete = el.parents('div.media').data('comment');
 				var comment_delete = el.parents('li.media').data('comment');
+				var master_container = el.parents('li.media');
 
 				var parent = (typeof reply_delete == "undefined") ? 'li.media' : 'div.media';
 				data.comment = (typeof reply_delete == "undefined") ? comment_delete : reply_delete;
@@ -456,6 +457,12 @@
 					success: function(data){
 						console.log(container);
 						container.remove();
+						if(typeof reply_delete != "undefined"){
+							var replies = master_container.children('div.media-body').children('p.todo-comment-head').children('a.comment-reply-btn').children('span.replies-counter');
+							console.log(replies);
+							var counter =  parseInt(replies.html())-1;
+							replies.html(counter);
+						}
 						console.log(data);
 					},
 					error: function(xhr){
