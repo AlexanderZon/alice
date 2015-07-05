@@ -270,7 +270,7 @@
 			var generatePutForm = function(comment, content){
 
 				var reply_form = '' +
-				'<div class="media commenting">' +
+				'<div class="media commenting" data-comment="' + comment + '">' +
 					'<a class="pull-left" href="javascript:;">' +
 						'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
 					'</a>' +
@@ -477,7 +477,7 @@
 								'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
 								'<span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp; ' + 
 								( data.attachment != null ? '<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
-								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
+								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta. "><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
 								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
 								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
 							'</p>' +
@@ -633,7 +633,7 @@
 								'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
 								'<span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp; ' + 
 								( data.attachment != null ? '<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
-								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gustas"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
+								'<a href="javascript:;" class="btn ' + (data.hasMyThumbsup ? 'font-blue' : 'font-blue-chambray' ) + ' tooltips comment-like-btn" data-original-title="' + data.thumbsups + ' Me gusta. ' + data.thumbsupers + '"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">' + data.thumbsups + '</span></a> &nbsp; ' +
 								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
 								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
 							'</p>' +

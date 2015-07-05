@@ -1025,8 +1025,9 @@ class ReadController extends \Teachers\Courses\ReadController {
 			'id' => Hashids::encode($discussion->id),
 			'user_id' => Hashids::encode($discussion->user_id),
 			'content' => $discussion->content,
-			'thumbsups' => $discussion->thumbsups,
-			'hasMyThumbsup' => $discussion->hasThumbsup(Auth::user()->id),
+			'thumbsups' => $discussion->thumbsups->count(),
+			'hasMyThumbsup' => $discussion->iThumbsupIt(),
+			'thumbsupers' => $discussion->peopleThumbsupIt(),
 			'created_at' => $discussion->created_at,
 			'attachment' => null
 			);
