@@ -638,7 +638,8 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$type = Input::get('type');
 
 		$evaluation = new Evaluation();
-		$evaluation->lesson_id = $lesson->id;
+		$evaluation->evaluationable_id = $lesson->id;
+		$evaluation->evaluationable_type = 'Lesson';
 		$evaluation->type = $type;
 		$evaluation->date_start = date('Y-m-d', strtotime($module->date_start));
 		$evaluation->date_end = date('Y-m-d', strtotime($module->date_end));

@@ -87,16 +87,16 @@ class AuthenticationController extends ReadController {
 				'description' => 'El usuario ' . Auth::user()->username . ' ha Iniciado Sesión'
 				), 'CREATE');*/
 
+			$user = Auth::user();
+			$user->timestamps = false;
+			$user->last_login = date('Y-m-d H:m:i');
+			$user->save();
+
 			if(Input::get('redirect_to') != ''):
 
 				return self::redirect( Input::get('redirect_to') );
 
 			else:
-
-				$user = Auth::user();
-				$user->timestamps = false;
-				$user->last_login = date('Y-m-d H:m:i');
-				$user->save();
 
 				return self::go('index');
 

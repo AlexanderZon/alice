@@ -16,9 +16,9 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="portlet-title">
 						<h4 class="profile-usertitle-name">Estudiantes en este Curso ({{ $students->count() }})
-							<a href="javascript:;" class="btn blue-madison pull-right tooltips lessons-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
+							<!-- <a href="javascript:;" class="btn blue-madison pull-right tooltips lessons-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
 								<i class="fa fa-arrow-left"></i>
-							</a>
+							</a> -->
 						</h4>
 					</div>
 					<div class="row">&nbsp;</div>

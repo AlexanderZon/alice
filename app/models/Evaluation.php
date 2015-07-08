@@ -15,6 +15,12 @@ class Evaluation extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public function evaluationable(){
+
+        return $this->morphTo();
+
+    }
+
     public function hangman(){
 
         return $this->hasMany('\Games\Hangman\Question');

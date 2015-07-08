@@ -1374,6 +1374,9 @@
 		            		case 'students':
 		        				initWall($('.students-btn'), 'students');
 		        				break;
+		            		case 'discussions':
+		        				initWall($('.discussions-btn'), 'discussions');
+		        				break;
 		        			default:
 		        				initWall($('.general-btn'), 'general');
 		        				break;

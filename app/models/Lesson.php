@@ -56,7 +56,9 @@ class Lesson extends \Eloquent {
 
     public function evaluations(){
 
-        return $this->hasMany('Evaluation', 'lesson_id');
+        return $this->morphMany('Evaluation', 'evaluationable')->orderBy('created_at');
+
+        // return $this->hasMany('Evaluation', 'lesson_id');
 
     }
 
