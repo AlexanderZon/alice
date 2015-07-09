@@ -209,6 +209,8 @@ div .todo-tasklist-item:hover {
 
 .todo-comment {
   position: relative;
+  border-left: 2px solid #428BCA;
+  padding-left: 10px;
 }
 
 .todo-comment:hover > .todo-comment-btn {
@@ -241,6 +243,96 @@ div .todo-tasklist-item:hover {
   font-size: 12px;
   color: #2b4a5c;
   font-weight: 400;
+}
+
+.todo-reply-head {
+  padding-top: 3px;
+}
+
+.todo-reply {
+  position: relative;
+}
+
+.todo-comment:hover > .todo-reply-btn {
+  display: block;
+}
+
+.todo-reply-btn {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  font-size: 12px;
+  color: #566e7c;
+  border-color: #a2aeb5;
+}
+
+.todo-reply-btn:hover {
+  color: #fff;
+  background-color: #a1b6c2;
+  border-color: #a1b6c2;
+}
+
+.todo-reply-username {
+  font-size: 14px;
+  color: #2b4a5c;
+  font-weight: 600;
+}
+
+.todo-reply-date {
+  font-size: 12px;
+  color: #2b4a5c;
+  font-weight: 400;
+}
+
+.todo-like-head {
+  padding-top: 3px;
+}
+
+.todo-like {
+  position: relative;
+}
+
+.todo-comment:hover > .todo-like-btn {
+  display: block;
+}
+
+.todo-like-btn {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 90px;
+  font-size: 12px;
+  color: #566e7c;
+  border-color: #a2aeb5;
+}
+
+.todo-like-btn:hover {
+  color: #fff;
+  background-color: #a1b6c2;
+  border-color: #a1b6c2;
+}
+
+.todo-like-username {
+  font-size: 14px;
+  color: #2b4a5c;
+  font-weight: 600;
+}
+
+.todo-like-date {
+  font-size: 12px;
+  color: #2b4a5c;
+  font-weight: 400;
+}
+
+.todo-user-left{
+  float: left;
+  padding-right: 0px;
+  margin-right: 10px;
+}
+
+.reply-submit-btn{
+  padding-top: 5px;
 }
 
 .todo-username-btn {

@@ -13,7 +13,9 @@
     	"nathanmac/laravel-guid": "dev-master",
     	"alexanderzon/laravel-hashids": "dev-master",
     	"barryvdh/laravel-debugbar": "1.8.*@dev",
-    	"Chumper/Zipper": "0.5.x"
+    	"Chumper/Zipper": "0.5.x",
+    	"guzzlehttp/guzzle": "~4.0",
+    	"brainboxlabs/brain-socket": "v1.0.0"
 	},
 	"autoload": {
 		"classmap": [

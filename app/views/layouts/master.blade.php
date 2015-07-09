@@ -49,7 +49,7 @@
 <link href="/assets/admin/layout4/css/custom.css" rel="stylesheet" type="text/css"/>
 
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="favicon.ico"/>
+<link rel="shortcut icon" href="/favicon.ico"/>
 
 @yield('css')
 
@@ -106,6 +106,7 @@
 	<script type="text/javascript" src="/assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>
 	<script type="text/javascript" src="/assets/global/plugins/datatables/extensions/Scroller/js/dataTables.scroller.min.js"></script>
 	<script type="text/javascript" src="/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+	<script type="text/javascript" src="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
 	
 	<script type="text/javascript" src="/assets/global/plugins/moment/moment.js"></script>
 	<script type="text/javascript" src="/assets/global/plugins/moment/moment.conf.js"></script>

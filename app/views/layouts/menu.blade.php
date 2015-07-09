@@ -33,7 +33,7 @@
 <!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="page-header-fixed page-sidebar-closed-hide-logo ppage-sidebar-closed-hide-logo">
+<body class="page-header-fixed page-sidebar-closed-hide-logo ppage-sidebar-closed-hide-logo {{ isset($sidebar_closed) ? 'page-sidebar-closed' : '' }}">
 
 <!-- BEGIN HEADER -->
 	<div class="page-header navbar navbar-fixed-top">
@@ -232,22 +232,31 @@
 								</li>
 								<li>
 									<ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+										<?php $unreadbox_counter = 0; ?>
 										@foreach($unreadbox as $message)
-											<?php $from = $message->from; ?>
-											<li>
-												<a href="/messages">
-													<span class="photo">
-													<img src="/assets/admin/layout3/img/avatar2.jpg" class="img-circle" alt="">
-													</span>
-													<span class="subject">
-													<span class="from">{{ $from->first_name}} {{ $from->last_name }} </span>
-													<span class="time moment-date">{{ $message->user_message()->created_at }}</span>
-													</span>
-													<span class="message">{{ $message->subject }} @if(count($message->attachments)>0) <i class="fa fa-paperclip"></i> @endif</span>
-												</a>
-											</li>
+											@if($unreadbox_counter <= 10)
+												<?php $from = $message->from; ?>
+												<li>
+													<a href="/messages?a=view&id={{ Crypt::encrypt( $message->id ) }}">
+														<span class="photo">
+														<img src="{{ $from->profile->getAvatar() }}" class="img-circle" alt="">
+														</span>
+														<span class="subject">
+														<span class="from">{{ $from->first_name}} {{ $from->last_name }} </span>
+														<span class="time moment-date">{{ $message->user_message()->created_at }}</span>
+														</span>
+														<span class="message">{{ $message->subject }} @if(count($message->attachments)>0) <i class="fa fa-paperclip"></i> @endif</span>
+													</a>
+												</li>
+											@endif
+											<?php $unreadbox_counter++; ?>
 										@endforeach
-										<li>
+										@if($unreadbox_counter > 5)
+											<li class="external center">
+												<a href="/messages">Ver los demas Mensajes</a>
+											</li>
+										@endif
+										<!-- <li>
 											<a href="/me/inbox/{{ Hashids::encode('2') }}">
 											<span class="photo">
 											<img src="/assets/admin/layout3/img/avatar3.jpg" class="img-circle" alt="">
@@ -302,7 +311,7 @@
 											<span class="message">
 											Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
 											</a>
-										</li>
+										</li> -->
 									</ul>
 								</li>
 							</ul>
@@ -445,11 +454,11 @@
 								</span>
 								<!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
 								&nbsp;
-								<img alt="" class="img-circle" src="/assets/admin/layout4/img/avatar9.jpg"/>
+								<img alt="" class="img-circle" src="{{ Auth::user()->profile->getAvatar() }}"/>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-default">
 								<li>
-									<a href="/me">
+									<a href="/profile">
 									<i class="icon-user"></i> Mi Perfil </a>
 								</li>
 								<li>
@@ -457,9 +466,13 @@
 									<i class="icon-calendar"></i> Mi Calendario </a>
 								</li>
 								<li>
-									<a href="/my/inbox">
-									<i class="icon-envelope-open"></i> Mi Buzón <span class="badge badge-danger">
-									3 </span>
+									<a href="/messages">
+									<i class="icon-envelope-open"></i> Mi Buzón 
+										@if(count($unreadbox) > 0)
+											<span class="badge badge-danger">
+												{{ count($unreadbox)}} 
+											</span>
+										@endif
 									</a>
 								</li>
 								<li>
@@ -507,7 +520,7 @@
 				<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 				<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
 				<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-				<ul class="page-sidebar-menu page-sidebar-menu-hover-submenu1" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				<ul class="page-sidebar-menu page-sidebar-menu-hover-submenu1 {{ isset($sidebar_closed) ? 'page-sidebar-menu-closed' : '' }}" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 					<li class="heading">
 						<h3>GENERAL</h3>
 					</li>
@@ -520,56 +533,10 @@
 					</li>
 					@endif
 
-					@if(Auth::user()->hasCap('persons_view_get') || Auth::user()->hasCap('clients_view_get') || Auth::user()->hasCap('providers_view_get') || Auth::user()->hasCap('locations_view_get'))
-					<li class="tooltips {{ $module['name'] == 'persons' || $module['name'] == 'clients' || $module['name'] == 'providers' || $module['name'] == 'locations' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Personas">
-						<a href="/clients">
-						<i class="icon-user"></i>
-						<span class="title">
-						Personas </span>
-						<span class="arrow"></span>
-						</a>
-						<ul class="sub-menu">
-
-							@if(Auth::user()->hasCap('clients_view_get'))
-							<li class="{{ $module['name'] == 'clients' ? 'active' : '' }}">
-								<a href="/clients">
-								<i class="icon-emoticon-smile"></i>
-								Clientes</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('providers_view_get'))
-							<li class="{{ $module['name'] == 'providers' ? 'active' : '' }}">
-								<a href="/providers">
-								<i class="icon-briefcase"></i>
-								Proveedores</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('locations_view_get'))
-							<li class="{{ $module['name'] == 'locations' ? 'active' : '' }}">
-								<a href="/locations">
-								<i class="icon-pointer"></i>
-								Localidades</a>
-							</li>
-							@endif
-
-							@if(Auth::user()->hasCap('persons_view_get'))
-							<li class="{{ $module['name'] == 'persons' ? 'active' : '' }}">
-								<a href="/persons">
-								<i class="icon-list"></i>
-								Representantes</a>
-							</li>
-							@endif
-
-						</ul>
-					</li>
-					@endif
-
 					<!-- Coordanators Module -->
 
 					@if(Auth::user()->hasCap('coordinators_read_get_index'))
-					<li class="tooltips {{ $name == 'coordinators_read' ? 'active open' : '' }}">
+					<li class="tooltips {{ $name == 'coordinators' ? 'active open' : '' }}">
 						<a href="/">
 						<i class="icon-home"></i>
 						<span class="title">Escritorio</span>
@@ -708,6 +675,101 @@
 						</ul>
 					</li>
 					@endif
+
+					<!-- Teacehrs Module -->
+
+					@if(Auth::user()->hasCap('teachers_read_get_index'))
+					<li class="tooltips {{ $name == 'teachers' ? 'active open' : '' }}">
+						<a href="/">
+						<i class="icon-home"></i>
+						<span class="title">Escritorio</span>
+						</a>
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('teachers_courses_get_index'))
+					<li class="tooltips {{ $name == 'teachers_courses' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
+						<a href="/teachers/courses">
+							<i class="icon-notebook"></i>
+							<span class="title">
+							Cursos </span>
+							<!-- <span class="arrow"></span> -->
+						</a>
+						<!-- <ul class="sub-menu">
+						
+							@if(Auth::user()->hasCap('teachers_courses_get_index'))
+							<li class="{{ $name == 'teachers_courses_read' ? 'active' : '' }}">
+								<a href="/teachers/courses">
+								<i class="icon-list"></i>
+								Listado</a>
+							</li>
+							@endif
+						
+							@if(Auth::user()->hasCap('teachers_courses_get_inactive'))
+							<li class="{{ $name == 'teachers_courses_inactive' ? 'active' : '' }}">
+								<a href="/teachers/courses/inactive">
+								<i class="icon-ban"></i>
+								Inactivos</a>
+							</li> 
+							@endif
+						
+						</ul> -->
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('teachers_contributions_get_index'))
+					<li class="tooltips {{ $name == 'teachers_contributions' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Contribuciones">
+						<a href="/teachers/contributions">
+							<i class="icon-eyeglasses"></i>
+							<span class="title">
+							Contribuciones </span>
+							<!-- <span class="arrow"></span> -->
+						</a>
+						<!-- <ul class="sub-menu">
+						
+							@if(Auth::user()->hasCap('teachers_contributions_get_index'))
+							<li class="{{ $name == 'teachers_contributions_read' ? 'active' : '' }}">
+								<a href="/teachers/contributions">
+								<i class="icon-list"></i>
+								Listado</a>
+							</li>
+							@endif
+						
+							@if(Auth::user()->hasCap('teachers_contributions_get_inactive'))
+							<li class="{{ $name == 'teachers_contributions_inactive' ? 'active' : '' }}">
+								<a href="/teachers/contributions/inactive">
+								<i class="icon-ban"></i>
+								Inactivos</a>
+							</li> 
+							@endif
+						
+						</ul> -->
+					</li>
+					@endif
+
+					<!-- Users Module -->
+
+					@if(Auth::user()->hasCap('users_mails_get_index'))
+					<li class="tooltips {{ $name == 'users_mails' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Correos">
+						<a href="/messages">
+						<i class="icon-envelope-open"></i>
+						<span class="title">
+						Correo </span>
+						</a>
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('users_profile_get_index'))
+					<li class="tooltips {{ $name == 'users_profile' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Mi Perfil">
+						<a href="/profile">
+						<i class="icon-user"></i>
+						<span class="title">
+						Perfil </span>
+						</a>
+					</li>
+					@endif
+
+
 					<!-- END ANGULARJS LINK -->
 					<!--
 					<li>

@@ -17,13 +17,17 @@ class Course extends \Eloquent {
 
     protected static $slug_counter = 0;
 
-    protected static $upload_folder = '/uploads/courses/';
+    public static $upload_folder = '/uploads/courses/';
 
     const DEFAULT_MAIN_IMAGE = '/uploads/courses/defaults/200x200.gif';
 
     const DEFAULT_COVER_IMAGE = '/uploads/courses/defaults/1000x200.gif';
 
     const DEFAULT_THUMBNAIL_IMAGE = '/uploads/courses/defaults/100x100.gif';
+
+    const DEFAULT_ALL_COURSES_ROUTE = '/cursos';
+
+    const DEFAULT_VIEW_COURSE_ROUTE = '/curso/';
 
     public function contributors(){
 
@@ -93,19 +97,25 @@ class Course extends \Eloquent {
 
     public function modules(){
 
-    	return $this->hasMany('Module', 'course_id');
+    	return $this->hasMany('Module', 'course_id')->orderBy('modules.order', 'ASC');
 
     }
 
     public function lessons(){
 
-    	return $this->hasManyThrough('Lesson', 'Module');
+    	return $this->hasManyThrough('Lesson', 'Module')->orderBy('lessons.order', 'ASC');
 
     }
 
     public function discussions(){
 
-    	return $this->morphMany('Discussion','discussionable');
+        return $this->morphMany('Discussion','discussionable');
+
+    }
+
+    public function recentdiscussions(){
+
+    	return $this->morphMany('Discussion','discussionable')->orderBy('created_at', 'DESC');
 
     }
 
@@ -120,6 +130,58 @@ class Course extends \Eloquent {
         # CODE: Average Calculating
 
         return '0%';
+
+    }
+
+    public function getRoute(){
+
+        return self::DEFAULT_VIEW_COURSE_ROUTE.$this->name;
+
+    }
+
+    public function getSummary( $length = 500 ){
+
+        $text = html_entity_decode(strip_tags( $this->description ));
+
+        if(strlen($text) > $length) return substr($text, 0, $length).'...';
+
+        return $text;
+
+    }
+
+    public function getRoundOptimizedMainPicture( $width = '200' ){
+
+        $image = public_path().$this->main_picture;
+
+        $attr = getimagesize($image);
+
+        $pivot = 'width';
+
+        if($attr[0] > $attr[1]):
+
+            $pivot = 'height';
+
+        endif;
+
+        return HTML::image($this->main_picture, $this->title, array($pivot => $width));
+
+    }
+
+    public function getRoundOptimizedThumbnailPicture( $width = '100' ){
+
+        $image = public_path().$this->thumbnail_picture;
+
+        $attr = getimagesize($image);
+
+        $pivot = 'width';
+
+        if($attr[0] > $attr[1]):
+
+            $pivot = 'height';
+
+        endif;
+
+        return HTML::image($this->thumbnail_picture, $this->title, array($pivot => $width));
 
     }
 
@@ -256,6 +318,24 @@ class Course extends \Eloquent {
 
         return $picture;
         
+    }
+
+    public static function getRoundOptimizedImage( $route, $width = '200', $title = '' ){
+
+        $image = public_path().$route;
+
+        $attr = getimagesize($image);
+
+        $pivot = 'width';
+
+        if($attr[0] > $attr[1]):
+
+            $pivot = 'height';
+
+        endif;
+
+        return HTML::image($route, $title, array($pivot => $width));
+
     }
 
 }

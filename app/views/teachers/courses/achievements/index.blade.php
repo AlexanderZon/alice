@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/teachers/courses/achievements/index.blade.php

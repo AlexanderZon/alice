@@ -17,6 +17,7 @@ class CreateDiscussionsKarmaTable extends Migration {
 			$table->increments('id');
 			$table->integer('user_id');
 			$table->integer('discussion_id');
+			$table->enum('type', array('thumbsup', 'banned', 'favorite'));
 			$table->string('status');
 			$table->timestamps();
 			$table->softDeletes();

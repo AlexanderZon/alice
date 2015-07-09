@@ -86,7 +86,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function profile(){
 
-		return $this->hasOne('Profile','user_id');
+		return $this->hasOne('UserProfile','user_id');
 
 	}
 
@@ -126,7 +126,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function contributions(){
 
-		return $this->belongsToMany('Course', 'contributes');
+		return $this->belongsToMany('Course', 'contributors');
 
 	}
 
@@ -148,9 +148,55 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
-	public function iTeach(){
+	public function teaching(){
 
-		return $this->hasMany('Course','user_id');
+		return $this->hasMany('Course','author_id')->where('courses.status','=','active');
+
+	}
+
+	public function lessonsteaching(){
+
+		$lessons = array();
+
+		$courses = $this->teaching;
+
+		if($courses->count() > 0):
+
+			foreach($courses as $course):
+				$c_lessons = $course->lessons;
+				if($c_lessons->count() > 0):
+					foreach($c_lessons as $c_lesson):
+						$lessons[] = $c_lesson;
+					endforeach;
+				endif;
+			endforeach;
+
+		endif;
+
+		return $lessons;
+
+	}
+
+	public function studentsteaching(){
+
+		$students = array();
+
+		$courses = $this->teaching;
+
+		if($courses->count() > 0):
+
+			foreach($courses as $course):
+				$c_students = $course->students;
+				if($c_students->count() > 0):
+					foreach($c_students as $c_lesson):
+						$students[] = $c_lesson;
+					endforeach;
+				endif;
+			endforeach;
+
+		endif;
+
+		return $students;
 
 	}
 
@@ -166,46 +212,73 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
-	public function inbox(){
+	public function inbox( $q = '' ){
 
+		$inbox = $this->belongsToMany('Message','user_messages')->whereRaw('( `user_messages`.`status` = ? OR `user_messages`.`status` = ? )', array('read', 'unread'))->orderBy('user_messages.created_at', 'DESC');
+
+		if($q != '') $inbox = $inbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
 		// return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read')->orWhere('user_messages.status', '=', 'unread');
-		return $this->belongsToMany('Message','user_messages')->whereRaw('( user_messages.status = ? OR user_messages.status = ? )', array('read', 'unread'))->orderBy('user_messages.created_at', 'DESC');
+		return $inbox;
 
 	}
 
-	public function unreadbox(){
+	public function unreadbox( $q = '' ){
 
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'unread')->orderBy('user_messages.created_at', 'DESC');
+		$unreadbox = $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'unread')->orderBy('user_messages.created_at', 'DESC');
 
-	}
-
-	public function readbox(){
-
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read')->orderBy('user_messages.created_at', 'DESC');
+		if($q != '') $unreadbox = $unreadbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+		
+		return  $unreadbox;
 
 	}
 
-	public function spambox(){
+	public function readbox( $q = '' ){
 
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'spam')->orderBy('user_messages.created_at', 'DESC');
+		$readbox = $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'read')->orderBy('user_messages.created_at', 'DESC');
 
-	}
-
-	public function trashbox(){
-
-		return $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'deleted')->orderBy('user_messages.created_at', 'DESC');
+		if($q != '') $readbox = $readbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+		
+		return $readbox;
 
 	}
 
-	public function outbox(){
+	public function spambox( $q = '' ){
 
-		return $this->hasMany('Message','author_id')->where('messages.status', '=', 'done')->orderBy('messages.created_at', 'DESC');
+		$spambox = $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'spam')->orderBy('user_messages.created_at', 'DESC');
+		
+		if($q != '') $spambox = $spambox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+
+		return $spambox;
 
 	}
 
-	public function draftbox(){
+	public function trashbox( $q = '' ){
 
-		return $this->hasMany('Message','author_id')->where('messages.status', '=', 'draft')->orderBy('messages.created_at', 'DESC');
+		$trashbox = $this->belongsToMany('Message','user_messages')->where('user_messages.status', '=', 'deleted')->orderBy('user_messages.created_at', 'DESC');
+
+		if($q != '') $trashbox = $trashbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+		
+		return $trashbox;
+
+	}
+
+	public function outbox( $q = '' ){
+
+		$outbox = $this->hasMany('Message','author_id')->where('messages.status', '=', 'done')->orderBy('messages.created_at', 'DESC');
+
+		if($q != '') $outbox = $outbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+
+		return $outbox;
+
+	}
+
+	public function draftbox( $q = '' ){
+
+		$draftbox = $this->hasMany('Message','author_id')->where('messages.status', '=', 'draft')->orderBy('messages.created_at', 'DESC');
+
+		if($q != '') $draftbox = $draftbox->whereRaw('( `messages`.`subject` LIKE(\'%'.$q.'%\') OR `messages`.`message` LIKE(\'%'.$q.'%\') )', array())->get();
+
+		return $draftbox;
 
 	}
 
@@ -217,15 +290,124 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function followers(){
 
-		return $this->belongsToMany('User','follows','followed_id','follower_id');
+		return $this->belongsToMany('User','follows','followed_id','follower_id')->where('follows.status','=','active');
+		
+	}
+
+	public function follows(){
+
+		return $this->hasMany('Follow','follower_id','id');
+		
+	}
+
+	public function followsme(){
+
+		return $this->hasMany('Follow','followed_id','id');
 		
 	}
 
 	public function followed(){
 
-		return $this->belongsToMany('User','follows','follower_id','followed_id');
+		return $this->belongsToMany('User','follows','follower_id','followed_id')->where('follows.status','=','active');
 
 	}
+
+	public function _follows( $user, $status = 'active' ){
+
+		$follow = null;
+
+		if(!$follow = $user->getMyFollow()):
+
+			$follow = new Follow();
+
+		endif;
+
+		$follow->follower_id = $this->id;
+		$follow->followed_id = $user->id;
+		$follow->status = $status;
+		return $follow->save();
+
+	}
+
+	public function follow( $user ){
+
+		$this->_follows($user, 'active');
+
+	}
+
+	public function unfollow( $user ){
+
+		$this->_follows($user, 'inactive');
+
+	}
+
+	public function block( $user ){
+
+		$this->_follows($user, 'block');
+
+	}
+
+	public function unblock( $user ){
+
+		$this->_follows($user, 'active');
+
+	}
+
+	public function hasMyFollow(){
+
+		$my_followed = Auth::user()->followed;
+
+		$bool = false;
+
+		foreach($my_followed as $followed):
+			if(($followed->id == $this->id)):
+				$follow = Follow::where('follower_id','=',Auth::user()->id)->where('followed_id','=',$this->id)->take(1)->get();
+				if(isset($follow[0]) AND $follow[0]->status == 'active'):
+			 		$bool = true;
+			 	endif;
+			 endif;
+		endforeach;
+
+		return $bool;
+		
+	}
+
+	public function getMyFollow(){
+
+		$my_followed = Auth::user()->follows;
+
+		$bool = false;
+
+		foreach($my_followed as $followed):
+			if(($followed->followed_id == $this->id)):
+			 	$bool = $followed;
+			endif;
+		endforeach;
+
+		return $bool;
+		
+	}
+
+	public function hasMyBlock(){
+
+		$my_followed = Auth::user()->followed;
+
+		$bool = false;
+
+		foreach($my_followed as $followed):
+			if(($followed->id == $this->id)):
+				$follow = Follow::where('follower_id','=',Auth::user()->id)->where('followed_id','=',$this->id)->take(1)->get();
+				if(isset($follow[0]) AND $follow[0]->status == 'block'):
+			 		$bool = true;
+			 	endif;
+			 endif;
+		endforeach;
+
+		return $bool;
+
+	}
+
+	/* -------- STATIC METHODS ----------- */
 
 	public static function getTeachers( $status = 'active' ){
 
@@ -283,6 +465,26 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
+	public static function isValidUsername( $username, $id = '' ){
+
+		if( $id != '' ):
+
+			$user = self::where('username', '=', $username )->where('id', '!=', $id )->take(1)->get();
+
+		else:
+
+			$user = self::where('username', '=', $username )->take(1)->get();
+
+		endif;
+
+		if(empty($user[0])):
+			return false;
+		else:
+			return true;
+		endif;
+
+	}
+
 	public static function hasEmail( $email, $id = '' ){
 
 		if( $id != '' ):
@@ -304,6 +506,22 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 			return true;
 
 		endif;
+
+	}
+
+	public static function search($q = ''){
+
+		return self::where('email','LIKE','%'.$q.'%')->orWhere('first_name','LIKE','%'.$q.'%')->orWhere('last_name','LIKE','%'.$q.'%')->orWhere('username','LIKE','%'.$q.'%')->orWhere('display_name','LIKE','%'.$q.'%')->get();
+
+	}
+
+	public static function retrieveByUsername( $username ){
+
+		$user = self::where('username','=',$username)->take(1)->get();
+
+		if(isset($user[0])) return $user[0];
+
+		else return null;
 
 	}
 

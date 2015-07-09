@@ -17,43 +17,49 @@
 		</div>
 	</th>
 	<th class="pagination-control" colspan="3">
-		{{ $trashbox->links('users.mails.read.paginate')->with('messages', $trashbox) }}
+		{{ $trashbox->links('users.mails.read.paginate')->with(array('messages' => $trashbox, 'box' => 'trashbox')) }}
 	</th>
 </tr>
 </thead>
 <tbody>
-@foreach($trashbox as $message)
-	<tr {{ $message->user_message()->status == 'unread' ? 'class="unread"' : '' }} data-messageid="{{ Crypt::encrypt($message->id) }}">
-		<td class="inbox-small-cells">
-			<input type="checkbox" class="mail-checkbox ids" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
-		</td>
-		<td class="inbox-small-cells">
-			<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}" data-favorite="{{ $message->user_message()->favorite }}">
-				<i class="fa fa-star {{ $message->user_message()->favorite ? 'inbox-started' : 'inbox-not-started' }}"></i>				
-			</a>
-		</td>
-		<td class="view-message hidden-xs">
-			@if($message->from->id == Auth::user()->id)
-				{{ 'Yo' }}
-			@else
-				{{ $message->from->first_name }} {{ $message->from->last_name }}
-			@endif
-		</td>
-		<td class="view-message ">
-			 {{ $message->subject }}
-		</td>
-		<td class="view-message inbox-small-cells">
-			@if(count($message->attachments) > 0)
-				<i class="fa fa-paperclip"></i>
-			@endif
-		</td>
-		<td class="view-message text-right">
-			<spam class="{{ $message->user_message()->created_diff() > 0 ? 'moment-date' : 'moment-time' }}">
-				{{ $message->user_message()->created_at }}
-			</spam> 
-		</td>
+@if($trashbox->count() > 0)
+	@foreach($trashbox as $message)
+		<tr {{ $message->user_message()->status == 'unread' ? 'class="unread"' : '' }} data-messageid="{{ Crypt::encrypt($message->id) }}">
+			<td class="inbox-small-cells">
+				<input type="checkbox" class="mail-checkbox ids" name="ids[]" value="{{Crypt::encrypt($message->id)}}">
+			</td>
+			<td class="inbox-small-cells">
+				<a class="favorite-btn" data-messageid="{{ Crypt::encrypt($message->id) }}" data-favorite="{{ $message->user_message()->favorite }}">
+					<i class="fa fa-star {{ $message->user_message()->favorite ? 'inbox-started' : 'inbox-not-started' }}"></i>				
+				</a>
+			</td>
+			<td class="view-message hidden-xs">
+				@if($message->from->id == Auth::user()->id)
+					{{ 'Yo' }}
+				@else
+					{{ $message->from->first_name }} {{ $message->from->last_name }}
+				@endif
+			</td>
+			<td class="view-message ">
+				 {{ $message->subject }}
+			</td>
+			<td class="view-message inbox-small-cells">
+				@if(count($message->attachments) > 0)
+					<i class="fa fa-paperclip"></i>
+				@endif
+			</td>
+			<td class="view-message text-right">
+				<spam class="{{ $message->user_message()->created_diff() > 0 ? 'moment-date' : 'moment-time' }}">
+					{{ $message->user_message()->created_at }}
+				</spam> 
+			</td>
+		</tr>
+	@endforeach
+@else
+	<tr>
+		<td colspan="6">No existen mensajes en tu Papelera</td>
 	</tr>
-@endforeach
+@endif
 
 </tbody>
 </table>

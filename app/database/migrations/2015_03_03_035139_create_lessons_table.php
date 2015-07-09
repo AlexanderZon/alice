@@ -22,6 +22,7 @@ class CreateLessonsTable extends Migration {
 			$table->double('approval_percentage', 3, 2);
 			$table->longText('content');
 			$table->string('status');
+			$table->integer('order');
 			$table->timestamps();
 			$table->softDeletes();
 		});

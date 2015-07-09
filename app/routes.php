@@ -11,9 +11,13 @@
 |
 */
 
+Route::get('/test/getimagesize', function(){
+	dd(getimagesize(public_path().'/assets/admin/pages/media/blog/8.jpg'));
+});
+
 if(Auth::check()):
 
-	switch(Auth::user()->role->name){
+	switch(Auth::user()->role->name):
 
 		case 'superadmin':
 		
@@ -50,6 +54,19 @@ if(Auth::check()):
 		break;
 		case 'teacher':
 			# Routes for teacher
+			Route::controller('/teachers/courses/{course_id}/achievements', '\Teachers\Courses\Achievements\ReadController');
+			Route::controller('/teachers/courses/{course_id}/activities', '\Teachers\Courses\Activities\ReadController');
+			Route::controller('/teachers/courses/{course_id}/contributors', '\Teachers\Courses\Contributors\ReadController');
+			Route::controller('/teachers/courses/{course_id}/discussions', '\Teachers\Courses\Discussions\ReadController');
+			Route::controller('/teachers/courses/{course_id}/general', '\Teachers\Courses\General\ReadController');
+			Route::controller('/teachers/courses/{course_id}/inscriptions', '\Teachers\Courses\Inscriptions\ReadController');
+			Route::controller('/teachers/courses/{course_id}/lessons', '\Teachers\Courses\Lessons\ReadController');
+			Route::controller('/teachers/courses/{course_id}/questions', '\Teachers\Courses\Questions\ReadController');
+			Route::controller('/teachers/courses/{course_id}/statistics', '\Teachers\Courses\Statistics\ReadController');
+			Route::controller('/teachers/courses/{course_id}/students', '\Teachers\Courses\Students\ReadController');
+			Route::controller('/teachers/courses', '\Teachers\Courses\ReadController');
+			Route::controller('/teachers/contributions', '\Teachers\Contributions\ReadController');
+			Route::controller('/teachers', '\Teachers\ReadController');
 		break;
 		case 'student':
 			# Routes for student
@@ -58,7 +75,7 @@ if(Auth::check()):
 			# Routes for unknown
 		break;
 
-	}
+	endswitch;
 
 	Route::controller('/messages', '\Users\Mails\ReadController');
 	Route::controller('/profile', '\Users\Profile\ReadController');
@@ -68,6 +85,7 @@ if(Auth::check()):
 	Route::controller('/memory', '\Games\Memory\ReadController');
 	Route::controller('/roulette', '\Games\Roulette\ReadController');
 	Route::controller('/auth', '\Security\AuthenticationController');
+	Route::controller('{username}/{section?}/{action?}', '\Users\Wall\ReadController');
 	Route::controller('/', '\Security\AuthenticationController');
 
 else:

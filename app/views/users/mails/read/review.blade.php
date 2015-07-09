@@ -9,7 +9,7 @@
 <div class="inbox-view-info">
 	<div class="row">
 		<div class="col-md-7">
-			<img src="{{'/assets/admin/layout4/img/avatar1_small.jpg'}}">
+			<img class="img-circle" src="{{ $message->from->profile->getAvatar() }}"  style="width:28px">
 			<span class="bold">
 			{{ $message->from->first_name }} {{ $message->from->last_name }} </span>
 			<span>
@@ -75,28 +75,46 @@
 				{{ count($message->attachemnts) }} Archivos Adjuntos — </span>
 				<a href="javascript:;" class="download-all-btn" data-messageid="{{ Crypt::encrypt($message->id) }}">
 				Descargar todos los archivos adjuntos </a>
-				<a href="javascript:;">
-				Ver todas las imágenes </a>
+				<!-- <a href="javascript:;">
+				Ver todas las imágenes </a> -->
 			</div>
 			<!--- Ciclo por cada Dato Adjunto -->
-			@if(count($message->attachments) > 0)
+			<?php $counter = 0 ?>
+			@if(count($message->attachments) > 0 )
 				@foreach($message->attachments as $attachment)
-					<div class="col-md-3">
+					@if((($counter)%6 )== 0)
 						<div class="row">
-							<div class="col-md-1"></div>
-							<img class="col-md-10" src="{{ $attachment->image() }}">							
+					@endif
+
+					<div class="col-md-2">
+						<div class="row">
+							<div class="col-md-1"><?php $counter++;?></div>
+							<img class="col-md-10 tooltips" src="{{ $attachment->image() }}" data-original-title="{{$attachment->name}}" data-container="body" data-placement="right" data-html="true">
 							<div class="col-md-1"></div>
 						</div>
 						<div class="row">
-							<strong class="col-md-12">{{$attachment->name}}</strong>
-							<span class="col-md-4">
-							{{ $attachment->getSize() }} </span>
-							<a class="col-md-3" href="javascript:;">
-							Ver </a>
-							<a class="col-md-4" href="javascript:;">
-							Descargar </a>
+							<!-- <div class="row">
+								<div class="col-md-1"></div>
+								<p class="col-md-10">{{$attachment->name}}</p>
+								<div class="col-md-1"></div>
+							</div> -->
+							<div class="row">
+								<div class="col-md-1"></div>
+								<span class="col-md-5">{{ $attachment->getSize() }} </span>
+								<a class="col-md-1 download-btn" href="javascript:;" data-attachmentid="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-download"></i></a>					
+								@if( $attachment->mime == 'image/png' || $attachment->mime == 'image/jpeg' || $attachment->mime == 'image/gif')
+								<a class="col-md-1 fancybox" data-fancybox-type="iframe" title="{{ $attachment->name }} ({{ $attachment->getSize() }})" href="{{ $route }}/viewimage/{{ Crypt::encrypt($attachment->id) }}" rel="view-images"><i class="fa fa-eye"></i></a>
+								@endif
+								<!-- <a class="col-md-3" href="javascript:;">Descargar</a>									
+								<a class="col-md-3" href="javascript:;">Ver</a> -->
+								<div class="col-md-1"></div>
+							</div>
 						</div>
 					</div>
+					@if(($counter)%6 == 0)
+
+						</div>
+					@endif
 				@endforeach
 			@endif
 			<!-- 

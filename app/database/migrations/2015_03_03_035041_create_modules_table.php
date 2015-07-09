@@ -18,7 +18,10 @@ class CreateModulesTable extends Migration {
 			$table->integer('course_id');
 			$table->string('name');
 			$table->string('title');
+			$table->date('date_start');
+			$table->date('date_end');
 			$table->string('status');
+			$table->integer('order');
 			$table->timestamps();
 			$table->softDeletes();
 		});

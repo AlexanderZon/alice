@@ -1,4 +1,6 @@
-@extends ('layouts.master')@section('toolbar')
+@extends ('layouts.master')
+
+@section('toolbar')
 	
 	<div class="page-toolbar">
 		<!-- BEGIN THEME PANEL -->

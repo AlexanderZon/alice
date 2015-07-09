@@ -24,7 +24,7 @@
 	<link id="style_color" href="/assets/admin/layout4/css/themes/light.css" rel="stylesheet" type="text/css"/>
 	<link href="/assets/admin/layout4/css/custom.css" rel="stylesheet" type="text/css"/>
 	<!-- END THEME STYLES -->
-	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="shortcut icon" href="/favicon.ico"/>
 
 @stop
 
@@ -97,15 +97,58 @@
 
 		    var content = $('.inbox-content');
 		    var loading = $('.inbox-loading');
+		    var loader = '<div class="portlet light"><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row"><div class="col-md-5">&nbsp;</div><img class="col-md-2" src="/assets/loaders/rubiks-cube.gif"/><div class="col-md-5">&nbsp;</div></div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div></div>';
 		    var listListing = '';
+
+		    var searchForm = function (el){
+
+		    	console.log('submit');
+
+		    	var url = '{{$route}}/search';
+
+		        // loading.show();
+		        content.html(loader);
+		        toggleButton(el);
+
+		    	$.ajax({
+		    		type: 'GET',
+		    		cache: false,
+		    		url: url,
+		    		data: el.serialize(),
+		    		dataType: 'html',
+		    		success: function(res)
+		    		{
+						toggleButton(el);/*
+
+		                $('.inbox-nav > li.active').removeClass('active');
+		                if(name == 'outbox'){
+		                	$('.inbox-nav > li.sent').addClass('active');		                	
+		                }
+		                $('#search-type').val(name);
+		                $('.inbox-nav > li.' + name).addClass('active');
+		                $('.inbox-header > h1').text(title);*/
+
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.initUniform();
+		    		},
+		    	})
+
+		    }
 
 		    var loadInbox = function (el, name) {
 		        var url = '{{$route}}/' + name;
 		        var title = $('.inbox-nav > li.' + name + ' a').attr('data-title');
+		        if(name == 'outbox') title = $('.inbox-nav > li.sent a').attr('data-title');
 		        listListing = name;
 
-		        loading.show();
-		        content.html('');
+		        console.log(name);
+
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        $.ajax({
@@ -121,6 +164,7 @@
 		                if(name == 'outbox'){
 		                	$('.inbox-nav > li.sent').addClass('active');		                	
 		                }
+		                $('#search-type').val(name);
 		                $('.inbox-nav > li.' + name).addClass('active');
 		                $('.inbox-header > h1').text(title);
 
@@ -135,7 +179,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -150,12 +194,17 @@
 		    }
 
 		    var paginateBox = function (el) {
-		        var url = '{{$route}}/paginate?';
+		    	if($(el).attr('data-box') == 'q-inbox' || $(el).attr('data-box') == 'q-outbox' || $(el).attr('data-box') == 'q-draft' || $(el).attr('data-box') == 'q-trash'){
+		        	var url = '{{$route}}/search?';		    		
+		    	}
+		    	else{
+		        	var url = '{{$route}}/paginate?';		    		
+		    	}
 		        
 		        listListing = name;
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        $.ajax({
@@ -164,12 +213,13 @@
 		            url: url,
 		            data: {
 		            	page: $(el).attr('data-paginateid'),
-		            	box: $(el).attr('data-box')
+		            	box: $(el).attr('data-box'),
+		            	q: $('input[name=q]').val(),
+		            	type: $('#search-type').val()
 		            },
 		            dataType: "html",
 		            success: function(res) 
 		            {
-
 		                loading.hide();
 		                content.html(res);
 		                if (Layout.fixContentHeight) {
@@ -181,7 +231,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -195,14 +245,23 @@
 		        });
 		    }
 
-		    var viewMessage = function (el, name, resetMenu) {
+		    var viewMessage = function (el, id, resetMenu) {
 		        var url = '{{$route}}/view';
 
-		        loading.show();
-		        content.html('');
-		        toggleButton(el);
+		        // loading.show();
+		        content.html(loader);
+		        // toggleButton(el);
 
-		        var message_id = el.parent('tr').attr("data-messageid");  
+		        var message_id = null;  
+
+		        if(typeof id != "undefined"){
+		        	message_id = id;  
+		        }else{
+		        	
+		        	message_id = el.parent('tr').attr("data-messageid");  
+
+		        }
+
 		        
 		        $.ajax({
 		            type: "GET",
@@ -212,7 +271,7 @@
 		            data: {'message_id': message_id},
 		            success: function(res) 
 		            {
-		                toggleButton(el);
+		                // toggleButton(el);
 
 		                if (resetMenu) {
 		                    $('.inbox-nav > li.active').removeClass('active');
@@ -228,15 +287,15 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
 		    var reviewMessage = function (el, name, resetMenu) {
 		        var url = '{{$route}}/review';
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        var message_id = el.parent('tr').attr("data-messageid");  
@@ -265,15 +324,15 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
 		    var recomposeMessage = function (el, name, resetMenu) {
 		        var url = '{{$route}}/recompose';
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        var message_id = el.parent('tr').attr("data-messageid");  
@@ -302,7 +361,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -310,8 +369,8 @@
 		        var message_id = el.attr("data-messageid"); 
 		        var url = '{{$route}}/downloadall/'+message_id;
 
-		        // loading.show();
-		        // content.html('');
+		        loading.show();
+		        // content.html(loader);
 		        // toggleButton(el);
 
 		        // console.log(message_id);
@@ -331,15 +390,15 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
 		    var downloadFile = function (el) {
 		        var attachment_id = el.attr("data-attachmentid"); 
 		        var url = '{{$route}}/download/'+attachment_id;
-		        // loading.show();
-		        // content.html('');
+		        loading.show();
+		        // content.html(loader);
 		        // toggleButton(el);
 
 		        // console.log(attachment_id);
@@ -359,7 +418,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -401,11 +460,15 @@
 
 		    }
 
-		    var loadCompose = function (el) {
+		    var loadCompose = function (el, profile) {
 		        var url = '{{$route}}/compose';
 
-		        loading.show();
-		        content.html('');
+		        if(typeof profile != "undefined"){
+		        	url += '?profile=' + profile;
+		        }
+
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // load the form via ajax
@@ -435,7 +498,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -443,8 +506,8 @@
 		        var messageid = $(el).attr("data-messageid");
 		        var url = '{{$route}}/reply?message_id=' + messageid;
 		        
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // load the form via ajax
@@ -475,7 +538,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -483,8 +546,8 @@
 		        var messageid = $(el).attr("data-messageid");
 		        var url = '{{$route}}/forward?messageid=' + messageid;
 		        
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // load the form via ajax
@@ -515,7 +578,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -552,8 +615,8 @@
 		        	'message': $('textarea[name=message]').val(),
 		        }*/
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // console.log(data);
@@ -581,7 +644,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -619,8 +682,8 @@
 		        	'message': $('#message-content').html(),
 		        };
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        // console.log(data);
@@ -649,7 +712,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -691,9 +754,9 @@
 		        	'message': $('textarea[name=message]').val(),
 		        }*/
 
-		        /*loading.show();
-		        content.html('');
-		        toggleButton(el);*/
+		        loading.show();
+		        content.html(loader);
+		        toggleButton(el);
 
 		        // console.log(data);
 
@@ -716,7 +779,7 @@
 		            {
 		                // toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 
 		        // handle group checkbox:
@@ -948,8 +1011,8 @@
 		    var loadSearchResults = function (el) {
 		        var url = '{{$route}}/search';
 
-		        loading.show();
-		        content.html('');
+		        // loading.show();
+		        content.html(loader);
 		        toggleButton(el);
 
 		        $.ajax({
@@ -973,7 +1036,7 @@
 		            {
 		                toggleButton(el);
 		            },
-		            async: false
+		            async: true
 		        });
 		    }
 
@@ -1014,6 +1077,20 @@
 		    return {
 		        //main function to initiate the module
 		        init: function () {
+
+		        	$('.inbox').on('submit', '#search-form', function(event) {
+		        		event.preventDefault();
+		        		/* Act on the event */
+		        		if($('#search-form input[name=q]').val() != '') searchForm($(this));
+		        		return false;
+		        	});
+
+		        	/*$('.inbox').on('keyup', '#search-form input[name=q]', function(event) {
+		        		
+		        		console.log(event.keyCode);
+		        		if(event.keyCode == 8 || (event.keyCode >= 32 && event.keyCode <=))
+		        		searchForm($('#search-form'));
+		        	});*/
 
 		            // handle compose btn click
 		            $('.inbox').on('click', '.compose-btn a', function () {
@@ -1171,9 +1248,9 @@
 
 		            //handle loading content based on URL parameter
 		            if (Metronic.getURLParameter("a") === "view") {
-		                viewMessage();
+		                viewMessage($('.inbox'), Metronic.getURLParameter("id"));
 		            } else if (Metronic.getURLParameter("a") === "compose") {
-		                loadCompose();
+		                loadCompose($('.compose-btn a'), Metronic.getURLParameter("profile"));
 		            } else {
 		               $('.inbox-nav > li.inbox > a').click();
 		            }

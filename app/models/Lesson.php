@@ -15,15 +15,30 @@ class Lesson extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    protected $defaults_avatar_url = '/uploads/discussions/defaults/';
+
+    protected $defaults_avatar_colors = [
+        'blue',
+        'brown',
+        'green',
+        'orange',
+        'pink',
+        'purple'
+    ];
+
+    protected $upload_folder = '/uploads/courses/';
+
+    protected static $slug_counter = 0;
+
     public function attachments(){
 
     	return $this->morphMany('Attachment', 'attachmentable');
 
     }
 
-    public function discussionable(){
+    public function discussions(){
 
-    	return $this->morphMany('Discussion', 'discussionable');
+    	return $this->morphMany('Discussion', 'discussionable')->orderBy('created_at');
 
     }
 
@@ -41,13 +56,27 @@ class Lesson extends \Eloquent {
 
     public function evaluations(){
 
-    	return $this->hasMany('Evaluation', 'evaluation_id');
+        return $this->morphMany('Evaluation', 'evaluationable')->orderBy('created_at');
+
+        // return $this->hasMany('Evaluation', 'lesson_id');
 
     }
 
     public function students(){
 
-    	return $this->belongsToMany('User','user_lessons')->orderBy('created_at','ASC')->get();
+        return $this->belongsToMany('User','user_lessons')->orderBy('created_at','ASC');
+
+    }
+
+    public function views(){
+
+    	return $this->hasMany('UserLesson', 'lesson_id')->orderBy('created_at','ASC');
+
+    }
+
+    public function viewedBy( $user ){
+
+        return $this->hasMany('UserLesson', 'lesson_id')->where('user_lessons.user_id','=',$user->id)->first();
 
     }
 
@@ -111,6 +140,36 @@ class Lesson extends \Eloquent {
 
     }
 
+    public function getAvatar(){
+
+        $character = substr($this->title, 0, 1);
+
+        $color = rand(0, count($this->defaults_avatar_colors)-1);
+
+        return File::exists(public_path().$this->defaults_avatar_url.$character.'_'.$this->defaults_avatar_colors[$color].'.png') ? $this->defaults_avatar_url.$character.'_'.$this->defaults_avatar_colors[$color].'.png' : $this->defaults_avatar_url.'x_'.$this->defaults_avatar_colors[$color].'.png';
+
+    }
+
+    public function getSummary( $length = 500 ){
+
+        $text = html_entity_decode(strip_tags( $this->content ));
+
+        if(strlen($text) > $length) return substr($text, 0, $length).'...';
+
+        return $text;
+
+    }
+
+    public function makeFullDirectory(){
+
+        $path = public_path().$this->upload_folder.$this->module->course->name.'/lessons/'.$this->name;
+
+        File::makeDirectory($path.'/attachments', $mode = 0755, true, true);
+
+        return $path;
+
+    }
+
     public static function _get( $status = 'active' ){
 
         return self::where( 'status', '=', $status )->get();
@@ -129,5 +188,42 @@ class Lesson extends \Eloquent {
 
     }
 
+    public static function findPermalinkCounter( $name ){
+
+        $slug = $name.'-'.(++self::$slug_counter);
+
+        if( count(self::where('name', '=', $slug)->get()) > 0 ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $slug;
+
+        endif;
+
+    }
+
+    public static function setPermalink( $title ){
+
+        $name = Str::slug( $title );
+
+        if( $counter = count(self::where('name', '=', $name)->get()) ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $name;
+
+        endif;
+
+    }
+
+    public static function getLastPosition( $modules ){
+
+        return $modules->lessons->count() + 1;
+
+    }
 
 }

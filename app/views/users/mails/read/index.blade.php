@@ -44,9 +44,10 @@
 				<div class="col-md-10">
 					<div class="inbox-header">
 						<h1 class="pull-left">Entrada</h1>
-						<form class="form-inline pull-right" action="" method="post">
+						<form id="search-form" class="form-inline pull-right" action="" method="post">
 							<div class="input-group input-medium">
-								<input type="text" class="form-control" placeholder="Búsqueda">
+								<input id="search-type" type="hidden" name="type" value="inbox">
+								<input type="text" name="q" class="form-control" placeholder="Búsqueda">
 								<span class="input-group-btn">
 								<button type="submit" class="btn green"><i class="fa fa-search"></i></button>
 								</span>

@@ -92,7 +92,7 @@
 											<div>Imagen Principal</div>
 											<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="{{Course::DEFAULT_MAIN_IMAGE}}" alt=""/>
+												<img src="{{Course::DEFAULT_MAIN_PICTURE}}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -112,7 +112,7 @@
 											<div>Imagen de Portada</div>
 											<div class="fileinput-new thumbnail" style="width: 200px; height: 50px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="{{Course::DEFAULT_COVER_IMAGE}}" alt=""/>
+												<img src="{{Course::DEFAULT_COVER_PICTURE}}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>
@@ -132,7 +132,7 @@
 											<div>Imagen Miniatura</div>
 											<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
 												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-												<img src="{{Course::DEFAULT_THUMBNAIL_IMAGE}}" alt=""/>
+												<img src="{{Course::DEFAULT_THUMBNAIL_PICTURE}}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
 											</div>

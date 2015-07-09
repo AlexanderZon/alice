@@ -17,7 +17,7 @@ class CreateFollowsTable extends Migration {
 			$table->increments('id');
 			$table->integer('follower_id');
 			$table->integer('followed_id');
-			$table->string('status');
+			$table->enum('sex', array('active', 'block', 'inactive'))->default('active');
 			$table->timestamps();
 			$table->softDeletes();
 		});

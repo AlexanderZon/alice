@@ -7,13 +7,14 @@
 	</div>
 </div>
 <div class="inbox-view-info">
+	<?php $from = $message->from; ?>
 	<div class="row">
-		<div class="col-md-7">
-			<img src="{{'/assets/admin/layout4/img/avatar1_small.jpg'}}">
+		<div class="col-md-9">
+			<img class="img-circle" src="{{ $from->profile->getAvatar() }}" style="width:28px">
 			<span class="bold">
-			{{ $message->from->first_name }} {{ $message->from->last_name }} </span>
+			{{ $from->first_name }} {{ $from->last_name }} </span>
 			<span>
-			&#60;{{ $message->from->email }}&#62; </span>
+			&#60;{{ $from->email }}&#62; </span>
 			para <span class="bold">
 			@foreach($message->to as $user)
 				@if(Auth::user()->id == $user->id) 
@@ -28,7 +29,7 @@
 			</spam> 
 				 <!--- '08:20PM 29 JAN 2013' -->
 		</div>
-		<div class="col-md-5 inbox-info-btn">
+		<div class="col-md-3 inbox-info-btn">
 			<div class="btn-group">
 				<button data-messageid="{{ Crypt::encrypt($message->id) }}" class="btn blue reply-btn">
 					<i class="fa fa-reply"></i> Responder 

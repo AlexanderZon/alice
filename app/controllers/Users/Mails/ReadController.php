@@ -33,7 +33,7 @@ class ReadController extends \BaseController {
 
 		self::$route = '/messages';
 
-		self::$name = 'messages';
+		self::$name = 'users_mails';
 
 		self::$title = 'Correo';
 
@@ -77,6 +77,12 @@ class ReadController extends \BaseController {
 		if(Input::get('action') == 'send'):
 
 			$to = array();
+
+			if(Input::get('profile') != ''):
+
+				$to[] = Crypt::decrypt(Input::get('profile'));
+
+			endif;
 
 			if(count(Input::get('to')) > 0):
 				foreach(Input::get('to') as $user):
@@ -196,6 +202,9 @@ class ReadController extends \BaseController {
 		$message->author_id = Auth::user()->id;
 		$message->save();
 
+
+		self::addArgument('profile', Input::get('profile'));
+
 		self::addArgument('token', Crypt::encrypt($message->id));
 
 		self::addArgument('tousers', User::all());
@@ -255,7 +264,179 @@ class ReadController extends \BaseController {
 
 	public function getSearch(){
 
-		return self::make('search');
+		$q = Input::get('q');
+
+		$type = Input::get('type');
+
+		self::addArgument('type', $type);
+		self::addArgument('q', $q);
+
+		$matches = array();
+		
+		$perPage = 5;
+
+		$currentPage = Input::get('page') != null ? Input::get('page') - 1 : 0;
+
+		if($q != ''):
+
+			switch(Input::get('type')){
+
+				case 'inbox':
+
+					$users = User::search($q);
+
+					$quest = Auth::user()->inbox($q);
+
+					if(count($users) > 0):
+
+						$messages = Auth::user()->inbox()->get();
+
+						foreach($messages as $message):
+
+							foreach($users as $user):
+
+								if($message->author_id == $user->id):
+
+									$bool = false;
+
+									foreach($quest as $element):
+										if($element->id == $message->id) $bool = true;
+									endforeach;
+
+									if(!$bool) $quest[] = $message;
+
+								endif;
+
+							endforeach;
+
+						endforeach;
+
+					endif;
+
+					break;
+
+				case 'outbox':
+
+					$users = User::search($q);
+
+					$quest = Auth::user()->outbox($q);
+
+					if(count($users) > 0):
+
+						$messages = Auth::user()->outbox()->get();
+
+						foreach($messages as $message):
+
+							foreach($message->to as $destinatary):
+
+								foreach($users as $user):
+
+									if($destinatary->id == $user->id):
+
+										$bool = false;
+
+										foreach($quest as $element):
+											if($element->id == $message->id) $bool = true;
+										endforeach;
+
+										if(!$bool) $quest[] = $message;
+
+									endif;
+
+								endforeach;
+
+							endforeach;
+
+						endforeach;
+
+					endif;
+
+					break;
+				case 'draft':
+
+					$users = User::search($q);
+
+					$quest = Auth::user()->draftbox($q);
+
+					if(count($users) > 0):
+
+						$messages = Auth::user()->outbox()->get();
+
+						foreach($messages as $message):
+
+							foreach($message->to as $destinatary):
+
+								foreach($users as $user):
+
+									if($destinatary->id == $user->id):
+
+										$bool = false;
+
+										foreach($quest as $element):
+											if($element->id == $message->id) $bool = true;
+										endforeach;
+
+										if(!$bool) $quest[] = $message;
+
+									endif;
+
+								endforeach;
+
+							endforeach;
+
+						endforeach;
+
+					endif;
+
+					break;
+				case 'trash':
+
+					$users = User::search($q);
+
+					$quest = Auth::user()->trashbox($q);
+
+					if(count($users) > 0):
+
+						$messages = Auth::user()->inbox()->get();
+
+						foreach($messages as $message):
+
+							foreach($users as $user):
+
+								if($message->author_id == $user->id):
+
+									$bool = false;
+
+									foreach($quest as $element):
+										if($element->id == $message->id) $bool = true;
+									endforeach;
+
+									if(!$bool) $quest[] = $message;
+
+								endif;
+
+							endforeach;
+
+						endforeach;
+
+					endif;
+
+					break;
+			}
+
+			foreach($quest as $element):
+				$matches[] = $element;
+			endforeach;
+
+		endif;
+
+		$pagedData = array_slice($matches, $currentPage * $perPage, $perPage);
+
+		$matches = \Paginator::make($pagedData, count($matches), $perPage);
+
+		self::addArgument('matches', $matches);
+
+		return self::make('search-'.$type);
 
 	}
 
@@ -529,7 +710,7 @@ class ReadController extends \BaseController {
 
 	}
 
-	public function getDeleteformbox(){
+	public function getDeletefrombox(){
 
 		foreach (Input::get('messages') as $message_id):
 			$message = Message::find(Crypt::decrypt($message_id));
