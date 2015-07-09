@@ -2,7 +2,6 @@
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link href="/assets/admin/pages/css/follows.css" rel="stylesheet" type="text/css"/>
 <link href="/assets/admin/pages/css/news.css" rel="stylesheet" type="text/css"/>
-<link href="/assets/global/css/components-material.css" rel="stylesheet" type="text/css"/>
 
 
 <div class="row">
@@ -28,9 +27,9 @@
 					<div class="row">&nbsp;</div>
 					<div class="portlet-body form discussions" data-course="{{ Hashids::encode($course->id) }}">
 						<div class="col-md-12 news-page">
-							<h3 style="margin-top:0">Más Populares</h3>
+							<!-- <h3 style="margin-top:0">Más Populares</h3> -->
 							<div class="row">
-								<?php $separator = (int) $discussions->count()/3; ?>
+								<?php $separator = ((int)($discussions->count()/3)) + ($discussions->count()%3 > 0 ? 1 : 0); ?>
 								<?php $col = 5; ?>
 								@if($discussions->count() == 0)
 									<div class="col-md-12">
@@ -112,14 +111,15 @@
 									</div>
 								@endif
 								@if($discussions->count() >= 3)
-									@for($i = 0; $i < $discussions->count(); $i++)
-										@if($i%$separator == 0)
+									@for($i = 0, $rows = $separator; $i < $discussions->count(); $i++)
+										@if($rows - $separator == 0)
+											<?php $rows = 0; ?>
 											<div class="col-md-{{ $col }}">
 										@endif
 										@if($discussions[$i]->status == 'active')
 											<div class="news-blocks discussion-block" data-discussion="{{ Hashids::encode($discussions[$i]->id)}}">
 												<h3>
-													<a href="javascript:;" class="discission-comments">
+													<a href="javascript:;" class="discussion-comments">
 														{{ $discussions[$i]->title}}
 													</a>
 												</h3>
@@ -130,7 +130,7 @@
 												</div>
 												<p>
 													<img class="news-block-img pull-right" src="{{ $discussions[$i]->getAvatar() }}" alt="">
-													{{ $discussions[$i]->getSummary(250) }}
+													{{ $discussions[$i]->getSummary(300 - ((6-$col)*50)) }}
 												</p>
 												<a href="javascript:;" class="news-block-btn discussion-edit">
 													Gestionar <i class="m-icon-swapright m-icon-black"></i>
@@ -149,7 +149,8 @@
 												</a>
 											</div>
 										@endif
-										@if($i%$separator == 0)
+										<?php $rows++; ?>
+										@if($rows - $separator == 0)
 											</div>
 											<?php $col--; ?>
 										@endif

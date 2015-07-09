@@ -1149,6 +1149,7 @@
 		    	var discussion = el.parents('.discussion-block').data('discussion');
 
 		    	if( typeof discussion == 'undefined') discussion = el.parents('.top-news').data('discussion');
+		    	if( typeof discussion == 'undefined') discussion = el.parents('.discussions').data('discussion');
 
 		        loading.show();
 		        content.html(loader);
@@ -1177,9 +1178,10 @@
 
 		    var discussionsDelete = function(el){
 
-		    	var course = el.parents('.timeline').data('course');
+		    	var course = el.parents('.portlet').data('course');
+		    	var discussion = el.parents('.portlet').data('discussion');
 
-		    	if( typeof discussion == 'undefined') discussion = el.parents('.timeline-grey-silver').data('discussion');
+		    	// if( typeof discussion == 'undefined') discussion = el.parents('.portlet-grey-silver').data('discussion');
 
 		        loading.show();
 		        content.html(loader);
@@ -1197,7 +1199,40 @@
 				        content.html(html);
 		                Metronic.init();
 		    			// console.log(html);
-		    			console.log('Edit Discussion');
+		    			console.log('Delete Discussion');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var discussionsComments = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+		    	var discussion = el.parents('.portlet').data('discussion');
+
+		    	if( typeof discussion == 'undefined') discussion = el.parents('.discussion-block').data('discussion');
+
+		        loading.show();
+		        content.html(loader);
+		        console.log(discussion);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/discussions/comments',
+		    		type: 'GET',
+		    		data: {
+		    			discussion_id: discussion,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Delete Discussion');
 		    		},
 		    		error: function(xhr) {
 		    			console.log(xhr);
@@ -1469,6 +1504,11 @@
 		            // handle delete discussion button click
 		            $('.profile').on('click', '.discussion-delete', function (e) {
 		                discussionsDelete($(this));
+		            });
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.discussion-comments', function (e) {
+		                discussionsComments($(this));
 		            });
 
 		            //handle loading content based on URL parameter

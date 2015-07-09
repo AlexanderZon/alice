@@ -109,7 +109,13 @@ class Course extends \Eloquent {
 
     public function discussions(){
 
-    	return $this->morphMany('Discussion','discussionable');
+        return $this->morphMany('Discussion','discussionable');
+
+    }
+
+    public function recentdiscussions(){
+
+    	return $this->morphMany('Discussion','discussionable')->orderBy('created_at', 'DESC');
 
     }
 
