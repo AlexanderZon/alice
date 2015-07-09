@@ -213,7 +213,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
-		                // toggleButton(el);
+		                console.log(xhr);
 		            },
 		            async: true
 		        });
@@ -320,6 +320,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                // toggleButton(el);
 		            },
 		            async: true
@@ -531,7 +532,7 @@
 			        async: true,
 			        success: function (html) {
 			        	content.html(html);
-			        	console.log(html);
+			        	// console.log(html);
 		                Metronic.init();
 			            console.log('Ajax Form Sent!');
 			        },
@@ -1116,6 +1117,95 @@
 
 		    }
 
+		    var discussionsAdd = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/discussions/add',
+		    		type: 'GET',
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Add Discussion');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var discussionsEdit = function(el){
+
+		    	var course = el.parents('.discussions').data('course');
+		    	var discussion = el.parents('.discussion-block').data('discussion');
+
+		    	if( typeof discussion == 'undefined') discussion = el.parents('.top-news').data('discussion');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/discussions/edit',
+		    		type: 'GET',
+		    		data: {
+		    			discussion_id: discussion,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Edit Discussion');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var discussionsDelete = function(el){
+
+		    	var course = el.parents('.timeline').data('course');
+
+		    	if( typeof discussion == 'undefined') discussion = el.parents('.timeline-grey-silver').data('discussion');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/discussions/delete',
+		    		type: 'GET',
+		    		data: {
+		    			discussion_id: discussion,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Edit Discussion');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1232,6 +1322,36 @@
 		                backWall($(this), 'statistics');
 		            });
 
+		            // handle inscriptions button click
+		            $('.profile').on('click', '.inscriptions-btn', function (e) {
+		                loadWall($(this), 'inscriptions');
+		            });
+
+		            // handle inscriptions button click
+		            $('.profile').on('click', '.inscriptions-back-btn', function (e) {
+		                backWall($(this), 'inscriptions');
+		            });
+
+		            // handle questions button click
+		            $('.profile').on('click', '.questions-btn', function (e) {
+		                loadWall($(this), 'questions');
+		            });
+
+		            // handle questions button click
+		            $('.profile').on('click', '.questions-back-btn', function (e) {
+		                backWall($(this), 'questions');
+		            });
+
+		            // handle activities button click
+		            $('.profile').on('click', '.activities-btn', function (e) {
+		                loadWall($(this), 'activities');
+		            });
+
+		            // handle activities button click
+		            $('.profile').on('click', '.activities-back-btn', function (e) {
+		                backWall($(this), 'activities');
+		            });
+
 		            // handle followers button click
 		            $('.profile').on('click', '.followers-btn', function (e) {
 		                loadWall($(this), 'followers');
@@ -1332,6 +1452,23 @@
 		            // handle order lesson button click
 		            $('.profile').on('click', '.lesson-students', function (e) {
 		                lessonsLessonStudents($(this));
+		            });
+
+		            /* Discussions Events */
+
+		            // handle add discussion button click
+		            $('.profile').on('click', '.discussion-add', function (e) {
+		                discussionsAdd($(this));
+		            });
+
+		            // handle edit discussion button click
+		            $('.profile').on('click', '.discussion-edit', function (e) {
+		                discussionsEdit($(this));
+		            });
+
+		            // handle delete discussion button click
+		            $('.profile').on('click', '.discussion-delete', function (e) {
+		                discussionsDelete($(this));
 		            });
 
 		            //handle loading content based on URL parameter

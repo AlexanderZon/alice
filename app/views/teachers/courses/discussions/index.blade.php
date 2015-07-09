@@ -2,13 +2,14 @@
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link href="/assets/admin/pages/css/follows.css" rel="stylesheet" type="text/css"/>
 <link href="/assets/admin/pages/css/news.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/global/css/components-material.css" rel="stylesheet" type="text/css"/>
 
 
 <div class="row">
 	<div class="col-md-12">
 		<!-- BEGIN PORTLET -->
 
-		<div class="portlet light">
+		<div class="portlet light" data-course="{{ Hashids::encode($course->id) }}">
 			<!-- STAT -->
 			<!-- <div class="row list-separated profile-stat">
 				<img class="col-md-12" src="{{ Auth::user()->profile->getCover() }}"/>
@@ -18,8 +19,8 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="portlet-title">
 						<h4 class="profile-usertitle-name">Discusiones sobre {{ $course->title }} ({{ $discussions->count() }})
-							<a href="javascript:;" class="btn blue-madison pull-right tooltips discussions-add-btn" data-placement="left" data-original-title="Añadir una Nueva DiscusiónRea">
-								<i class="fa fa-arrow-left"></i>
+							<a href="javascript:;" class="btn blue-madison pull-right tooltips discussion-add" data-placement="left" data-original-title="Añadir una Nueva Discusión">
+								<i class="fa fa-plus"></i>
 							</a>
 						</h4>
 					</div>
@@ -27,8 +28,135 @@
 					<div class="row">&nbsp;</div>
 					<div class="portlet-body form discussions" data-course="{{ Hashids::encode($course->id) }}">
 						<div class="col-md-12 news-page">
-							<h1 style="margin-top:0">Más Populares</h1>
+							<h3 style="margin-top:0">Más Populares</h3>
 							<div class="row">
+								<?php $separator = (int) $discussions->count()/3; ?>
+								<?php $col = 5; ?>
+								@if($discussions->count() == 0)
+									<div class="col-md-12">
+										Todavia no Existen Discusiones para este Curso, te invitamos a crear nuevas discusiones o invita a otros profesores a colaborar con este curso.
+									</div>
+								@endif
+								@if($discussions->count() >= 1 && $discussions->count() <= 2)
+									<div class="col-md-5">
+										@if($discussions[0]->status == 'active')
+											<div class="news-blocks discussion-block" data-discussion="{{Hashids::encode($discussions[0]->id)}}">
+												<h3>
+													<a href="javascript:;" class="discussion-comments">
+														{{ $discussions[0]->title}}
+													</a>
+												</h3>
+												<div class="news-block-tags">
+													<strong>{{ $discussions[0]->author->display_name}}</strong>
+													<strong><i class="fa fa-comments-o"></i> {{ $discussions[0]->children->count() }}</strong>
+													<em class="moment-fromnow">{{ $discussions[0]->created_at }}</em>
+												</div>
+												<p>
+													<img class="news-block-img pull-right" src="{{ $discussions[0]->getAvatar() }}" alt="">
+													{{ $discussions[0]->getSummary(250) }}
+												</p>
+												<a href="javascript:;" class="news-block-btn discussion-edit" >
+													Gestionar <i class="m-icon-swapright m-icon-black"></i>
+												</a>
+											</div>
+										@else
+											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[0]->id)}}">
+												<a href="javascript:;" class="btn grey-silver discussion-edit">
+												<span>{{ $discussions[0]->title }}</span>
+												<em class="moment-fromnow">{{ $discussions[0]->created_at }}</em>
+												<em>
+													<i class="fa fa-user"></i>
+													{{ $discussions[0]->author->display_name}}
+												</em>
+												<i class="fa fa-comments-o top-news-icon"></i>
+												</a>
+											</div>
+										@endif
+									</div>
+								@endif
+								@if($discussions->count() == 2)
+									<div class="col-md-4">
+										@if($discussions[1]->status == 'active')
+											<div class="news-blocks discussion-block" data-discussion="{{Hashids::encode($discussions[1]->id)}}">
+												<h3>
+													<a href="javascript:;" class="discussion-comments">
+														{{ $discussions[1]->title}}
+													</a>
+												</h3>
+												<div class="news-block-tags">
+													<strong>{{ $discussions[1]->author->display_name}}</strong>
+													<strong><i class="fa fa-comments-o"></i> {{ $discussions[1]->children->count() }}</strong>
+													<em class="moment-fromnow">{{ $discussions[1]->created_at }}</em>
+												</div>
+												<p>
+													<img class="news-block-img pull-right" src="{{ $discussions[1]->getAvatar() }}" alt="">
+													{{ $discussions[1]->getSummary(200) }}
+												</p>
+												<a href="javascript:;" class="news-block-btn discussion-edit">
+													Gestionar <i class="m-icon-swapright m-icon-black"></i>
+												</a>
+											</div>
+										@else
+											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[1]->id)}}">
+												<a href="javascript:;" class="btn grey-silver discussion-edit">
+												<span>{{ $discussions[1]->title }}</span>
+												<em class="moment-fromnow">{{ $discussions[1]->created_at }}</em>
+												<em>
+													<i class="fa fa-user"></i>
+													{{ $discussions[1]->author->display_name}}
+												</em>
+												<i class="fa fa-comments-o top-news-icon"></i>
+												</a>
+											</div>
+										@endif
+									</div>
+								@endif
+								@if($discussions->count() >= 3)
+									@for($i = 0; $i < $discussions->count(); $i++)
+										@if($i%$separator == 0)
+											<div class="col-md-{{ $col }}">
+										@endif
+										@if($discussions[$i]->status == 'active')
+											<div class="news-blocks discussion-block" data-discussion="{{ Hashids::encode($discussions[$i]->id)}}">
+												<h3>
+													<a href="javascript:;" class="discission-comments">
+														{{ $discussions[$i]->title}}
+													</a>
+												</h3>
+												<div class="news-block-tags">
+													<strong>{{ $discussions[$i]->author->display_name}}</strong>
+													<strong><i class="fa fa-comments-o"></i> {{ $discussions[$i]->children->count() }}</strong>
+													<em class="moment-fromnow">{{ $discussions[$i]->created_at }}</em>
+												</div>
+												<p>
+													<img class="news-block-img pull-right" src="{{ $discussions[$i]->getAvatar() }}" alt="">
+													{{ $discussions[$i]->getSummary(250) }}
+												</p>
+												<a href="javascript:;" class="news-block-btn discussion-edit">
+													Gestionar <i class="m-icon-swapright m-icon-black"></i>
+												</a>
+											</div>
+										@else
+											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[$i]->id)}}">
+												<a href="javascript:;" class="btn grey-silver discussion-edit">
+												<span>{{ $discussions[$i]->title }}</span>
+												<em class="moment-fromnow">{{ $discussions[$i]->created_at }}</em>
+												<em>
+													<i class="fa fa-user"></i>
+													{{ $discussions[$i]->author->display_name}}
+												</em>
+												<i class="fa fa-comments-o top-news-icon"></i>
+												</a>
+											</div>
+										@endif
+										@if($i%$separator == 0)
+											</div>
+											<?php $col--; ?>
+										@endif
+									@endfor
+								@endif
+							</div>
+							<!-- <div class="row">
 								<div class="col-md-5">
 									<div class="news-blocks">
 										<h3>
@@ -95,7 +223,7 @@
 										</a>
 									</div>
 								</div>
-								<!--end col-md-5-->
+								END col-md-5
 								<div class="col-md-4">
 									<div class="news-blocks">
 										<h3>
@@ -162,7 +290,7 @@
 										</a>
 									</div>
 								</div>
-								<!--end col-md-4-->
+								END col-md-4
 								<div class="col-md-3">
 									<div class="news-blocks">
 										<h3>
@@ -213,7 +341,7 @@
 										</a>
 									</div>
 								</div>
-								<!--end col-md-3-->
+								END col-md-3
 							</div>
 							<div class="space20">
 							</div>
@@ -253,7 +381,7 @@
 										</a>
 									</div>
 								</div>
-								<!--end col-md-3-->
+								END col-md-3
 								<div class="col-md-3">
 									<div class="news-blocks">
 										<h3>
@@ -288,7 +416,7 @@
 										</a>
 									</div>
 								</div>
-								<!--end col-md-3-->
+								END col-md-3
 								<div class="col-md-6">
 									<div class="row">
 										<div class="col-md-12">
@@ -349,7 +477,7 @@
 										</div>
 									</div>
 								</div>
-								<!--end col-md-6-->
+								END col-md-6
 							</div>
 							<div class="space20">
 							</div>
@@ -461,7 +589,7 @@
 										</a>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>

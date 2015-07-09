@@ -15,6 +15,21 @@ class Discussion extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    protected $defaults_avatar_url = '/uploads/discussions/defaults/';
+
+    protected $defaults_avatar_colors = [
+        'blue',
+        'brown',
+        'green',
+        'orange',
+        'pink',
+        'purple'
+    ];
+
+    protected static $upload_folder = '/uploads/courses/';
+
+    protected static $slug_counter = 0;
+
     public function discussionable(){
 
     	return $this->morphTo();
@@ -185,6 +200,26 @@ class Discussion extends \Eloquent {
 
     }
 
+    public function getAvatar(){
+
+        $character = substr($this->title, 0, 1);
+
+        $color = rand(0, count($this->defaults_avatar_colors)-1);
+
+        return File::exists(public_path().$this->defaults_avatar_url.$character.'_'.$this->defaults_avatar_colors[$color].'.png') ? $this->defaults_avatar_url.$character.'_'.$this->defaults_avatar_colors[$color].'.png' : $this->defaults_avatar_url.'x_'.$this->defaults_avatar_colors[$color].'.png';
+
+    }
+
+    public function getSummary( $length = 500 ){
+
+        $text = html_entity_decode(strip_tags( $this->content ));
+
+        if(strlen($text) > $length) return substr($text, 0, $length).'...';
+
+        return $text;
+
+    }
+
     public static function _get( $type = 'Course', $status = 'active' ){
 
         $discussions = self::where( 'discussionable_type', '=', $type );
@@ -240,6 +275,48 @@ class Discussion extends \Eloquent {
     public static function inactivesFromLessons(){
 
         return self::fromLessons('inactive');
+
+    }
+
+    public static function findPermalinkCounter( $name ){
+
+        $slug = $name.'-'.(++self::$slug_counter);
+
+        if( count(self::where('name', '=', $slug)->get()) > 0 ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $slug;
+
+        endif;
+
+    }
+
+    public static function setPermalink( $title ){
+
+        $name = Str::slug( $title );
+
+        if( $counter = count(self::where('name', '=', $name)->get()) ):
+
+            return self::findPermalinkCounter( $name );
+
+        else:
+
+            return $name;
+
+        endif;
+
+    }
+
+    public static function makeFullDirectory( $course_name, $name ){
+
+        $path = public_path().self::$upload_folder.$course_name.'/discussions/'.$name;
+
+        File::makeDirectory($path, $mode = 0755, true, true);
+
+        return $path;
 
     }
 

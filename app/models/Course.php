@@ -17,7 +17,7 @@ class Course extends \Eloquent {
 
     protected static $slug_counter = 0;
 
-    protected static $upload_folder = '/uploads/courses/';
+    public static $upload_folder = '/uploads/courses/';
 
     const DEFAULT_MAIN_PICTURE = '/uploads/courses/defaults/200x200.gif';
 
