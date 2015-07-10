@@ -3,11 +3,12 @@
 use \Course as Course;
 use \Discussion as Discussion;
 use \DiscussionKarma as DiscussionKarma;
-use \Attachments as Attachments;
+use \Attachment as Attachment;
 use \User as User;
 use \Auth as Auth;
 use \Input as Input;
 use \Response as Response;
+use \GUID as GUID;
 use \Hash as Hash;
 use \Hashids as Hashids;
 

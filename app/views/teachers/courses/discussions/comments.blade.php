@@ -66,7 +66,7 @@
 								</a>
 							</h4>
 						</div>
-						<div class="portlet-body form discussions" data-discussion="{{ Hashids::encode($discussion->id) }}" data-course="{{ Hashids::encode($course->id) }}">
+						<div class="portlet-body form" data-discussion="{{ Hashids::encode($discussion->id) }}" data-course="{{ Hashids::encode($course->id) }}">
 							<!-- BEGIN FORM-->
 							<?php $discussion_user = $discussion->author; ?>
 							<?php $attachments = $discussion->attachments; ?>
@@ -195,7 +195,7 @@
 																	<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment"></textarea>
 																</div>
 																<div class="reply-submit-btn">
-																	<button type="button" class="pull-right btn btn-sm btn-circle green-haze comment-form-btn"> &nbsp; Responder &nbsp; </button>
+																	<a href="javascript:;" class="pull-right btn btn-sm btn-circle green-haze comment-form-btn"> &nbsp; Responder &nbsp; </a>
 																	<span class="pull-right"> &nbsp; </span>
 																	<div class="pull-right fileinput fileinput-new" data-provides="fileinput">
 																		<span class="btn default btn-file btn-sm btn-circle green-haze">
