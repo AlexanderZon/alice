@@ -19,11 +19,11 @@ class Course extends \Eloquent {
 
     public static $upload_folder = '/uploads/courses/';
 
-    const DEFAULT_MAIN_IMAGE = '/uploads/courses/defaults/200x200.gif';
+    const DEFAULT_MAIN_PICTURE = '/uploads/courses/defaults/200x200.gif';
 
-    const DEFAULT_COVER_IMAGE = '/uploads/courses/defaults/1000x200.gif';
+    const DEFAULT_COVER_PICTURE = '/uploads/courses/defaults/1000x200.gif';
 
-    const DEFAULT_THUMBNAIL_IMAGE = '/uploads/courses/defaults/100x100.gif';
+    const DEFAULT_THUMBNAIL_PICTURE = '/uploads/courses/defaults/100x100.gif';
 
     const DEFAULT_ALL_COURSES_ROUTE = '/cursos';
 
