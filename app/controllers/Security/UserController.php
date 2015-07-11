@@ -121,7 +121,7 @@ class UserController extends ReadController {
 
 		if( !User::isValidUsername(Input::get('username')) ):
 
-			self::setWarning('security_user_username_err', 'Error al agregar estudiante', 'El nombre de usuario ' . Input::get('username') . ' no es Válido, por favor ingrese uno diferente');
+			self::setWarning('security_user_username_err', 'Error al agregar usuario', 'El nombre de usuario ' . Input::get('username') . ' no es Válido, por favor ingrese uno diferente');
 
 			return self::go( 'create' );
 

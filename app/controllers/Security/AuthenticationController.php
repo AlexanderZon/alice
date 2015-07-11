@@ -133,6 +133,86 @@ class AuthenticationController extends ReadController {
 		return self::go( 'login' );
 	}
 
+	public function getSignup(){
+
+		dd(Input::all());
+
+		if( !User::isValidUsername(Input::get('username')) ):
+
+			self::setWarning('security_user_username_err', 'Error al agregar usuario', 'El nombre de usuario ' . Input::get('username') . ' no es Válido, por favor ingrese uno diferente');
+
+			return self::go( 'login' );
+
+		elseif( User::hasUsername(Input::get('username')) ):
+
+			self::setWarning('security_user_username_err', 'Error al agregar usuario', 'El usuario ' . Input::get('username') . ' ya existe, por favor ingrese uno diferente');
+
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'login' );
+
+		elseif( User::hasEmail(Input::get('email')) ):
+
+			self::setWarning('security_user_email_err', 'Error al agregar usuario', 'El correo ' . Input::get('email') . ' ya existe, por favor ingrese uno diferente');
+
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'login' );
+
+		elseif( strlen(Input::get('password')) < 6 ):
+
+			self::setWarning('security_user_password_err', 'Error al agregar usuario', 'La contraseña debe contener más de 5 caracteres');
+		
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'login' );
+
+		elseif( Input::get('password') != Input::get('rpassword')):
+
+			self::setWarning('security_user_password_err', 'Error al agregar usuario', 'Las contraseñas deben ser iguales');
+
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'login' );
+
+		else:
+
+			$user = new User();
+			$user->first_name = Input::get('first_name');
+			$user->last_name = Input::get('last_name');
+			$user->username = Input::get('username');
+			$user->display_name = Input::get('display_name') != '' ? Input::get('display_name') : Input::get('first_name').' '.Input::get('last_name');
+			$user->email = Input::get('email');
+			$user->password = Hash::make(Input::get('password'));
+			$user->role_id = 'student';
+			$user->status = 'inactive';
+			
+			if( $user->save() ):
+
+				$profile = new UserProfile();
+				$profile->user_id = $user->id;
+				$profile->save();
+	
+				self::setSuccess('security_user_create', 'Usuario Agregado', 'El usuario ' . $user->display_name . ' fue agregado exitósamente');
+
+				// Audits::add(Auth::user(), $args['msg_success'], 'CREATE');
+
+				return self::go( 'index' );
+
+			else:
+
+				self::setDanger('security_user_create_err', 'Error al agregar usuario', 'Hubo un error al agregar el usuario ' . $user->display_name);
+
+				// Audits::add(Auth::user(), $args['msg_danger'], 'CREATE');
+
+				return self::go( 'login' );
+
+			endif;
+
+		endif;
+
+	}
+
 	private static function session(){
 
 		if( Auth::check() ):

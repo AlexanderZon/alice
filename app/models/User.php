@@ -142,6 +142,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
+	public function learning(){
+
+		return $this->inscriptions->where('inscriptions.status','=','active');
+
+	}
+
+	public function learned(){
+
+		return $this->inscriptions->where('inscriptions.status','=','used');
+
+	}
+
 	public function myCourses(){
 
 		return $this->belongsToMany('Course','inscriptions')->where('status','=','active')->get();
@@ -209,6 +221,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function discussions(){
 
 		return $this->hasMany('Discussion','user_id');
+
+	}
+
+
+	public function discussionsfromcourses(){
+
+		return $this->hasMany('Discussion','user_id')->where('discussions.discussionable_type','=','Course');
 
 	}
 
@@ -473,11 +492,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 		else:
 
-			$user = self::where('username', '=', $username )->take(1)->get();
+			$user = self::where('username', '=', $username )->first();
 
 		endif;
 
-		if(empty($user[0])):
+		if($user != null):
 			return false;
 		else:
 			return true;

@@ -458,7 +458,7 @@
 							</a>
 							<ul class="dropdown-menu dropdown-menu-default">
 								<li>
-									<a href="/profile">
+									<a href="/{{ Auth::user()->username }}">
 									<i class="icon-user"></i> Mi Perfil </a>
 								</li>
 								<li>

@@ -32,529 +32,136 @@
 					<div class="col-md-12 news-page">
 						<h4 class="profile-desc-title">Discusiones</h4>
 
-						<div class="row">
-							<div class="col-md-5">
-								<div id="myCarousel" class="carousel image-carousel slide">
-									<div class="carousel-inner">
-										<div class="active item">
-											<img src="../../assets/admin/pages/media/gallery/image5.jpg" class="img-responsive" alt="">
-											<div class="carousel-caption">
-												<h4>
-												<a href="page_news_item.html">
-												First Thumbnail label </a>
-												</h4>
-												<p>
-													 Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-												</p>
-											</div>
-										</div>
-										<div class="item">
-											<img src="../../assets/admin/pages/media/gallery/image2.jpg" class="img-responsive" alt="">
-											<div class="carousel-caption">
-												<h4>
-												<a href="page_news_item.html">
-												Second Thumbnail label </a>
-												</h4>
-												<p>
-													 Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-												</p>
-											</div>
-										</div>
-										<div class="item">
-											<img src="../../assets/admin/pages/media/gallery/image1.jpg" class="img-responsive" alt="">
-											<div class="carousel-caption">
-												<h4>
-												<a href="page_news_item.html">
-												Third Thumbnail label </a>
-												</h4>
-												<p>
-													 Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-												</p>
-											</div>
-										</div>
-									</div>
-									<!-- Carousel nav -->
-									<a class="carousel-control left" href="#myCarousel" data-slide="prev">
-									<i class="m-icon-big-swapleft m-icon-white"></i>
-									</a>
-									<a class="carousel-control right" href="#myCarousel" data-slide="next">
-									<i class="m-icon-big-swapright m-icon-white"></i>
-									</a>
-									<ol class="carousel-indicators">
-										<li data-target="#myCarousel" data-slide-to="0" class="active">
-										</li>
-										<li data-target="#myCarousel" data-slide-to="1">
-										</li>
-										<li data-target="#myCarousel" data-slide-to="2">
-										</li>
-									</ol>
-								</div>
-								<div class="top-news margin-top-10">
-									<a href="javascript:;" class="btn blue">
-									<span>
-									Featured News </span>
-									<em>
-									<i class="fa fa-tags"></i>
-									USA, Business, Apple </em>
-									<i class="fa fa- icon-bullhorn top-news-icon"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Google Glass Technology.. </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>CA, USA</strong>
-										<em>3 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image1.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Sint occaecati cupiditat </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>London, UK</strong>
-										<em>7 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image4.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Accusamus et iusto odio </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>CA, USA</strong>
-										<em>3 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image5.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-							</div>
-							<!--end col-md-5-->
-							<div class="col-md-4">
-								<div class="top-news">
-									<a href="javascript:;" class="btn red">
-									<span>
-									World News </span>
-									<em>
-									<i class="fa fa-tags"></i>
-									UK, Canada, Asia </em>
-									<i class="fa fa-globe top-news-icon"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Odio dignissimos ducimus </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>Berlin, Germany</strong>
-										<em>2 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image3.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Sanditiis praesentium vo </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>Ankara, Turkey</strong>
-										<em>5 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image5.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint praesentium voluptatum delenitioccaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-								<div class="top-news">
-									<a href="javascript:;" class="btn green">
-									<span>
-									Finance </span>
-									<em>
-									<i class="fa fa-tags"></i>
-									Money, Business, Google </em>
-									<i class="fa fa-briefcase top-news-icon"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Odio dignissimos ducimus </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>Berlin, Germany</strong>
-										<em>2 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image3.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Sanditiis praesentium vo </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>Ankara, Turkey</strong>
-										<em>5 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image5.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint praesentium voluptatum delenitioccaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-							</div>
-							<!--end col-md-4-->
-							<div class="col-md-3">
-								<div class="top-news">
-									<a href="javascript:;" class="btn purple">
-									<span>
-									Science </span>
-									<em>
-									<i class="fa fa-tags"></i>
-									Hi-Tech, Medicine, Space </em>
-									<i class="fa fa-beaker top-news-icon"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Vero eos et accusam </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>CA, USA</strong>
-										<em>3 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image2.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Sias excepturi sint occae </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>Vancouver, Canada</strong>
-										<em>3 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image4.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-								<div class="top-news">
-									<a href="javascript:;" class="btn yellow">
-									<span>
-									Sport </span>
-									<em>
-									<i class="fa fa-tags"></i>
-									Football, Swimming, Tennis </em>
-									<i class="fa fa-trophy top-news-icon"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Vero eos et accusam </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>CA, USA</strong>
-										<em>3 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image2.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-							</div>
-							<!--end col-md-3-->
-						</div>
-						<div class="space20">
-						</div>
-						<h3>News Option</h3>
-						<div class="row">
-							<div class="col-md-3">
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Google Glass Technology.. </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>LA, USA</strong>
-										<em>2 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image5.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Google Glass Technology.. </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>Berlin, Germany</strong>
-										<em>6 hours ago</em>
-									</div>
-									<p>
-										 At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-							</div>
-							<!--end col-md-3-->
-							<div class="col-md-3">
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Google Glass Technology.. </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>CA, USA</strong>
-										<em>3 hours ago</em>
-									</div>
-									<p>
-										<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image3.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-								<div class="news-blocks">
-									<h3>
-									<a href="page_news_item.html">
-									Google Glass Technology.. </a>
-									</h3>
-									<div class="news-block-tags">
-										<strong>CA, USA</strong>
-										<em>3 hours ago</em>
-									</div>
-									<p>
-										 At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-									</p>
-									<a href="page_news_item.html" class="news-block-btn">
-									Read more <i class="m-icon-swapright m-icon-black"></i>
-									</a>
-								</div>
-							</div>
-							<!--end col-md-3-->
-							<div class="col-md-6">
-								<div class="row">
+						
+							<div class="row">
+								<?php $separator = ((int)($discussions->count()/3)) + ($discussions->count()%3 > 0 ? 1 : 0); ?>
+								<?php $col = 5; ?>
+								@if($discussions->count() == 0)
 									<div class="col-md-12">
-										<div class="news-blocks">
-											<h3>
-											<a href="page_news_item.html">
-											Pusto odio dignissimos ducimus i quos dolores et qui blanditiis praesentium.. </a>
-											</h3>
-											<div class="news-block-tags">
-												<strong>CA, USA</strong>
-												<em>3 hours ago</em>
-											</div>
-											<p>
-												<img class="news-block-img pull-right" src="../../assets/admin/pages/media/gallery/image2.jpg" alt="">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident iti..
-											</p>
-											<a href="page_news_item.html" class="news-block-btn">
-											Read more <i class="m-icon-swapright m-icon-black"></i>
-											</a>
-										</div>
+										Todavia no Existen Discusiones para este Curso, te invitamos a crear nuevas discusiones o invita a otros profesores a colaborar con este curso.
 									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="news-blocks">
-											<h3>
-											<a href="page_news_item.html">
-											Vero eos et accusamus et iusto od qui.. </a>
-											</h3>
-											<div class="news-block-tags">
-												<strong>CA, USA</strong>
-												<em>3 hours ago</em>
+								@endif
+								@if($discussions->count() >= 1 && $discussions->count() <= 2)
+									<div class="col-md-5">
+										@if($discussions[0]->status == 'active')
+											<div class="news-blocks discussion-block" data-discussion="{{Hashids::encode($discussions[0]->id)}}">
+												<h3>
+													<a href="javascript:;" class="discussion-comments">
+														{{ $discussions[0]->title}}
+													</a>
+												</h3>
+												<div class="news-block-tags">
+													<strong>{{ $discussions[0]->author->display_name}}</strong>
+													<strong><i class="fa fa-comments-o"></i> {{ $discussions[0]->children->count() }}</strong>
+													<em class="moment-fromnow">{{ $discussions[0]->created_at }}</em>
+												</div>
+												<p>
+													<img class="news-block-img pull-right" src="{{ $discussions[0]->getAvatar() }}" alt="">
+													{{ $discussions[0]->getSummary(250) }}
+												</p>
+												<a href="javascript:;" class="news-block-btn discussion-edit" >
+													Leer Más... <i class="m-icon-swapright m-icon-black"></i>
+												</a>
 											</div>
-											<p>
-												 At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-											</p>
-											<a href="page_news_item.html" class="news-block-btn">
-											Read more <i class="m-icon-swapright m-icon-black"></i>
-											</a>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="news-blocks">
-											<h3>
-											<a href="page_news_item.html">
-											Google Glass Technology.. </a>
-											</h3>
-											<div class="news-block-tags">
-												<strong>CA, USA</strong>
-												<em>3 hours ago</em>
+										@else
+											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[0]->id)}}">
+												<a href="javascript:;" class="btn grey-silver discussion-edit">
+												<span>{{ $discussions[0]->title }}</span>
+												<em class="moment-fromnow">{{ $discussions[0]->created_at }}</em>
+												<em>
+													<i class="fa fa-user"></i>
+													{{ $discussions[0]->author->display_name}}
+												</em>
+												<i class="fa fa-comments-o top-news-icon"></i>
+												</a>
 											</div>
-											<p>
-												 At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident
-											</p>
-											<a href="page_news_item.html" class="news-block-btn">
-											Read more <i class="m-icon-swapright m-icon-black"></i>
-											</a>
-										</div>
+										@endif
 									</div>
-								</div>
+								@endif
+								@if($discussions->count() == 2)
+									<div class="col-md-4">
+										@if($discussions[1]->status == 'active')
+											<div class="news-blocks discussion-block" data-discussion="{{Hashids::encode($discussions[1]->id)}}">
+												<h3>
+													<a href="javascript:;" class="discussion-comments">
+														{{ $discussions[1]->title}}
+													</a>
+												</h3>
+												<div class="news-block-tags">
+													<strong>{{ $discussions[1]->author->display_name}}</strong>
+													<strong><i class="fa fa-comments-o"></i> {{ $discussions[1]->children->count() }}</strong>
+													<em class="moment-fromnow">{{ $discussions[1]->created_at }}</em>
+												</div>
+												<p>
+													<img class="news-block-img pull-right" src="{{ $discussions[1]->getAvatar() }}" alt="">
+													{{ $discussions[1]->getSummary(200) }}
+												</p>
+												<a href="javascript:;" class="news-block-btn discussion-edit">
+													Leer Más... <i class="m-icon-swapright m-icon-black"></i>
+												</a>
+											</div>
+										@else
+											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[1]->id)}}">
+												<a href="javascript:;" class="btn grey-silver discussion-edit">
+												<span>{{ $discussions[1]->title }}</span>
+												<em class="moment-fromnow">{{ $discussions[1]->created_at }}</em>
+												<em>
+													<i class="fa fa-user"></i>
+													{{ $discussions[1]->author->display_name}}
+												</em>
+												<i class="fa fa-comments-o top-news-icon"></i>
+												</a>
+											</div>
+										@endif
+									</div>
+								@endif
+								@if($discussions->count() >= 3)
+									@for($i = 0, $rows = $separator; $i < $discussions->count(); $i++)
+										@if($rows - $separator == 0)
+											<?php $rows = 0; ?>
+											<div class="col-md-{{ $col }}">
+										@endif
+										@if($discussions[$i]->status == 'active')
+											<div class="news-blocks discussion-block" data-discussion="{{ Hashids::encode($discussions[$i]->id)}}">
+												<h3>
+													<a href="javascript:;" class="discussion-comments">
+														{{ $discussions[$i]->title}}
+													</a>
+												</h3>
+												<div class="news-block-tags">
+													<strong>{{ $discussions[$i]->author->display_name}}</strong>
+													<strong><i class="fa fa-comments-o"></i> {{ $discussions[$i]->children->count() }}</strong>
+													<em class="moment-fromnow">{{ $discussions[$i]->created_at }}</em>
+												</div>
+												<p>
+													<img class="news-block-img pull-right" src="{{ $discussions[$i]->getAvatar() }}" alt="">
+													{{ $discussions[$i]->getSummary(300 - ((6-$col)*50)) }}
+												</p>
+												<a href="javascript:;" class="news-block-btn discussion-edit">
+													Leer Más... <i class="m-icon-swapright m-icon-black"></i>
+												</a>
+											</div>
+										@else
+											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[$i]->id)}}">
+												<a href="javascript:;" class="btn grey-silver discussion-edit">
+												<span>{{ $discussions[$i]->title }}</span>
+												<em class="moment-fromnow">{{ $discussions[$i]->created_at }}</em>
+												<em>
+													<i class="fa fa-user"></i>
+													{{ $discussions[$i]->author->display_name}}
+												</em>
+												<i class="fa fa-comments-o top-news-icon"></i>
+												</a>
+											</div>
+										@endif
+										<?php $rows++; ?>
+										@if($rows - $separator == 0)
+											</div>
+											<?php $col--; ?>
+										@endif
+									@endfor
+								@endif
 							</div>
-							<!--end col-md-6-->
-						</div>
-						<div class="space20">
-						</div>
-						<h3>News Feeds</h3>
-						<div class="row">
-							<div class="col-md-3">
-								<div class="top-news">
-									<a href="javascript:;" class="btn red">
-									<span>
-									Metronic News </span>
-									<em>Posted on: April 16, 2013</em>
-									<em>
-									<i class="fa fa-tags"></i>
-									Money, Business, Google </em>
-									<i class="fa fa-briefcase top-news-icon"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="top-news">
-									<a href="javascript:;" class="btn green">
-									<span>
-									Top Week </span>
-									<em>Posted on: April 15, 2013</em>
-									<em>
-									<i class="fa fa-tags"></i>
-									Internet, Music, People </em>
-									<i class="fa fa-music top-news-icon"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="top-news">
-									<a href="javascript:;" class="btn blue">
-									<span>
-									Gold Price Falls </span>
-									<em>Posted on: April 14, 2013</em>
-									<em>
-									<i class="fa fa-tags"></i>
-									USA, Business, Apple </em>
-									<i class="fa fa-globe top-news-icon"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="top-news">
-									<a href="javascript:;" class="btn yellow">
-									<span>
-									Study Abroad </span>
-									<em>Posted on: April 13, 2013</em>
-									<em>
-									<i class="fa fa-tags"></i>
-									Education, Students, Canada </em>
-									<i class="fa fa-book top-news-icon"></i>
-									</a>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3">
-								<div class="top-news">
-									<a href="javascript:;" class="btn green">
-									<span>
-									Top Week </span>
-									<em>Posted on: April 15, 2013</em>
-									<em>
-									<i class="fa fa-tags"></i>
-									Internet, Music, People </em>
-									<i class="fa fa-music top-news-icon"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="top-news">
-									<a href="javascript:;" class="btn yellow">
-									<span>
-									Study Abroad </span>
-									<em>Posted on: April 13, 2013</em>
-									<em>
-									<i class="fa fa-tags"></i>
-									Education, Students, Canada </em>
-									<i class="fa fa-book top-news-icon"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="top-news">
-									<a href="javascript:;" class="btn red">
-									<span>
-									Metronic News </span>
-									<em>Posted on: April 16, 2013</em>
-									<em>
-									<i class="fa fa-tags"></i>
-									Money, Business, Google </em>
-									<i class="fa fa-briefcase top-news-icon"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="top-news">
-									<a href="javascript:;" class="btn blue">
-									<span>
-									Gold Price Falls </span>
-									<em>Posted on: April 14, 2013</em>
-									<em>
-									<i class="fa fa-tags"></i>
-									USA, Business, Apple </em>
-									<i class="fa fa-globe top-news-icon"></i>
-									</a>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -562,7 +169,9 @@
 				
 		<!-- END PORTLET -->
 	</div>
-</div>		
+</div>
+
+<script type="text/javascript" src="/assets/global/plugins/moment/moment.conf.js"></script>
 	
 <script type="text/javascript">
 	Metronic.init();
