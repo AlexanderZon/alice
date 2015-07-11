@@ -204,10 +204,12 @@ class AuthenticationController extends ReadController {
 			$user->display_name = Input::get('display_name') != '' ? Input::get('display_name') : Input::get('first_name').' '.Input::get('last_name');
 			$user->email = Input::get('email');
 			$user->password = \Hash::make(Input::get('password'));
-			$user->role_id = 'student';
+			$user->role_id = \Role::getIdByName('student');
 			$user->status = 'inactive';
 			
 			if( $user->save() ):
+
+				\Notification::newStudent($user->name);
 
 				$profile = new \UserProfile();
 				$profile->user_id = $user->id;

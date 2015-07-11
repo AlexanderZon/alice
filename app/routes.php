@@ -91,6 +91,7 @@ if(Auth::check()):
 
 	endswitch;
 
+	Route::controller('/search', '\Users\Search\ReadController');
 	Route::controller('/messages', '\Users\Mails\ReadController');
 	Route::controller('/profile', '\Users\Profile\ReadController');
 

@@ -63,6 +63,14 @@ class Role extends \Eloquent {
 
 	}
 
+	public static function getIdByName( $name ){
+
+		$role = self::getByName($name);
+
+		return $role->id;
+
+	}
+
 	public static function hasCapability( $role, $cap ){
 
 		$capabilities = $role->capabilities;
