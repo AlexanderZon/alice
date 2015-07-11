@@ -70,6 +70,20 @@ if(Auth::check()):
 		break;
 		case 'student':
 			# Routes for student
+			Route::controller('/cursos/{course_name}/actividades', '\Students\Courses\Activities\ReadController');
+			Route::controller('/cursos/{course_name}/premiaciones', '\Students\Courses\Achievements\ReadController');
+			Route::controller('/cursos/{course_name}/contribuidores', '\Students\Courses\Contributors\ReadController');
+			Route::controller('/cursos/{course_name}/discusiones', '\Students\Courses\Discussions\ReadController');
+			Route::controller('/cursos/{course_name}/general', '\Students\Courses\General\ReadController');
+			Route::controller('/cursos/{course_name}/inscripciones', '\Students\Courses\Inscriptions\ReadController');
+			Route::controller('/cursos/{course_name}/lecciones', '\Students\Courses\Lessons\ReadController');
+			Route::controller('/cursos/{course_name}/preguntas', '\Students\Courses\Questions\ReadController');
+			Route::controller('/cursos/{course_name}/estadisticas', '\Students\Courses\Statistics\ReadController');
+			Route::controller('/cursos/{course_name}/estudiantes', '\Students\Courses\Students\ReadController');
+			Route::controller('/cursos', '\Students\Courses\ReadController');
+			Route::controller('/profesores', '\Students\Teachers\ReadController');
+			Route::controller('/estudiantes', '\Students\Students\ReadController');
+			Route::controller('/inicio', '\Students\ReadController');
 		break;
 		default:
 			# Routes for unknown

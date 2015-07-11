@@ -16,7 +16,23 @@
 			<div class="form-group">
 				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
 				<div class="alert alert-danger">
-					<strong>¡Error!</strong> Usuario o Contraseña inválida.
+					<strong>¡Error!</strong> {{ $msg_error }}
+				</div>
+			</div>
+		@endif
+		@if( $msg_warning != null )
+			<div class="form-group">
+				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+				<div class="alert alert-warning">
+					<strong>¡Advertencia!</strong> {{ $msg_warning['description'] }}
+				</div>
+			</div>
+		@endif
+		@if( $msg_success != null )
+			<div class="form-group">
+				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+				<div class="alert alert-success">
+					<strong>¡Excelente!</strong> {{ $msg_success['description'] }}
 				</div>
 			</div>
 		@endif

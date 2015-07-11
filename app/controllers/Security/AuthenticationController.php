@@ -57,6 +57,10 @@ class AuthenticationController extends ReadController {
 
 			self::addArgument('msg_error', Session::get('msg_error'));
 
+			self::addArgument('msg_warning', Session::get('msg_warning'));
+
+			self::addArgument('msg_success', Session::get('msg_success'));
+
 			self::addArgument('redirect_to', Session::get('redirect_to'));
 
 			return self::make('login');
@@ -104,11 +108,29 @@ class AuthenticationController extends ReadController {
 
 		else:
 
-			self::addArgument('msg_error', 'Usuario o Contraseña Inválidos');
+			if(Auth::attempt(array(
+				'username' => Input::get('username'),
+				'password' => Input::get('password'),
+				'status' => 'inactive'
+				))):
 
-			self::addArgument('redirect_to', Input::get('redirect_to'));
+				Auth::logout();
 
-			return self::go('login');
+				self::addArgument('msg_error', 'Tu usuario no ha sido verificado');
+
+				self::addArgument('redirect_to', Input::get('redirect_to'));
+
+				return self::go('login');
+
+			else:
+
+				self::addArgument('msg_error', 'Usuario o Contraseña Inválidos');
+
+				self::addArgument('redirect_to', Input::get('redirect_to'));
+
+				return self::go('login');
+
+			endif;
 
 		endif;
 	}
@@ -133,17 +155,15 @@ class AuthenticationController extends ReadController {
 		return self::go( 'login' );
 	}
 
-	public function getSignup(){
+	public function postSignup(){
 
-		dd(Input::all());
-
-		if( !User::isValidUsername(Input::get('username')) ):
+		if( !\User::isValidUsername(Input::get('username')) ):
 
 			self::setWarning('security_user_username_err', 'Error al agregar usuario', 'El nombre de usuario ' . Input::get('username') . ' no es Válido, por favor ingrese uno diferente');
 
 			return self::go( 'login' );
 
-		elseif( User::hasUsername(Input::get('username')) ):
+		elseif( \User::hasUsername(Input::get('username')) ):
 
 			self::setWarning('security_user_username_err', 'Error al agregar usuario', 'El usuario ' . Input::get('username') . ' ya existe, por favor ingrese uno diferente');
 
@@ -151,7 +171,7 @@ class AuthenticationController extends ReadController {
 
 			return self::go( 'login' );
 
-		elseif( User::hasEmail(Input::get('email')) ):
+		elseif( \User::hasEmail(Input::get('email')) ):
 
 			self::setWarning('security_user_email_err', 'Error al agregar usuario', 'El correo ' . Input::get('email') . ' ya existe, por favor ingrese uno diferente');
 
@@ -177,27 +197,27 @@ class AuthenticationController extends ReadController {
 
 		else:
 
-			$user = new User();
+			$user = new \User();
 			$user->first_name = Input::get('first_name');
 			$user->last_name = Input::get('last_name');
 			$user->username = Input::get('username');
 			$user->display_name = Input::get('display_name') != '' ? Input::get('display_name') : Input::get('first_name').' '.Input::get('last_name');
 			$user->email = Input::get('email');
-			$user->password = Hash::make(Input::get('password'));
+			$user->password = \Hash::make(Input::get('password'));
 			$user->role_id = 'student';
 			$user->status = 'inactive';
 			
 			if( $user->save() ):
 
-				$profile = new UserProfile();
+				$profile = new \UserProfile();
 				$profile->user_id = $user->id;
 				$profile->save();
 	
-				self::setSuccess('security_user_create', 'Usuario Agregado', 'El usuario ' . $user->display_name . ' fue agregado exitósamente');
+				self::setSuccess('security_user_create', 'Usuario Agregado', '' . $user->display_name . ', has sido/a registrado exitosamente. Deberás esperar la confirmación del Coordinador para ingresar al sistema.');
 
 				// Audits::add(Auth::user(), $args['msg_success'], 'CREATE');
 
-				return self::go( 'index' );
+				return self::go( 'login' );
 
 			else:
 
