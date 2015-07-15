@@ -26,7 +26,7 @@ class ReadController extends \BaseController {
 
 		self::$route = '/inicio';
 
-		self::$name = 'students_read';
+		self::$name = 'students';
 
 		self::$title = 'Inicio';
 

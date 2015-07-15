@@ -75,13 +75,17 @@
 													<p class="justify">
 														{{ $course->getSummary() }}
 													</p>
-													@if($course->hasMyInscription())
-														<a class="btn blue" href="{{ $route }}/show/{{ Hashids::encode($course->id) }}">
+													@if($course->iveAccepted())
+														<a class="btn blue" href="{{ $route }}/ver/{{ Hashids::encode($course->id) }}">
 															Entrar <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													@elseif($course->ivePostuled())
+														<a class="btn green" href="{{ $route }}/nopostular/{{ Hashids::encode($course->id) }}">
+															Dejar de Postular <i class="fa fa-history"></i>
 														</a>
 													@else
 														<a class="btn blue" href="{{ $route }}/postular/{{ Hashids::encode($course->id) }}">
-															Postularse <i class="m-icon-swapright m-icon-white"></i>
+															Postularse <i class="fa fa-sign-in"></i>
 														</a>
 													@endif
 													<div class="course-students">

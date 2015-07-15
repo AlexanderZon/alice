@@ -191,16 +191,70 @@ class Course extends \Eloquent {
 
     }
 
-    public function hasInscription($user){
+    public function getAccepted($user){
 
-        $inscription = $this->inscriptions()->where('inscriptions.user_id','=', $user->id)->where('inscriptions.status','=','active')->first();
+        $inscription = $this->accepted()->where('inscriptions.user_id','=', $user->id)->first();
+
+        return $inscription;
+
+    }
+
+    public function hasAccepted($user){
+
+        $inscription = $this->getAccepted($user);
 
         if($inscription != null) return true;
         else return false;
 
     }
 
-    public function hasMyInscription(){
+    public function iveAccepted(){
+
+        return $this->hasAccepted(Auth::user());
+
+    }
+
+    public function getPostuled($user){
+
+        $inscription = $this->postulations()->where('inscriptions.user_id','=', $user->id)->first();
+
+        return $inscription;
+
+    }
+
+    public function hasPostuled($user){
+
+        $inscription = $this->getPostuled($user);
+
+        if($inscription != null) return true;
+        else return false;
+
+    }
+
+    public function ivePostuled(){
+
+        return $this->hasPostuled(Auth::user());
+
+    }
+
+    public function getInscription($user){
+
+        $inscription = $this->inscriptions()->where('inscriptions.user_id','=', $user->id)->first();
+
+        return $inscription;
+
+    }
+
+    public function hasInscription($user){
+
+        $inscription = $this->getInscription($user);
+
+        if($inscription != null) return true;
+        else return false;
+
+    }
+
+    public function iveInscription(){
 
         return $this->hasInscription(Auth::user());
 

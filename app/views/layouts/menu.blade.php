@@ -740,7 +740,7 @@
 					<!-- Students Module -->
 
 					@if(Auth::user()->hasCap('students_read_get_index'))
-					<li class="tooltips {{ $name == 'students_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Inicio">
+					<li class="tooltips {{ $name == 'students' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Inicio">
 						<a href="/">
 						<i class="icon-home"></i>
 						<span class="title">

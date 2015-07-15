@@ -1,6 +1,7 @@
 <?php namespace Students\Courses;
 
 use \Course as Course;
+use \Inscription as Inscription;
 use \User as User;
 use \Input as Input;
 use \Response as Response;
@@ -87,7 +88,7 @@ class ReadController extends \Students\ReadController {
 	 *
 	 * @return Response
 	 */
-	public function postShow( $id )
+	public function postVer( $id )
 	{
 
 		$course = Course::find(Hashids::decode($id));
@@ -104,6 +105,42 @@ class ReadController extends \Students\ReadController {
 		self::addArgument('sidebar_closed', true);
 
 		return self::make('general.index');
+
+	}
+
+	public function getPostular( $id ){
+
+		$course = Course::find(Hashids::decode($id));
+
+		$inscription = $course->getPostuled(Auth::user());
+		if($inscription == null ) $inscription = new Inscription();
+
+		$inscription->user_id = Auth::user()->id;
+		$inscription->course_id = $course->id;
+		$inscription->status = 'inactive';
+		$inscription->save();
+
+		self::addArgument('courses', Course::where( 'status', '=', 'active' )->paginate(5));
+
+		self::addArgument('section', 'index');
+
+		return self::make('index');
+
+	}
+
+	public function getNopostular( $id ){
+
+		$course = Course::find(Hashids::decode($id));
+
+		$inscription = $course->getPostuled(Auth::user());
+
+		if($inscription != null) $inscription->delete();
+
+		self::addArgument('courses', Course::where( 'status', '=', 'active' )->paginate(5));
+
+		self::addArgument('section', 'index');
+
+		return self::make('index');
 
 	}
 
