@@ -1,4 +1,4 @@
-<?php
+<?php namespace Students\Courses\Statistics;
 
 class ReadController extends \BaseController {
 

@@ -17,7 +17,7 @@ class CreateInscriptionsTable extends Migration {
 			$table->increments('id');
 			$table->integer('user_id');
 			$table->integer('course_id');
-			$table->string('status');
+			$table->enum('status', array('active', 'inactive', 'done'));
 			$table->timestamps();
 			$table->softDeletes();
 		});

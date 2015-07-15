@@ -14,7 +14,14 @@ class Notification extends \Eloquent {
     use SoftDeletingTrait;
 
     protected $dates = ['deleted_at'];
-	/*
+    
+    public function user(){
+
+    	return $this->belongsTo('User', 'user_id');
+
+    }
+    
+    /*
     public $_title = '';
     public $_description = '';
     public $_type = '';
@@ -25,11 +32,6 @@ class Notification extends \Eloquent {
     public $_status = 'fired';
     public $_picture = '';
 
-    public function user(){
-
-    	return $this->belongsTo('User', 'user_id');
-
-    }
 
     public function newStudent( $name ){
 

@@ -185,6 +185,27 @@ class Course extends \Eloquent {
 
     }
 
+    public function beststudents(){
+
+        return \User::all();
+
+    }
+
+    public function hasInscription($user){
+
+        $inscription = $this->inscriptions()->where('inscriptions.user_id','=', $user->id)->where('inscriptions.status','=','active')->first();
+
+        if($inscription != null) return true;
+        else return false;
+
+    }
+
+    public function hasMyInscription(){
+
+        return $this->hasInscription(Auth::user());
+
+    }
+
     public static function findPermalinkCounter( $name ){
 
         $slug = $name.'-'.(++self::$slug_counter);

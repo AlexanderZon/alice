@@ -1,4 +1,4 @@
-<?php namespace Teachers;
+<?php namespace Students;
 
 use \Auth as Auth;
 use \Course as Course;
@@ -26,11 +26,11 @@ class ReadController extends \BaseController {
 
 		self::$route = '/inicio';
 
-		self::$name = 'students';
+		self::$name = 'students_read';
 
-		self::$title = 'Escritorio';
+		self::$title = 'Inicio';
 
-		self::$description = 'Módulo de Profesores del Sistema';
+		self::$description = 'Mis Cursos';
 
 		self::setArguments();
 
@@ -38,13 +38,7 @@ class ReadController extends \BaseController {
 
 	public function getIndex(){
 
-		self::addArgument('courses', Auth::user()->teach);
-
-		self::addArgument('contributing', Auth::user()->contributing);
-
-		self::addArgument('lessons', Auth::user()->lessonsteaching());
-
-		self::addArgument('students', Auth::user()->studentsteaching());
+		self::addArgument('courses', Auth::user()->learning()->paginate(25));
 
 		return self::make('index');
 

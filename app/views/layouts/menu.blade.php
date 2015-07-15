@@ -123,22 +123,12 @@
 									<ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
 										<li>
 											<a href="javascript:;">
-											<span class="time">just now</span>
-											<span class="details">
-											<span class="label label-sm label-icon label-success">
-											<i class="fa fa-plus"></i>
-											</span>
-											New user registered. </span>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:;">
 											<span class="time">3 mins</span>
 											<span class="details">
 											<span class="label label-sm label-icon label-danger">
 											<i class="fa fa-bolt"></i>
 											</span>
-											Server #12 overloaded. </span>
+											</span>
 											</a>
 										</li>
 										<li>
@@ -744,6 +734,48 @@
 							@endif
 						
 						</ul> -->
+					</li>
+					@endif
+
+					<!-- Students Module -->
+
+					@if(Auth::user()->hasCap('students_read_get_index'))
+					<li class="tooltips {{ $name == 'students_read' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Inicio">
+						<a href="/">
+						<i class="icon-home"></i>
+						<span class="title">
+						Inicio </span>
+						</a>
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('students_courses_get_index'))
+					<li class="tooltips {{ $name == 'students_courses' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Todos los Cursos">
+						<a href="/cursos">
+						<i class="icon-notebook"></i>
+						<span class="title">
+						Cursos </span>
+						</a>
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('students_teachers_get_index'))
+					<li class="tooltips {{ $name == 'students_teachers' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Todos los Profesores">
+						<a href="/profesores">
+						<i class="icon-graduation"></i>
+						<span class="title">
+						Profesores </span>
+						</a>
+					</li>
+					@endif
+
+					@if(Auth::user()->hasCap('students_students_get_index'))
+					<li class="tooltips {{ $name == 'students_students' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Todos los Estudiantes">
+						<a href="/estudiantes">
+						<i class="icon-emoticon-smile"></i>
+						<span class="title">
+						Estudiantes </span>
+						</a>
 					</li>
 					@endif
 

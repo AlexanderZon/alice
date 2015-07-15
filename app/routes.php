@@ -53,7 +53,9 @@ if(Auth::check()):
 
 		break;
 		case 'teacher':
+
 			# Routes for teacher
+
 			Route::controller('/teachers/courses/{course_id}/achievements', '\Teachers\Courses\Achievements\ReadController');
 			Route::controller('/teachers/courses/{course_id}/activities', '\Teachers\Courses\Activities\ReadController');
 			Route::controller('/teachers/courses/{course_id}/contributors', '\Teachers\Courses\Contributors\ReadController');
@@ -67,9 +69,12 @@ if(Auth::check()):
 			Route::controller('/teachers/courses', '\Teachers\Courses\ReadController');
 			Route::controller('/teachers/contributions', '\Teachers\Contributions\ReadController');
 			Route::controller('/teachers', '\Teachers\ReadController');
+			
 		break;
 		case 'student':
+
 			# Routes for student
+
 			Route::controller('/cursos/{course_name}/actividades', '\Students\Courses\Activities\ReadController');
 			Route::controller('/cursos/{course_name}/premiaciones', '\Students\Courses\Achievements\ReadController');
 			Route::controller('/cursos/{course_name}/contribuidores', '\Students\Courses\Contributors\ReadController');
@@ -84,6 +89,7 @@ if(Auth::check()):
 			Route::controller('/profesores', '\Students\Teachers\ReadController');
 			Route::controller('/estudiantes', '\Students\Students\ReadController');
 			Route::controller('/inicio', '\Students\ReadController');
+
 		break;
 		default:
 			# Routes for unknown

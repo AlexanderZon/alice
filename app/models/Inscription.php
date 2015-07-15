@@ -7,7 +7,7 @@ class Inscription extends \Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'inscription';
+	protected $table = 'inscriptions';
 
 	protected $fillable = [];
 
