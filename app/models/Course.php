@@ -260,6 +260,16 @@ class Course extends \Eloquent {
 
     }
 
+    public static function getByName( $name ){
+
+        $course = self::where('name','=',$name)->first();
+
+        if($course == null) throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("No se Encontró el curso");
+
+        return $course; 
+
+    }
+
     public static function findPermalinkCounter( $name ){
 
         $slug = $name.'-'.(++self::$slug_counter);

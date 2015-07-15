@@ -63,7 +63,7 @@ License: You must have a valid license purchased only from themeforest(the above
 			 404
 		</div>
 		<div class=" details">
-			<h3>Oops! No encontramos lo que estas buscando.</h3>
+			<h3>Uups! No encontramos lo que estas buscando.</h3>
 			<p>
 				¡Tal vez ha sido raptado por alienígenas!<br/>
 				Presiona <a href="/">aquí</a> para volver al escritorio.<br/><br/>

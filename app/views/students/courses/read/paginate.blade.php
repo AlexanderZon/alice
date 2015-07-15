@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/students/courses/read/paginate.blade.php

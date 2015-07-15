@@ -36,9 +36,11 @@ class ReadController extends \Students\ReadController {
 
 		self::addSection('show', 'Gestionar Curso');
 
+		self::addSection('course', 'Visualizar Curso');
+
 		self::$title = 'Cursos';
 
-		self::$description = 'Gestión de Cursos del Sistema';
+		self::$description = 'Contenido del Curso';
 
 		self::pushBreadCrumb('Cursos', self::$route );
 
@@ -75,6 +77,27 @@ class ReadController extends \Students\ReadController {
 		self::addArgument('hashid', $id);
 
 		self::addArgument('course', Course::find(Hashids::decode($id)));
+		
+		self::addArgument('sidebar_closed', true);
+
+		return self::make('show');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /courses
+	 *
+	 * @return Response
+	 */
+	public function getCourse( $name )
+	{
+
+		$course = Course::getByName($name);
+
+		self::addArgument('hashid', Hashids::encode($course->id));
+
+		self::addArgument('course', $course);
 		
 		self::addArgument('sidebar_closed', true);
 

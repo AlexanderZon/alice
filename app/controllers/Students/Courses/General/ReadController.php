@@ -1,86 +1,65 @@
 <?php namespace Students\Courses\General;
 
-class ReadController extends \BaseController {
+use \Hashids as Hashids;
+use \Course as Course;
+
+class ReadController extends \Students\Courses\ReadController {
+
+	public function __construct(){
+
+		parent::__construct();
+
+		$this->beforeFilter('auth');
+
+		$this->beforeFilter('capabilities');
+
+		$this->beforeFilter('parameters');
+
+		$this->beforeFilter('arguments');
+
+		$this->afterFilter('auditory');     
+
+		self::setModule('read');  
+		
+		self::pushViews('general');    
+
+		self::pushRoute('general');
+
+		self::pushName('general');
+
+		self::setModule('general');
+
+		self::addSection('general', 'Informaciones Generales');
+
+		self::$title = 'General';
+
+		self::$description = 'Gestión de Informaciones Generales de los Cursos';
+
+		self::pushBreadCrumb('General', self::$route );
+
+		# --- Put here your global args for this Controller --- #
+
+	}
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /read
+	 * GET /courses
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function postIndex( $course_name = '' )
 	{
-		//
-	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /read/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+		$course =  Course::getByName($course_name);
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /read
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+		self::addArgument('hashid', Hashids::encode($course->id));
 
-	/**
-	 * Display the specified resource.
-	 * GET /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+		self::addArgument('course', $course);
+		
+		self::addArgument('sidebar_closed', true);
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /read/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+		return self::make('index');
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }

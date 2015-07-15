@@ -181,8 +181,8 @@
 
 		    var initWall = function (el, name) {
 
-		        var url = '{{$route}}/{{$hashid}}/' + name;
-
+		        var url = '{{$route}}/' + name;
+		        console.log(url);
 		        console.log(el);
 		        // toggleButton(el);
 
@@ -215,7 +215,7 @@
 
 		    var initAction = function (el, name, section, data, method, callback) {
 
-		        var url = '{{$route}}/{{$hashid}}/' + name + '/' + section;
+		        var url = '{{$route}}/' + name + '/' + section;
 
 		        console.log(el);
 		        // toggleButton(el);
@@ -250,7 +250,7 @@
 
 		    var loadWall = function (el, name) {
 
-		        var url = '{{$route}}/{{$hashid}}/' + name;
+		        var url = '{{$route}}/' + name;
 
 		        console.log(el);
 
@@ -288,7 +288,7 @@
 
 		    var backWall = function (el, name) {
 
-		        var url = '{{$route}}/{{$hashid}}/' + name;
+		        var url = '{{$route}}/' + name;
 
 		        console.log(el);
 
