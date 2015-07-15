@@ -1,6 +1,7 @@
 <?php namespace Teachers\Courses\Inscriptions;
 
 use \Course as Course;
+use \Inscription as Inscription;
 use \User as User;
 use \Input as Input;
 use \Hash as Hash;
@@ -54,7 +55,49 @@ class ReadController extends \Teachers\Courses\ReadController {
 	public function postIndex( $course_id = '' )
 	{
 
-		self::addArgument('inscriptions', Course::find(Hashids::decode($course_id)));
+		$course = Course::find(Hashids::decode($course_id));
+
+		self::addArgument('course', $course);
+
+		self::addArgument('inscriptions', $course->postulations);
+
+		return self::make('index');
+
+	}
+
+	public function getAccept( $course_id = '' )
+	{
+
+		$course = Course::find(Hashids::decode($course_id));
+
+		$inscription = Inscription::find(Hashids::decode(Input::get('inscription_id')));
+		$inscription->status = 'active';
+		$inscription->save();
+
+		/* NOTIFICATE */
+
+		self::addArgument('course', $course);
+
+		self::addArgument('inscriptions', $course->postulations);
+
+		return self::make('index');
+
+	}
+
+	public function getReject( $course_id = '' )
+	{
+
+		$course = Course::find(Hashids::decode($course_id));
+
+		$inscription = Inscription::find(Hashids::decode(Input::get('inscription_id')));
+		$inscription->status = 'rejected';
+		$inscription->save();
+
+		/* NOTIFICATE */
+
+		self::addArgument('course', $course);
+
+		self::addArgument('inscriptions', $course->postulations);
 
 		return self::make('index');
 

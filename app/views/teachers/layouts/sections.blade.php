@@ -1241,6 +1241,68 @@
 
 		    }
 
+		    var inscriptionsAccept = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+		    	var inscription = el.parents('.inscription').data('inscription');
+
+		        loading.show();
+		        content.html(loader);
+		        console.log(inscription);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/inscriptions/accept',
+		    		type: 'GET',
+		    		data: {
+		    			inscription_id: inscription,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Accept Inscription');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var inscriptionsReject = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+		    	var inscription = el.parents('.inscription').data('inscription');
+
+		        loading.show();
+		        content.html(loader);
+		        console.log(inscription);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/inscriptions/reject',
+		    		type: 'GET',
+		    		data: {
+		    			inscription_id: inscription,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Reject Inscription');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1511,6 +1573,16 @@
 		                discussionsComments($(this));
 		            });
 
+		            // handle view discussion button click
+		            $('.profile').on('click', '.inscriptions-accept-btn', function (e) {
+		                inscriptionsAccept($(this));
+		            });
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.inscriptions-reject-btn', function (e) {
+		                inscriptionsReject($(this));
+		            });
+
 		            //handle loading content based on URL parameter
 		            if (Metronic.getURLParameter("a") === "view") {
 		                viewMessage();
@@ -1553,6 +1625,9 @@
 		        				break;
 		            		case 'discussions':
 		        				initWall($('.discussions-btn'), 'discussions');
+		        				break;
+		            		case 'inscriptions':
+		        				initWall($('.inscriptions-btn'), 'inscriptions');
 		        				break;
 		        			default:
 		        				initWall($('.general-btn'), 'general');

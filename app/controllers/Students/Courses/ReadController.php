@@ -120,6 +120,8 @@ class ReadController extends \Students\ReadController {
 		$inscription->status = 'inactive';
 		$inscription->save();
 
+		/* NOTIFICATE */
+
 		self::addArgument('courses', Course::where( 'status', '=', 'active' )->paginate(5));
 
 		self::addArgument('section', 'index');
@@ -135,6 +137,8 @@ class ReadController extends \Students\ReadController {
 		$inscription = $course->getPostuled(Auth::user());
 
 		if($inscription != null) $inscription->delete();
+
+		/* NOTIFICATE */
 
 		self::addArgument('courses', Course::where( 'status', '=', 'active' )->paginate(5));
 

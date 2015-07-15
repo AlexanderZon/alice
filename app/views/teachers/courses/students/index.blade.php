@@ -36,7 +36,7 @@
 											<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" width="200">
 											<div class="mix-details">
 												<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
-												<span href="/">Última visita: <span class="moment-fromnow">{{ $user->last_login }}</span></span>
+												<span href="/">Última visita: <span class="moment-fromnow">{{ $student->last_login }}</span></span>
 												<a href="javascript:;" class="mix-link student-statistics-btn" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}">
 													<i class="fa fa-sliders"></i>
 												</a>
