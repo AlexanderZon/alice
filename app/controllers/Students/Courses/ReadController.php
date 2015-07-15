@@ -52,7 +52,7 @@ class ReadController extends \Students\ReadController {
 	 *
 	 * @return Response
 	 */
-	public function getIndex()
+	public function getIndex( )
 	{
 
 		self::addArgument('courses', Course::where( 'status', '=', 'active' )->paginate(5));

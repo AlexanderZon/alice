@@ -150,13 +150,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function learning(){
 
-		return $this->inscriptions()->where('inscriptions.status','=','active');
+		return $this->belongsToMany('Course','inscriptions')->where('inscriptions.status','=','active');
 
 	}
 
 	public function learned(){
 
-		return $this->inscriptions()->where('inscriptions.status','=','used');
+		return $this->belongsToMany('Course','inscriptions')->where('inscriptions.status','=','done');
 
 	}
 
