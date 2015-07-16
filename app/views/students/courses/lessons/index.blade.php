@@ -120,8 +120,8 @@
 																	<i class="fa fa-power-off"></i>
 																</a>
 																-->	
-																<a href="javascript:;" class="btn grey-cararra pull-right lesson-status tooltips" data-original-title="Entrar a esta Lección" data-placement="left"> 
-																	<i class="fa fa-sign-in"></i>
+																<a href="javascript:;" class="btn grey-cararra pull-right lesson-view tooltips" data-original-title="Entrar a esta Lección" data-placement="left"> 
+																	<i class="m-icon-swapright m-icon-black"></i>
 																</a>										
 															</h2>
 															<div class="timeline-content">

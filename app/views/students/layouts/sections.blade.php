@@ -556,7 +556,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/addmodule',
+		    		url: '{{$route}}/lessons/addmodule',
 		    		type: 'GET',
 		    		async: true,
 		    		success: function(html) {
@@ -585,7 +585,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/editmodule',
+		    		url: '{{$route}}/lessons/editmodule',
 		    		type: 'GET',
 		    		data: {
 		    			module_id: module,
@@ -617,7 +617,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/deletemodule',
+		    		url: '{{$route}}/lessons/deletemodule',
 		    		type: 'GET',
 		    		data: {
 		    			module_id: module,
@@ -648,7 +648,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/ordermodules',
+		    		url: '{{$route}}/lessons/ordermodules',
 		    		type: 'GET',
 		    		async: true,
 		    		success: function(html) {
@@ -679,7 +679,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/addlesson',
+		    		url: '{{$route}}/lessons/addlesson',
 		    		type: 'GET',
 		    		data: {
 		    			module_id: module
@@ -713,7 +713,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/editlesson',
+		    		url: '{{$route}}/lessons/editlesson',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -747,7 +747,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/deletelesson',
+		    		url: '{{$route}}/lessons/deletelesson',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -779,7 +779,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/orderlessons',
+		    		url: '{{$route}}/lessons/orderlessons',
 		    		type: 'GET',
 		    		data: {
 		    			module_id: module,
@@ -817,7 +817,7 @@
 		        el.html('<img src="/assets/loaders/rubiks-cube.gif" class="col-md-12"/>');
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/statuslesson',
+		    		url: '{{$route}}/lessons/statuslesson',
 		    		type: 'POST',
 		    		data: {
 		    			lesson_id: lesson,
@@ -870,7 +870,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/attachments',
+		    		url: '{{$route}}/lessons/attachments',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -902,7 +902,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/activities',
+		    		url: '{{$route}}/lessons/activities',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -932,7 +932,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/addactivity',
+		    		url: '{{$route}}/lessons/addactivity',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -963,7 +963,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/addactivity',
+		    		url: '{{$route}}/lessons/addactivity',
 		    		type: 'POST',
 		    		data: {
 		    			lesson_id: lesson,
@@ -995,7 +995,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/editactivity',
+		    		url: '{{$route}}/lessons/editactivity',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -1026,7 +1026,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/activities',
+		    		url: '{{$route}}/lessons/activities',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -1058,7 +1058,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/comments',
+		    		url: '{{$route}}/lessons/comments',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -1090,7 +1090,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/lessons/students',
+		    		url: '{{$route}}/lessons/students',
 		    		type: 'GET',
 		    		data: {
 		    			lesson_id: lesson,
@@ -1119,7 +1119,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/discussions/add',
+		    		url: '{{$route}}/discussions/add',
 		    		type: 'GET',
 		    		async: true,
 		    		success: function(html) {
@@ -1149,7 +1149,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/discussions/edit',
+		    		url: '{{$route}}/discussions/edit',
 		    		type: 'GET',
 		    		data: {
 		    			discussion_id: discussion,
@@ -1181,7 +1181,7 @@
 		        content.html(loader);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/discussions/delete',
+		    		url: '{{$route}}/discussions/delete',
 		    		type: 'GET',
 		    		data: {
 		    			discussion_id: discussion,
@@ -1214,7 +1214,7 @@
 		        console.log(discussion);
 
 		    	$.ajax({
-		    		url: '{{$route}}/' + course + '/discussions/comments',
+		    		url: '{{$route}}/discussions/comments',
 		    		type: 'GET',
 		    		data: {
 		    			discussion_id: discussion,
