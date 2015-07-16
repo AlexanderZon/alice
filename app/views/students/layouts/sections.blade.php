@@ -253,6 +253,7 @@
 		        var url = '{{$route}}/' + name;
 
 		        console.log(el);
+		        console.log(url);
 
 		        loading.show();
 		        content.html(loader);

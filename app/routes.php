@@ -79,12 +79,23 @@ if(Auth::check()):
 			Route::controller('/curso/{course_name}/premiaciones', '\Students\Courses\Achievements\ReadController');
 			Route::controller('/curso/{course_name}/contribuidores', '\Students\Courses\Contributors\ReadController');
 			Route::controller('/curso/{course_name}/discusiones', '\Students\Courses\Discussions\ReadController');
-			Route::controller('/curso/{course_name}/general', '\Students\Courses\General\ReadController');
 			Route::controller('/curso/{course_name}/inscripciones', '\Students\Courses\Inscriptions\ReadController');
 			Route::controller('/curso/{course_name}/lecciones', '\Students\Courses\Lessons\ReadController');
 			Route::controller('/curso/{course_name}/preguntas', '\Students\Courses\Questions\ReadController');
 			Route::controller('/curso/{course_name}/estadisticas', '\Students\Courses\Statistics\ReadController');
 			Route::controller('/curso/{course_name}/estudiantes', '\Students\Courses\Students\ReadController');
+
+			Route::controller('/curso/{course_name}/activities', '\Students\Courses\Activities\ReadController');
+			Route::controller('/curso/{course_name}/achievements', '\Students\Courses\Achievements\ReadController');
+			Route::controller('/curso/{course_name}/contributors', '\Students\Courses\Contributors\ReadController');
+			Route::controller('/curso/{course_name}/discussions', '\Students\Courses\Discussions\ReadController');
+			Route::controller('/curso/{course_name}/general', '\Students\Courses\General\ReadController');
+			Route::controller('/curso/{course_name}/inscriptions', '\Students\Courses\Inscriptions\ReadController');
+			Route::controller('/curso/{course_name}/lessons', '\Students\Courses\Lessons\ReadController');
+			Route::controller('/curso/{course_name}/questions', '\Students\Courses\Questions\ReadController');
+			Route::controller('/curso/{course_name}/statistics', '\Students\Courses\Statistics\ReadController');
+			Route::controller('/curso/{course_name}/students', '\Students\Courses\Students\ReadController');
+
 			Route::get('/curso/{course_name}', '\Students\Courses\ReadController@getCourse');
 			Route::controller('/cursos', '\Students\Courses\ReadController');
 			Route::controller('/profesores', '\Students\Teachers\ReadController');
