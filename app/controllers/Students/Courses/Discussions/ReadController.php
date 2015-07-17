@@ -11,6 +11,7 @@ use \Response as Response;
 use \GUID as GUID;
 use \Hash as Hash;
 use \Hashids as Hashids;
+use \Crypt as Crypt;
 
 
 class ReadController extends \Students\Courses\ReadController {
@@ -128,7 +129,8 @@ class ReadController extends \Students\Courses\ReadController {
 	        $filename = $file->getClientOriginalName();
 	        $path = GUID::generate().".".$file->getClientOriginalExtension();
 
-	        $route = '/uploads/courses/'.$course->name.'/discussions/'.$discussion->name.'/';
+	        $route = '/uploads/courses/'.$course->name;
+	        $route .= '/discussions/'.$discussion->name.'/';
 
 			$attachment = new Attachment();
 			$attachment->attachmentable_type = 'Discussion';
@@ -142,6 +144,7 @@ class ReadController extends \Students\Courses\ReadController {
 	    	$upload = $file->move( public_path().$route, $path );
 
 			$response['attachment'] = $attachment->getSize();
+			$response['attachment_crypt'] = Crypt::encrypt($attachment->id);
 
 		endif;
 

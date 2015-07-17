@@ -1021,6 +1021,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 	    	$upload = $file->move( public_path().$route, $path );
 
 			$response['attachment'] = $attachment->getSize();
+			$response['attachment_crypt'] = Crypt::encrypt($attachment->id);
 
 		endif;
 

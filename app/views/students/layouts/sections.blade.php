@@ -666,6 +666,41 @@
 
 		    }
 
+		    var lessonsLessonView = function(el) {
+
+		    	var course = el.parents('.timeline').data('course');
+		    	var lesson = el.parents('.timeline-blue-steel').data('lesson');
+
+		    	if( typeof lesson == 'undefined') lesson = el.parents('.timeline-grey-silver').data('lesson');
+
+		        console.log(lesson);
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/lessons/viewlesson',
+		    		type: 'GET',
+		    		data: {
+		    			lesson_id: lesson,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('View lesson');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    /*
 		    var lessonsLessonAdd = function(el) {
 
 		    	var course = el.parents('.timeline').data('course');
@@ -809,9 +844,6 @@
 
 		        console.log(lesson);
 
-		        /*loading.show();
-		        content.html(loader);*/
-
 		    	el.removeClass('blue-steel');
 		    	el.removeClass('grey-silver');	
 		        el.html('<img src="/assets/loaders/rubiks-cube.gif" class="col-md-12"/>');
@@ -843,10 +875,6 @@
 		    				parent.removeClass('timeline-blue-steel');
 		    				parent.addClass('timeline-grey-silver');
 		    			}
-
-				        /*loading.hide();
-				        content.html(html);
-		                Metronic.init();*/
 		    			console.log(res);
 		    			console.log('Status lesson Form');
 		    		},
@@ -856,6 +884,8 @@
 		    	});
 
 		    }
+
+		    */
 
 		    var lessonsLessonAttachments = function(el) {
 
@@ -1423,6 +1453,11 @@
 		                lessonsLessonAdd($(this));
 		            });
 
+		            // handle add lesson button click
+		            $('.profile').on('click', '.lesson-view', function (e) {
+		                lessonsLessonView($(this));
+		            });
+		            /*
 		            // handle edit lesson button click
 		            $('.profile').on('click', '.lesson-edit', function (e) {
 		                lessonsLessonEdit($(this));
@@ -1442,7 +1477,7 @@
 		            $('.profile').on('click', '.lesson-status', function (e) {
 		                lessonsLessonStatus($(this));
 		            });
-
+					*/
 		            // handle order lesson button click
 		            $('.profile').on('click', '.lesson-attachments', function (e) {
 		                lessonsLessonAttachments($(this));

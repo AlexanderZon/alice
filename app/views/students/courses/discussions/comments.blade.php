@@ -51,12 +51,17 @@
 
 			<div class="portlet light discussions" data-course="{{ Hashids::encode($course->id) }}" data-discussion="{{ Hashids::encode($discussion->id) }}">
 
+				<!-- STAT -->
+				<div class="row list-separated profile-stat">
+					<img class="col-md-12" src="{{ $course->cover_picture }}"/>
+				</div>
+				<!-- END PAGE CONTENT INNER -->
 				<!-- END PAGE CONTENT INNER -->
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="portlet-title">
 							<h4 class="profile-usertitle-name">{{ $discussion->title }}
-								<a href="javascript:;" class="btn blue-madison pull-right tooltips discussions-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
+								<a href="javascript:;" class="btn blue-madison pull-right tooltips discussions-back-btn" data-placement="left" data-original-title="Ir al listado de Discusiones">
 									<i class="fa fa-arrow-left"></i>
 								</a>
 								<span class="pull-right">&nbsp;</span>
@@ -632,7 +637,7 @@
 							'<p class="todo-comment-head">' +
 								'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
 								'<span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp; ' + 
-								( data.attachment != null ? '<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
+								( data.attachment != null ? '<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment-btn" data-original-title="Descargar archivo (' + data.attachment + ')" data-attachment="' + data.attachment_crypt + '"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
 								'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta. "><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
 								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
 								'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
@@ -718,7 +723,7 @@
 								'<div class="media-body todo-comment">' +
 									'<p class="todo-comment-head">' +
 										'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp;' +
-										( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips" data-original-title="Descargar archivo (' + data.attachment + ')"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
+										( data.attachment != null ?	'<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment-btn" data-original-title="Descargar archivo (' + data.attachment + ')" data-attachment="' + data.attachment_crypt + '"><i class="fa fa-paperclip"></i></a> &nbsp;' : '' ) +
 										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-like-btn" data-original-title="0 Me gusta"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">0</span></a> &nbsp; ' +
 										'<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="0 Respuestas"><i class="fa fa-comments-o"></i> <span class="replies-counter">0</span></a>' +
 										'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
