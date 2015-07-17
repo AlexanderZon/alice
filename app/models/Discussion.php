@@ -104,16 +104,16 @@ class Discussion extends \Eloquent {
         if($my):
             if($another):
                 $people = substr($people, 0, -2);
-                $people = ' y Yo.';
+                $people .= ' y Yo.';
             else:
-                $people = 'Solo Yo.';
+                $people .= 'Solo Yo.';
             endif;
         else:
             if($another):
                 $people = substr($people, 0, -2);
-                $people = '.';
+                $people .= '.';
             else:
-                $people = '';
+                $people .= '';
             endif;
         endif;
 

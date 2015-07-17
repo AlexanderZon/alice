@@ -107,80 +107,86 @@
 												<ul class="media-list">
 													@if($comments->count() > 0)
 														@foreach($comments as $comment)
-														    <!-- Vista Profesor puede visualizar todos los comentarios -->
-														    <!-- Vista Estudiante solo puede visualizar los comentarios no Banneados -->
-															<?php $comment_user = $comment->author; ?>
-															<?php $attachments = $comment->attachments; ?>
-															<?php $thumbsups = $comment->thumbsups; ?>
-															<?php $replies = $comment->children; ?>
-															<li class="media {{ $comment->isBanned() ? 'banned' : '' }}" data-comment="{{ Hashids::encode($comment->id) }}">
-																<a class="pull-left" href="javascript:;">
-																<img class="todo-userpic" src="{{ $comment_user->profile->getAvatar() }}" width="45px" height="45px">
-																</a>
-																<div class="media-body todo-comment">
-																	<p class="todo-comment-head">
-																		<span class="todo-comment-username">{{ $comment_user->display_name }}</span> &nbsp; 
-																		<span class="todo-comment-date moment-fromnow">{{ $comment->created_at }}</span> &nbsp; 
-																		@if($attachments->count() > 0)
-																			<?php $attachment = $comment->attachments->first() ?>
-																			<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment-btn" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})" data-attachment="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-paperclip"></i></a> &nbsp; 
-																		@endif
-																		<a href="javascript:;" class="btn {{ $comment->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gusta. {{ $comment->peopleThumbsupIt() }}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
-																		<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-comments-o"></i> <span class="replies-counter">{{ $replies->count() }}</span></a>
-																		@if($comment->isMarkedAsBanned())
-																			<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="Marcado como no deseado por {{ $comment->peopleBannedIt() }}."><i class="fa fa-ban"></i></a>
-																		@else
-																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
-																		@endif
-																		@if($comment->isMine())
-																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
-																			<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
-																		@endif
-																	</p>
-																	<div class="todo-text-color">
-																		 {{ $comment->content }} <br>
-																	</div>
-																	<div class="children-comments">
-																		@if($replies->count() > 0)
-																			@foreach($replies as $reply)
-																				<?php $comment_user = $reply->author; ?>
-																				<?php $attachments = $reply->attachments; ?>
-																				<?php $thumbsups = $reply->thumbsups; ?>
-																				<?php $replies = $reply->children; ?>
-																				<div class="media {{ $reply->isBanned() ? 'banned' : '' }}" data-comment="{{ Hashids::encode($reply->id) }}">
-																					<a class="pull-left" href="javascript:;">
-																					<img class="todo-userpic" src="{{ $comment_user->profile->getAvatar() }}" width="45px" height="45px">
-																					</a>
-																					<div class="media-body">
-																						<p class="todo-comment-head">
-																							<span class="todo-comment-username">{{ $comment_user->display_name }}</span> &nbsp; 
-																							<span class="todo-comment-date moment-fromnow">{{ $reply->created_at }}</span> &nbsp; 
-																							@if($attachments->count() > 0)
-																								<?php $attachment = $reply->attachments->first() ?>
-																								<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment-btn" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"  data-attachment="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-paperclip"></i></a> &nbsp; 
-																							@endif
-																							<a href="javascript:;" class="btn {{ $reply->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gusta. {{$reply->peopleThumbsupIt()}}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $reply->thumbsups->count() }}</span></a> &nbsp; 
-																							@if($reply->isMarkedAsBanned())
-																								<!-- Solo los profesores pueden ver esto -->
-																								<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="Marcado como no deseado por {{ $reply->peopleBannedIt() }}"><i class="fa fa-ban"></i></a>
-																							@else
-																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
-																							@endif
-																							@if($comment->isMine())
-																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
-																								<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
-																							@endif
-																						</p>
-																						<div class="todo-text-color">
-																							 {{ $reply->content }}
+															@if(!$comment->isBanned())
+															    <!-- Vista Profesor puede visualizar todos los comentarios -->
+															    <!-- Vista Estudiante solo puede visualizar los comentarios no Banneados -->
+																<?php $comment_user = $comment->author; ?>
+																<?php $attachments = $comment->attachments; ?>
+																<?php $thumbsups = $comment->thumbsups; ?>
+																<?php $replies = $comment->children; ?>
+																<li class="media {{ $comment->isBanned() ? 'banned' : '' }}" data-comment="{{ Hashids::encode($comment->id) }}">
+																	<a class="pull-left" href="javascript:;">
+																	<img class="todo-userpic" src="{{ $comment_user->profile->getAvatar() }}" width="45px" height="45px">
+																	</a>
+																	<div class="media-body todo-comment">
+																		<p class="todo-comment-head">
+																			<span class="todo-comment-username">{{ $comment_user->display_name }}</span> &nbsp; 
+																			<span class="todo-comment-date moment-fromnow">{{ $comment->created_at }}</span> &nbsp; 
+																			@if($attachments->count() > 0)
+																				<?php $attachment = $comment->attachments->first() ?>
+																				<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment-btn" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})" data-attachment="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-paperclip"></i></a> &nbsp; 
+																			@endif
+																			<a href="javascript:;" class="btn {{ $comment->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $thumbsups->count() }} Me gusta. {{ $comment->peopleThumbsupIt() }}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $thumbsups->count() }}</span></a> &nbsp; 
+																			<a href="javascript:;" class="btn font-blue-chambray tooltips comment-reply-btn" data-original-title="{{ $replies->count() }} Respuestas"><i class="fa fa-comments-o"></i> <span class="replies-counter">{{ $replies->count() }}</span></a>
+																			@if($comment->isMine())
+																				<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+																				<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
+																			@else
+																				@if($comment->isMarkedAsBanned())
+																					<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="Marcado como no deseado por {{ $comment->peopleBannedIt() }}."><i class="fa fa-ban"></i></a>
+																				@else
+																					<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
+																				@endif
+																			@endif
+																		</p>
+																		<div class="todo-text-color">
+																			 {{ $comment->content }} <br>
+																		</div>
+																		<div class="children-comments">
+																			@if($replies->count() > 0)
+																				@foreach($replies as $reply)
+																					@if(!$reply->isBanned())
+																						<?php $comment_user = $reply->author; ?>
+																						<?php $attachments = $reply->attachments; ?>
+																						<?php $thumbsups = $reply->thumbsups; ?>
+																						<?php $replies = $reply->children; ?>
+																						<div class="media {{ $reply->isBanned() ? 'banned' : '' }}" data-comment="{{ Hashids::encode($reply->id) }}">
+																							<a class="pull-left" href="javascript:;">
+																							<img class="todo-userpic" src="{{ $comment_user->profile->getAvatar() }}" width="45px" height="45px">
+																							</a>
+																							<div class="media-body">
+																								<p class="todo-comment-head">
+																									<span class="todo-comment-username">{{ $comment_user->display_name }}</span> &nbsp; 
+																									<span class="todo-comment-date moment-fromnow">{{ $reply->created_at }}</span> &nbsp; 
+																									@if($attachments->count() > 0)
+																										<?php $attachment = $reply->attachments->first() ?>
+																										<a href="javascript:;" class="btn font-blue-chambray tooltips download-attachment-btn" data-original-title="Descargar archivo adjunto ({{ $attachment->getSize() }})"  data-attachment="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-paperclip"></i></a> &nbsp; 
+																									@endif
+																									<a href="javascript:;" class="btn {{ $reply->hasThumbsup(Auth::user()->id) ? 'font-blue' : 'font-blue-chambray' }} tooltips comment-like-btn" data-original-title="{{ $reply->thumbsups->count() }} Me gusta. {{$reply->peopleThumbsupIt()}}"><i class="fa fa-thumbs-up"></i> <span class="thumbsups-counter">{{ $reply->thumbsups->count() }}</span></a> &nbsp;
+																									@if($reply->isMine())
+																										<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+																										<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
+																									@else
+																										@if($reply->isMarkedAsBanned())
+																											<!-- Solo los profesores pueden ver esto -->
+																											<a href="javascript:;" class="btn font-red tooltips comment-ban-btn pull-right" data-original-title="Marcado como no deseado por {{ $reply->peopleBannedIt() }}"><i class="fa fa-ban"></i></a>
+																										@else
+																											<a href="javascript:;" class="btn font-grey-silver tooltips comment-ban-btn pull-right" data-original-title="No deseo ver esto"><i class="fa fa-ban"></i></a>
+																										@endif
+																									@endif
+																								</p>
+																								<div class="todo-text-color">
+																									 {{ $reply->content }}
+																								</div>
+																							</div>
 																						</div>
-																					</div>
-																				</div>
-																			@endforeach
-																		@endif															
+																					@endif
+																				@endforeach
+																			@endif															
+																		</div>
 																	</div>
-																</div>
-															</li>
+																</li>
+															@endif
 														@endforeach
 													@else
 														<li class="btn yellow col-md-12 be-firts-comment" style="margin-bottom:15px">Sé el/la primero/a en hacer comentario en esta Discusión</li>
@@ -545,9 +551,11 @@
 					success: function(data){
 						if(data.banned){
 							container.addClass('banned');
+							container.remove();
 							el.attr('data-original-title', 'Marcado como no deseado por ' + data.banneders );
 						}
 						else{
+							container.remove();
 							container.removeClass('banned');
 							el.attr('data-original-title', 'Marcado como no deseado por ' + data.banneders);
 							el.removeClass('font-grey-silver');
@@ -619,7 +627,7 @@
 					data: formData,
 					async: true,
 					success: function(data) {
-
+						console.log(data);
 						reply_html = '' +
 							'<p class="todo-comment-head">' +
 								'<span class="todo-comment-username">' + '{{ Auth::user()->display_name }}' + '</span> &nbsp; ' +
@@ -636,7 +644,7 @@
 						var comment_element = $('div.waiting_comment');
 						comment_element.html(reply_html);
 						comment_element.removeClass('waiting_comment');
-						comment_element.data('comment', data.id);
+						comment_element.parents('div.media').attr('data-comment', data.id);
 
 						var replies_tooltip = comment_element.parents('li.media').children('.media-body').children('.todo-comment-head').children('.comment-reply-btn');
 						var replies = replies_tooltip.children('.replies-counter');

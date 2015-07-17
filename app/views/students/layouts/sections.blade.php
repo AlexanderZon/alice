@@ -1226,7 +1226,7 @@
 				        content.html(html);
 		                Metronic.init();
 		    			// console.log(html);
-		    			console.log('Delete Discussion');
+		    			console.log('Comments Discussion');
 		    		},
 		    		error: function(xhr) {
 		    			console.log(xhr);
