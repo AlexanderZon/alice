@@ -202,29 +202,68 @@
 										</div>
 									</div>
 								</div>
-								<div class="tab-pane" id="tab_2">
-									<p>
-										 Howdy, I'm in Section 2.
-									</p>
-									<p>
-										 Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat. Ut wisi enim ad minim veniam, quis nostrud exerci tation.
-									</p>
+								<div class="tab-pane attachments" id="tab_2">
+									@if($lesson->attachments->count() > 0)
+										@foreach($lesson->attachments as $attachment)
+											<div class="row" style="margin-bottom:5px">
+												<div class="col-md-2">
+													<img src="{{ $attachment->image() }}" width="50px">
+												</div>
+												<div class="col-md-8">
+													{{ $attachment->name }} ({{ $attachment->getSize() }})
+												</div>
+												<div class="col-md-2">
+													<span class="btn blue-madison download-attachment-btn" data-attachment="{{ Crypt::encrypt($attachment->id) }}">Descargar <i class="fa fa-download"></i></span>
+												</div>
+											</div>
+										@endforeach
+									@else
+										<div class="row">
+											<div class="col-md-12">
+												Todavia no hay archivos adjuntos para esta lección
+											</div>
+										</div>
+									@endif
 								</div>
 								<div class="tab-pane" id="tab_3">
-									<p>
-										 Howdy, I'm in Section 3.
-									</p>
-									<p>
-										 Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat
-									</p>
+									@if($lesson->links->count() > 0)
+										@foreach($lesson->links as $link)
+											<div class="row" style="margin-bottom:5px">
+												<div class="col-md-10">
+													{{ $link->title }}
+												</div>
+												<div class="col-md-2">
+													<a href="{{ $link->url }}" target="_blank" class="btn blue-madison">Ir <i class="fa fa-external-link"></i></a>
+												</div>
+											</div>
+										@endforeach
+									@else
+										<div class="row">
+											<div class="col-md-12">
+												Todavia no hay enlace relacionados de esta lección
+											</div>
+										</div>
+									@endif
 								</div>
 								<div class="tab-pane" id="tab_4">
-									<p>
-										 Howdy, I'm in Section 4.
-									</p>
-									<p>
-										 Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat
-									</p>
+									@if($lesson->evaluations->count() > 0)
+										@foreach($lesson->evaluations as $evaluation)
+											<div class="row" style="margin-bottom:5px">
+												<div class="col-md-9">
+													<h4>{{ $evaluation->title }}</h4>
+												</div>
+												<div class="col-md-3">
+													<span class="btn blue-madison evaluation-test-btn" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}">Ir a la actividad <i class="fa fa-flask"></i></span>
+												</div>
+											</div>
+										@endforeach
+									@else
+										<div class="row">
+											<div class="col-md-12">
+												Todavia no hay actividades para esta lección
+											</div>
+										</div>
+									@endif
 								</div>
 							</div>
 						</div>
@@ -881,8 +920,6 @@
 
 			}
 
-
-
 		    var downloadAttachment = function (el) {
 
 		        window.open('{{$route}}/download?attachment=' + el.attr("data-attachment"));
@@ -964,6 +1001,30 @@
 
 		}();
 
+		var AttachmentsManager = function(){
+
+		    var downloadAttachment = function (el) {
+
+		        window.open('{{$route}}/download?attachment=' + el.attr("data-attachment"));
+
+		    }
+
+			return {
+
+				init: function(){
+
+					$('.attachments').on('click', '.download-attachment-btn', function(event) {
+						event.preventDefault();
+						downloadAttachment($(this));
+						/* Act on the event */
+					});
+
+				}
+
+			}
+
+		}();
+
 		/**
 		Todo Module
 		**/
@@ -1031,6 +1092,7 @@
 		ComponentsEditors.init();
 		Todo.init();
 		CommentsManager.init();
+		AttachmentsManager.init();
 		MomentManager.init();
 
 		window.history.pushState("", "", '/curso/{{ $course->name }}?section=lessons&action=viewlesson&lesson_id={{ Hashids::encode($lesson->id) }}');
