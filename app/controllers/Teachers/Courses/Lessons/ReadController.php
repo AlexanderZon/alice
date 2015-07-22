@@ -6,6 +6,7 @@ use \Lesson as Lesson;
 use \Discussion as Discussion;
 use \DiscussionKarma as DiscussionKarma;
 use \Attachment as Attachment;
+use \Link as Link;
 use \User as User;
 use \Input as Input;
 use \Response as Response;
@@ -1197,5 +1198,84 @@ class ReadController extends \Teachers\Courses\ReadController {
 		return self::make('students');
 
 	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /links
+	 *
+	 * @return Response
+	 */
+
+	public function getLinks( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		self::addArgument('module', $lesson->module);
+
+		self::addArgument('lesson', $lesson);
+
+		self::addArgument('links', $lesson->links);
+
+		self::addArgument('course', Course::find(Hashids::decode($course_id)));
+
+		return self::make('links');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /link
+	 *
+	 * @return Response
+	 */
+
+	public function postLink( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+
+		$link = new Link();
+		$link->title = '';
+		$link->url = '';
+		$link->lesson_id = $lesson->id;
+		$link->save();
+		$link->hashids = Hashids::encode($link->id);
+
+		$lesson->hashids = Hashids::encode($lesson->id);
+
+		$args = array(
+			'link' => $link,
+			'lesson' => $lesson,
+			);
+
+		return Response::json($args);
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * PUT /link
+	 *
+	 * @return Response
+	 */
+
+	public function putLink( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+		$link = Link::find(Hashids::decode(Input::get('id')));
+
+		$link->title = Input::get('title');
+		$link->url = Input::get('url');
+		$link->save();
+		$link->hashids = Hashids::encode($link->id);
+
+		$args = array(
+			'link' => $link
+			);
+
+		return Response::json($args);
+
+	}
+
+
 
 }
