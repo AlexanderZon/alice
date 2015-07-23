@@ -73,21 +73,21 @@
 										@endif
 										<!-- <li class="active">
 											<a data-toggle="tab" href="#tab_1-1">
-											<i class="fa fa-link"></i>Primera Pregunta...</a>
+											<i class="fa fa-link"></i>Primera Enlace...</a>
 											<span class="after">
 											</span>
 										</li>
 										<li>
 											<a data-toggle="tab" href="#tab_2-2">
-											<i class="fa fa-link"></i>Segunda Pregunta...</a>
+											<i class="fa fa-link"></i>Segunda Enlace...</a>
 										</li>
 										<li>
 											<a data-toggle="tab" href="#tab_3-3">
-											<i class="fa fa-link"></i>Tercera Pregunta... </a>
+											<i class="fa fa-link"></i>Tercera Enlace... </a>
 										</li>
 										<li>
 											<a data-toggle="tab" href="#tab_4-4">
-											<i class="fa fa-link"></i>Cuarta Pregunta... </a>
+											<i class="fa fa-link"></i>Cuarta Enlace... </a>
 										</li> -->
 									</ul>
 								</div>
@@ -184,7 +184,7 @@
 					data: el.serialize(),
 					success: function(data){
 						$('#lesson-form-loader').addClass('hidden');
-						toastr['success']("Los datos de la actividad han sido modificados con éxito!", "Actividad Modificada");
+						toastr['success']("Los datos de la actividad han sido modificados con éxito!", "Actividad Modificado");
 						console.log(data);
 					},
 					error: function(xhr){
@@ -213,10 +213,10 @@
 						console.log(data);
 						$('#links-form-loader').addClass('hidden');
 						$('#links-list > li > a[href=#link_' + data.link.hashids + '] > span').html(data.link.title.slice(0, 25) + '...');
-						toastr['success']("Los datos de la pregunta han sido modificados con éxito!", "Pregunta Modificada");
+						toastr['success']("Los datos del enlace han sido modificados con éxito!", "Enlace Modificado");
 					},
 					error: function(xhr){
-						toastr['error']("No se han podido guardar los datos de la pregunta", "ERROR");
+						toastr['error']("No se han podido guardar los datos del enlace", "ERROR");
 						console.log(xhr);
 					}
 				});
@@ -226,7 +226,7 @@
 
 				var data = $(el.parents('form')[0]).serialize();
 
-                bootbox.confirm("¿Está usted seguro que desea eliminar esta pregunta?", function(result) {
+                bootbox.confirm("¿Está usted seguro que desea eliminar este enlace?", function(result) {
                 	if(result){
 
 						$('#links-form-loader').removeClass('hidden');
@@ -244,11 +244,11 @@
 								$('div.link-pane').last().addClass('active');
 								$('ul#links-list li').last().addClass('active');
 								console.log(data);
-								toastr['success']("La pregunta ha sido eliminada con éxito!", "Pregunta Eliminada");
+								toastr['success']("El enlace ha sido eliminado con éxito!", "Enlace Eliminada");
                 			},
                 			error: function(xhr){
                 				console.log(xhr);
-								toastr['error']("No se han podido eliminar la pregunta", "ERROR");
+								toastr['error']("No se han podido eliminar el enlace", "ERROR");
                 			}
                 		})
                 	}
@@ -297,12 +297,12 @@
 									'<input type="hidden" name="lesson_id" value="' + data.lesson.hashids + '">' +
 									'<input type="hidden" name="id" value="' + data.link.hashids + '">' +
 									'<div class="form-group">' +
-										'<label class="control-label">Pregunta</label>' +
-										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="link" value="' + data.link.title + '"  required/>' +
+										'<label class="control-label">Nombre</label>' +
+										'<input type="text" placeholder="Indique el nombre del Enlace" class="form-control" name="title" value="' + data.link.title + '"  required/>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="control-label">Palabra</label>' +
-										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="word" value="' + data.link.url + '" maxlength="254" required/>' +
+										'<label class="control-label">URL</label>' +
+										'<input type="text" placeholder="Indique la URL del Enlace" class="form-control" name="url" value="' + data.link.url + '" maxlength="254" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
 										'<div class="btn green submit-link-form">Guardar</div>' +
