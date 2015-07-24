@@ -70,7 +70,7 @@
 								</li>
 								<li style="text-align:center;">
 									<div class="btn" href="#tab_3" data-toggle="tab">
-									Enlaces ({{ '0' }})</div>
+									Enlaces ({{ $lesson->links->count() }})</div>
 								</li>
 								<li style="text-align:center;">
 									<div class="btn" href="#tab_4" data-toggle="tab">
