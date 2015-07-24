@@ -1276,6 +1276,30 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 * DELETE /link
+	 *
+	 * @return Response
+	 */
+
+	public function deleteLink( $course_id = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+		$link = Link::find(Hashids::decode(Input::get('id')));
+
+		$hashids = Hashids::encode($link->id);
+
+		$link->delete();
+
+		$args = array(
+			'hashids' => $hashids
+			);
+
+		return Response::json($args);
+
+	}
+
 
 
 }

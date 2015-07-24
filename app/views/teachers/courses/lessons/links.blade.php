@@ -35,7 +35,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="portlet-title">
 							<h4 class="profile-usertitle-name">Enlaces de la Lección "{{ $lesson->title }}"	
-								<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-activities-back" data-placement="left" data-original-title="Ir al listado de Lecciones" data-course="{{ Hashids::encode($course->id) }}" data-lesson="{{ Hashids::encode($lesson->id) }}">
+								<a href="javascript:;" class="btn blue-madison pull-right tooltips lessons-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones" data-course="{{ Hashids::encode($course->id) }}" data-lesson="{{ Hashids::encode($lesson->id) }}">
 									<i class="fa fa-arrow-left"></i>
 								</a>
 							</h4>
@@ -244,7 +244,7 @@
 								$('div.link-pane').last().addClass('active');
 								$('ul#links-list li').last().addClass('active');
 								console.log(data);
-								toastr['success']("El enlace ha sido eliminado con éxito!", "Enlace Eliminada");
+								toastr['success']("El enlace ha sido eliminado con éxito!", "Enlace Eliminado");
                 			},
                 			error: function(xhr){
                 				console.log(xhr);
