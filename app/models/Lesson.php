@@ -92,6 +92,18 @@ class Lesson extends \Eloquent {
 
     }
 
+    public function countValidLinks(){
+
+        $counter = 0;
+
+        foreach($this->links as $link):
+            if($link->title != '' AND $link->title != null AND $link->url != '' AND $link->url != null) $counter++;
+        endforeach;
+
+        return $counter;
+        
+    }
+
     public function notes(){
 
     	return $this->hasMany('Note','lesson_id');

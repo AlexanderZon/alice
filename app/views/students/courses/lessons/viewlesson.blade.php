@@ -70,7 +70,7 @@
 								</li>
 								<li style="text-align:center;">
 									<div class="btn" href="#tab_3" data-toggle="tab">
-									Enlaces ({{ $lesson->links->count() }})</div>
+									Enlaces ({{ $lesson->countValidLinks() }})</div>
 								</li>
 								<li style="text-align:center;">
 									<div class="btn" href="#tab_4" data-toggle="tab">
@@ -228,14 +228,16 @@
 								<div class="tab-pane" id="tab_3">
 									@if($lesson->links->count() > 0)
 										@foreach($lesson->links as $link)
-											<div class="row" style="margin-bottom:5px">
-												<div class="col-md-10">
-													{{ $link->title }}
+											@if($link->title != '' AND $link->title != null AND $link->url != '' AND $link->url != null)
+												<div class="row" style="margin-bottom:5px">
+													<div class="col-md-10">
+														{{ $link->title }}
+													</div>
+													<div class="col-md-2">
+														<a href="{{ $link->url }}" target="_blank" class="btn blue-madison">Ir <i class="fa fa-external-link"></i></a>
+													</div>
 												</div>
-												<div class="col-md-2">
-													<a href="{{ $link->url }}" target="_blank" class="btn blue-madison">Ir <i class="fa fa-external-link"></i></a>
-												</div>
-											</div>
+											@endif
 										@endforeach
 									@else
 										<div class="row">
