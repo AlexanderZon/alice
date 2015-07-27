@@ -62,6 +62,14 @@ class Lesson extends \Eloquent {
 
     }
 
+    public function validevaluations(){
+
+        return $this->morphMany('Evaluation', 'evaluationable')->where('evaluations.status','=','active')->orderBy('created_at');
+
+        // return $this->hasMany('Evaluation', 'lesson_id');
+
+    }
+
     public function students(){
 
         return $this->belongsToMany('User','user_lessons')->orderBy('created_at','ASC');
@@ -101,7 +109,7 @@ class Lesson extends \Eloquent {
         endforeach;
 
         return $counter;
-        
+
     }
 
     public function notes(){

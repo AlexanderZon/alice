@@ -74,7 +74,7 @@
 								</li>
 								<li style="text-align:center;">
 									<div class="btn" href="#tab_4" data-toggle="tab">
-									Actividades ({{$lesson->evaluations->count()}})</div>
+									Actividades ({{$lesson->validevaluations->count() }})</div>
 								</li>
 							</ul>
 							<div class="tab-content">
@@ -248,8 +248,8 @@
 									@endif
 								</div>
 								<div class="tab-pane" id="tab_4">
-									@if($lesson->evaluations->count() > 0)
-										@foreach($lesson->evaluations as $evaluation)
+									@if($lesson->validevaluations->count() > 0)
+										@foreach($lesson->validevaluations as $evaluation)
 											<div class="row" style="margin-bottom:5px">
 												<div class="col-md-9">
 													<h4>{{ $evaluation->title }}</h4>
