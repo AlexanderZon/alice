@@ -76,7 +76,7 @@
 														{{ $course->getSummary() }}
 													</p>
 													@if($course->iveAccepted())
-														<a class="btn blue" href="{{ $route }}/ver/{{ Hashids::encode($course->id) }}">
+														<a class="btn blue" href="/curso/{{ $course->name }}">
 															Entrar <i class="m-icon-swapright m-icon-white"></i>
 														</a>
 													@elseif($course->ivePostuled())

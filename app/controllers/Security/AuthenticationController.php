@@ -209,13 +209,13 @@ class AuthenticationController extends ReadController {
 			
 			if( $user->save() ):
 
-				\Notification::newStudent($user->name);
-
 				$profile = new \UserProfile();
 				$profile->user_id = $user->id;
 				$profile->save();
+
+				\Event::fire('notification.new_student', array($user));
 	
-				self::setSuccess('security_user_create', 'Usuario Agregado', '' . $user->display_name . ', has sido/a registrado exitosamente. Deberás esperar la confirmación del Coordinador para ingresar al sistema.');
+				self::setSuccess('security_user_create', 'Usuario Agregado', '' . $user->display_name . ', has sido registrado/a exitosamente. Deberás esperar la confirmación del Coordinador para ingresar al sistema.');
 
 				// Audits::add(Auth::user(), $args['msg_success'], 'CREATE');
 

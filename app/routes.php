@@ -112,6 +112,9 @@ if(Auth::check()):
 	Route::controller('/search', '\Users\Search\ReadController');
 	Route::controller('/messages', '\Users\Mails\ReadController');
 	Route::controller('/profile', '\Users\Profile\ReadController');
+	Route::controller('/perfil', '\Users\Profile\ReadController');
+	Route::controller('/notifications', '\Users\Notifications\ReadController');
+	Route::controller('/notificaciones', '\Users\Notifications\ReadController');
 
 	Route::controller('/rpsls', '\Games\RPSLS\ReadController');
 	Route::controller('/hangman', '\Games\Hangman\ReadController');

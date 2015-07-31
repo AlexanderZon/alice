@@ -92,7 +92,9 @@
 											<hr>
 										@endforeach
 									@else
-										Todavia no te has inscrito en ningún curso, te invitamos a hacer una exploracion a Todos los cursos para que puedas optar para entrar a un curso.
+										<h1>¡Bienvenido/a, {{ Auth::user()->display_name }}!</h1>
+										Todavia no te has inscrito en ningún curso, te invitamos a hacer una exploracion a <a href="/cursos">Todos los cursos</a> para que puedas optar para entrar a un curso. 
+										Tambien puedes <a href="/perfil">Personalizar tu Perfil</a>.
 									@endif
 								</div>
 								<!--end col-md-12-->

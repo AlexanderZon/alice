@@ -68,56 +68,42 @@
 									General </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->iveAccepted())
 								<li id="lessons-section" class="{{ $section == 'lessons' ? 'active' : '' }}">
 									<a href="javascript:;" class="lessons-btn">
 									<i class="icon-notebook"></i>
 									Lecciones </a>
 								</li>
-							@endif
-							@if(true)
 								<li id="students-section" class="{{ $section == 'students' ? 'active' : '' }}">
 									<a href="javascript:;" class="students-btn">
 									<i class="icon-graduation"></i>
 									Compañeros </a>
 								</li>
-							@endif
-							@if(true)
 								<li id="discussions-section" class="{{ $section == 'discussions' ? 'active' : '' }}">
 									<a href="javascript:;" class="discussions-btn">
 									<i class="icon-bubbles"></i>
 									Discusiones </a>
 								</li>
-							@endif
-							@if(true)
 								<li id="contributors-section" class="{{ $section == 'contributing' ? 'active' : '' }}">
 									<a href="javascript:;" class="contributors-btn">
 									<i class="icon-eyeglasses"></i>
 									Contribuidores </a>
 								</li>
-							@endif
-							@if(true)
 								<li id="achievements-section" class="{{ $section == 'achievements' ? 'active' : '' }}">
 									<a href="javascript:;" class="achievements-btn">
 									<i class="icon-badge"></i>
 									Premios </a>
 								</li>
-							@endif
-							@if(true)
 								<li id="statistics-section" class="{{ $section == 'statistics' ? 'active' : '' }}">
 									<a href="javascript:;" class="statistics-btn">
 									<i class="icon-graph"></i>
 									Estadísticas </a>
 								</li>
-							@endif
-							@if(true)
 								<li id="questions-section" class="{{ $section == 'questions' ? 'active' : '' }}">
 									<a href="javascript:;" class="questions-btn">
 									<i class="icon-question"></i>
 									Preguntas </a>
 								</li>
-							@endif
-							@if(true)
 								<li id="activities-section" class="{{ $section == 'activities' ? 'active' : '' }}">
 									<a href="javascript:;" class="activities-btn">
 									<i class="icon-chemistry"></i>

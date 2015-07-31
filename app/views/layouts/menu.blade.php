@@ -113,31 +113,36 @@
 						<li class="dropdown dropdown-extended dropdown-inbox" id="header_notification_bar">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 							<i class="icon-bell"></i>
+							<?php Auth::user()->setnotifications(); ?>
 							<?php $new_notifications = Auth::user()->newnotifications->count(); ?>
 							@if($new_notifications > 0)
 								<span class="badge badge-success">{{$new_notifications}} </span>
+							@else
+								<span class="badge">{{$new_notifications}} </span>
 							@endif
 							</a>
 							<ul class="dropdown-menu">
+								<?php $notifications = Auth::user()->notifications()->take(50)->get(); ?>
 								<li class="external">
-									<h3>Tu Tienes<span class="bold"> {{ Auth::user()->notifications->count() }} notificaciones</span> pendientes</h3>
+									<h3>Tu Tienes<span class="bold"> {{ $new_notifications }} Notificaciones</span> pendientes</h3>
 								</li>
 								<li>
 									<ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-										<li>
-											<a href="/me/inbox/{{ Hashids::encode('2') }}">
+										@foreach($notifications as $notification)
+										<li class="{{ $notification->status == 'viewed' ? 'active' : '' }}">
+											<a href="/notifications/go/{{ Crypt::encrypt($notification->id) }}">
 											<span class="photo">
-											<img src="/assets/admin/layout3/img/avatar3.jpg" class="img-circle" alt="">
+											<img src="{{ $notification->picture }}" class="img-circle" alt="">
 											</span>
 											<span class="subject">
-											<span class="from">
-											Richard Doe </span>
-											<span class="time">16 mins </span>
+											<span class="from">{{ $notification->title}}</span>
+											<span class="time moment-fromnow">{{ $notification->created_at }}</span>
 											</span>
-											<span class="message">
-											Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+											<span class="message">{{ $notification->description }} </span>
 											</a>
 										</li>
+										@endforeach
+										<!--
 										<li>
 											<a href="/me/inbox/{{ Hashids::encode('2') }}">
 											<span class="photo">
@@ -234,6 +239,7 @@
 											Storage server failed. </span>
 											</a>
 										</li>
+										-->
 									</ul>
 								</li>
 								<li class="external">
@@ -250,11 +256,15 @@
 							<?php $unreadbox = Auth::user()->unreadbox ?>
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 							<i class="icon-envelope-open"></i>
-							<span class="badge badge-danger"> {{ count($unreadbox)}} </span>
+							@if(count($unreadbox) > 0)
+								<span class="badge badge-danger"> {{ count($unreadbox)}} </span>
+							@else
+								<span class="badge"> {{ count($unreadbox)}} </span>
+							@endif
 							</a>
 							<ul class="dropdown-menu">
 								<li class="external">
-									<h3>Tu Tienes <span class="bold">{{ count($unreadbox)}} Nuevos</span> Mensajes</h3>
+									<h3>Tu Tienes <span class="bold">{{ count($unreadbox)}} Mensajes</span> nuevos</h3>
 									<a href="/messages">ver todos</a>
 								</li>
 								<li>
@@ -347,6 +357,7 @@
 						<li class="separator hide"></li>
 						<!-- BEGIN TODO DROPDOWN -->
 						<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+						<!--
 						<li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 							<i class="icon-pin"></i>
@@ -440,6 +451,7 @@
 								</li>
 							</ul>
 						</li>
+						-->
 						<!-- END TODO DROPDOWN -->
 						<li class="separator hide"></li>
 						<!-- BEGIN LANGUAGE BAR -->

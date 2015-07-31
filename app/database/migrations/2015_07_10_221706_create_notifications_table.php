@@ -23,7 +23,7 @@ class CreateNotificationsTable extends Migration {
 			$table->string('route', 1024);
 			$table->string('title');
 			$table->string('description', 1024);
-			$table->enum('status', array('fired', 'viewed', 'deleted'));
+			$table->enum('status', array('fired', 'catched', 'viewed', 'deleted'))->default('fired');
 			$table->timestamps();
 			$table->softDeletes();
 		});

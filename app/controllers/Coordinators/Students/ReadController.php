@@ -332,6 +332,8 @@ class ReadController extends \Coordinators\ReadController {
 
 		if($student->save()):
 
+			\Event::fire('notification.activate_student', array($student, \Auth::user()));
+
 			self::setSuccess('coordinators_students_activate', 'Estudiante Activado', 'El estudiante ' . $student->display_name . ' fue activado exitósamente');
 
 			return self::go( 'index' );

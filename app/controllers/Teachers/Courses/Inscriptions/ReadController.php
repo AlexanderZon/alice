@@ -74,7 +74,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$inscription->status = 'active';
 		$inscription->save();
 
-		/* NOTIFICATE */
+		\Event::fire('notification.postulation_accepted', array($inscription->student, $course));
 
 		self::addArgument('course', $course);
 
@@ -93,7 +93,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$inscription->status = 'rejected';
 		$inscription->save();
 
-		/* NOTIFICATE */
+		\Event::fire('notification.postulation_declined', array($inscription->student, $course));
 
 		self::addArgument('course', $course);
 

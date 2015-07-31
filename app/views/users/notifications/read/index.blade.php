@@ -1,0 +1,1 @@
+C:\wamp\www\alice\app/views/users/notifications/read/index.blade.php
