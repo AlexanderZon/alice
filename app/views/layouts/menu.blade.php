@@ -55,6 +55,7 @@
 			<!-- END RESPONSIVE MENU TOGGLER -->
 			<!-- BEGIN PAGE ACTIONS -->
 			<!-- DOC: Remove "hide" class to enable the page header actions -->
+			<!--
 			<div class="page-actions">
 				<div class="btn-group">
 					<button type="button" class="btn red-haze btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -88,6 +89,7 @@
 					</ul>
 				</div>
 			</div>
+			-->
 			<!-- END PAGE ACTIONS -->
 			<!-- BEGIN PAGE TOP -->
 			<div class="page-top">
@@ -108,19 +110,50 @@
 						<li class="separator hide"></li>
 						<!-- BEGIN NOTIFICATION DROPDOWN -->
 						<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-						<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+						<li class="dropdown dropdown-extended dropdown-inbox" id="header_notification_bar">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 							<i class="icon-bell"></i>
-							<span class="badge badge-success">
-							7 </span>
+							<?php $new_notifications = Auth::user()->newnotifications->count(); ?>
+							@if($new_notifications > 0)
+								<span class="badge badge-success">{{$new_notifications}} </span>
+							@endif
 							</a>
 							<ul class="dropdown-menu">
 								<li class="external">
-									<h3><span class="bold">12 pending</span> notifications</h3>
-									<a href="/me/notifications">view all</a>
+									<h3>Tu Tienes<span class="bold"> {{ Auth::user()->notifications->count() }} notificaciones</span> pendientes</h3>
 								</li>
 								<li>
 									<ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+										<li>
+											<a href="/me/inbox/{{ Hashids::encode('2') }}">
+											<span class="photo">
+											<img src="/assets/admin/layout3/img/avatar3.jpg" class="img-circle" alt="">
+											</span>
+											<span class="subject">
+											<span class="from">
+											Richard Doe </span>
+											<span class="time">16 mins </span>
+											</span>
+											<span class="message">
+											Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+											</a>
+										</li>
+										<li>
+											<a href="/me/inbox/{{ Hashids::encode('2') }}">
+											<span class="photo">
+											<span class="label label-sm label-icon label-danger">
+											<i class="fa fa-bolt"></i>
+											</span>
+											</span>
+											<span class="subject">
+											<span class="from">
+											Richard Doe </span>
+											<span class="time">16 mins </span>
+											</span>
+											<span class="message">
+											Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+											</a>
+										</li>
 										<li>
 											<a href="javascript:;">
 											<span class="time">3 mins</span>
@@ -202,6 +235,10 @@
 											</a>
 										</li>
 									</ul>
+								</li>
+								<li class="external">
+									<h3>&nbsp;</h3>
+									<a href="/me/notifications">ver todas</a>
 								</li>
 							</ul>
 						</li>

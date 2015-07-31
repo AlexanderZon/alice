@@ -58,6 +58,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		
 	}
 
+	public function newnotifications(){
+
+		return $this->notifications()->where('notifications.status','=','fired');
+		
+	}
+
 	public function hasCapability( $capability ){
 
 		$capabilities = $this->role->capabilities;
