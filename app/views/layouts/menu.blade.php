@@ -20,6 +20,16 @@
 <link href="/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
 @yield('before')
+<style type="text/css">
+	.badge-notification{
+		height: 16px;
+	    line-height: 1;
+	    font-size: 6pt !important;
+	    width: 16px;
+	    padding-left: 3px;
+	    margin-top: -2px;
+	}
+</style>
 
 </head>
 <!-- END HEAD -->
@@ -116,27 +126,27 @@
 							<?php Auth::user()->setnotifications(); ?>
 							<?php $new_notifications = Auth::user()->newnotifications->count(); ?>
 							@if($new_notifications > 0)
-								<span class="badge badge-success">{{$new_notifications}} </span>
+								<span class="badge badge-success notifications-counter">{{$new_notifications}} </span>
 							@else
-								<span class="badge">{{$new_notifications}} </span>
+								<span class="badge notifications-counter">{{$new_notifications}} </span>
 							@endif
 							</a>
 							<ul class="dropdown-menu">
 								<?php $notifications = Auth::user()->notifications()->take(50)->get(); ?>
 								<li class="external">
-									<h3>Tu Tienes<span class="bold"> {{ $new_notifications }} Notificaciones</span> pendientes</h3>
+									<h3>Tu Tienes<span class="bold"> <span class="notifications-counter">{{ $new_notifications }}</span> Notificaciones</span> pendientes</h3>
 								</li>
 								<li>
-									<ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+									<ul class="dropdown-menu-list scroller notifications-dropdown-list" style="height: 250px;" data-handle-color="#637283">
 										@foreach($notifications as $notification)
-										<li class="{{ $notification->status == 'viewed' ? 'active' : '' }}">
+										<li class="{{ $notification->status == 'viewed' ? 'active' : '' }}" data-notification="{{ Hashids::encode($notification->id) }}">
 											<a href="/notifications/go/{{ Crypt::encrypt($notification->id) }}">
 											<span class="photo">
 											<img src="{{ $notification->picture }}" class="img-circle" alt="">
 											</span>
 											<span class="subject">
-											<span class="from">{{ $notification->title}}</span>
-											<span class="time moment-fromnow">{{ $notification->created_at }}</span>
+											<span class="from {{ $notification->status == 'viewed' ? '' : 'active' }}">{{ $notification->icon != '' ? '<span class="badge badge-notification '.$notification->badge.'"><i class="fa '.$notification->icon.'"></i></span>&nbsp;' : '' }}{{ $notification->title}}</span>
+											<span class="time"><span class="moment-fromnow">{{ $notification->created_at }}</span></span>
 											</span>
 											<span class="message">{{ $notification->description }} </span>
 											</a>
@@ -1306,6 +1316,9 @@
 	</div>
 
 @yield('after')
+
+<script type="text/javascript" src="/assets/global/plugins/noty/packaged/jquery.noty.packaged.js"></script>
+<script type="text/javascript" src="/assets/global/scripts/notification.js"></script>
 
 </body>
 <!-- END BODY -->

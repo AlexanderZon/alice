@@ -73,7 +73,7 @@ class Course extends \Eloquent {
 
     public function students(){
 
-    	return ( $this->belongsToMany('User', 'inscriptions')->where('inscriptions.status','=','active'));
+    	return $this->belongsToMany('User', 'inscriptions')->where('inscriptions.status','=','active');
 
     }
 

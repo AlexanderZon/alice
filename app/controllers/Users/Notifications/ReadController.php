@@ -166,4 +166,20 @@ class ReadController extends \BaseController {
 
 	}
 
+	public function postNews(){
+
+		$notifications = Auth::user()->firednotifications;
+		Auth::user()->setnotifications();
+
+		foreach($notifications as $notification):
+
+			$notification->crypt = \Crypt::encrypt($notification->id);
+			$notification->hashids = \Hashids::encode($notification->id);
+
+		endforeach;
+
+		return Response::json($notifications);
+
+	}
+
 }

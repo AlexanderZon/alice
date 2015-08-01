@@ -12,7 +12,8 @@
 			$notification->user_id = $coordinator->id;
 			$notification->notificationable_id = $student->id;
 			$notification->notificationable_type = 'User';
-			$notification->icon = 'fa-plus';
+			$notification->icon = 'fa-user';
+			$notification->badge = 'bg-blue-madison';
 			$notification->picture = $student->profile->getAvatar();
 			$notification->route = '/coordinators/students/inactive';
 			$notification->title = 'Nuevo Estudiante Registrado';
@@ -32,6 +33,8 @@
 		$notification->user_id = $student->id;
 		$notification->notificationable_id = $student->id;
 		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-check';
+		$notification->badge = 'bg-green';
 		$notification->picture = $coordinator->profile->getAvatar();
 		$notification->route = '/';
 		$notification->title = 'Felicidades';
@@ -48,6 +51,8 @@
 		$notification->user_id = $course->teacher->id;
 		$notification->notificationable_id = $student->id;
 		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-user';
+		$notification->badge = 'bg-blue-madison';
 		$notification->picture = $student->profile->getAvatar();
 		$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=inscriptions';
 		$notification->title = 'Nuevo estudiante postulado';
@@ -64,6 +69,8 @@
 		$notification->user_id = $student->id;
 		$notification->notificationable_id = $student->id;
 		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-check';
+		$notification->badge = 'bg-green';
 		$notification->picture = $course->teacher->profile->getAvatar();
 		$notification->route = '/curso/'.$course->name;
 		$notification->title = 'Postulacion Aceptada';
@@ -80,6 +87,8 @@
 		$notification->user_id = $student->id;
 		$notification->notificationable_id = $student->id;
 		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-times';
+		$notification->badge = 'bg-red';
 		$notification->picture = $course->teacher->profile->getAvatar();
 		$notification->route = '/curso/'.$course->name;
 		$notification->title = 'Postulacion Rechazada';

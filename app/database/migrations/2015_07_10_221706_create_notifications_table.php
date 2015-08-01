@@ -19,6 +19,7 @@ class CreateNotificationsTable extends Migration {
 			$table->integer('notificationable_id');
 			$table->string('notificationable_type');
 			$table->string('icon', 64);
+			$table->string('badge');
 			$table->string('picture');
 			$table->string('route', 1024);
 			$table->string('title');
