@@ -31,10 +31,10 @@
 								<div class="col-md-12">Todavia no existen estudiantes inscritos en este curso. Vaya a la sección de Inscripciones para permitir que los estudiantes vean el contenido del curso.</div>
 							@else
 								@foreach($students as $student)
-									<div class="col-md-3 col-sm-4 mix">
+									<div class="col-lg-2 col-md-3 col-sm-4 col-xm-4 mix">
 										<div class="mix-inner">
-											<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" width="200">
-											<div class="mix-details">
+											<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" style="max-width:200px !important">
+											<div class="mix-details" style="max-width:200px !important;">
 												<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $student->last_login }}</span></span>
 												<a href="javascript:;" class="mix-link student-statistics-btn" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}">

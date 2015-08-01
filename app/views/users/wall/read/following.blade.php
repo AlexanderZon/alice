@@ -20,10 +20,10 @@
 			<!-- BEGIN FILTER -->
 				<div class="row mix-grid">
 					@foreach($following as $followed)
-						<div class="col-md-3 col-sm-4 mix">
+						<div class="col-lg-2 col-md-3 col-sm-4 col-xm-4 mix">
 							<div class="mix-inner">
-								<img class="img-responsive" src="{{ $followed->profile->getAvatar() }}" alt="" width="200">
-								<div class="mix-details">
+								<img class="img-responsive" src="{{ $followed->profile->getAvatar() }}" alt="" style="max-width:200px !important">
+								<div class="mix-details" style="max-width:200px !important">
 									<a href="/{{ $followed->username }}" title="Ver perfil de {{ $followed->display_name }}"><h4>{{ $followed->display_name }}</h4></a>
 									@if($followed->id != Auth::user()->id)
 										<a href="javascript:;" class="mix-link follow-follows" data-user="{{ $followed->username }}" title="Seguir a {{ $followed->display_name }}">
