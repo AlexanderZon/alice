@@ -32,7 +32,7 @@
 							@else
 								@foreach($inscriptions as $inscription)
 									<?php $student = $inscription->student; ?>
-									<div class="col-md-3 col-sm-4 col-xm-4 mix">
+									<div class="col-lg-2 col-md-3 col-sm-4 col-xm-4 mix">
 										<div class="mix-inner inscription" data-inscription="{{ Hashids::encode($inscription->id) }}">
 											<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" style="max-width:200px !important">
 											<div class="mix-details" style="max-width:200px !important;">
