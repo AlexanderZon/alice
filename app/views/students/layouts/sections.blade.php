@@ -1566,6 +1566,9 @@
 		            		case 'students':
 		        				initWall($('.students-btn'), 'students');
 		        				break;
+		            		case 'contributors':
+		        				initWall($('.contributors-btn'), 'contributors');
+		        				break;
 		            		case 'discussions':
 		        				initWall($('.discussions-btn'), 'discussions');
 		        				break;

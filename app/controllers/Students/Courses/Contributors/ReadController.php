@@ -1,86 +1,66 @@
 <?php namespace Students\Courses\Contributors;
 
-class ReadController extends \BaseController {
+use \Course as Course;
+use \User as User;
+use \Input as Input;
+use \Hash as Hash;
+use \Hashids as Hashids;
+
+class ReadController extends \Students\Courses\ReadController {
+
+	public function __construct(){
+
+		parent::__construct();
+
+		$this->beforeFilter('auth');
+
+		$this->beforeFilter('capabilities');
+
+		$this->beforeFilter('parameters');
+
+		$this->beforeFilter('arguments');
+
+		$this->afterFilter('auditory'); 
+
+		self::setModule('read');  
+		
+		self::pushViews('contributors');    
+
+		self::pushRoute('contributors');       
+
+		self::setModule('contributors');
+
+		self::pushName('contributors');
+
+		self::addSection('inactive', 'Inactivos');
+
+		self::$title = 'Estudiantes';
+
+		self::$description = 'Gestión de Estudiantes de los Cursos';
+
+		self::pushBreadCrumb('Estudiantes', self::$route );
+
+		# --- Put here your global args for this Controller --- #
+
+	}
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /read
+	 * GET /courses
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function postIndex( $course_name = '' )
 	{
-		//
-	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /read/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+		$course = Course::getByName($course_name);
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /read
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+		self::addArgument('course', $course);
 
-	/**
-	 * Display the specified resource.
-	 * GET /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+		self::addArgument('contributors', $course->contributors);
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /read/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+		return self::make('index');
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }
