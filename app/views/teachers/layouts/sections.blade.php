@@ -1336,6 +1336,48 @@
 
 		    }
 
+		    var achievementsAdd = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+
+		        data = {
+		        	achievement_id: el.data('achievement'),
+		        	student_id: el.parents('ul').data('student'),
+		        }
+
+		        console.log(data);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/achievements/add',
+		    		type: 'POST',
+		    		data: {
+			        	achievement_id: el.data('achievement'),
+			        	student_id: el.parents('ul').data('student'),
+			        },
+		    		async: true,
+		    		success: function(data) {
+		    			container = $($(el.parents('.student-container')).children('.student-achievement').children('.achievements-container')[0]);
+		    			counter = $($(el.parents('.student-container')).children('.student-info').children('ul.list-inline').children('li.list-achievements').children('.achievements-counter')[0]);
+		    			counter.html(parseInt(counter.html()) + 1 );
+		    			console.log(data);
+		    			container.append('' +
+							'<div class="col-md-2" style="padding:0px; padding-right: 5px">' +
+								'<div class="mask-circle tooltips" data-original-title="' + data.user_course_achievement.course_achievement.title + '">' +
+									'<img src="' + data.user_course_achievement.course_achievement.picture + '" alt="" class="img-responsive" style="border-radius:50%">' +
+								'</div>' +
+							'</div>' +
+		    				'');
+		                Metronic.init();
+		    			// console.log(data);
+		    			console.log('Achievements Add');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    var achievementsEdit = function(el){
 
 		    	var course = el.parents('.portlet').data('course');
@@ -1676,6 +1718,11 @@
 		            });
 
 		            /* Achievements Events */
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.achievements-add-btn', function (e) {
+		                achievementsAdd($(this));
+		            });
 
 		            // handle view discussion button click
 		            $('.profile').on('click', '.achievements-edit-btn', function (e) {

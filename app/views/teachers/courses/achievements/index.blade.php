@@ -43,29 +43,35 @@
 							@else
 								<div class="col-md-12">
 								@foreach($students as $student)
-									<div class="col-md-6 portlet-light blog-tag-data" style="    border-left: 5px solid #5b9bd1;margin-bottom: 10px;box-shadow: 1px 1px 3px #5b9bd1;padding-top: 10px;">
-										<div class="col-md-3">
+									<div class="col-md-6 blog-tag-data student-container" style="border-left: 5px solid #5b9bd1;margin-bottom: 10px;box-shadow: 1px 1px 3px #5b9bd1;padding-top: 10px;">
+										<div class="col-md-3 student-info">
+											<?php $student_achievements = $student->achievementFromCourse($course); ?>
 											<div class="mask-circle">
 												<img src="{{ $student->profile->getAvatar() }}" alt="" class="img-responsive" style="border-radius:50%">			
 											</div>
 											<ul class="list-inline">
-												<li>
+												<li class="list-achievements">
 													<i class="fa fa-trophy"></i>
-													{{ $student->achievements()->count() }} Insignias
+													<span class="achievements-counter">{{ count($student_achievements) }}</span> Insignias
 												</li>
-												<li>
+												<li class="list-comments">
 													<i class="fa fa-comments"></i>
-													{{ $student->achievements()->count() }} Comentarios
+													<span class="comments-counter">{{ $student->achievements()->count() }}</span> Comentarios
 												</li>
 											</ul>
 										</div>
-										<div class="col-md-6">
-												<h4>{{$student->display_name}}</h4>
-											<?php $student_achievements = $student->achievementFromCourse($course); ?>
+										<div class="col-md-6 student-achievement">
+											<h4>{{$student->display_name}}</h4>
 											@if(count($student_achievements) > 0)
-												@foreach($student->achievementFromCourse($course) as $achievement)
-													<img src="{{$achievement->image}}" class="img-circle col-md-1">
-												@endforeach
+												<div class="col-md-12 achievements-container">
+													@foreach($student->achievementFromCourse($course) as $achievement)
+														<div class="col-md-2" style="padding:0px; padding-right: 5px">
+															<div class="mask-circle tooltips" data-original-title="{{$achievement->title}}">
+																<img src="{{ $achievement->picture }}" alt="" class="img-responsive" style="border-radius:50%">			
+															</div>
+														</div>
+													@endforeach
+												</div>
 											@else
 												<span>Todavia no tiene insignias de premiación</span>
 											@endif
@@ -74,7 +80,7 @@
 										  <a href="#{{$student->username}}" class="wheel-button" style="background-color:#1ABC9C;background-size:100%;text-decoration:none">+</a>
 										  <ul id="{{$student->username}}" data-student="{{Hashids::encode($student->id)}}" data-angle="all">
 										  	@foreach($achievements as $achievement)
-										    	<li class="item tooltips" data-original-title="{{$achievement->title}}" data-picture="{{$achievement->picture}}"><a href="javascript:;" class="add-achievement-btn" data-achievement="{{Hashids::encode($achievement->id)}}">&nbsp;</a></li>
+										    	<li class="item tooltips" data-original-title="{{$achievement->title}}" data-picture="{{$achievement->picture}}"><a href="javascript:;" class="achievements-add-btn" data-achievement="{{Hashids::encode($achievement->id)}}">&nbsp;</a></li>
 										  	@endforeach
 										  </ul>
 										</div>
