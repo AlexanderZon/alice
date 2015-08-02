@@ -7,7 +7,7 @@ class CourseAchievement extends \Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'course_achivements';
+	protected $table = 'course_achievements';
 
 	protected $fillable = [];
 

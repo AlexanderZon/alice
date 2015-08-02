@@ -121,7 +121,19 @@ class Course extends \Eloquent {
 
     public function achievements(){
 
-    	return $this->hasMany('CourseAchievement', 'course_id');
+        return $this->hasMany('CourseAchievement', 'course_id');
+
+    }
+
+    public function activeachievements(){
+
+    	return $this->achievements()->where('course_achievements.status','=','active');
+
+    }
+
+    public function evaluations(){
+
+        return $this->morphMany('Evaluation', 'evaluationable')->orderBy('created_at');
 
     }
 
@@ -187,7 +199,7 @@ class Course extends \Eloquent {
 
     public function beststudents(){
 
-        return \User::all();
+        return $this->students;
 
     }
 

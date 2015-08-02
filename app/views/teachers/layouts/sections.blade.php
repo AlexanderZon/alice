@@ -264,6 +264,7 @@
 		        loading.show();
 		        content.html(loader);
 		        // toggleButton(el);
+		        console.log(url);
 
 		        $.ajax({
 		            type: "POST",
@@ -1335,6 +1336,58 @@
 
 		    }
 
+		    var achievementsEdit = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/achievements/edit',
+		    		type: 'GET',
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Achievements Edit');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var achievementsBunch = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/achievements/bunch',
+		    		type: 'GET',
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Achievements Bunch');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1610,6 +1663,8 @@
 		                discussionsComments($(this));
 		            });
 
+		            /* Inscriptions Events */
+
 		            // handle view discussion button click
 		            $('.profile').on('click', '.inscriptions-accept-btn', function (e) {
 		                inscriptionsAccept($(this));
@@ -1618,6 +1673,18 @@
 		            // handle view discussion button click
 		            $('.profile').on('click', '.inscriptions-reject-btn', function (e) {
 		                inscriptionsReject($(this));
+		            });
+
+		            /* Achievements Events */
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.achievements-edit-btn', function (e) {
+		                achievementsEdit($(this));
+		            });
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.achievements-bunch-btn', function (e) {
+		                achievementsBunch($(this));
 		            });
 
 		            //handle loading content based on URL parameter
@@ -1665,6 +1732,9 @@
 		        				break;
 		            		case 'inscriptions':
 		        				initWall($('.inscriptions-btn'), 'inscriptions');
+		        				break;
+		            		case 'achievements':
+		        				initWall($('.achievements-btn'), 'achievements');
 		        				break;
 		        			default:
 		        				initWall($('.general-btn'), 'general');
