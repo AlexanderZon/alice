@@ -16,6 +16,20 @@ class Achievement extends \Eloquent {
     protected $dates = ['deleted_at'];
 
    	public static $defaults = array(
+   		'/uploads/achievements/defaults/icon_1.png',
+   		'/uploads/achievements/defaults/icon_2.png',
+   		'/uploads/achievements/defaults/icon_3.png',
+   		'/uploads/achievements/defaults/icon_4.png',
+   		'/uploads/achievements/defaults/icon_5.png',
+   		'/uploads/achievements/defaults/icon_6.png',
+   		'/uploads/achievements/defaults/icon_7.png',
+   		'/uploads/achievements/defaults/icon_8.png',
+   		'/uploads/achievements/defaults/icon_9.png',
+   		'/uploads/achievements/defaults/icon_10.png',
+   		'/uploads/achievements/defaults/icon_11.png',
+   		'/uploads/achievements/defaults/icon_12.png',
+   		'/uploads/achievements/defaults/icon_13.png',
+   		'/uploads/achievements/defaults/icon_14.png',
    		'/uploads/achievements/defaults/iconos_1.png',
    		'/uploads/achievements/defaults/iconos_2.png',
    		'/uploads/achievements/defaults/iconos_3.png',
