@@ -15,9 +15,9 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="portlet-title">
-						<h4 class="profile-usertitle-name">Contribuidores del Curso ({{ $contributors->count() }})
+						<h4 class="profile-usertitle-name">Profesores del Sistema ({{ $teachers->count() }})
 							<a href="javascript:;" class="btn blue-madison pull-right tooltips contributors-add-btn" data-placement="left" data-original-title="Añadir Contribuidores">
-								<i class="fa fa-plus"></i>
+								<i class="fa fa-arrow-left"></i>
 							</a> 
 						</h4>
 					</div>
@@ -27,20 +27,20 @@
 				
 						<!-- BEGIN FILTER -->
 						<div class="row mix-grid">
-							@if($contributors->count() == 0)
-								<div class="col-md-12">Todavia no existen contribuidores asignados en este curso. Invite a un profesor para que sea contribuidor de este curso.</div>
+							@if($teachers->count() == 0)
+								<div class="col-md-12">Todavia no existen otros profesores.</div>
 							@else
-								@foreach($contributors as $contributor)
+								@foreach($teachers as $teacher)
 									<div class="col-md-3 col-sm-4 mix">
 										<div class="mix-inner">
-											<img class="img-responsive" src="{{ $contributor->profile->getAvatar() }}" alt="" width="200">
+											<img class="img-responsive" src="{{ $teacher->profile->getAvatar() }}" alt="" width="200">
 											<div class="mix-details">
-												<a href="/{{ $contributor->username }}" class="" title="Ver perfil de {{ $contributor->display_name }}"><h4>{{ $contributor->display_name }}</h4></a>
+												<a href="/{{ $teacher->username }}" class="" title="Ver perfil de {{ $teacher->display_name }}"><h4>{{ $teacher->display_name }}</h4></a>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $user->last_login }}</span></span>
-												<a href="javascript:;" class="mix-link contributor-statistics-btn" title="Estadísticas de {{ $contributor->display_name }} para este curso" data-user="{{ Hashids::encode($contributor->id) }}">
+												<a href="javascript:;" class="mix-link contributor-statistics-btn" title="Estadísticas de {{ $teacher->display_name }} para este curso" data-user="{{ Hashids::encode($teacher->id) }}">
 													<i class="fa fa-comments-o"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="/{{ $contributor->username }}" title="Ver perfil de {{ $contributor->display_name }}" data-rel="fancybox-button">
+												<a class="mix-preview fancybox-button" href="/{{ $teacher->username }}" title="Ver perfil de {{ $teacher->display_name }}" data-rel="fancybox-button">
 													<i class="fa fa-eye"></i>
 												</a>
 											</div>
@@ -59,7 +59,7 @@
 
 <script type="text/javascript">
 	
-	window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=contributors');
+	window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=contributors&action=add');
 		document.title = 'Alice | {{ $course->title }} | Contribuidores';
 
 </script>

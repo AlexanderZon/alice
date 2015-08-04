@@ -171,6 +171,8 @@ class ReadController extends \Coordinators\ReadController {
 				$profile = new UserProfile();
 				$profile->user_id = $teacher->id;
 				$profile->save();
+
+				\Event::fire('notification.new_teacher', array($teacher));
 	
 				self::setSuccess('coordinators_teachers_create', 'Profesor Agregado', 'El profesor ' . $teacher->display_name . ' fue agregado exitósamente');
 

@@ -1430,6 +1430,32 @@
 
 		    }
 
+		    var contributorsAdd = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/contributors/add',
+		    		type: 'GET',
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Contributors Add');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1703,6 +1729,13 @@
 		            // handle view discussion button click
 		            $('.profile').on('click', '.discussion-comments', function (e) {
 		                discussionsComments($(this));
+		            });
+
+		            /* Contributors Events */
+
+		            // handle add contributors button click
+		            $('.profile').on('click', '.contributors-add-btn', function (e) {
+		                contributorsAdd($(this));
 		            });
 
 		            /* Inscriptions Events */

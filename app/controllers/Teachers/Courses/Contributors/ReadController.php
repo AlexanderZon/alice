@@ -63,4 +63,24 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 * GET /courses
+	 *
+	 * @return Response
+	 */
+	public function getAdd( $course_id = '' )
+	{
+		$course = Course::find(Hashids::decode($course_id));
+
+		self::addArgument('course', $course);
+
+		self::addArgument('teachers', $course->noncontributors());
+
+		return self::make('add');
+
+	}
+
+
+
 }

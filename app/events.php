@@ -92,7 +92,43 @@
 		$notification->picture = $course->teacher->profile->getAvatar();
 		$notification->route = '/curso/'.$course->name;
 		$notification->title = 'Postulacion Rechazada';
-		$notification->description = 'Tu solicitudpara entrar al curso '.$course->title.' ha sido rechazada';
+		$notification->description = 'Tu solicitud para entrar al curso '.$course->title.' ha sido rechazada';
+		$notification->save();
+
+		return true;
+
+	});
+
+	Event::listen('notification.new_teacher', function($teacher){
+
+		$notification = new Notification();
+		$notification->user_id = $teacher->id;
+		$notification->notificationable_id = $teacher->id;
+		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-check';
+		$notification->badge = 'bg-green';
+		$notification->picture = Auth::user()->profile->getAvatar();
+		$notification->route = '/';
+		$notification->title = 'Bienvenido';
+		$notification->description = 'Bienvenido profesor/a'. $teacher->display_name. '.';
+		$notification->save();
+
+		return true;
+
+	});
+
+	Event::listen('notification.course_assigned', function($teacher, $course){
+
+		$notification = new Notification();
+		$notification->user_id = $teacher->id;
+		$notification->notificationable_id = $teacher->id;
+		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-book';
+		$notification->badge = 'bg-green-haze';
+		$notification->picture = Auth::user()->profile->getAvatar();
+		$notification->route = '/courses/show/'.Hashids::encode($course->name);
+		$notification->title = 'Curso Asignado';
+		$notification->description = $teacher->display_name . ' has sido asignado como profesor del curso ' . $course->title;
 		$notification->save();
 
 		return true;

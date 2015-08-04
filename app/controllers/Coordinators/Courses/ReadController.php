@@ -140,6 +140,10 @@ class ReadController extends \Coordinators\ReadController {
 			$course->main_picture = Input::file('main_picture') != null ? Course::uploadMainPicture( Input::file('main_picture'), $name ) : '';
 			$course->cover_picture = Input::file('cover_picture') != null ? Course::uploadCoverPicture( Input::file('cover_picture'), $name ) : '';
 			$course->thumbnail_picture = Input::file('thumbnail_picture') != null ? Course::uploadThumbnailPicture( Input::file('thumbnail_picture'), $name ) : '';
+
+			$teacher = User::find(Input::get('author_id'));
+
+			\Event::fire('notification.course_assigned', array($teacher, $course));
 			
 			if( $course->save() ):
 	
@@ -202,10 +206,11 @@ class ReadController extends \Coordinators\ReadController {
 			return self::go( 'create' );
 
 		else:
-
-			// dd(Input::file('main_picture'));
-
-			// dd(Course::uploadMainPicture( Input::file('main_picture'), $course->name ));
+			
+			if(Input::get('author_id') != $course->author_id):
+				$teacher = User::find(Input::get('author_id'));
+				\Event::fire('notification.course_assigned', array($teacher, $course));
+			endif;
 
 			$course->author_id = Input::get('author_id');
 			$course->title = Input::get('title');

@@ -35,6 +35,28 @@ class Course extends \Eloquent {
 
     }
 
+    public function noncontributors(){
+
+        if( $role = Role::getByName( 'teacher' ) ):
+
+            $users = User::where( 'role_id', '=', $role->id )->where( 'status', '=', 'active' );
+
+            foreach($this->contributors as $contributor):
+                $users = $users->where('id','!=',$contributor->id);
+            endforeach;
+
+            $users = $users->where('id','!=',$this->author_id);
+
+            return $users->get();
+
+        else:
+
+            return false;
+
+        endif;
+
+    }
+
     public function teacher(){
 
     	return $this->belongsTo('User','author_id');
