@@ -31,12 +31,12 @@
 								<div class="col-md-12">Todavia no existen contribuidores asignados en este curso. Invite a un profesor para que sea contribuidor de este curso.</div>
 							@else
 								@foreach($contributors as $contributor)
-									<div class="col-md-3 col-sm-4 mix">
+									<div class="col-lg-2 col-md-3 col-sm-4 col-xm-4 mix contributor-container" data-contributor="{{ Hashids::encode($contributor->id) }}">
 										<div class="mix-inner">
-											<img class="img-responsive" src="{{ $contributor->profile->getAvatar() }}" alt="" width="200">
-											<div class="mix-details">
+											<img class="img-responsive" src="{{ $contributor->profile->getAvatar() }}" alt="" style="max-width:200px !important">
+											<div class="mix-details" style="max-width:200px !important;">
 												<a href="/{{ $contributor->username }}" class="" title="Ver perfil de {{ $contributor->display_name }}"><h4>{{ $contributor->display_name }}</h4></a>
-												<span href="/">Última visita: <span class="moment-fromnow">{{ $user->last_login }}</span></span>
+												<span href="/">Última visita: <span class="moment-fromnow">{{ $contributor->last_login }}</span></span>
 												<a href="javascript:;" class="mix-link contributor-statistics-btn" title="Estadísticas de {{ $contributor->display_name }} para este curso" data-user="{{ Hashids::encode($contributor->id) }}">
 													<i class="fa fa-comments-o"></i>
 												</a>

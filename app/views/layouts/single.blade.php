@@ -88,7 +88,7 @@
 			<!-- BEGIN LOGO -->
 			<div class="page-logo">
 				<a href="/">
-				<img src="/assets/admin/layout4/img/logo-light.png" alt="logo" class="logo-default"/>
+				<img src="/assets/images/logo_main.png" alt="logo" class="logo-default" style="width:auto; height: 51px" />
 				</a>
 				<div class="menu-toggler sidebar-toggler">
 					<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->

@@ -71,13 +71,23 @@ class ReadController extends \Teachers\ReadController {
 	public function getShow( $id )
 	{
 
-		self::addArgument('hashid', $id);
+		$course = Course::find(Hashids::decode($id));
 
-		self::addArgument('course', Course::find(Hashids::decode($id)));
-		
-		self::addArgument('sidebar_closed', true);
+		if($course->author_id == Auth::user()->id):
 
-		return self::make('show');
+			self::addArgument('hashid', $id);
+
+			self::addArgument('course', $course);
+			
+			self::addArgument('sidebar_closed', true);
+
+			return self::make('show');
+
+		else:
+
+			return \View::make('security.auth.404');
+
+		endif;
 
 	}
 

@@ -126,9 +126,81 @@
 		$notification->icon = 'fa-book';
 		$notification->badge = 'bg-green-haze';
 		$notification->picture = Auth::user()->profile->getAvatar();
-		$notification->route = '/courses/show/'.Hashids::encode($course->name);
+		$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id);
 		$notification->title = 'Curso Asignado';
 		$notification->description = $teacher->display_name . ' has sido asignado como profesor del curso ' . $course->title;
+		$notification->save();
+
+		return true;
+
+	});
+
+	Event::listen('notification.contributor_invite', function($teacher, $course){
+
+		$notification = new Notification();
+		$notification->user_id = $teacher->id;
+		$notification->notificationable_id = $teacher->id;
+		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-paper-plane';
+		$notification->badge = 'bg-blue-madison';
+		$notification->picture = Auth::user()->profile->getAvatar();
+		$notification->route = 'teachers/contributions/show/'.Hashids::encode($course->id);
+		$notification->title = 'Invitacion para ser Contribuidor';
+		$notification->description = $teacher->display_name . ' has sido invitado a ser contribuidor del curso ' . $course->title;
+		$notification->save();
+
+		return true;
+
+	});
+
+	Event::listen('notification.contributor_accept', function($teacher, $course){
+
+		$notification = new Notification();
+		$notification->user_id = $course->author_id;
+		$notification->notificationable_id = $course->author_id;
+		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-paper-plane';
+		$notification->badge = 'bg-green';
+		$notification->picture = Auth::user()->profile->getAvatar();
+		$notification->route = 'teachers/courses/show/'.Hashids::encode($course->id).'?section=contributors';
+		$notification->title = 'Invitacion de Contribuidor Aceptada';
+		$notification->description = $teacher->display_name . ' ha aceptado tu invitación para ser contribuidor del curso ' . $course->title;
+		$notification->save();
+
+		return true;
+
+	});
+
+	Event::listen('notification.contributor_denied', function($teacher, $course){
+
+		$notification = new Notification();
+		$notification->user_id = $course->author_id;
+		$notification->notificationable_id = $course->author_id;
+		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-paper-plane';
+		$notification->badge = 'bg-red';
+		$notification->picture = Auth::user()->profile->getAvatar();
+		$notification->route = 'teachers/courses/show/'.Hashids::encode($course->id).'?section=contributors';
+		$notification->title = 'Invitacion de Contribuidor Denegada';
+		$notification->description = $teacher->display_name . ' ha declinado tu invitación para ser contribuidor del curso ' . $course->title;
+		$notification->save();
+
+		return true;
+
+	});
+
+	Event::listen('notification.contributor_active', function($teacher, $course){
+
+		$notification = new Notification();
+		$notification->user_id = $teacher->id;
+		$notification->notificationable_id = $teacher->id;
+		$notification->notificationable_type = 'User';
+		$notification->icon = 'fa-paper-plane';
+		$notification->badge = 'bg-blue-madison';
+		$notification->picture = Auth::user()->profile->getAvatar();
+		$notification->route = 'teachers/contributions/show/'.Hashids::encode($course->id);
+		$notification->title = 'Eres un Contribuidor';
+		$notification->description = $teacher->display_name . ' ya formas parte de los contribuidores del curso ' . $course->title;
 		$notification->save();
 
 		return true;

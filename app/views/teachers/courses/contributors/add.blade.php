@@ -16,7 +16,7 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="portlet-title">
 						<h4 class="profile-usertitle-name">Profesores del Sistema ({{ $teachers->count() }})
-							<a href="javascript:;" class="btn blue-madison pull-right tooltips contributors-add-btn" data-placement="left" data-original-title="Añadir Contribuidores">
+							<a href="javascript:;" class="btn blue-madison pull-right tooltips contributors-back-btn" data-placement="left" data-original-title="Añadir Contribuidores">
 								<i class="fa fa-arrow-left"></i>
 							</a> 
 						</h4>
@@ -31,14 +31,14 @@
 								<div class="col-md-12">Todavia no existen otros profesores.</div>
 							@else
 								@foreach($teachers as $teacher)
-									<div class="col-md-3 col-sm-4 mix">
+									<div class="col-lg-2 col-md-3 col-sm-4 col-xm-4 mix contributor-container" data-contributor="{{ Hashids::encode($teacher->id) }}">
 										<div class="mix-inner">
-											<img class="img-responsive" src="{{ $teacher->profile->getAvatar() }}" alt="" width="200">
-											<div class="mix-details">
+											<img class="img-responsive" src="{{ $teacher->profile->getAvatar() }}" alt="" style="max-width:200px !important">
+											<div class="mix-details" style="max-width:200px !important;">
 												<a href="/{{ $teacher->username }}" class="" title="Ver perfil de {{ $teacher->display_name }}"><h4>{{ $teacher->display_name }}</h4></a>
-												<span href="/">Última visita: <span class="moment-fromnow">{{ $user->last_login }}</span></span>
-												<a href="javascript:;" class="mix-link contributor-statistics-btn" title="Estadísticas de {{ $teacher->display_name }} para este curso" data-user="{{ Hashids::encode($teacher->id) }}">
-													<i class="fa fa-comments-o"></i>
+												<span href="/">Última visita: <span class="moment-fromnow">{{ $teacher->last_login }}</span></span>
+												<a href="javascript:;" class="mix-link contributors-invite-btn" title="Invitar a {{ $teacher->display_name }} a ser Contribuidor de este curso" data-teacher="{{ Hashids::encode($teacher->id) }}">
+													<i class="fa fa-paper-plane-o"></i>
 												</a>
 												<a class="mix-preview fancybox-button" href="/{{ $teacher->username }}" title="Ver perfil de {{ $teacher->display_name }}" data-rel="fancybox-button">
 													<i class="fa fa-eye"></i>

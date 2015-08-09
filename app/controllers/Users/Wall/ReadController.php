@@ -141,6 +141,9 @@ class ReadController extends \BaseController {
 				case 'teaching':
 					self::addArgument('courses', $user->teaching()->paginate(10));
 					break;
+				case 'contributing':
+					self::addArgument('courses', $user->contributions()->paginate(10));
+					break;
 				case 'discussions':
 					self::addArgument('discussions',$user->discussionsfromcourses);
 					break;

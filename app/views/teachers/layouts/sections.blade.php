@@ -1,10 +1,18 @@
 @extends ('layouts.master')
 
+<!-- BEGIN CSS -->
 @section('css')
+	
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
+	<!-- END PAGE LEVEL STYLES -->
 
+	<!-- BEGIN CONTENT-CSS -->
 	@yield('content_css')
+	<!-- END CONTENT-CSS -->
 
 @stop
+<!-- END CSS -->
 
 @section('toolbar')
 	
@@ -46,9 +54,20 @@
 					<!-- END SIDEBAR USER TITLE -->
 					<!-- SIDEBAR BUTTONS -->
 					<div class="profile-userbuttons">
-						
-						<!-- <a href="javascript:;" type="button" class="btn btn-large green-haze btn-sm follow-btn {{ ($course->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-up"></i> Seguir</a>
-						<a href="javascript:;" type="button" class="btn btn-large btn-danger btn-sm unfollow-btn {{ (!$course->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-down"></i> Dejar de Seguir</a> -->
+						@if($course->isContributor(Auth::user()))
+							@if($course->contributionstatus(Auth::user()) == 'inactive')
+								<div class="row contributors-invitation-container" data-course="{{ Hashids::encode($course->id) }}">
+									<div class="col-md-12">
+										<a href="javascript:;" type="button" class="btn btn-large green-haze btn-sm contributors-accept-btn {{ ($course->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-check"></i> Aceptar Invitación</a>
+									</div>
+									<div class="col-md-12 ">&nbsp;</div>
+									<div class="col-md-12">
+										<a href="javascript:;" type="button" class="btn btn-large btn-danger btn-sm contributors-deny-btn {{ (!$course->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-times"></i> Denegar Invitación</a>
+									</div>
+								</div>
+							@endif
+						@endif
+										
 
 					</div>
 					<div class="profile-userbuttons">
@@ -68,63 +87,63 @@
 									General </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->author_id == Auth::user()->id)
 								<li id="lessons-section" class="{{ $section == 'lessons' ? 'active' : '' }}">
 									<a href="javascript:;" class="lessons-btn">
 									<i class="icon-notebook"></i>
 									Lecciones </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->author_id == Auth::user()->id)
 								<li id="students-section" class="{{ $section == 'students' ? 'active' : '' }}">
 									<a href="javascript:;" class="students-btn">
 									<i class="icon-graduation"></i>
 									Estudiantes </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->author_id == Auth::user()->id OR $course->contributionStatus(Auth::user()) == 'active')
 								<li id="discussions-section" class="{{ $section == 'discussions' ? 'active' : '' }}">
 									<a href="javascript:;" class="discussions-btn">
 									<i class="icon-bubbles"></i>
 									Discusiones </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->author_id == Auth::user()->id)
 								<li id="contributors-section" class="{{ $section == 'contributing' ? 'active' : '' }}">
 									<a href="javascript:;" class="contributors-btn">
 									<i class="icon-eyeglasses"></i>
 									Contribuidores </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->author_id == Auth::user()->id)
 								<li id="achievements-section" class="{{ $section == 'achievements' ? 'active' : '' }}">
 									<a href="javascript:;" class="achievements-btn">
 									<i class="icon-badge"></i>
 									Premiaciones </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->author_id == Auth::user()->id)
 								<li id="statistics-section" class="{{ $section == 'statistics' ? 'active' : '' }}">
 									<a href="javascript:;" class="statistics-btn">
 									<i class="icon-graph"></i>
 									Estadísticas </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->author_id == Auth::user()->id)
 								<li id="inscriptions-section" class="{{ $section == 'inscriptions' ? 'active' : '' }}">
 									<a href="javascript:;" class="inscriptions-btn">
 									<i class="icon-user-following"></i>
 									Inscripciones </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->author_id == Auth::user()->id)
 								<li id="questions-section" class="{{ $section == 'questions' ? 'active' : '' }}">
 									<a href="javascript:;" class="questions-btn">
 									<i class="icon-question"></i>
 									Preguntas </a>
 								</li>
 							@endif
-							@if(true)
+							@if($course->author_id == Auth::user()->id)
 								<li id="activities-section" class="{{ $section == 'activities' ? 'active' : '' }}">
 									<a href="javascript:;" class="activities-btn">
 									<i class="icon-chemistry"></i>
@@ -174,10 +193,30 @@
 
 @section('javascripts')
 
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="/assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+	<!-- END PAGE LEVEL SCRIPTS -->
+	<!-- BEGIN CONTENT JAVASCRIPTS -->
 	@yield('content_javascripts')
+	<!-- END CONTENT JAVASCRIPTS -->
 	
 	<!-- END PAGE LEVEL SCRIPTS -->
 	<script type="text/javascript">
+
+		toastr.options = {
+		  "closeButton": true,
+		  "debug": false,
+		  "positionClass": "toast-top-right",
+		  "onclick": null,
+		  "showDuration": "1000",
+		  "hideDuration": "1000",
+		  "timeOut": "5000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}
 
 		var Wall = function () {
 
@@ -1456,6 +1495,99 @@
 
 		    }
 
+		    var contributorsInvite = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+		    	var teacher = el.data('teacher');
+		    	var container = el.parents('.contributor-container');
+
+		    	container.html('<img src="/assets/loaders/rubiks-cube.gif" class="col-md-12"/>');
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/contributors/invite',
+		    		type: 'POST',
+		    		async: true,
+		    		data: {
+		    			teacher_id: teacher
+		    		},
+		    		success: function(html) {
+
+				        loading.hide();
+		                Metronic.init();
+		    			container.remove();
+						toastr['success']("La Invitación ha sido enviada con éxito", "Invitación Enviada");
+		    			console.log('Contributors Add');
+		    		},
+		    		error: function(xhr) {
+						toastr['error']("No se han podido enviar la Invitación", "ERROR");
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var contributorsAccept = function(el){
+
+		    	var course = el.parents('.contributors-invitation-container').data('course');
+		    	var teacher = el.data('teacher');
+		    	var container = el.parents('.contributors-invitation-container');
+
+		    	container.html('<img src="/assets/loaders/rubiks-cube.gif" class="col-md-12"/>');
+
+		    	$.ajax({
+		    		url: '{{$route}}/accept/' + course,
+		    		type: 'POST',
+		    		async: true,
+		    		data: {
+		    			teacher_id: teacher
+		    		},
+		    		success: function(html) {
+
+				        loading.hide();
+		                Metronic.init();
+		    			container.html('');
+						toastr['success']("La Invitación ha sido aceptada con éxito", "Invitación Aceptada");
+		    			console.log('Contributors Add');
+		    		},
+		    		error: function(xhr) {
+						toastr['error']("No se han podido enviar la Invitación", "ERROR");
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var contributorsDeny = function(el){
+
+		    	var course = el.parents('.contributors-invitation-container').data('course');
+		    	var teacher = el.data('teacher');
+		    	var container = el.parents('.contributors-invitation-container');
+
+		    	container.html('<img src="/assets/loaders/rubiks-cube.gif" class="col-md-12"/>');
+
+		    	$.ajax({
+		    		url: '{{$route}}/deny/' + course,
+		    		type: 'POST',
+		    		async: true,
+		    		data: {
+		    			teacher_id: teacher
+		    		},
+		    		success: function(html) {
+
+				        loading.hide();
+		                Metronic.init();
+		    			container.html('');
+						toastr['success']("La Invitación ha sido denegada con éxito", "Invitación Denegada");
+		    			console.log('Contributors Add');
+		    		},
+		    		error: function(xhr) {
+						toastr['error']("No se han podido enviar la Invitación", "ERROR");
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1738,6 +1870,21 @@
 		                contributorsAdd($(this));
 		            });
 
+		            // handle add contributors button click
+		            $('.profile').on('click', '.contributors-invite-btn', function (e) {
+		                contributorsInvite($(this));
+		            });
+
+		            // handle add contributors button click
+		            $('.profile').on('click', '.contributors-accept-btn', function (e) {
+		                contributorsAccept($(this));
+		            });
+
+		            // handle add contributors button click
+		            $('.profile').on('click', '.contributors-deny-btn', function (e) {
+		                contributorsDeny($(this));
+		            });
+
 		            /* Inscriptions Events */
 
 		            // handle view discussion button click
@@ -1815,6 +1962,9 @@
 		        				break;
 		            		case 'achievements':
 		        				initWall($('.achievements-btn'), 'achievements');
+		        				break;
+		            		case 'contributors':
+		        				initWall($('.contributors-btn'), 'contributors');
 		        				break;
 		        			default:
 		        				initWall($('.general-btn'), 'general');

@@ -249,7 +249,7 @@
 						console.log(data);
 					},
 					error: function(xhr){
-						toastr['error']("No se han podido guardar los datos de la actividad", "ERROR")
+						toastr['error']("No se han podido guardar los datos de la actividad", "ERROR");
 						console.log(xhr);
 					}
 				});

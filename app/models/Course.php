@@ -31,7 +31,51 @@ class Course extends \Eloquent {
 
     public function contributors(){
 
-    	return $this->belongsToMany('User', 'contributors', 'course_id', 'user_id');
+        return $this->belongsToMany('User', 'contributors', 'course_id', 'user_id')->where('contributors.deleted_at','=',null);
+
+    }
+
+    public function contributions(){
+
+        return $this->hasMany('Contributor', 'course_id')->where('contributors.deleted_at','=',null);
+
+    }
+
+    public function contributionOf($teacher){
+
+        $contrib = false;
+
+        foreach($this->contributions as $contribution):
+            if($contribution->user_id == $teacher->id):
+                $contrib = $contribution;
+            endif;
+        endforeach;
+
+        return $contrib;
+
+    }
+
+
+    public function contributionStatus($teacher){
+
+        if(($contribution = $this->contributionOf($teacher)) != false) return $contribution->status;
+
+        return false;
+
+    }
+
+
+    public function isContributor($teacher){
+
+        $bool = false;
+
+        foreach($this->contributors as $contributor):
+            if($contributor->id == $teacher->id):
+                $bool = true;
+            endif;
+        endforeach;
+
+    	return $bool;
 
     }
 

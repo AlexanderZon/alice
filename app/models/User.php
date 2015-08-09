@@ -155,7 +155,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function contributions(){
 
-		return $this->belongsToMany('Course', 'contributors');
+		return $this->belongsToMany('Course', 'contributors')->where('contributors.deleted_at','=',null);
 
 	}
 

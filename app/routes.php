@@ -67,6 +67,8 @@ if(Auth::check()):
 			Route::controller('/teachers/courses/{course_id}/statistics', '\Teachers\Courses\Statistics\ReadController');
 			Route::controller('/teachers/courses/{course_id}/students', '\Teachers\Courses\Students\ReadController');
 			Route::controller('/teachers/courses', '\Teachers\Courses\ReadController');
+			Route::controller('/teachers/contributions/{course_id}/discussions', '\Teachers\Contributions\Discussions\ReadController');
+			Route::controller('/teachers/contributions/{course_id}/general', '\Teachers\Contributions\General\ReadController');
 			Route::controller('/teachers/contributions', '\Teachers\Contributions\ReadController');
 			Route::controller('/teachers', '\Teachers\ReadController');
 
