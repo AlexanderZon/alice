@@ -1966,6 +1966,9 @@
 		            		case 'contributors':
 		        				initWall($('.contributors-btn'), 'contributors');
 		        				break;
+		            		case 'statistics':
+		        				initWall($('.statistics-btn'), 'statistics');
+		        				break;
 		        			default:
 		        				initWall($('.general-btn'), 'general');
 		        				break;

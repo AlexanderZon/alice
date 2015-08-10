@@ -54,7 +54,39 @@ class ReadController extends \Teachers\Courses\ReadController {
 	public function postIndex( $course_id = '' )
 	{
 
-		self::addArgument('statistics', Course::find(Hashids::decode($course_id)));
+		$course = Course::find(Hashids::decode($course_id));
+
+		$students = $course->students;
+
+		$statistics = array();
+
+		foreach($students as $student):
+
+			$student->comments = $course->discussionsOf($student);
+
+			$student->likes = 0;
+
+			foreach($student->comments as $comment):
+				$student->likes += $comment->thumbsups->count();
+			endforeach;
+
+			$student->average = $course->averageOf($student);
+
+			$statistics[] = array(
+				"student" => $student->display_name,
+				"likes" => $student->likes,
+				"comments" => count($student->comments),
+				"average" => $student->average,
+				"achievements" => count($student->achievementFromCourse($course))
+				);
+
+		endforeach;
+
+		self::addArgument('course', $course);
+
+		self::addArgument('students', $students);
+
+		self::addArgument('statistics', json_encode($statistics));
 
 		return self::make('index');
 

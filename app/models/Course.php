@@ -203,11 +203,55 @@ class Course extends \Eloquent {
 
     }
 
+    public function discussionsOf($user){
+
+        $results = array();
+        $counter = 0;
+
+        foreach($this->lessons as $lesson):
+            if($lesson->discussions->count() > 0 ):
+                foreach($lesson->discussions as $discussion):
+                    if($discussion->user_id == $user->id) $results[] = $discussion; $counter++;
+                    if($discussion->children->count() > 0 ):
+                        foreach($discussion->children as $child):
+                            if($child->user_id == $user->id) $results[] = $child; $counter++;
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
+        endforeach;
+
+        foreach($this->discussions as $discussion):
+            if($discussion->user_id == $user->id) $results[] = $discussion; $counter++;
+            if($discussion->children->count() > 0 ):
+                foreach($discussion->children as $child):
+                    if($child->user_id == $user->id) $results[] = $child; $counter++;
+                    if($child->children->count() > 0 ):
+                        foreach($child->children as $grandchild):
+                            if($grandchild->user_id == $user->id) $results[] = $grandchild; $counter++;
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
+        endforeach;
+
+        return $results;
+
+    }
+
     public function average(){
 
         # CODE: Average Calculating
 
-        return '0%';
+        return 0;
+
+    }
+
+    public function averageOf($student){
+
+        # CODE: Average Calculating
+
+        return 0;
 
     }
 
