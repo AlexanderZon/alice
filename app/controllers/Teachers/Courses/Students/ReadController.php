@@ -64,4 +64,18 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	}
 
+	public function getStatistics( $course_id = '' ){
+
+		$course = Course::find(Hashids::decode($course_id));
+
+		$student = User::find(Hashids::decode(Input::get('student_id')));
+
+		self::addArgument('course', $course);
+
+		self::addArgument('student', $student);
+
+		return self::make('statistics');
+
+	}
+
 }

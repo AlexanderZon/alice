@@ -83,4 +83,36 @@ class Evaluation extends \Eloquent {
 
     }
 
+    public function testsOf( $user ){
+
+        $results = array();
+        $counter = 0;
+
+        if($this->tests->count() > 0):
+            foreach($this->tests as $test):
+                if($test->user_id == $user->id) $results[] = $test;
+            endforeach;
+        endif;
+
+        return $results;
+
+    }
+
+    public function averageOf( $user ){
+
+        $tests = $this->testsOf($user);
+        $points = 0;
+
+        if(count($tests) > 0):
+            foreach($tests as $test):
+                $points += $test->percentage;
+            endforeach;
+        else:
+            return 0;
+        endif;
+
+        return $points/count($tests);
+
+    }
+
 }

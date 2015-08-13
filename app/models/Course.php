@@ -239,15 +239,143 @@ class Course extends \Eloquent {
 
     }
 
-    public function average(){
+    public function discussionsThumbsupsOf($user){
 
-        # CODE: Average Calculating
+        $discussions = $this->discussionsOf($user);
+        $counter = 0;
 
-        return 0;
+        foreach($discussions as $comment):
+            $counter += $comment->thumbsups->count();
+        endforeach;
+
+        return $counter;
 
     }
 
-    public function averageOf($student){
+    public function discussionsInLessonsOf($user){
+
+        $results = array();
+        $counter = 0;
+
+        foreach($this->lessons as $lesson):
+            if($lesson->discussions->count() > 0 ):
+                foreach($lesson->discussions as $discussion):
+                    if($discussion->user_id == $user->id) $results[] = $discussion; $counter++;
+                    if($discussion->children->count() > 0 ):
+                        foreach($discussion->children as $child):
+                            if($child->user_id == $user->id) $results[] = $child; $counter++;
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
+        endforeach;
+
+        return $results;
+
+    }
+
+    public function discussionsInLessonsThumbsupsOf($user){
+
+        $discussions = $this->discussionsOf($user);
+        $counter = 0;
+
+        foreach($discussions as $comment):
+            $counter += $comment->thumbsups->count();
+        endforeach;
+
+        return $counter;
+
+    }
+
+
+    public function discussionsInLessonsBannedOf($user){
+
+        $discussions = $this->discussionsOf($user);
+        $counter = 0;
+
+        foreach($discussions as $comment):
+            $counter += $comment->banned->count();
+        endforeach;
+
+        return $counter;
+
+    }
+
+    public function attachmentsInLessonsOf($user){
+
+        $results = array();
+        $counter = 0;
+
+        foreach($this->lessons as $lesson):
+            if($lesson->discussions->count() > 0 ):
+                foreach($lesson->discussions as $discussion):
+                    if($discussion->user_id == $user->id AND $discussion->attachments->count() > 0 ) $results[] = $discussion->attachments()->first(); $counter++;
+                    if($discussion->children->count() > 0 ):
+                        foreach($discussion->children as $child):
+                            if($child->user_id == $user->id AND $child->attachments->count() > 0 ) $results[] = $child->attachments()->first(); $counter++;
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
+        endforeach;
+
+        return $results;
+
+    }
+
+    public function activitiesOf($user){
+
+        $results = array();
+        $counter = 0;
+
+        foreach($this->lessons as $lesson):
+            if($lesson->evaluations->count() > 0 ):
+                foreach($lesson->evaluations as $evaluation):
+                    $tmp = $evaluation->testsOf( $user );
+                    if(count($tmp) > 0):
+                        foreach($tmp as $test):
+                            $results[] = $test; $counter++;
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
+        endforeach;
+
+        return $results;
+
+    }
+
+    public function averageOf($user){
+
+        $points = 0;
+        $counter = 0;
+
+        foreach($this->lessons as $lesson):
+            if($lesson->evaluations->count() > 0 ):
+                foreach($lesson->evaluations as $evaluation):
+                    $tmp = $evaluation->testsOf( $user );
+                    if(count($tmp) > 0):
+                        foreach($tmp as $test):
+                            $points += $test->percentage; $counter++;
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
+        endforeach;
+
+        if($counter > 0 ):
+
+            return $points/$counter;
+        
+        else:
+
+            return 0;
+
+        endif;
+
+    }
+
+    public function average(){
 
         # CODE: Average Calculating
 

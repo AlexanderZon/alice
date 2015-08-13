@@ -6,7 +6,7 @@
 	<div class="col-md-12">
 		<!-- BEGIN PORTLET -->
 
-		<div class="portlet light">
+		<div class="portlet light" data-course="{{ Hashids::encode($course->id) }}">
 			<!-- STAT -->
 			<!-- <div class="row list-separated profile-stat">
 				<img class="col-md-12" src="{{ Auth::user()->profile->getCover() }}"/>
@@ -23,7 +23,7 @@
 					</div>
 					<div class="row">&nbsp;</div>
 					<div class="row">&nbsp;</div>
-					<div class="portlet-body form students" data-course="{{ Hashids::encode($course->id) }}">
+					<div class="portlet-body form students">
 				
 						<!-- BEGIN FILTER -->
 						<div class="row mix-grid">
@@ -37,7 +37,7 @@
 											<div class="mix-details" style="max-width:200px !important;">
 												<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $student->last_login }}</span></span>
-												<a href="javascript:;" class="mix-link student-statistics-btn" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}">
+												<a href="javascript:;" class="mix-link students-statistics-btn" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}">
 													<i class="fa fa-sliders"></i>
 												</a>
 												<a class="mix-preview fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button">

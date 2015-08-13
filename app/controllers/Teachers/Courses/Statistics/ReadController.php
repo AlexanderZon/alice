@@ -64,11 +64,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 			$student->comments = $course->discussionsOf($student);
 
-			$student->likes = 0;
-
-			foreach($student->comments as $comment):
-				$student->likes += $comment->thumbsups->count();
-			endforeach;
+			$student->likes = $course->discussionsThumbsupsOf($student);
 
 			$student->average = $course->averageOf($student);
 

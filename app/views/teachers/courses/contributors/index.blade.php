@@ -37,9 +37,10 @@
 											<div class="mix-details" style="max-width:200px !important;">
 												<a href="/{{ $contributor->username }}" class="" title="Ver perfil de {{ $contributor->display_name }}"><h4>{{ $contributor->display_name }}</h4></a>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $contributor->last_login }}</span></span>
+												<!--
 												<a href="javascript:;" class="mix-link contributor-statistics-btn" title="Estadísticas de {{ $contributor->display_name }} para este curso" data-user="{{ Hashids::encode($contributor->id) }}">
 													<i class="fa fa-comments-o"></i>
-												</a>
+												</a>-->
 												<a class="mix-preview fancybox-button" href="/{{ $contributor->username }}" title="Ver perfil de {{ $contributor->display_name }}" data-rel="fancybox-button">
 													<i class="fa fa-eye"></i>
 												</a>

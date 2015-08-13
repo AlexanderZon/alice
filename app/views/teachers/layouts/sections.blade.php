@@ -1588,6 +1588,35 @@
 
 		    }
 
+		    var studentsStatistics = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+		    	var student = el.data('user');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + "/students/statistics",
+		    		type: 'GET',
+		    		async: true,
+		    		data: {
+		    			student_id: student
+		    		},
+		    		success: function(html) {
+
+				        loading.hide();
+		                Metronic.init();
+		    			content.html(html);
+		    			console.log('Students Statistics');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1912,6 +1941,13 @@
 		            // handle view discussion button click
 		            $('.profile').on('click', '.achievements-bunch-btn', function (e) {
 		                achievementsBunch($(this));
+		            });
+
+		            /* Statistics Events */
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.students-statistics-btn', function (e) {
+		                studentsStatistics($(this));
 		            });
 
 		            //handle loading content based on URL parameter
