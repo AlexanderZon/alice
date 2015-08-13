@@ -15,4 +15,13 @@ class UserLesson extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public static function hasViewed($lesson, $student){
+
+    	$user_lesson = self::where('lesson_id','=',$lesson->id)->where('user_id','=',$student->id)->first();
+
+    	return $user_lesson;
+
+    }
+
+
 }

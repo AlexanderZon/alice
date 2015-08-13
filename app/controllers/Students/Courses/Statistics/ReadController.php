@@ -1,86 +1,75 @@
 <?php namespace Students\Courses\Statistics;
 
-class ReadController extends \BaseController {
+use \Course as Course;
+use \Discussion as Discussion;
+use \DiscussionKarma as DiscussionKarma;
+use \Attachment as Attachment;
+use \User as User;
+use \Auth as Auth;
+use \Input as Input;
+use \Response as Response;
+use \GUID as GUID;
+use \Hash as Hash;
+use \Hashids as Hashids;
+use \Crypt as Crypt;
+
+
+class ReadController extends \Students\Courses\ReadController {
+
+	public function __construct(){
+
+		parent::__construct();
+
+		$this->beforeFilter('auth');
+
+		$this->beforeFilter('capabilities');
+
+		$this->beforeFilter('parameters');
+
+		$this->beforeFilter('arguments');
+
+		$this->afterFilter('auditory'); 
+
+		self::setModule('read');  
+		
+		self::pushViews('statistics');    
+
+		self::pushRoute('statistics');       
+
+		self::setModule('statistics');
+
+		self::pushName('statistics');
+
+		self::addSection('inactive', 'Inactivos');
+
+		self::$title = 'Estadisticas';
+
+		self::$description = 'Gestión de Estadisticas de los Cursos';
+
+		self::pushBreadCrumb('Estadisticas', self::$route );
+
+		# --- Put here your global args for this Controller --- #
+
+	}
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /read
+	 * GET /courses
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function postIndex( $course_name = '' )
 	{
-		//
-	}
+		$course = Course::getByName($course_name);	
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /read/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+		$student = Auth::user();
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /read
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+		self::addArgument('course', $course);
 
-	/**
-	 * Display the specified resource.
-	 * GET /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+		self::addArgument('student', $student);
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /read/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+		return self::make('index');
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }

@@ -6,7 +6,7 @@
 	<div class="col-md-12">
 		<!-- BEGIN PORTLET -->
 
-		<div class="portlet light">
+		<div class="portlet light" data-course="{{ Hashids::encode($course->id) }}">
 			<!-- STAT -->
 			<!-- <div class="row list-separated profile-stat">
 				<img class="col-md-12" src="{{ Auth::user()->profile->getCover() }}"/>
@@ -52,12 +52,12 @@
 									<div class="col-md-3 col-sm-4 mix">
 										<div class="mix-inner">
 										<?php $viewed = $lesson->viewedBy($student) ?>
-											<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" width="200">
-											<div class="mix-details">
+											<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" style="max-width:200px">
+											<div class="mix-details" style="max-width:200px">
 												<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
 												<span href="/">Primera visita: <span class="moment-fromnow">{{ $viewed->created_at }}</span></span><br>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $viewed->updated_at }}</span></span>
-												<a href="javascript:;" class="mix-link follow-follows" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ $student->username }}">
+												<a href="javascript:;" class="mix-link students-statistics-btn" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}">
 													<i class="fa fa-sliders"></i>
 												</a>
 												<a class="mix-preview fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button">

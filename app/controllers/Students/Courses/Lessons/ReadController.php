@@ -7,6 +7,7 @@ use \Discussion as Discussion;
 use \DiscussionKarma as DiscussionKarma;
 use \Attachment as Attachment;
 use \User as User;
+use \UserLesson as UserLesson;
 use \Input as Input;
 use \Response as Response;
 use \Hashids as Hashids;
@@ -93,11 +94,26 @@ class ReadController extends \Students\Courses\ReadController {
 
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 
+		$course = Course::getByName($course_name);
+
+		if(!$user_lesson = UserLesson::hasViewed($lesson, Auth::user())):
+			$user_lesson = new UserLesson();
+			$user_lesson->lesson_id = $lesson->id;
+			$user_lesson->user_id = Auth::user()->id;
+			$user_lesson->status = 'active';
+			$user_lesson->save();
+		else:
+			$user_lesson->status = 'inactive';
+			$user_lesson->save();
+			$user_lesson->status = 'active';
+			$user_lesson->save();
+		endif;
+
 		self::addArgument('module', $lesson->module);
 
 		self::addArgument('lesson', $lesson);
 
-		self::addArgument('course', Course::getByName($course_name));
+		self::addArgument('course', $course);
 
 		return self::make('viewlesson');
 

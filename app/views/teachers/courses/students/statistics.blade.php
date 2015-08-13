@@ -33,7 +33,7 @@
 									<div class="mix-details" style="max-width:200px !important;">
 										<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
 										<span href="/">Última visita: <span class="moment-fromnow">{{ $student->last_login }}</span></span>
-										<a href="javascript:;" class="mix-link students-back-btn" title="Ir atrás" data-user="{{ Hashids::encode($student->id) }}">
+										<a href="javascript:;" class="mix-link students-back-btn" title="Ir al listado de Estudiantes" data-user="{{ Hashids::encode($student->id) }}">
 											<i class="fa fa-arrow-left"></i>
 										</a>
 										<a class="mix-preview fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button">
