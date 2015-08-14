@@ -37,12 +37,19 @@
 											<div class="mix-details" style="max-width:200px !important;">
 												<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $student->last_login }}</span></span>
-												<a href="javascript:;" class="mix-link student-statistics-btn" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}">
-													<i class="fa fa-sliders"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button">
-													<i class="fa fa-eye"></i>
-												</a>
+												<span>
+													<a class="fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button" style="color: #555;display: block;cursor: pointer;margin-top: 10px;position: absolute;left: 37%;padding: 10px 15px;background: #16b2f4;">
+														<i class="fa fa-eye"></i>
+													</a>
+												</span>
+												<!--
+													<a href="javascript:;" class="mix-link student-statistics-btn" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}">
+														<i class="fa fa-sliders"></i>
+													</a>
+													<a class="mix-preview fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button">
+														<i class="fa fa-eye"></i>
+													</a>
+												-->
 											</div>
 										</div>
 									</div>
