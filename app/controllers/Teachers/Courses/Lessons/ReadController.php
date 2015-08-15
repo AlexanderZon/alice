@@ -1026,6 +1026,16 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		endif;
 
+		if($parent == 0):
+
+			\Event::fire('notification.lessons_write_comment', array(Auth::user(), $lesson, $discussion));
+
+		else:
+		
+			\Event::fire('notification.lessons_reply_comment', array(Auth::user(), $lesson, $discussion, $discussion->parent));
+
+		endif;
+
 		return Response::json($response);
 
 	}
@@ -1106,6 +1116,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 			$thumbsup->discussion_id = $discussion->id;
 			$thumbsup->type = 'thumbsup';
 			$thumbsup->save();
+			\Event::fire('notification.lessons_like_comment', array(Auth::user(), $discussion));
 		endif;
 
 		$response['thumbsupers'] = $discussion->peopleThumbsupIt();
@@ -1152,6 +1163,8 @@ class ReadController extends \Teachers\Courses\ReadController {
 			$banned->discussion_id = $discussion->id;
 			$banned->type = 'banned';
 			$banned->save();
+
+			\Event::fire('notification.lessons_banned_comment', array(Auth::user(), $discussion));
 
 		endif;
 

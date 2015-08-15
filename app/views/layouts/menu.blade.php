@@ -254,7 +254,14 @@
 								</li>
 								<li class="external">
 									<h3>&nbsp;</h3>
-									<a href="/me/notifications">ver todas</a>
+									<div class="row">
+										<div class="col-md-8">
+											<a href="/me/readall">Marcar todas como Leidas</a>
+										</div>
+										<div class="col-md-3">
+											<a href="/me/notifications">ver todas</a>
+										</div>
+									</div>
 								</li>
 							</ul>
 						</li>

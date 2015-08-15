@@ -186,7 +186,19 @@ class Discussion extends \Eloquent {
 
     public function parent(){
 
-    	return $this->belongsTo('Discussion', 'discussionable_id');
+        return $this->belongsTo('Discussion', 'discussionable_id');
+
+    }
+
+    public function lesson(){
+
+        return $this->belongsTo('Lesson', 'discussionable_id');
+
+    }
+
+    public function course(){
+
+    	return $this->belongsTo('Course', 'discussionable_id');
 
     }
 

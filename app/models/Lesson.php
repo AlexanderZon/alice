@@ -118,9 +118,15 @@ class Lesson extends \Eloquent {
 
     }
 
-    public function myNotes( $user ){
+    public function notesOf( $user ){
 
-    	return $this->hasMany('Note','lesson_id')->where('user_id','=',$user->id)->get();
+        return $this->notes()->where('user_id','=',$user->id)->get();
+
+    }
+
+    public function myNotes(){
+
+    	return $this->notesOf(Auth::user());
 
     }
 

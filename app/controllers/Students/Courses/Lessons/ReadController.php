@@ -6,6 +6,7 @@ use \Lesson as Lesson;
 use \Discussion as Discussion;
 use \DiscussionKarma as DiscussionKarma;
 use \Attachment as Attachment;
+use \Note as Note;
 use \User as User;
 use \UserLesson as UserLesson;
 use \Input as Input;
@@ -201,11 +202,11 @@ class ReadController extends \Students\Courses\ReadController {
 
 		if($parent == 0):
 
-			\Event::fire('notification.students_lessons_write_comment', array(Auth::user(), $lesson, $discussion));
+			\Event::fire('notification.lessons_write_comment', array(Auth::user(), $lesson, $discussion));
 
 		else:
 		
-			\Event::fire('notification.students_lessons_reply_comment', array(Auth::user(), $lesson, $discussion, $discussion->parent));
+			\Event::fire('notification.lessons_reply_comment', array(Auth::user(), $lesson, $discussion, $discussion->parent));
 
 		endif;
 
@@ -289,6 +290,7 @@ class ReadController extends \Students\Courses\ReadController {
 			$thumbsup->discussion_id = $discussion->id;
 			$thumbsup->type = 'thumbsup';
 			$thumbsup->save();
+			\Event::fire('notification.lessons_like_comment', array(Auth::user(), $discussion));
 		endif;
 
 		$response['thumbsupers'] = $discussion->peopleThumbsupIt();
@@ -336,6 +338,8 @@ class ReadController extends \Students\Courses\ReadController {
 			$banned->type = 'banned';
 			$banned->save();
 
+			\Event::fire('notification.lessons_banned_comment', array(Auth::user(), $discussion));
+
 		endif;
 
 		$response['banneders'] = $discussion->peopleBannedIt();
@@ -358,5 +362,81 @@ class ReadController extends \Students\Courses\ReadController {
 		return Response::download(public_path().$attachment->route, $attachment->name);
 
 	}
+
+	/**
+	 * Display a listing of the resource.
+	 * POST /notes
+	 *
+	 * @return Response
+	 */
+
+	public function postNotes( $course_name = '' ){
+
+
+		$course = Course::getByName($course_name);
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+		$parent = Hashids::decode(Input::get('parent_id'));
+
+		$note = new Note();
+		$note->user_id = Auth::user()->id;
+		$note->lesson_id = $lesson->id;
+		$note->content = Input::get('comment');
+		$note->save();
+
+		$response = array(
+			'id' => Hashids::encode($note->id),
+			'user_id' => Hashids::encode($note->user_id),
+			'content' => $note->content,
+			'created_at' => $note->created_at
+			);
+
+		return Response::json($response);
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * PUT /notes
+	 *
+	 * @return Response
+	 */
+
+	public function putNotes( $course_name = '' ){
+
+		$course = Course::getByName($course_name);
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+		$parent = Hashids::decode(Input::get('parent_id'));
+
+		$note = Note::find(Hashids::decode(Input::get('comment_id')));
+		$note->content = Input::get('comment');
+		$note->save();
+
+		$response = array(
+			'id' => Hashids::encode($note->id),
+			'user_id' => Hashids::encode($note->user_id),
+			'content' => $note->content,
+			'created_at' => $note->created_at
+			);
+
+		return Response::json($response);
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * DELETE /notes
+	 *
+	 * @return Response
+	 */
+
+	public function deleteNotes( $course_name = '' ){
+
+		$note = Note::find(Hashids::decode(Input::get('note')));
+		$note->delete();
+
+		return Response::json(Input::all());
+
+	}
+
 
 }

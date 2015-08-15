@@ -76,6 +76,10 @@
 									<div class="btn" href="#tab_4" data-toggle="tab">
 									Actividades ({{$lesson->validevaluations->count() }})</div>
 								</li>
+								<li style="text-align:center;">
+									<div class="btn" href="#tab_5" data-toggle="tab">
+									Mis notas (<span id="my-notes-counter">{{$lesson->myNotes()->count() }}</span>)</div>
+								</li>
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="tab_1">
@@ -266,6 +270,61 @@
 											</div>
 										</div>
 									@endif
+								</div>
+								<div class="tab-pane" id="tab_5">
+									<?php $notes = $lesson->myNotes(); ?>
+									<?php $avatar = Auth::user()->profile->getAvatar() ?>
+									<div class="row notes"> 
+										<div class="form-group">
+											<div class="col-md-12">
+												<ul class="media-list">
+													@if($notes->count() > 0)
+														@foreach($notes as $note)
+														    <!-- Vista Profesor puede visualizar todos los comentarios -->
+														    <!-- Vista Estudiante solo puede visualizar los comentarios no Banneados -->
+															<li class="media " data-note="{{ Hashids::encode($note->id) }}">
+																<a class="pull-left" href="javascript:;">
+																<img class="todo-userpic" src="{{ $avatar }}" width="45px" height="45px">
+																</a>
+																<div class="media-body todo-comment">
+																	<p class="todo-comment-head">
+																		<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; 
+																		<span class="todo-comment-date moment-fromnow">{{ $note->created_at }}</span> &nbsp; 
+																		<a href="javascript:;" class="btn font-grey-silver tooltips note-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+																		<a href="javascript:;" class="btn font-grey-silver tooltips note-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>
+																	</p>
+																	<div class="todo-text-color">
+																		 {{ $note->content }} <br>
+																	</div>
+																	<div class="children-comments">
+																	</div>
+																</div>
+															</li>
+														@endforeach
+													@else
+														<li class="btn yellow col-md-12 be-firts-comment" style="margin-bottom:15px">Aquí puedes crear apuntes personales acerca de esta lección</li>
+													@endif
+													<li class="media">
+														<a class="pull-left" href="javascript:;">
+															<img class="todo-userpic" src="{{ $avatar }}" width="45px" height="45px">
+														</a>
+														<div class="media-body">
+															<form class="note-form-ajax" enctype="multipart/form-data">
+																<input type="hidden" name="lesson_id" value="{{ Hashids::encode($lesson->id) }}"/>
+																<input type="hidden" name="parent_id" value="{{ Hashids::encode(0) }}"/>
+																<div class="reply-textarea-content">
+																	<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment"></textarea>
+																</div>
+																<div class="reply-submit-btn">
+																	<a href="javascript:;" class="pull-right btn btn-sm btn-circle green-haze note-form-btn"> &nbsp; Enviar &nbsp; </a>
+																</div>
+															</form>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -1003,6 +1062,296 @@
 
 		}();
 
+		var NotesManager = function() {
+
+			var display_comment = null;
+
+			var image_loader = '<img src="/assets/loaders/rubiks-cube.gif" width="50px"/>';
+
+			var generatePutForm = function(comment, content){
+
+				var reply_form = '' +
+				'<div class="commenting" style="margin-bottom:30px">' +
+					'<form class="note-form-ajax" enctype="multipart/form-data">' +
+						'<input type="hidden" name="lesson_id" value="{{ Hashids::encode($lesson->id) }}"/>' +
+						'<input type="hidden" name="comment_id" value="' + comment + '"/>' +
+						'<div class="reply-textarea-content">' +
+							'<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment">' + content + '</textarea>' +
+						'</div>' +
+						'<div class="reply-submit-btn">' +
+							'<button type="button" class="pull-right btn btn-sm btn-circle green-haze note-put-btn"> &nbsp; Editar &nbsp; </button>' +
+							'<span class="pull-right"> &nbsp; </span>' +
+						'</div>' +
+					'</form>' +
+				'</div>';
+
+				return reply_form;
+				
+			}
+
+			var discussionsEdit = function(el){
+
+				var data = {
+					user: '{{ Hashids::encode(Auth::user()->id) }}',
+					note: 0,
+					content: '',
+				};
+
+				var reply_edit = el.parents('div.media').data('note');
+				var comment_edit = el.parents('li.media').data('note');
+
+				// console.log(reply_edit);
+				// console.log(comment_edit);
+
+				data.note = el.parents('li.media').data('note');
+				data.content = el.parents(parent).children('div.media-body').children('div.todo-text-color').html();
+
+				console.log(data);
+				var container = el.parents(parent).children('div.media-body');
+				container.children('div.children-comments').before(generatePutForm(data.note, data.content));
+				container.children('p.todo-comment-head').remove();
+				container.children('div.todo-text-color').remove();
+
+				ComponentsEditors.init();
+				MomentManager.init();
+				Metronic.init();
+				
+			}
+
+			var discussionsDelete = function(el){
+
+				var data = {
+					user: '{{ Hashids::encode(Auth::user()->id) }}',
+					note: el.parents('li.media').data('note')
+				};
+
+				var master_container = el.parents('li.media');
+
+				var parent = 'li.media';
+
+				var container = el.parents(parent);
+				var media_body = el.parents(parent).children('div.media-body');
+
+				media_body.children('div.todo-text-color').html(image_loader);
+				media_body.children('p.todo-comment-head').children('span.todo-comment-date').html('Eliminando');
+				media_body.children('div.children-comments').remove();
+				media_body.children('p.todo-comment-head').children('a').remove();
+
+
+				$.ajax({
+					url: '{{ $route }}/notes',
+					type: 'DELETE',
+					dataType: 'json',
+					data: data,
+					async: true,
+					success: function(data){
+						$('#my-notes-counter').html(parseInt($('#my-notes-counter').html()) - 1);
+						console.log(container);
+						container.remove();
+						if(typeof reply_delete != "undefined"){
+							var replies = master_container.children('div.media-body').children('p.todo-comment-head').children('a.comment-reply-btn').children('span.replies-counter');
+							console.log(replies);
+							var counter =  parseInt(replies.html())-1;
+							replies.html(counter);
+						}
+						console.log(data);
+					},
+					error: function(xhr){
+						console.log(xhr);
+					}
+				});
+
+				ComponentsEditors.init();
+				MomentManager.init();
+				Metronic.init();
+				
+			}
+
+			var discussionsSubmit = function(el){
+
+				var form = $(el.parents('form.note-form-ajax')[0]);
+
+				var comment = $(form.children('div.reply-textarea-content')).children('textarea.summernote').val();
+
+				var media_body = form.parents('ul.media-list').children('li.media:last');
+
+				// media_body.parents('div.media').removeClass('commenting');
+				console.log(form.serialize());
+
+				var formData = new FormData(el.parents('form.note-form-ajax')[0]);
+
+				comment_html = '' +
+					'<li class="media waiting_comment">' +
+						'<a class="pull-left" href="javascript:;">' +
+						'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
+						'</a>' +
+						'<div class="media-body todo-comment">' +
+							'<p class="todo-comment-head">' +
+								'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date">Enviando</span> &nbsp;' +
+							'</p>' +
+							'<div class="todo-text-color" style="min-width:700px">' + image_loader + '</div>'
+							'<div class="children-comments">' +
+								'<!-- COMMENTS HERE -->' +
+							'</div>' +
+						'</div>' +
+					'</li>';
+
+				media_body.before(comment_html);
+
+				$.ajax({
+					url: '{{ $route }}/notes',
+					type: 'POST',
+					dataType: 'json',
+					data: formData,
+					async: true,
+					success: function(data) {
+
+						$('#my-notes-counter').html(parseInt($('#my-notes-counter').html()) + 1);
+
+						console.log(data);
+
+						$('li.be-firts-comment').remove();
+
+						comment_html = '' +
+								'<a class="pull-left" href="javascript:;">' +
+								'<img class="todo-userpic" src="{{ Auth::user()->profile->getAvatar() }}" width="45px" height="45px">' +
+								'</a>' +
+								'<div class="media-body todo-comment">' +
+									'<p class="todo-comment-head">' +
+										'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp;' +
+										'<a href="javascript:;" class="btn font-grey-silver tooltips note-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
+										'<a href="javascript:;" class="btn font-grey-silver tooltips note-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>' +
+									'</p>' +
+									'<div class="todo-text-color" style="min-width:700px">' + data.content + '</div>' +
+									'<div class="children-comments">' +
+										'<!-- COMMENTS HERE -->' +
+									'</div>' +
+								'</div>';
+
+						var comment_element = $('li.waiting_comment');
+						comment_element.html(comment_html);
+						comment_element.data('note', data.id);
+						comment_element.removeClass('waiting_comment');
+						console.log(data);
+
+						el.parents('form.note-form-ajax').children('div.reply-textarea-content').children('div.note-editor').children('div.note-editable').html('');
+
+						MomentManager.init();
+						Metronic.init();
+
+					},
+					error: function(xhr) {
+						console.log(xhr);
+					},
+			        cache: false,
+			        contentType: false,
+			        processData: false
+				});
+
+			}
+
+			var discussionsPutSubmit = function(el){
+
+				var form = $(el.parents('form.note-form-ajax')[0]);
+
+				var comment = $(form.children('div.reply-textarea-content')).children('textarea.summernote').val();
+
+				var media_body = el.parents('div.media-body');
+
+				// media_body.parents('div.media').removeClass('commenting');
+				console.log(form.serialize());
+
+				var formData = new FormData(el.parents('form.ntoe-form-ajax')[0]);
+
+				comment_html = '' +
+					'<p class="todo-comment-head">' +
+						'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date">Enviando</span> &nbsp;' +
+					'</p>' +
+					'<div class="todo-text-color" style="min-width:700px">' + image_loader + '</div>';
+
+				media_body.children('div.children-comments').before(comment_html);
+				media_body.children('div.commenting').remove();
+
+				$.ajax({
+					url: '{{ $route }}/notes',
+					type: 'PUT',
+					dataType: 'json',
+					data: form.serialize(),
+					async: true,
+					success: function(data) {
+
+						console.log(data);
+
+						var todo_comment_head = '' +
+							'<span class="todo-comment-username">{{ Auth::user()->display_name }}</span> &nbsp; <span class="todo-comment-date moment-fromnow">' + data.created_at.date + '</span> &nbsp;' +
+							'<a href="javascript:;" class="btn font-grey-silver tooltips comment-edit-btn pull-right" data-original-title="Editar"><i class="fa fa-pencil"></i></a>' +
+							'<a href="javascript:;" class="btn font-grey-silver tooltips comment-delete-btn pull-right" data-original-title="Eliminar"><i class="fa fa-trash-o"></i></a>';
+
+						var todo_text_color = data.content;
+
+						media_body.children('p.todo-comment-head').html(todo_comment_head);
+						media_body.children('div.todo-text-color').html(todo_text_color);
+
+						MomentManager.init();
+						Metronic.init();
+
+					},
+					error: function(xhr) {
+						console.log(xhr);
+					}
+				});
+
+			}
+
+			var updateSummernoteTextarea = function(el){
+
+				var textarea = $($($(el.parents('div.note-editor')).siblings('textarea.summernote'))[0]);
+				// console.log(el.html());
+				// console.log(el.text());
+				// console.log($.parseHTML(el.html()));
+				textarea.html(el.html());
+
+			}
+
+			return {
+
+				init: function (){
+
+					$('.notes').on('click', '.note-delete-btn', function(event) {
+						event.preventDefault();
+						discussionsDelete($(this));
+						/* Act on the event */
+					});
+
+					$('.notes').on('click', '.note-edit-btn', function(event) {
+						event.preventDefault();
+						discussionsEdit($(this));
+						/* Act on the event */
+					});
+
+					$('.notes').on('click', '.note-form-btn', function(event) {
+						event.preventDefault();
+						discussionsSubmit($(this));
+						/* Act on the event */
+					});
+
+					$('.notes').on('click', '.note-put-btn', function(event) {
+						event.preventDefault();
+						discussionsPutSubmit($(this));
+						/* Act on the event */
+					});
+
+					$('.notes').on('keyup', '.note-editable', function(event) {
+						event.preventDefault();
+						updateSummernoteTextarea($(this));
+						/* Act on the event */
+					});
+
+				}
+			}
+
+		}();
+
 		var AttachmentsManager = function(){
 
 		    var downloadAttachment = function (el) {
@@ -1094,6 +1443,7 @@
 		ComponentsEditors.init();
 		Todo.init();
 		CommentsManager.init();
+		NotesManager.init();
 		AttachmentsManager.init();
 		MomentManager.init();
 
