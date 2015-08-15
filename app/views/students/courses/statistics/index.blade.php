@@ -44,10 +44,10 @@
 									<h3><i class="fa fa-lightbulb-o"></i> Promedio: {{ $course->averageOf($student) }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
-									<h3><i class="fa fa-thumbs-up"></i> Me gustas: {{ count($course->discussionsInLessonsThumbsupsOf($student)) }}</h3>
+									<h3><i class="fa fa-thumbs-up"></i> Me gustas: {{ is_array($likes = $course->discussionsInLessonsThumbsupsOf($student) ) ? count($likes) : 0 }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
-									<h3><i class="fa fa-ban"></i> Comentarios No deseados: {{ count($course->discussionsInLessonsBannedOf($student)) }}</h3>
+									<h3><i class="fa fa-ban"></i> Comentarios No deseados: {{ is_array($banned = $course->discussionsInLessonsBannedOf($student)) ? count($banned) : 0 }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
 									<?php $student_achievements = $student->achievementFromCourse($course); ?>
@@ -65,8 +65,8 @@
 
 <script type="text/javascript">
 	
-	window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=students');
-		document.title = 'Alice | {{ $course->title }} | Estudiantes';
+	window.history.pushState("", "", '/curso/{{ $course->name  }}?section=statistics');
+		document.title = 'Alice | {{ $course->title }} | Estadísticas';
 
 </script>
 

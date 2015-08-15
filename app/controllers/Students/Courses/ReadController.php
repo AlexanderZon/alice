@@ -131,7 +131,7 @@ class ReadController extends \Students\ReadController {
 
 	}
 
-	public function getPostular( $id ){
+	public function postPostular( $id ){
 
 		$course = Course::find(Hashids::decode($id));
 
@@ -149,11 +149,11 @@ class ReadController extends \Students\ReadController {
 
 		self::addArgument('section', 'index');
 
-		return self::make('index');
+		return \Response::json(array('Postulado'));
 
 	}
 
-	public function getNopostular( $id ){
+	public function postNopostular( $id ){
 
 		$course = Course::find(Hashids::decode($id));
 
@@ -165,7 +165,7 @@ class ReadController extends \Students\ReadController {
 
 		self::addArgument('section', 'index');
 
-		return self::make('index');
+		return \Response::json(array('No Postulado'));
 
 	}
 

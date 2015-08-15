@@ -79,13 +79,9 @@
 														<a class="btn blue" href="/curso/{{ $course->name }}">
 															Entrar <i class="m-icon-swapright m-icon-white"></i>
 														</a>
-													@elseif($course->ivePostuled())
-														<a class="btn green" href="{{ $route }}/nopostular/{{ Hashids::encode($course->id) }}">
-															Dejar de Postular <i class="fa fa-history"></i>
-														</a>
 													@else
-														<a class="btn blue" href="{{ $route }}/postular/{{ Hashids::encode($course->id) }}">
-															Postularse <i class="fa fa-sign-in"></i>
+														<a class="btn blue" href="/curso/{{ $course->name }}">
+															Leer más <i class="fa fa-sign-in"></i>
 														</a>
 													@endif
 													<div class="course-students">

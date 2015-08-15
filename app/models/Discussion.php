@@ -180,7 +180,33 @@ class Discussion extends \Eloquent {
 
     public function children(){
 
-    	return $this->morphMany('Discussion', 'discussionable');
+        return $this->morphMany('Discussion', 'discussionable');
+
+    }
+
+    public function parent(){
+
+    	return $this->belongsTo('Discussion', 'discussionable_id');
+
+    }
+
+    public function repliers(){
+
+        $replies = $this->children;
+
+        $list = array();
+
+        $repliers = new User();
+
+        foreach($replies as $reply):
+            $bool = true;
+            foreach($list as $elem):
+                if($elem == $reply->user_id) $bool = false;
+            endforeach;
+            if($bool) $list[] = $reply->id; $repliers = $repliers->orWhere('id','=',$reply->user_id);
+        endforeach;
+
+        return $repliers->get();
 
     }
 

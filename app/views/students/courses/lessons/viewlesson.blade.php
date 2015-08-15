@@ -182,7 +182,7 @@
 																	<textarea class="summernote" rows="1" placeholder="Escribe un comentario..." name="comment"></textarea>
 																</div>
 																<div class="reply-submit-btn">
-																	<a href="javascript:;" class="pull-right btn btn-sm btn-circle green-haze comment-form-btn"> &nbsp; Responder &nbsp; </a>
+																	<a href="javascript:;" class="pull-right btn btn-sm btn-circle green-haze comment-form-btn"> &nbsp; Enviar &nbsp; </a>
 																	<span class="pull-right"> &nbsp; </span>
 																	<div class="pull-right fileinput fileinput-new" data-provides="fileinput">
 																		<span class="btn default btn-file btn-sm btn-circle green-haze">

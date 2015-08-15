@@ -56,8 +56,8 @@
 
 <script type="text/javascript">
 	
-	window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=students');
-		document.title = 'Alice | {{ $course->title }} | Estudiantes';
+	window.history.pushState("", "", '/curso/{{ $course->name }}?section=achievements');
+		document.title = 'Alice | {{ $course->title }} | Premiaciones';
 
 </script>
 

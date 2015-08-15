@@ -153,6 +153,7 @@ class ReadController extends \Students\Courses\ReadController {
 
 	public function postComments( $course_name = '' ){
 
+
 		$course = Course::getByName($course_name);
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 		$parent = Hashids::decode(Input::get('parent_id'));
@@ -195,6 +196,16 @@ class ReadController extends \Students\Courses\ReadController {
 
 			$response['attachment'] = $attachment->getSize();
 			$response['attachment_crypt'] = Crypt::encrypt($attachment->id);
+
+		endif;
+
+		if($parent == 0):
+
+			\Event::fire('notification.students_lessons_write_comment', array(Auth::user(), $lesson, $discussion));
+
+		else:
+		
+			\Event::fire('notification.students_lessons_reply_comment', array(Auth::user(), $lesson, $discussion, $discussion->parent));
 
 		endif;
 

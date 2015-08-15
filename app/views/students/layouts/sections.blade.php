@@ -1,6 +1,10 @@
 @extends ('layouts.master')
 
 @section('css')
+	
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
+	<!-- END PAGE LEVEL STYLES -->
 
 	@yield('content_css')
 
@@ -28,7 +32,7 @@
 			<!-- BEGIN PROFILE SIDEBAR -->
 			<div class="profile-sidebar col-md-2" >
 				<!-- PORTLET MAIN -->
-				<div class="portlet light profile-sidebar-portlet">
+				<div class="portlet light profile-sidebar-portlet" data-course="{{ Hashids::encode($course->id) }}">
 					<!-- SIDEBAR USERPIC -->
 					<div id="course-main-image" class="profile-userpic">
 						<img src="{{ $course->main_picture }}" class="img-responsive" alt="">
@@ -46,6 +50,22 @@
 					<!-- END SIDEBAR USER TITLE -->
 					<!-- SIDEBAR BUTTONS -->
 					<div class="profile-userbuttons">
+
+						@if(!$course->iveAccepted())
+							<div class="row students-postulation-container" data-course="{{ Hashids::encode($course->id) }}">
+								@if($course->ivePostuled())
+									<a class="btn green students-notpostulation-btn" href="javascript:;">
+										Dejar de Postular <i class="fa fa-history"></i>
+									</a>
+									<!-- {{ $route }}/nopostular/{{ Hashids::encode($course->id) }} -->
+								@else
+									<a class="btn blue students-postulation-btn" href="javascript:;">
+										Postularme <i class="fa fa-sign-in"></i>
+									</a>
+									<!-- {{ $route }}/postular/{{ Hashids::encode($course->id) }} -->
+								@endif
+							</div>
+						@endif
 						
 						<!-- <a href="javascript:;" type="button" class="btn btn-large green-haze btn-sm follow-btn {{ ($course->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-up"></i> Seguir</a>
 						<a href="javascript:;" type="button" class="btn btn-large btn-danger btn-sm unfollow-btn {{ (!$course->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-down"></i> Dejar de Seguir</a> -->
@@ -155,6 +175,9 @@
 
 	@yield('content_javascripts')
 	
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="/assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+	<!-- END PAGE LEVEL SCRIPTS -->
 	<!-- END PAGE LEVEL SCRIPTS -->
 	<script type="text/javascript">
 
@@ -1251,6 +1274,68 @@
 
 		    }
 
+		    var studentsPostulation = function(el){
+
+		    	var course = el.parents('.students-postulation-container').data('course');
+		    	var teacher = el.data('teacher');
+		    	var container = el.parents('.students-postulation-container');
+
+		    	container.html('<img src="/assets/loaders/rubiks-cube.gif" class="col-md-12"/>');
+
+		    	$.ajax({
+		    		url: '/cursos/postular/' + course,
+		    		type: 'POST',
+		    		async: true,
+		    		data: {
+		    			teacher_id: teacher
+		    		},
+		    		success: function(html) {
+
+				        loading.hide();
+		                Metronic.init();
+		    			container.html('<a class="btn green students-notpostulation-btn" href="javascript:;">Dejar de Postular <i class="fa fa-history"></i></a>');
+						toastr['success']("Debes esperar a que tu postulación sea aceptada por el profesor encargado de este curso", "Postulación Enviada");
+		    			console.log('Contributors Add');
+		    		},
+		    		error: function(xhr) {
+						toastr['error']("No se han podido enviar la Postulación", "ERROR");
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var studentsNotPostulation = function(el){
+
+		    	var course = el.parents('.students-postulation-container').data('course');
+		    	var teacher = el.data('teacher');
+		    	var container = el.parents('.students-postulation-container');
+
+		    	container.html('<img src="/assets/loaders/rubiks-cube.gif" class="col-md-12"/>');
+
+		    	$.ajax({
+		    		url: '/cursos/nopostular/' + course,
+		    		type: 'POST',
+		    		async: true,
+		    		data: {
+		    			teacher_id: teacher
+		    		},
+		    		success: function(html) {
+
+				        loading.hide();
+		                Metronic.init();
+		    			container.html('<a class="btn blue students-postulation-btn" href="javascript:;">Postularme <i class="fa fa-sign-in"></i></a>');
+						toastr['success']("Has cancelado la postulación para entrar al contenido de este curso", "Postulación Cancelada");
+		    			console.log('Contributors Add');
+		    		},
+		    		error: function(xhr) {
+						toastr['error']("No se ha podido cancelar la postulación", "ERROR");
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1524,6 +1609,18 @@
 		            // handle view discussion button click
 		            $('.profile').on('click', '.discussion-comments', function (e) {
 		                discussionsComments($(this));
+		            });
+
+		            /* Postulation Events Handlers */
+
+		            // handle add students button click
+		            $('.profile').on('click', '.students-postulation-btn', function (e) {
+		                studentsPostulation($(this));
+		            });
+
+		            // handle add students button click
+		            $('.profile').on('click', '.students-notpostulation-btn', function (e) {
+		                studentsNotPostulation ($(this));
 		            });
 
 		            //handle loading content based on URL parameter
