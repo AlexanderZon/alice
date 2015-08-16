@@ -208,15 +208,15 @@ class Discussion extends \Eloquent {
 
         $list = array();
 
-        $repliers = new User();
-
         foreach($replies as $reply):
             $bool = true;
             foreach($list as $elem):
                 if($elem == $reply->user_id) $bool = false;
             endforeach;
-            if($bool) $list[] = $reply->id; $repliers = $repliers->orWhere('id','=',$reply->user_id);
+            if($bool) $list[] = $reply->user_id; 
         endforeach;
+
+        $repliers = User::whereIn('id', $list);
 
         return $repliers->get();
 
