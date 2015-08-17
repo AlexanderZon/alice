@@ -206,7 +206,15 @@ class Discussion extends \Eloquent {
 
         $replies = $this->children;
 
-        $list = array();
+        $list = $this->repliersList($replies);
+
+        $repliers = User::whereIn('id', $list);
+
+        return $repliers->get();
+
+    }
+
+    public function repliersList($replies, $list = array()){
 
         foreach($replies as $reply):
             $bool = true;
@@ -214,11 +222,10 @@ class Discussion extends \Eloquent {
                 if($elem == $reply->user_id) $bool = false;
             endforeach;
             if($bool) $list[] = $reply->user_id; 
+            if($reply->children->count() > 0) $list = array_merge($list, $this->repliersList($reply->children, $list));
         endforeach;
 
-        $repliers = User::whereIn('id', $list);
-
-        return $repliers->get();
+        return $list;
 
     }
 
