@@ -311,7 +311,7 @@
 			$notification->user_id = $teacher->id;
 			$notification->notificationable_id = $writer->id;
 			$notification->notificationable_type = 'User';
-			$notification->icon = 'fa-comments';
+			$notification->icon = 'fa-comments-o';
 			$notification->badge = 'bg-green';
 			$notification->picture = $writer->profile->getAvatar();
 			$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=lessons&action=comments&type=get&lesson_id='.Hashids::encode($lesson->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
@@ -421,17 +421,23 @@
 
 		$course = $discussion->course;
 
-		foreach($discussion->students as $student):
-			if($student->id != $writer->id):
+		# Notificación a los participantes de la discusion
+
+		foreach($discussion->repliers() as $replier):
+			if($replier->id != $writer->id AND $replier->id != $discussion->user_id AND $replier->id != $discussion->user_id):
 
 				$notification = new Notification();
-				$notification->user_id = $student->id;
+				$notification->user_id = $replier->id;
 				$notification->notificationable_id = $writer->id;
 				$notification->notificationable_type = 'User';
-				$notification->icon = 'fa-comment';
-				$notification->badge = 'bg-green';
+				$notification->icon = 'fa-comments-o';
+				$notification->badge = 'bg-purple';
 				$notification->picture = $writer->profile->getAvatar();
-				$notification->route = '/curso/'.$course->name.'?section=lessons&action=viewlesson&type=get&lesson_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+				if($replier->isStudent()):
+					$notification->route = '/curso/'.$course->name.'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+				else:
+					$notification->route = '/teachers/contributions/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+				endif;
 				$notification->title = $writer->display_name.' comentó';
 				$notification->description = 'En '.$discussion->title.' del curso ' . $course->title;
 				$notification->save();
@@ -439,7 +445,29 @@
 			endif;
 		endforeach;
 
+		# Notificación al contribuidor si es por parte de un contribuidor
+
 		$teacher = $course->teacher;
+
+		if($writer->id != $discussion->user_id AND $discussion->user_id != $teacher->id):
+
+			$notification = new Notification();
+			$notification->user_id = $discussion->user_id;
+			$notification->notificationable_id = $writer->id;
+			$notification->notificationable_type = 'User';
+			$notification->icon = 'fa-comments-o';
+			$notification->badge = 'bg-purple';
+			$notification->picture = $writer->profile->getAvatar();
+			$notification->route = '/teachers/contributions/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			$notification->title = $writer->display_name.' comentó ';
+			$notification->description = 'En '.$discussion->title.' del curso de ' . $course->title;
+			$notification->save();
+
+			return true;
+
+		endif;
+
+		# Notificación al Profesor del Curso
 
 		if($writer->id != $teacher->id):
 
@@ -447,10 +475,10 @@
 			$notification->user_id = $teacher->id;
 			$notification->notificationable_id = $writer->id;
 			$notification->notificationable_type = 'User';
-			$notification->icon = 'fa-comment';
-			$notification->badge = 'bg-green';
+			$notification->icon = 'fa-comments-o';
+			$notification->badge = 'bg-purple';
 			$notification->picture = $writer->profile->getAvatar();
-			$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=lessons&action=comments&type=get&lesson_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
 			$notification->title = $writer->display_name.' comentó ';
 			$notification->description = 'En '.$discussion->title.' del curso de ' . $course->title;
 			$notification->save();
@@ -461,39 +489,45 @@
 
 	});
 
-	Event::listen('notification.discussions_reply_comment', function($writer, $lesson, $comment, $parent){
+	Event::listen('notification.discussions_reply_comment', function($writer, $discussion, $comment, $parent){
 
-		$course = $lesson->module->course;
+		$course = $discussion->course;
 
-		$repliers = $parent->repliers();
+		$repliers = $discussion->repliers();
 
 		$author = $parent->author;
 
-		// Notificaciones a los demas que respondieron el comentario
+		# Notificaciones a los participantes 3ros de la discusión
 
 		foreach($repliers as $replier):
-			if($replier->id != $writer->id AND $replier->id != $course->author_id AND $replier->id != $parent->user_id):
+			if($replier->id != $writer->id AND $replier->id != $discussion->user_id AND $replier->id != $discussion->user_id AND $replier->id != $parent->user_id):
 
 				$notification = new Notification();
 				$notification->user_id = $replier->id;
 				$notification->notificationable_id = $writer->id;
 				$notification->notificationable_type = 'User';
-				$notification->icon = 'fa-comments';
-				$notification->badge = 'bg-green';
+				$notification->icon = 'fa-comments-o';
+				$notification->badge = 'bg-purple';
 				$notification->picture = $writer->profile->getAvatar();
-				$notification->route = '/curso/'.$course->name.'?section=lessons&action=viewlesson&type=get&lesson_id='.Hashids::encode($lesson->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+				if($replier->isStudent($replier)):
+					$notification->route = '/curso/'.$course->name.'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+				else:
+					$notification->route = '/teachers/contributions/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+				endif;
 				$notification->title = $writer->display_name.' tambien respondió';
 				if($writer->id != $parent->user_id):
-					$notification->description = 'El comentario de ' . $author->display_name .' en ' .$lesson->title. ' del curso de ' . $course->title;
+					$notification->description = 'El comentario de ' . $author->display_name .' en ' .$discussion->title. ' del curso de ' . $course->title;
 				else:
-					$notification->description = 'Su comentario en ' .$lesson->title. ' del curso de ' . $course->title;
+					$notification->description = 'Su comentario en ' .$discussion->title. ' del curso de ' . $course->title;
 				endif;
 				$notification->save();
 
 			endif;
 		endforeach;
 
-		// Notificacion al que realizó el comentario
+		$teacher = $course->teacher;
+
+		# Notificación a quien estan respondiendo
 
 		if($writer->id != $parent->user_id):
 
@@ -501,35 +535,65 @@
 			$notification->user_id = $parent->user_id;
 			$notification->notificationable_id = $writer->id;
 			$notification->notificationable_type = 'User';
-			$notification->icon = 'fa-comments';
-			$notification->badge = 'bg-green';
+			$notification->icon = 'fa-comments-o';
+			$notification->badge = 'bg-purple';
 			$notification->picture = $writer->profile->getAvatar();
-			$notification->route = '/curso/'.$course->name.'?section=lessons&action=viewlesson&type=get&lesson_id='.Hashids::encode($lesson->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			if($parent->author->isStudent()):
+				$notification->route = '/curso/'.$course->name.'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			elseif($parent->author->isTeacher() AND $parent->user_id == $teacher->id):
+				$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			else:
+				$notification->route = '/teachers/contributions/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			endif;
 			$notification->title = $writer->display_name.' respondió tu comentario ';
-			$notification->description = 'En '.$lesson->title.' del curso ' . $course->title;
+			$notification->description = 'En '.$discussion->title.' del curso ' . $course->title;
 			$notification->save();
 
 		endif;
 
-		// Notificación al profesor
+		# Notificación al contribuidor si es por parte de un contribuidor
+
+		if($writer->id != $discussion->user_id AND $discussion->user_id != $teacher->id AND $discussion->user_id != $parent->user_id):
+
+			$notification = new Notification();
+			$notification->user_id = $discussion->user_id;
+			$notification->notificationable_id = $writer->id;
+			$notification->notificationable_type = 'User';
+			$notification->icon = 'fa-comments-o';
+			$notification->badge = 'bg-purple';
+			$notification->picture = $writer->profile->getAvatar();
+			$notification->route = '/teachers/contributions/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			$notification->title = $writer->display_name.' respondió ';
+			if($writer->id != $parent->user_id):
+				$notification->description = 'El comentario de ' . $author->display_name .' en ' .$discussion->title. ' del curso de ' . $course->title;
+			else:
+				$notification->description = 'Su comentario en ' .$discussion->title. ' del curso de ' . $course->title;
+			endif;
+			$notification->save();
+
+			return true;
+
+		endif;
+
+		# Notificación al profesor
 
 		$teacher = $course->teacher;
 
-		if($writer->id != $teacher->id):
+		if($writer->id != $teacher->id AND $discussion->user_id != $parent->user_id):
 
 			$notification = new Notification();
 			$notification->user_id = $teacher->id;
 			$notification->notificationable_id = $writer->id;
 			$notification->notificationable_type = 'User';
-			$notification->icon = 'fa-comments';
-			$notification->badge = 'bg-green';
+			$notification->icon = 'fa-comments-o';
+			$notification->badge = 'bg-purple';
 			$notification->picture = $writer->profile->getAvatar();
-			$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=lessons&action=comments&type=get&lesson_id='.Hashids::encode($lesson->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
 			$notification->title = $writer->display_name.' respondió';
 			if($writer->id != $parent->user_id):
-				$notification->description = 'El comentario de ' . $author->display_name .' en ' .$lesson->title. ' del curso de ' . $course->title;
+				$notification->description = 'El comentario de ' . $author->display_name .' en ' .$discussion->title. ' del curso de ' . $course->title;
 			else:
-				$notification->description = 'Su comentario en ' .$lesson->title. ' del curso de ' . $course->title;
+				$notification->description = 'Su comentario en ' .$discussion->title. ' del curso de ' . $course->title;
 			endif;
 			$notification->save();
 
@@ -541,17 +605,40 @@
 
 	Event::listen('notification.discussions_like_comment', function($liker, $comment){
 
-		if(($object = $comment->discussionable) instanceof Discussion):
+		$course = null;
+		$discussion = null;
+		$is_parent = false;
 
-			$lesson = $object->discussionable;
+		if(!($object = $comment->discussionable) instanceof Course):
+
+			if(!($parent_object = $object->discussionable) instanceof Course):
+
+				if(!($grand_parent_object = $parent_object->discussionable) instanceof Course):
+
+					$course = $grand_parent_object->discussionable;
+					$discussion = $grand_parent_object;
+
+				else:
+
+					$course = $grand_parent_object;
+					$discussion = $parent_object;
+
+				endif;
+
+			else:
+
+				$course = $parent_object;
+				$discussion = $object;
+
+			endif;
 
 		else:
 
-			$lesson = $object;
+			$course = $object;
+			$discussion = $comment;
+			$is_parent = true;
 
 		endif;
-
-		$course = $lesson->module->course;
 
 		if($liker->id != $comment->user_id):
 
@@ -562,13 +649,20 @@
 			$notification->icon = 'fa-thumbs-up';
 			$notification->badge = 'bg-blue';
 			$notification->picture = $liker->profile->getAvatar();
-			if($comment->user_id == $course->author_id):
-				$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=lessons&action=comments&type=get&lesson_id='.Hashids::encode($lesson->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			if($comment->author->isStudent()):
+				$notification->route = '/curso/'.$course->name.'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			elseif($comment->user_id == $course->author_id):
+				$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
 			else:
-				$notification->route = '/curso/'.$course->name.'?section=lessons&action=viewlesson&type=get&lesson_id='.Hashids::encode($lesson->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+				$notification->route = '/teachers/contributions/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
 			endif;
-			$notification->title = 'A '.$liker->display_name.' le gustó tu comentario';
-			$notification->description = 'En '.$lesson->title.' del curso de ' . $course->title;
+			if($is_parent):
+				$notification->title = 'A '.$liker->display_name.' le gustó tu aporte';
+				$notification->description = 'En '.$discussion->title.' del curso de ' . $course->title;
+			else:
+				$notification->title = 'A '.$liker->display_name.' le gustó tu comentario';
+				$notification->description = 'En '.$discussion->title.' del curso de ' . $course->title;
+			endif;
 			$notification->save();
 
 		endif;
@@ -579,19 +673,42 @@
 
 	Event::listen('notification.discussions_banned_comment', function($banneder, $comment){
 
-		if(($object = $comment->discussionable) instanceof Discussion):
+		$course = null;
+		$discussion = null;
+		$is_parent = false;
 
-			$lesson = $object->discussionable;
+		if(!($object = $comment->discussionable) instanceof Course):
+
+			if(!($parent_object = $object->discussionable) instanceof Course):
+
+				if(!($grand_parent_object = $parent_object->discussionable) instanceof Course):
+
+					$course = $grand_parent_object->discussionable;
+					$discussion = $grand_parent_object;
+
+				else:
+
+					$course = $grand_parent_object;
+					$discussion = $parent_object;
+
+				endif;
+
+			else:
+
+				$course = $parent_object;
+				$discussion = $object;
+
+			endif;
 
 		else:
 
-			$lesson = $object;
+			$course = $object;
+			$discussion = $comment;
+			$is_parent = true;
 
 		endif;
 
-		$course = $lesson->module->course;
-
-		if($course->author_id != $comment->user_id):
+		if($comment->author->isStudent()):
 
 			$notification = new Notification();
 			$notification->user_id = $comment->user_id;
@@ -600,9 +717,25 @@
 			$notification->icon = 'fa-ban';
 			$notification->badge = 'bg-red';
 			$notification->picture = $banneder->profile->getAvatar();
-			$notification->route = '/curso/'.$course->name.'?section=lessons&action=viewlesson&type=get&lesson_id='.Hashids::encode($lesson->id);
+			$notification->route = '/curso/'.$course->name.'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id);
 			$notification->title = 'A '.$banneder->display_name.' no le gustó tu comentario';
-			$notification->description = 'En '.$lesson->title.' del curso de ' . $course->title . ' y fué mandado a revisión';
+			$notification->description = 'En '.$discussion->title.' del curso de ' . $course->title . ' y fué mandado a revisión';
+			$notification->save();
+
+		endif;
+
+		if($banneder->id != $discussion->user_id AND $discussion->user_id != $course->author_id):
+
+			$notification = new Notification();
+			$notification->user_id = $course->author_id;
+			$notification->notificationable_id = $banneder->id;
+			$notification->notificationable_type = 'User';
+			$notification->icon = 'fa-ban';
+			$notification->badge = 'bg-red';
+			$notification->picture = $banneder->profile->getAvatar();
+			$notification->route = '/teachers/contributions/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			$notification->title = 'A '.$banneder->display_name.' no le gustó';
+			$notification->description = 'El comentario de '.$comment->author->display_name.' en '.$discussion->title.' del curso de ' . $course->title;
 			$notification->save();
 
 		endif;
@@ -616,9 +749,9 @@
 			$notification->icon = 'fa-ban';
 			$notification->badge = 'bg-red';
 			$notification->picture = $banneder->profile->getAvatar();
-			$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=lessons&action=comments&type=get&lesson_id='.Hashids::encode($lesson->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
+			$notification->route = '/teachers/courses/show/'.Hashids::encode($course->id).'?section=discussions&action=comments&type=get&discussion_id='.Hashids::encode($discussion->id).'&focusable=true&focuskey=comment&focusvalue='.Hashids::encode($comment->id).'';
 			$notification->title = 'A '.$banneder->display_name.' no le gustó';
-			$notification->description = 'El comentario de '.$comment->author->display_name.' en '.$lesson->title.' del curso de ' . $course->title;
+			$notification->description = 'El comentario de '.$comment->author->display_name.' en '.$discussion->title.' del curso de ' . $course->title;
 			$notification->save();
 
 		endif;

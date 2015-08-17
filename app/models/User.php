@@ -455,6 +455,33 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
+	public function isStudent(){
+
+		$role = $this->role;
+
+		if($role->name == 'student') return true;
+		else return false;
+		
+	}
+
+	public function isTeacher(){
+
+		$role = $this->role;
+
+		if($role->name == 'teacher') return true;
+		else return false;
+		
+	}
+
+	public function isCoordinator(){
+
+		$role = $this->role;
+
+		if($role->name == 'coordinator') return true;
+		else return false;
+
+	}
+
 	/* -------- STATIC METHODS ----------- */
 
 	public static function getCoordinators( $status = 'active' ){

@@ -269,8 +269,8 @@ Page Header
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-extended .dropdown-menu {
   min-width: 160px;
-  max-width: 400px;
-  width: 400px;
+  max-width: 600px;
+  width: 600px;
   z-index: 9995;
   /* header notifications dropdowns */
 }
