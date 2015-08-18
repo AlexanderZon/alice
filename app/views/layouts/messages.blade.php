@@ -177,6 +177,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -229,6 +230,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -285,6 +287,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -322,6 +325,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -359,6 +363,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -388,6 +393,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -416,6 +422,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -452,7 +459,8 @@
 		                type: 'HEAD'
 		            }).fail(function () {
 		                $('<span class="alert alert-error"/>')
-		                    .text('Subida al servidor temporalmente no disponible - ' +
+		                    .text('Subida al servidor tem
+		                    console.log(xhr);poralmente no disponible - ' +
 		                    new Date())
 		                    .appendTo('#compose-mail');
 		            });
@@ -496,6 +504,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -536,6 +545,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -544,7 +554,7 @@
 
 		    var loadForward = function (el) {
 		        var messageid = $(el).attr("data-messageid");
-		        var url = '{{$route}}/forward?messageid=' + messageid;
+		        var url = '{{$route}}/forward?message_id=' + messageid;
 		        
 		        // loading.show();
 		        content.html(loader);
@@ -576,6 +586,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -642,6 +653,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -710,6 +722,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true
@@ -777,6 +790,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                // toggleButton(el);
 		            },
 		            async: true
@@ -1034,6 +1048,7 @@
 		            },
 		            error: function(xhr, ajaxOptions, thrownError)
 		            {
+		            	console.log(xhr);
 		                toggleButton(el);
 		            },
 		            async: true

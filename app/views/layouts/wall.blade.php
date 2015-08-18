@@ -65,9 +65,9 @@
 					<!-- SIDEBAR MENU -->
 					<div class="profile-usermenu">
 						<ul class="nav">
-							@if(UserProfile::hasSection('index', $role))
-								<li class="{{ $section == 'index' ? 'active' : '' }}">
-									<a href="javascript:;" class="index-btn">
+							@if(UserProfile::hasSection('general', $role))
+								<li class="{{ $section == 'general' ? 'active' : '' }}">
+									<a href="javascript:;" class="general-btn">
 									<i class="icon-home"></i>
 									General </a>
 								</li>
@@ -155,7 +155,7 @@
 			<!-- BEGIN PROFILE CONTENT -->
 			<div class="profile-content">
 			
-				@yield('content_profile')
+
 
 			</div>
 			<!-- END PROFILE CONTENT -->
@@ -179,6 +179,40 @@
 		    var loading = $('.profile-loading');
 		    var loader = '<div class="portlet light"><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row"><div class="col-md-5">&nbsp;</div><img class="col-md-2" src="/assets/loaders/rubiks-cube.gif"/><div class="col-md-5">&nbsp;</div></div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div><div class="row">&nbsp;</div></div>';
 		    var listListing = '';
+
+		    var initWall = function (el, name) {
+
+		        var url = '{{$route}}/' + name;
+
+		        console.log(el);
+		        // toggleButton(el);
+
+		        $.ajax({
+		            type: "POST",
+		            cache: false,
+		            url: url,
+		            dataType: "html",
+		            success: function(res) 
+		            {
+		            	console.log(name);
+		                $('.profile-usermenu li').removeClass('active');
+		                el.parents('li').addClass('active');	
+
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.init();
+		            },
+		            error: function(xhr, ajaxOptions, thrownError)
+		            {
+		                console.log(xhr);
+		            },
+		            async: true
+		        });
+
+		    }
 
 		    var loadWall = function (el, name) {
 		        var url = '{{$route}}/' + name;
@@ -482,9 +516,9 @@
 		            });
 
 		            // handle spam and forward button click
-		            $('.profile').on('click', '.index-btn', function (e) {
+		            $('.profile').on('click', '.general-btn', function (e) {
 		            	e.preventDefault();
-		                loadWall($(this), 'index');
+		                loadWall($(this), 'general');
 		            });
 
 		            // handle sned and forward button click
@@ -539,10 +573,43 @@
 		            //handle loading content based on URL parameter
 		            if (Metronic.getURLParameter("a") === "view") {
 		                viewMessage();
+		            } else if (Metronic.getURLParameter("section") != null) {
+		            	switch(Metronic.getURLParameter("section")){
+		            		case 'lesson':
+		        				initWall($('.lessons-btn'), 'lessons');
+		        				break;
+		            		case 'lessons':
+		        				initWall($('.lessons-btn'), 'lessons');
+		        				break;
+		            		case 'general':
+		        				initWall($('.general-btn'), 'general');
+		        				break;
+		            		case 'students':
+		        				initWall($('.students-btn'), 'students');
+		        				break;
+		            		case 'discussions':
+		        				initWall($('.discussions-btn'), 'discussions');
+		        				break;
+		            		case 'inscriptions':
+		        				initWall($('.inscriptions-btn'), 'inscriptions');
+		        				break;
+		            		case 'achievements':
+		        				initWall($('.achievements-btn'), 'achievements');
+		        				break;
+		            		case 'contributors':
+		        				initWall($('.contributors-btn'), 'contributors');
+		        				break;
+		            		case 'statistics':
+		        				initWall($('.statistics-btn'), 'statistics');
+		        				break;
+		        			default:
+		        				initWall($('.general-btn'), 'general');
+		        				break;
+		            	}
 		            } else if (Metronic.getURLParameter("a") === "compose") {
 		                loadCompose();
 		            } else {
-		               $('.profile-nav > li.profile > a').click();
+		        		initWall($('.general-btn'), 'general');
 		            }
 
 		        }

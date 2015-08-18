@@ -57,18 +57,18 @@ class UserProfile extends \Eloquent {
 
     public static $profile_sections = array(
     	'superadmin' => array(
-    		'index',
+    		'general',
     		'followers',
     		'following'
     		),
     	'coordinator' => array(
-    		'index',
+    		'general',
     		'discussions',
     		'followers',
     		'following'
     		),
     	'teacher' => array(
-    		'index',
+    		'general',
     		'teaching',
     		'contributing',
     		'discussions',
@@ -76,7 +76,7 @@ class UserProfile extends \Eloquent {
     		'following'
     		),
     	'student' => array(
-    		'index',
+    		'general',
     		'learning',
     		'discussions',
     		'achievements',

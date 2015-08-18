@@ -59,6 +59,7 @@
 												</a>
 											</div>
 										@else
+											<!--
 											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[0]->id)}}">
 												<a href="javascript:;" class="btn grey-silver discussion-comments">
 												<span>{{ $discussions[0]->title }}</span>
@@ -70,6 +71,7 @@
 												<i class="fa fa-comments-o top-news-icon"></i>
 												</a>
 											</div>
+											-->
 										@endif
 									</div>
 								@endif
@@ -96,6 +98,7 @@
 												</a>
 											</div>
 										@else
+											<!--
 											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[1]->id)}}">
 												<a href="javascript:;" class="btn grey-silver discussion-comments">
 												<span>{{ $discussions[1]->title }}</span>
@@ -107,6 +110,7 @@
 												<i class="fa fa-comments-o top-news-icon"></i>
 												</a>
 											</div>
+											-->
 										@endif
 									</div>
 								@endif
@@ -137,6 +141,7 @@
 												</a>
 											</div>
 										@else
+											<!--
 											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[$i]->id)}}">
 												<a href="javascript:;" class="btn grey-silver discussion-comments">
 												<span>{{ $discussions[$i]->title }}</span>
@@ -148,6 +153,7 @@
 												<i class="fa fa-comments-o top-news-icon"></i>
 												</a>
 											</div>
+											-->
 										@endif
 										<?php $rows++; ?>
 										@if($rows - $separator == 0)

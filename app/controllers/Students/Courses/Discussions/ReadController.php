@@ -64,7 +64,7 @@ class ReadController extends \Students\Courses\ReadController {
 
 		self::addArgument('course', $course);
 
-		self::addArgument('discussions', $course->recentdiscussions);
+		self::addArgument('discussions', $course->recentdiscussions()->where('discussions.status','=','active')->get());
 
 		return self::make('index');
 

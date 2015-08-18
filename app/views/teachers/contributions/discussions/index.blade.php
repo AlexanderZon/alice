@@ -33,7 +33,7 @@
 								<?php $col = 5; ?>
 								@if($discussions->count() == 0)
 									<div class="col-md-12">
-										Todavia no Existen Discusiones para este Curso, te invitamos a crear nuevas discusiones o invita a otros profesores a colaborar con este curso.
+										Todavia no Existen Discusiones para este Curso, te invitamos a crear nuevas discusiones.
 									</div>
 								@endif
 								@if($discussions->count() >= 1 && $discussions->count() <= 2)

@@ -285,7 +285,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		$lesson = new Lesson();
 		$lesson->module_id = $module->id;
-		$lesson->previous_id = Input::get('previous_id') != null ? Input::get('previous_id') : 0;
+		// $lesson->previous_id = Input::get('previous_id') != null ? Input::get('previous_id') : 0;
 		$lesson->title = Input::get('title');
 		$lesson->name = Lesson::setPermalink(Input::get('title'));
 		$lesson->approval_percentage = (Input::get('approval_percentage')/100);

@@ -11,6 +11,8 @@
 |
 */
 
+setlocale(LC_ALL, "Spanish_Colombia.1252");
+
 Route::get('/test/getimagesize', function(){
 	dd(getimagesize(public_path().'/assets/admin/pages/media/blog/8.jpg'));
 });
@@ -71,6 +73,13 @@ if(Auth::check()):
 			Route::controller('/teachers/contributions/{course_id}/general', '\Teachers\Contributions\General\ReadController');
 			Route::controller('/teachers/contributions', '\Teachers\Contributions\ReadController');
 			Route::controller('/teachers', '\Teachers\ReadController');
+
+			Route::controller('/curso/{course_name}/general', '\Students\Courses\General\ReadController');
+			Route::get('/curso/{course_name}', '\Students\Courses\ReadController@getCourse');
+			Route::controller('/cursos', '\Students\Courses\ReadController');
+			Route::controller('/profesores', '\Students\Teachers\ReadController');
+			Route::controller('/estudiantes', '\Students\Students\ReadController');
+			Route::controller('/inicio', '\Students\ReadController');
 
 		break;
 		case 'student':

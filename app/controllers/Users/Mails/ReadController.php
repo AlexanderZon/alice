@@ -202,7 +202,6 @@ class ReadController extends \BaseController {
 		$message->author_id = Auth::user()->id;
 		$message->save();
 
-
 		self::addArgument('profile', Input::get('profile'));
 
 		self::addArgument('token', Crypt::encrypt($message->id));
@@ -239,7 +238,7 @@ class ReadController extends \BaseController {
                 &lt;br&gt;
 				&lt;blockquote style="font-size:1em" &gt;'.$old->message.'&lt;/blockquote&gt;';
 		$message->save();
-		$message->to()->sync(array($message->author_id));
+		$message->to()->sync(array($old->author_id));
 		$message->save();
 
 		self::addArgument('message', $message);
@@ -255,6 +254,25 @@ class ReadController extends \BaseController {
 	}
 
 	public function getForward(){
+
+		$old = Message::find(Crypt::decrypt(Input::get('message_id')));
+
+		$message = new Message();
+		$message->author_id = Auth::user()->id;
+		$message->message = '
+                &lt;br&gt;
+                &lt;br&gt;
+				&lt;blockquote style="font-size:1em" &gt;'.$old->message.'&lt;/blockquote&gt;
+				&lt;br&gt;
+				Mensaje Escrito por: '.$old->from->display_name.' ('.strftime('%A %d de %B de %Y a las %H:%M:%S %p', strtotime($old->updated_at)).').
+				&lt;br&gt;';
+		$message->save();
+
+		self::addArgument('message', $message);
+
+		self::addArgument('old', $old);
+
+		self::addArgument('token', Crypt::encrypt($message->id));
 
 		self::addArgument('tousers', User::all());
 

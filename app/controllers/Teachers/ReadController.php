@@ -38,9 +38,9 @@ class ReadController extends \BaseController {
 
 	public function getIndex(){
 
-		self::addArgument('courses', Auth::user()->teach);
+		self::addArgument('courses', Auth::user()->teaching);
 
-		self::addArgument('contributing', Auth::user()->contributing);
+		self::addArgument('contributing', Auth::user()->contributions);
 
 		self::addArgument('lessons', Auth::user()->lessonsteaching());
 

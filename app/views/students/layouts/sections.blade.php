@@ -51,7 +51,7 @@
 					<!-- SIDEBAR BUTTONS -->
 					<div class="profile-userbuttons">
 
-						@if(!$course->iveAccepted())
+						@if(Auth::user()->isStudent() AND !$course->iveAccepted())
 							<div class="row students-postulation-container" data-course="{{ Hashids::encode($course->id) }}">
 								@if($course->ivePostuled())
 									<a class="btn green students-notpostulation-btn" href="javascript:;">

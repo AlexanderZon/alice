@@ -531,6 +531,7 @@
 										@endif
 									</a>
 								</li>
+								<!--
 								<li>
 									<a href="/my/tasks">
 									<i class="icon-pin"></i> Mis Tareas 
@@ -538,6 +539,7 @@
 										5 </span>
 										</a>
 								</li>
+								-->
 								<li class="divider">
 								</li>
 								<li>
@@ -744,7 +746,7 @@
 					@endif
 
 					@if(Auth::user()->hasCap('teachers_courses_get_index'))
-					<li class="tooltips {{ $name == 'teachers_courses' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
+					<li class="tooltips {{ $name == 'teachers_courses' || $name == 'students_courses' ? 'active open' : '' }}" data-container="body" data-placement="right" data-html="true" data-original-title="Módulo de Cursos">
 						<a href="/teachers/courses">
 							<i class="icon-notebook"></i>
 							<span class="title">
