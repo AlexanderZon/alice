@@ -259,7 +259,7 @@
 											<a href="/me/readall">Marcar todas como Leidas</a>
 										</div>
 										<div class="col-md-3">
-											<a href="/me/notifications">ver todas</a>
+											<a href="/notifications">ver todas</a>
 										</div>
 									</div>
 								</li>

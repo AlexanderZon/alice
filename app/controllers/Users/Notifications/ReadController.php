@@ -47,112 +47,24 @@ class ReadController extends \BaseController {
 
 	public function getIndex(){
 
-		self::$route = $username;
+		self::addArgument('notifications', Auth::user()->notifications);
 
-		if( $user = User::retrieveByUsername( $username )):
-
-			self::$title = $user->display_name;
-			self::$description = $username;
-			self::fixSection('index', 'Perfil de '.$user->display_name);
-			self::setArguments();
-			self::addArgument('sidebar_closed', true);
-			self::addArgument('user', $user);
-			self::addArgument('profile', $user->profile);
-			self::addArgument('role', $user->role);
-			self::addArgument('hasMyFollow', $user->hasMyFollow());
-
-			switch($section):
-				case 'follow':
-					return Response::json(array(
-						'status' => Auth::user()->follow($user)
-						));
-					break;
-				case 'unfollow':
-					return Response::json(array(
-						'status' => Auth::user()->unfollow($user)
-						));
-					break;
-				case 'block':
-					return Response::json(array(
-						'status' => Auth::user()->block($user)
-						));
-					break;
-				case 'unblock':
-					return Response::json(array(
-						'status' => Auth::user()->unblock($user)
-						));
-					break;
-				case 'learning':
-					self::addArgument('courses', Course::paginate(10));
-					break;
-			endswitch;
-
-			return self::make($section);
-
-		else:
-
-			return View::make('security.auth.404');
-
-		endif;
+		return self::make('index');
 
 	}
 
-	public function postIndex(){
+	public function postMarkallasread(){
 
-		self::$route = $username;
+		Auth::user()->setnotifications();
 
-		if( $user = User::retrieveByUsername( $username )):
+		$notifications = Auth::user()->newnotifications;
 
-			self::addArgument('user', $user);
-			self::addArgument('profile', $user->profile);
-			self::addArgument('role', $user->role);
-			self::addArgument('hasMyFollow', $user->hasMyFollow());
+		foreach($notifications as $notification):
+			$notification->status = 'viewed';
+			$notification->save();
+		endforeach;
 
-			switch($section):
-				case 'follow':
-					return Response::json(array(
-						'status' => Auth::user()->follow($user)
-						));
-					break;
-				case 'unfollow':
-					return Response::json(array(
-						'status' => Auth::user()->unfollow($user)
-						));
-					break;
-				case 'block':
-					return Response::json(array(
-						'status' => Auth::user()->block($user)
-						));
-					break;
-				case 'unblock':
-					return Response::json(array(
-						'status' => Auth::user()->unblock($user)
-						));
-					break;
-				case 'followers':
-					self::addArgument('followers', $user->followers);
-					break;
-				case 'following':
-					self::addArgument('following', $user->followed);
-					break;
-				case 'learning':
-					self::addArgument('courses', $user->learning()->paginate(10));
-					break;
-				case 'teaching':
-					self::addArgument('courses', $user->teaching()->paginate(10));
-					break;
-				case 'discussions':
-					self::addArgument('discussions',$user->discussionsfromcourses);
-					break;
-			endswitch;
-
-			return self::make($section);
-
-		else:
-
-			return View::make('security.auth.404');
-
-		endif;
+		return Response::json(array(true));
 
 	}
 
