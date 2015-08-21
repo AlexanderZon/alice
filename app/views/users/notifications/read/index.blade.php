@@ -40,6 +40,7 @@
 												</div>
 											</div>
 										@endforeach
+										<!--
 										<div class="todo-tasklist-item todo-tasklist-item-border-green">
 											<img class="todo-userpic pull-left" src="../../assets/admin/layout4/img/avatar4.jpg" width="27px" height="27px">
 											<div class="todo-tasklist-item-title">
@@ -150,6 +151,7 @@
 												<span class="todo-tasklist-badge badge badge-roundless">Postponed</span>&nbsp; <span class="todo-tasklist-badge badge badge-roundless">Primary</span>
 											</div>
 										</div>
+										-->
 									</div>
 								</div>
 							</div>

@@ -16,23 +16,199 @@ TODO Page
 }
 
 .todo-tasklist-item-border-green {
+  border-left: #35aa47 2px solid;
+}
+
+.todo-tasklist-item-border-green-meadow {
+  border-left: #1BBC9B 2px solid;
+}
+
+.todo-tasklist-item-border-green-seagreen {
+  border-left: #1BA39C 2px solid;
+}
+
+.todo-tasklist-item-border-green-turquoise {
+  border-left: #36D7B7 2px solid;
+}
+
+.todo-tasklist-item-border-green-haze {
+  border-left: #44b6ae 2px solid;
+}
+
+.todo-tasklist-item-border-green-jungle {
+  border-left: #26C281 2px solid;
+}
+
+.todo-tasklist-item-border-green-sharp {
+  border-left: #4DB3A2 2px solid;
+}
+
+.todo-tasklist-item-border-green-soft {
   border-left: #3faba4 2px solid;
 }
 
-.todo-tasklist-item-border-blue {
-  border-left: #4c87b9 2px solid;
+.todo-tasklist-item-border-grey {
+  border-left: #E5E5E5 2px solid;
 }
 
-.todo-tasklist-item-border-purple {
-  border-left: #8877a9 2px solid;
+.todo-tasklist-item-border-grey-steel {
+  border-left: #e9edef 2px solid;
+}
+
+.todo-tasklist-item-border-grey-cararra {
+  border-left: #fafafa 2px solid;
+}
+
+.todo-tasklist-item-border-grey-gallery {
+  border-left: #555555 2px solid;
+}
+
+.todo-tasklist-item-border-grey-cascade {
+  border-left: #95A5A6 2px solid;
+}
+
+.todo-tasklist-item-border-grey-silver {
+  border-left: #BFBFBF 2px solid;
+}
+
+.todo-tasklist-item-border-grey-salsa {
+  border-left: #ACB5C3 2px solid;
+}
+
+.todo-tasklist-item-border-grey-salt {
+  border-left: #bfcad1 2px solid;
+}
+
+.todo-tasklist-item-border-grey-mint {
+  border-left: #9eacb4 2px solid;
 }
 
 .todo-tasklist-item-border-red {
+  border-left: #d84a38 2px solid;
+}
+
+.todo-tasklist-item-border-red-pink {
+  border-left: #E08283 2px solid;
+}
+
+.todo-tasklist-item-border-red-sunglo {
+  border-left: #E26A6A 2px solid;
+}
+
+.todo-tasklist-item-border-red-intense {
+  border-left: #e35b5a 2px solid;
+}
+
+.todo-tasklist-item-border-red-thunderbird {
+  border-left: #D91E18 2px solid;
+}
+
+.todo-tasklist-item-border-red-flamingo {
+  border-left: #EF4836 2px solid;
+}
+
+.todo-tasklist-item-border-red-soft {
   border-left: #d05454 2px solid;
 }
 
+.todo-tasklist-item-border-red-haze {
+  border-left: #f36a5a 2px solid;
+}
+
 .todo-tasklist-item-border-yellow {
-  border-left: #d4ad38 2px solid;
+  border-left: #FFB848 2px solid;
+}
+
+.todo-tasklist-item-border-yellow-gold {
+  border-left: #E87E04 2px solid;
+}
+
+.todo-tasklist-item-border-yellow-casablanca {
+  border-left: #f2784b 2px solid;
+}
+
+.todo-tasklist-item-border-yellow-crusta {
+  border-left: #f3c200 2px solid;
+}
+
+.todo-tasklist-item-border-yellow-lemon {
+  border-left: #F7CA18 2px solid;
+}
+
+.todo-tasklist-item-border-yellow-saffron {
+  border-left: #F4D03F 2px solid;
+}
+
+.todo-tasklist-item-border-purple {
+  border-left: #8E44AD 2px solid;
+}
+
+.todo-tasklist-item-border-purple-plum {
+  border-left: #8775a7 2px solid;
+}
+
+.todo-tasklist-item-border-purple-medium {
+  border-left: #BF55EC 2px solid;
+}
+
+.todo-tasklist-item-border-purple-studio {
+  border-left: #8E44AD 2px solid;
+}
+
+.todo-tasklist-item-border-purple-wisteria {
+  border-left: #9B59B6 2px solid;
+}
+
+.todo-tasklist-item-border-purple-seance {
+  border-left: #9A12B3 2px solid;
+}
+
+.todo-tasklist-item-border-purple-intense {
+  border-left: #8775a7 2px solid;
+}
+
+.todo-tasklist-item-border-purple-sharp {
+  border-left: #796799 2px solid;
+}
+
+.todo-tasklist-item-border-purple-soft {
+  border-left: #8877a9 2px solid;
+}
+
+.todo-tasklist-item-border-blue {
+  border-left: #4B8DF8 2px solid;
+}
+
+.todo-tasklist-item-border-blue-madison {
+  border-left: #578ebe 2px solid;
+}
+
+.todo-tasklist-item-border-blue-chambray {
+  border-left: #2C3E50 2px solid;
+}
+
+.todo-tasklist-item-border-blue-ebonyclay {
+  border-left: #22313F 2px solid;
+}
+
+.todo-tasklist-item-border-blue-hoki {
+  border-left: #67809F 2px solid;
+}
+
+.todo-tasklist-item-border-blue-steel {
+  border-left: #4B77BE 2px solid;
+}
+
+.todo-tasklist-item-border-blue-soft {
+  border-left: #4c87b9 2px solid;
+}
+
+.todo-tasklist-item-border-blue-dark {
+  border-left: #5e738b 2px solid;
+}
+
+.todo-tasklist-item-border-blue-sharp {
+  border-left: #5C9BD1 2px solid;
 }
 
 .padding-top-10px {
