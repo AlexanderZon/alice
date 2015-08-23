@@ -7,6 +7,7 @@ use \Auth as Auth;
 use \Hash as Hash;
 use \View as View;
 use \Crypt as Crypt;
+use \Hashids as Hashids;
 use \UserProfile as UserProfile;
 use \User as User;
 use \Course as Course;
@@ -50,6 +51,16 @@ class ReadController extends \BaseController {
 		self::addArgument('notifications', Auth::user()->notifications);
 
 		return self::make('index');
+
+	}
+
+	public function deleteIndex(){
+
+		$notification = Notification::find(Hashids::decode(Input::get('notification_id')));
+
+		$notification->delete();
+
+		return Response::json(array(true));
 
 	}
 
