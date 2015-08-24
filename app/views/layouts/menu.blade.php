@@ -256,7 +256,7 @@
 									<h3>&nbsp;</h3>
 									<div class="row">
 										<div class="col-md-8">
-											<a href="/readall">Marcar todas como Leidas</a>
+											&nbsp;
 										</div>
 										<div class="col-md-3">
 											<a href="/notifications">ver todas</a>
