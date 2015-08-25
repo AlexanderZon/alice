@@ -63,6 +63,12 @@ class Evaluation extends \Eloquent {
     	
     }
 
+    public function image(){
+
+        return '/uploads/activities/defaults/'.$this->type.'.png';
+
+    }
+
     public function average(){
 
         if($this->tests->count() > 0):

@@ -34,13 +34,11 @@ class ReadController extends \Students\ReadController {
 
 		self::pushName('courses');
 
-		self::addSection('show', 'Gestionar Curso');
-
-		self::addSection('course', 'Visualizar Curso');
+		self::addSection('course', 'Contenido del Curso');
 
 		self::$title = 'Cursos';
 
-		self::$description = 'Contenido del Curso';
+		self::$description = 'Listado de Cursos';
 
 		self::pushBreadCrumb('Cursos', self::$route );
 

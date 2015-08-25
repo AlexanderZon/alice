@@ -1,6 +1,9 @@
 <?php namespace Security;
 
+use \User as User;
 use \Auth as Auth;
+use \Crypt as Crypt;
+use \Hash as Hash;
 use \Session as Session;
 use \Input as Input;
 
@@ -230,6 +233,53 @@ class AuthenticationController extends ReadController {
 				return self::go( 'login' );
 
 			endif;
+
+		endif;
+
+	}
+
+	public function getLock(){
+
+		/*Audits::add(Auth::user(), array(
+			'name' => 'auth_logout',
+			'title' => 'Cierre de Sesión',
+			'description' => 'El usuario ' . Auth::user()->username . ' ha Cerrado Sesión'
+			), 'DELETE');*/
+
+		if(Auth::check()):
+
+			$user = Auth::user();
+
+			Auth::logout();
+
+			self::addArgument('user', $user);
+
+			return self::make( 'lock' );
+
+		else: 
+
+			return self::go('login');
+
+		endif;
+
+	}
+
+	public function postLock(){
+
+		$user = User::find(Crypt::decrypt(Input::get('_token')));
+
+		if(Hash::check(Input::get('password'), $user->password)):
+
+			Auth::login($user);
+
+			return \Redirect::to('/');
+
+		else:
+
+			self::addArgument('user', $user);
+			self::addArgument('msg_error', 'Contraseña Incorrecta');
+
+			return self::make( 'lock' );
 
 		endif;
 

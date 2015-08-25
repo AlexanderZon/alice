@@ -59,7 +59,7 @@
 										<div class="row portfolio-block activity-block" data-activity="{{ Hashids::encode($evaluation->id) }}">
 											<div class="col-md-5">
 												<div class="portfolio-text">
-													<img src="/assets/admin/pages/media/profile/logo_metronic.jpg" alt=""/>
+													<img src="{{ $evaluation->image() }}" alt="" style="max-width:100px" />
 													<div class="portfolio-text-info">
 														<h4>{{ $evaluation->title != '' ? $evaluation->title : 'Sin nombre' }}</h4>
 														<p>
@@ -95,6 +95,39 @@
 													Gestionar </span>
 													</a>
 												</div>
+											</div>
+											<div class="col-md-12"><hr></div>
+											<div class="col-md-12 testers">
+												@foreach($evaluation->testers as $tester)
+													<div class="col-md-5">
+														<div class="portfolio-text">
+															<img src="{{ Auth::user()->profile->getAvatar() }}" alt="" style="max-width:100px" />
+															<div class="portfolio-text-info">
+																<h4>{{ Auth::user()->display_name }}</h4>
+																<p>
+																	<em class="timeago">({{ $evaluation->date_start }})</em>
+																</p>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-7 portfolio-stat">
+														<div class="portfolio-info col-md-3">
+															Porcentaje <span>
+															{{ '75%' }} </span>
+														</div>
+														<div class="portfolio-info col-md-3">
+															Preguntas Acertadas <span>
+															{{ '18' }} </span>
+														</div>
+														<div class="portfolio-info col-md-3">
+															Equivocaciones <span>
+															{{ '6' }} </span>
+														</div>
+														<div class="portfolio-info col-md-3">
+															Duración <span>{{ '14 min' }}</span>
+														</div>
+													</div>
+												@endforeach
 											</div>
 										</div>
 									@endforeach
@@ -180,6 +213,8 @@
 	<script type="text/javascript" src="/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	
 	<script type="text/javascript">
+
+
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=activities&lesson_id={{ Hashids::encode($lesson->id) }}');
 		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Actividades';
