@@ -64,7 +64,6 @@ class Course extends \Eloquent {
 
     }
 
-
     public function isContributor($teacher){
 
         $bool = false;

@@ -100,25 +100,14 @@
 				</div>
 			</div>
 		</div>
+		<!--
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
-				<!-- BEGIN PORTLET-->
 				<div class="portlet light ">
 					<div class="portlet-title">
 						<div class="caption caption-md">
 							<i class="icon-bar-chart theme-font-color hide"></i>
 							<span class="caption-subject theme-font-color bold uppercase">Cursos en Ejecución</span>
-							<!-- <span class="caption-helper hide">estadísticas semanales...</span> -->
-						</div>
-						<div class="actions">
-							<!-- <div class="btn-group btn-group-devided" data-toggle="buttons">
-								<label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
-								<input type="radio" name="options" class="toggle" id="option1">Hoy</label>
-								<label class="btn btn-transparent grey-salsa btn-circle btn-sm">
-								<input type="radio" name="options" class="toggle" id="option2">Semana</label>
-								<label class="btn btn-transparent grey-salsa btn-circle btn-sm">
-								<input type="radio" name="options" class="toggle" id="option2">Mes</label>
-							</div> -->
 						</div>
 					</div>
 					<div class="portlet-body">
@@ -126,7 +115,6 @@
 							<div class="col-md-6 col-sm-6 col-xs-6">
 								<div class="stat-left">
 									<div class="stat-chart">
-										<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
 										<div id="sparkline_bar"> </div>
 									</div>
 									<div class="stat-number">
@@ -142,7 +130,6 @@
 							<div class="col-md-6 col-sm-6 col-xs-6">
 								<div class="stat-right">
 									<div class="stat-chart">
-										<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
 										<div id="sparkline_bar2"> </div>
 									</div>
 									<div class="stat-number">
@@ -158,13 +145,9 @@
 						</div>
 
 						<div class="scroller" style="height: 244px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
-						<!-- <div class="table-scrollable table-scrollable-borderless"> -->
 							<table class="table table-hover table-light">
 								<thead>
 									<tr class="uppercase">
-										<!-- <th colspan="2">
-											PROYECTO
-										</th> -->
 										<th colspan="2">
 											CURSO
 										</th>
@@ -203,13 +186,131 @@
 									</td>
 								</tr>
 							</table>
-						<!-- </div> -->
 						</div>
 					</div>
 				</div>
-				<!-- END PORTLET-->
 			</div>
 		</div>
+		-->
+		<link href="/assets/admin/pages/css/blog.css" rel="stylesheet" type="text/css"/>
+		<link href="/assets/admin/pages/css/news.css" rel="stylesheet" type="text/css"/>
+
+		<style type="text/css">
+			.course-students{
+				text-align: right;
+				display: block;
+			}
+			.student-line-picture{
+				width: 40px;
+				height: 40px;
+				display: inline-block;
+				margin-left: 5px;
+			}
+			.full-width{
+				width: 100%;
+			}
+		</style>
+
+	<div class="row">
+		<div class="col-md-12">
+			<!-- BEGIN PORTLET -->
+
+			<div class="portlet light">
+				<!-- STAT -->
+				<div class="portlet-body">
+					<div class="row">
+						<div class="col-md-12 blog-page">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 article-block">
+									<!-- <h4 class="profile-desc-title">Aprendiendo ({{ $courses->count() }})</h4> -->
+									@if($courses->count() > 0 )
+										@foreach($courses as $course)
+											<div class="row">
+												<div class="col-lg-2 col-md-4 blog-img blog-tag-data">
+													<div class="mask-circle">
+														<img src="{{ $course->main_picture }}" alt="" class="img-responsive">			
+													</div>
+													<ul class="list-inline">
+														<!--
+														<li>
+															<i class="fa fa-user"></i>
+															<a href="{{ $course->teacher->username }}">
+															{{ $course->teacher->display_name }} </a>
+														</li>
+														-->
+														<li>
+															<i class="fa fa-users"></i>
+															{{ $course->students()->count() }} Estudiantes
+														</li>
+														<li>
+															<i class="fa fa-book"></i>
+															{{ $course->lessons()->count() }} Lecciones
+														</li>
+														<li>
+															<i class="fa fa-comments"></i>
+															{{ $course->discussions()->count() }} Discusiones
+														</li>
+														<li>
+															<i class="fa fa-flask"></i>
+															{{ $course->evaluations()->count() }} Actividades
+														</li>
+													</ul>
+													<!-- <ul class="list-inline blog-tags">
+														<li>
+															<i class="fa fa-tags"></i>
+															<a href="javascript:;">
+															Technology </a>
+															<a href="javascript:;">
+															Education </a>
+															<a href="javascript:;">
+															Internet </a>
+														</li>
+													</ul> -->
+												</div>
+												<div class="col-lg-10 col-md-8 blog-article">
+													<h3>
+													<a href="{{ $course->getRoute() }}">{{ $course->title }}</a>
+													</h3>
+													<p class="justify">
+														{{ $course->getSummary(2000) }}
+													</p>
+													<a class="btn blue" href="{{ $route }}/show/{{ Hashids::encode($course->id) }}">
+													Gestionar <i class="m-icon-swapright m-icon-white"></i>
+													</a>
+													<div class="course-students">
+														<h5>Estudiantes destacados</h5>
+															@if(count($course->beststudents()) > 0)
+																@foreach($course->beststudents() as $student)
+																	<a href="/{{ $student->username }}" class="student-line-picture tooltips" data-original-title="{{ $student->display_name }}"><img alt="" class="img-circle full-width" src="{{ $student->profile->getAvatar() }}"></a>
+																@endforeach
+															@else
+																<span>No hay estudientes en este curso aún</span>
+															@endif
+														<!-- <a href="#" class="student-line-picture"><img alt="" class="img-circle full-width" src="/uploads/users/AlexanderZon/images/A5790167-359B-B89B-60CD-A405C4207010.jpg"></a>
+														<a href="#" class="student-line-picture"><img alt="" class="img-circle full-width" src="/uploads/users/AlexanderZon/images/A5790167-359B-B89B-60CD-A405C4207010.jpg"></a>
+														<a href="#" class="student-line-picture"><img alt="" class="img-circle full-width" src="/uploads/users/AlexanderZon/images/A5790167-359B-B89B-60CD-A405C4207010.jpg"></a> -->
+													</div>
+												</div>
+											</div>
+											<hr>
+										@endforeach
+									@else
+										No has sido asignado a ningún curso como Profesor.
+									@endif
+								</div>
+								<!--end col-md-12-->
+							</div>
+							@if( $courses->count() > 0 )
+								{{ $courses->links('users.wall.read.paginate')->with(array('courses' => $courses, 'section' => 'list')) }}
+							@endif
+						</div>
+					</div>
+				</div>
+			</div>
+					
+			<!-- END PORTLET -->
+		</div>
+	</div>	
 		
 @stop
 

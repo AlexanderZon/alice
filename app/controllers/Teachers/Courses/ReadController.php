@@ -37,7 +37,7 @@ class ReadController extends \Teachers\ReadController {
 
 		self::$title = 'Cursos';
 
-		self::$description = 'Gestión de Cursos del Sistema';
+		self::$description = 'Listado de todos los Cursos del Sistema';
 
 		self::pushBreadCrumb('Cursos', self::$route );
 
@@ -54,7 +54,7 @@ class ReadController extends \Teachers\ReadController {
 	public function getIndex()
 	{
 
-		self::addArgument('courses', Auth::user()->teaching()->paginate(5));
+		self::addArgument('courses', Course::paginate(5));
 
 		self::addArgument('section', 'index');
 

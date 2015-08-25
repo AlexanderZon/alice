@@ -37,7 +37,7 @@ class ReadController extends \Teachers\ReadController {
 
 		self::$title = 'Contribuciones';
 
-		self::$description = 'Gestión de Contribuciones de los Cursos';
+		self::$description = 'Listado de Cursos que yo contribuyo';
 
 		self::pushBreadCrumb('Contribuciones', self::$route );
 

@@ -28,9 +28,9 @@ class ReadController extends \BaseController {
 
 		self::$name = 'teachers';
 
-		self::$title = 'Profesores';
+		self::$title = 'Escritorio';
 
-		self::$description = 'Módulo de Profesores del Sistema';
+		self::$description = 'Listado de cursos que imparto';
 
 		self::setArguments();
 
@@ -38,7 +38,7 @@ class ReadController extends \BaseController {
 
 	public function getIndex(){
 
-		self::addArgument('courses', Auth::user()->teaching);
+		self::addArgument('courses', Auth::user()->teaching()->paginate(5));
 
 		self::addArgument('contributing', Auth::user()->contributions);
 

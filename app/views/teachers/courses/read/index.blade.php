@@ -86,9 +86,19 @@
 													<p class="justify">
 														{{ $course->getSummary(2000) }}
 													</p>
-													<a class="btn blue" href="{{ $route }}/show/{{ Hashids::encode($course->id) }}">
-													Gestionar <i class="m-icon-swapright m-icon-white"></i>
-													</a>
+													@if($course->author_id == Auth::user()->id)
+														<a class="btn blue" href="{{ $route }}/show/{{ Hashids::encode($course->id) }}">
+														Gestionar <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													@elseif($course->isContributor(Auth::user()))
+														<a class="btn blue" href="/teachers/contributions/show/{{ Hashids::encode($course->id) }}">
+														Contribuir <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													@else
+														<a class="btn blue" href="/curso/{{ $course->name }}">
+														Leer más <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													@endif
 													<div class="course-students">
 														<h5>Estudiantes destacados</h5>
 															@if(count($course->beststudents()) > 0)
