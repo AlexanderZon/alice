@@ -194,7 +194,6 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$discussion = Discussion::find(Hashids::decode(Input::get('discussion_id')));
 		$parent = Hashids::decode(Input::get('parent_id'));
 
-		// return Response::json($parent);
 
 		$comment = new Discussion();
 		$comment->user_id = Auth::user()->id;
@@ -239,7 +238,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 		$parent = Discussion::find($parent);
 
-		if($parent->id != $discussion->id):
+		if($parent):
 
 			\Event::fire('notification.discussions_reply_comment', array(Auth::user(), $discussion, $comment, $parent));
 

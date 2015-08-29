@@ -150,7 +150,7 @@ class ReadController extends \Students\Courses\ReadController {
 
 		$parent = Discussion::find($parent);
 
-		if($parent->id != $discussion->id):
+		if($parent):
 
 			\Event::fire('notification.discussions_reply_comment', array(Auth::user(), $discussion, $comment, $parent));
 
