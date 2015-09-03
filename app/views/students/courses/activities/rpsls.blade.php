@@ -112,7 +112,7 @@
 					<div class="col-md-8 col-sm-8 col-xs-10 center">
 						<div class="row" id="answer-selected">
 							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
-							<h3 class="col-lg-2 col-md-4 col-sm-4 col-xs-6"><img src="/games/rpsls/images/help.png" width="100%"/></h3>
+							<h3 class="col-lg-2 col-md-4 col-sm-4 col-xs-6"><img src="{{ Auth::user()->profile->getAvatar() }}" width="100%"/></h3>
 							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
 						</div>
 						<div class="row" id="answer-selected">
