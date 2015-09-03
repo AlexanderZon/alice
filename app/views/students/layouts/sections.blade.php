@@ -1336,6 +1336,37 @@
 
 		    }
 
+		    var evaluationTest = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+		    	var evaluation = el.data('evaluation');
+
+		        loading.show();
+		        content.html(loader);
+		        console.log(evaluation);
+
+		    	$.ajax({
+		    		url: '{{$route}}/activities/test',
+		    		type: 'GET',
+		    		data: {
+		    			evaluation_id: evaluation,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Evaluation Test');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1621,6 +1652,13 @@
 		            // handle add students button click
 		            $('.profile').on('click', '.students-notpostulation-btn', function (e) {
 		                studentsNotPostulation ($(this));
+		            });
+
+		            /* Evaluations Events Handlers */
+
+		            // handle add students button click
+		            $('.profile').on('click', '.evaluation-test-btn', function (e) {
+		                evaluationTest($(this));
 		            });
 
 		            //handle loading content based on URL parameter

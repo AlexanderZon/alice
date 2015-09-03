@@ -18,6 +18,11 @@ class CreateTestsTable extends Migration {
 			$table->integer('user_id');
 			$table->integer('evaluation_id');
 			$table->double('percentage', 3, 2);
+			$table->integer('hits');
+			$table->integer('mistakes');
+			$table->integer('duration');
+			$table->integer('attempts');
+			$table->integer('points');
 			$table->string('status');
 			$table->timestamps();
 			$table->softDeletes();

@@ -1,86 +1,91 @@
 <?php namespace Students\Courses\Activities;
 
-class ReadController extends \BaseController {
+use \Course as Course;
+use \Evaluation as Evaluation;
+use \Test as Test;
+use \Discussion as Discussion;
+use \DiscussionKarma as DiscussionKarma;
+use \Attachment as Attachment;
+use \User as User;
+use \Auth as Auth;
+use \Input as Input;
+use \Response as Response;
+use \GUID as GUID;
+use \Hash as Hash;
+use \Hashids as Hashids;
+use \Crypt as Crypt;
+
+class ReadController extends \Students\Courses\ReadController {
+
+	public function __construct(){
+
+		parent::__construct();
+
+		$this->beforeFilter('auth');
+
+		$this->beforeFilter('capabilities');
+
+		$this->beforeFilter('parameters');
+
+		$this->beforeFilter('arguments');
+
+		$this->afterFilter('auditory'); 
+
+		self::setModule('read');  
+		
+		self::pushViews('activities');    
+
+		self::pushRoute('activities');       
+
+		self::setModule('activities');
+
+		self::pushName('activities');
+
+		self::addSection('inactive', 'Inactivos');
+
+		self::$title = 'Actividades';
+
+		self::$description = 'Gestión de Actividades de los Cursos';
+
+		self::pushBreadCrumb('Actividades', self::$route );
+
+		# --- Put here your global args for this Controller --- #
+
+	}
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /read
+	 * GET /courses
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getTest( $course_name = '' )
 	{
-		//
-	}
+		$course = Course::getByName($course_name);	
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /read/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+		$evaluation = Evaluation::find(Crypt::decrypt(Input::get('evaluation_id')));
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /read
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+		$questions = $evaluation->json($evaluation->type);
 
-	/**
-	 * Display the specified resource.
-	 * GET /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+		/*$test = new Test();
+		$test->evaluation_id = $evaluation->id;
+		$test->user_id = Auth::user()->id;
+		$test->status = 'starting';
+		$test->percentage = 0;
+		$test->save();*/
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /read/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+		$activities = Auth::user()->achievementFromCourse($course);
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+		self::addArgument('course', $course);
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /read/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+		self::addArgument('evaluation', $evaluation);
+
+		self::addArgument('questions', $questions);
+
+		// self::addArgument('test', $test);
+
+		return self::make($evaluation->type);
+
 	}
 
 }
