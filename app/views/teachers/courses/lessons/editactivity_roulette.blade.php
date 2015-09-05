@@ -174,6 +174,10 @@
 															@endforeach
 														@endif
 														<div class="form-group">
+															<label class="control-label">Referencia Bibliográfica</label>
+															<input type="text" placeholder="Indique una referencia" class="form-control" name="reference" value="{{ $question->reference }}" required/>
+														</div>
+														<div class="form-group">
 															<input type="submit" placeholder="Indique una Opción Errónea" class="btn green" value="Guardar" />
 															<div class="btn red delete-question">Eliminar</div>
 														</div>
@@ -382,6 +386,10 @@
 									'<div class="form-group">' +
 										'<label class="control-label">Respuesta Incorrecta #3</label>' +
 										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[2] + '" maxlength="254" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="control-label">Referencia Bibliográfica</label>' +
+										'<input type="text" placeholder="Indique una referencia" class="form-control" name="reference" value="' + data.question.reference + '" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
 										'<div class="btn green submit-question-form">Guardar</div>' +

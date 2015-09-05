@@ -26,9 +26,35 @@ h3{
 }	
 
 .aside{
-	background-image: url(/games/hangman/images/battery.jpeg);
-	background-size: 100%;
+	/*background-image: url(/games/hangman/images/battery.jpeg);*/    
 	background-repeat: no-repeat;
+	background-size: auto 300px;
+    background-position-y: 50px;
+    background-position-x: 100px;
+}
+
+.battery-5{
+	background-image: url(/games/hangman/images/battery_5.png);
+}
+
+.battery-4{
+	background-image: url(/games/hangman/images/battery_4.png);
+}
+
+.battery-3{
+	background-image: url(/games/hangman/images/battery_3.png);
+}
+
+.battery-2{
+	background-image: url(/games/hangman/images/battery_2.png);
+}
+
+.battery-1{
+	background-image: url(/games/hangman/images/battery_1.png);
+}
+
+.battery-0{
+	background-image: url(/games/hangman/images/battery_0.png);
 }
 
  .result{

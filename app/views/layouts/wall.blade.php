@@ -94,11 +94,11 @@
 								</li>
 							@endif
 							@if(UserProfile::hasSection('discussions', $role))
-								<li class="{{ $section == 'discussions' ? 'active' : '' }}">
+								<!-- <li class="{{ $section == 'discussions' ? 'active' : '' }}">
 									<a href="javascript:;" class="discussions-btn">
 									<i class="icon-bubbles"></i>
 									Discusiones </a>
-								</li>
+								</li> -->
 							@endif
 							@if(UserProfile::hasSection('achievements', $role))
 								<li class="{{ $section == 'achievements' ? 'active' : '' }}">

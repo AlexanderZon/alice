@@ -722,8 +722,9 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question = new Hangman();
 				$question->question = 'Pregunta #'.($evaluation->hangman->count()+1);
 				$question->word = '';
-				$question->seconds = 0;
+				$question->seconds = 30;
 				$question->evaluation_id = $evaluation->id;
+				$question->reference = '';
 				$question->save();
 				$question->hashids = Hashids::encode($question->id);
 				$evaluation->hashids = Hashids::encode($evaluation->id);
@@ -733,6 +734,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question->question = 'Pregunta #'.($evaluation->memory->count()+1);
 				$question->answer = '';
 				$question->evaluation_id = $evaluation->id;
+				$question->reference = '';
 				$question->save();
 				$question->hashids = Hashids::encode($question->id);
 				$evaluation->hashids = Hashids::encode($evaluation->id);
@@ -741,6 +743,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question = new RPSLS();
 				$question->question = 'Pregunta #'.($evaluation->rpsls->count()+1);
 				$question->evaluation_id = $evaluation->id;
+				$question->reference = '';
 				$question->save();
 				$tmp = array(
 					'id' => $question->id,
@@ -768,6 +771,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question = new Roulette();
 				$question->question = 'Pregunta #'.($evaluation->roulette->count()+1);
 				$question->evaluation_id = $evaluation->id;
+				$question->reference = '';
 				$question->save();
 				$tmp = array(
 					'id' => $question->id,
@@ -820,6 +824,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question->question = Input::get('question');
 				$question->word = Input::get('word');
 				$question->seconds = Input::get('seconds');
+				$question->reference = Input::get('reference');
 				$question->save();
 				$question->hashids = Hashids::encode($question->id);
 				$evaluation->hashids = Hashids::encode($evaluation->id);
@@ -829,6 +834,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question->question = Input::get('question');
 				$question->answer = Input::get('answer');
 				$question->evaluation_id = $evaluation->id;
+				$question->reference = Input::get('reference');
 				$question->save();
 				$question->hashids = Hashids::encode($question->id);
 				$evaluation->hashids = Hashids::encode($evaluation->id);
@@ -837,6 +843,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question = RPSLS::find(Hashids::decode(Input::get('id')));
 				$question->question = Input::get('question');
 				$question->evaluation_id = $evaluation->id;
+				$question->reference = Input::get('reference');
 				$question->save();
 				$tmp = array(
 					'id' => $question->id,
@@ -869,6 +876,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 				$question = Roulette::find(Hashids::decode(Input::get('id')));
 				$question->question = Input::get('question');
 				$question->evaluation_id = $evaluation->id;
+				$question->reference = Input::get('reference');
 				$question->save();
 				$tmp = array(
 					'id' => $question->id,

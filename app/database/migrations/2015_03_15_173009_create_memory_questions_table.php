@@ -18,6 +18,7 @@ class CreateMemoryQuestionsTable extends Migration {
 			$table->integer('evaluation_id');
 			$table->string('question');
 			$table->string('answer');
+			$table->string('reference');
 			$table->timestamps();
 			$table->softDeletes();
 		});

@@ -19,6 +19,7 @@ class CreateHangmanQuestionsTable extends Migration {
 			$table->text('question');
 			$table->string('word');
 			$table->integer('seconds');
+			$table->string('reference');
 			$table->timestamps();
 			$table->softDeletes();
 		});

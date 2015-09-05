@@ -166,10 +166,14 @@
 														</div>
 														<div class="form-group">
 															<label class="control-label">Segundos</label>
-															<input type="text" placeholder="Indique una Opción Errónea" class="form-control" name="seconds" value="{{ $question->seconds }}" required/>
+															<input type="text" placeholder="Indique el tiempo que se tendra el estudiante en responder" class="form-control" name="seconds" value="{{ $question->seconds }}" required/>
 														</div>
 														<div class="form-group">
-															<input type="submit" placeholder="Indique una Opción Errónea" class="btn green" value="Guardar" />
+															<label class="control-label">Referencia Bibliográfica</label>
+															<input type="text" placeholder="Indique una referencia" class="form-control" name="reference" value="{{ $question->reference }}" required/>
+														</div>
+														<div class="form-group">
+															<input type="submit" class="btn green" value="Guardar" />
 															<div class="btn red delete-question">Eliminar</div>
 														</div>
 													</form>
@@ -346,7 +350,7 @@
 						$('#questions-list').append(''+
 							'<li class="active">' +
 								'<a data-toggle="tab" href="#question_' + data.question.hashids + '">'+
-									'<i class="fa fa-cube"></i><span>' + data.question.question.slice(0, 25) + '</span></a>' +
+									'<i class="fa fa-cube font-red"></i><span>' + data.question.question.slice(0, 25) + '</span></a>' +
 								'<span class="after">' +
 								'</span>' +
 							'</li>');
@@ -368,6 +372,10 @@
 									'<div class="form-group">' +
 										'<label class="control-label">Segundos</label>' +
 										'<input type="text" placeholder="Indique una Opción Errónea" class="form-control" name="seconds" value="' + data.question.seconds + '" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="control-label">Referencia Bibliográfica</label>' +
+										'<input type="text" placeholder="Indique una referencia" class="form-control" name="reference" value="' + data.question.reference + '" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
 										'<div class="btn green submit-question-form">Guardar</div>' +

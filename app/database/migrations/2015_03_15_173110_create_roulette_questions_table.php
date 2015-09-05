@@ -17,6 +17,7 @@ class CreateRouletteQuestionsTable extends Migration {
 			$table->increments('id');
 			$table->integer('evaluation_id');
 			$table->text('question');
+			$table->string('reference');
 			$table->timestamps();
 			$table->softDeletes();
 		});

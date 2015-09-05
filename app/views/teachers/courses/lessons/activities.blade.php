@@ -98,12 +98,11 @@
 											</div>
 											<div class="col-md-12"><hr></div>
 											<div class="col-md-12 testers">
-												@foreach($evaluation->testers as $tester)
 													<div class="col-md-5">
 														<div class="portfolio-text">
 															<img src="{{ Auth::user()->profile->getAvatar() }}" alt="" style="max-width:100px" />
 															<div class="portfolio-text-info">
-																<h4>{{ Auth::user()->display_name }}</h4>
+																<h4>Carminy Angulo</h4>
 																<p>
 																	<em class="timeago">({{ $evaluation->date_start }})</em>
 																</p>
@@ -127,7 +126,6 @@
 															Duración <span>{{ '14 min' }}</span>
 														</div>
 													</div>
-												@endforeach
 											</div>
 										</div>
 									@endforeach

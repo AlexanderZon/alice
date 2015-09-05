@@ -51,7 +51,7 @@
 										<em>Una pregunta y Cinco Posibles Respuestas</em>
 										<em>
 										<i class="fa fa-info"></i>
-										Basado en el cláasico juego de Piedra, Papel o Tijera</em>
+										Basado en el clásico juego de Piedra, Papel o Tijera</em>
 										<i class="fa fa-cube top-news-icon"></i>
 										</a>
 									</div>
@@ -74,7 +74,7 @@
 										<a href="javascript:;" class="btn blue lesson-activities-new" data-type="memory">
 										<span>
 										La Taguara </span>
-										<em>Una PRegunta y una Respuesta</em>
+										<em>Una Pregunta y una Respuesta</em>
 										<em>
 										<i class="fa fa-info"></i>
 										Selección de una pregunta y su respectiva respuesta </em>
@@ -86,7 +86,7 @@
 									<div class="top-news">
 										<a href="javascript:;" class="btn yellow lesson-activities-new" data-type="hangman">
 										<span>
-										El nombre que dijo Carmini </span>
+										El nombre que dijo Carminy </span>
 										<em>Una pregunta y una respuesta</em>
 										<em>
 										<i class="fa fa-info"></i>

@@ -25,7 +25,7 @@
 						  	<div id="correct-progress" class="progress-bar progress-bar-striped progress-bar-success" style="width: 0%;position:relative;left:0;">
 						    	<span class="sr-only"></span>
 						  	</div>
-						  	<div id="during-progress" class="progress-bar progress-bar-striped progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;;position:relative;left:0;">
+						  	<div id="during-progress" class="progress-bar progress-bar-striped progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;position:relative;left:0;">
 						    	<span class="sr-only"></span>
 						  	</div>
 						</div>
@@ -166,15 +166,15 @@
 
 		</div>
 
-		<div class="col-md-4 aside center" id="right-side">
+		<div class="col-md-4 aside battery-5 center" id="right-side">
 			<div id="battery" class="row battery">
-				<div class="col-md-1">&nbsp;</div>
+				<!-- <div class="col-md-1">&nbsp;</div>
 				<div class="col-md-2 charge bg-red">&nbsp;</div>
 				<div class="col-md-2 charge bg-orange">&nbsp;</div>
 				<div class="col-md-2 charge bg-yellow">&nbsp;</div>
 				<div class="col-md-2 charge bg-green">&nbsp;</div>
 				<div class="col-md-2 charge bg-blue">&nbsp;</div>
-				<div class="col-md-1">&nbsp;</div>
+				<div class="col-md-1">&nbsp;</div> -->
 			</div>
 			<!-- <div class="row">
 				<div class="col-md-2"></div>
@@ -639,13 +639,14 @@
 					lowBattery();
 				}
 				else{
-					for(var i = 0; i < $('.charge').length; i++){
-							console.log('Battery Discount ' + battery);
+					console.log('Battery Discount ' + battery);
+					elem = $('#right-side');
+					$(elem).removeClass('battery-'+(battery+1));
+					$(elem).addClass('battery-'+(battery));
+					/*for(var i = 0; i < $('.charge').length; i++){
 						if(i>=battery) {
-							elem = $('.charge').get(i);
-							$(elem).css({'background-color':'#000'});
 						} 
-					}
+					}*/
 				}
 			}
 

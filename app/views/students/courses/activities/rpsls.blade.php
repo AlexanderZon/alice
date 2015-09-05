@@ -1,21 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title></title>
-
-	<link href="/assets/global/css/fonts.googleapis.com.css" rel="stylesheet" type="text/css"/>
-	<link href="/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-	<link href="/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-	<link href="/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-	<link href="/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-	<link href="/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
-	<link href="/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 
 	<link rel="stylesheet" type="text/css" href="/games/rpsls/css/style.css"/>
-	<script type="text/javascript" src="/assets/global/plugins/jquery.min.js"></script>
-</head>
-<body>
 
 	<div class="row content">
 
@@ -135,7 +119,6 @@
 								    0%
 								  </div>
 								  <div id="final-progress" class="progress-bar progress-bar-striped progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-								    
 								  </div>
 								</div>
 							</div>
@@ -189,7 +172,7 @@
 			<div class="row">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
-					Las tijeras cortan el papel, el papel cubre a la piedra, la piedra aplasta al lagarto, el lagarto envenena a Spock, Spock destroza las tijeras, las tijeras decapitan al lagarto, el lagarto se come el papel, el papel refuta a Spock, Spock vaporiza la piedra, y como es habitual... la piedra aplasta las tijeras.
+					Las tijeras cortan el papel, el papel cubre a la piedra, la piedra aplasta a la iguana, la iguana muerde a la garra, la garra destroza las tijeras, las tijeras decapitan a la iguana, la iguana se come el papel, el papel dibuja a la garra, la garra tira la piedra, y como es habitual... la piedra aplasta las tijeras.
 				</div>
 			</div>
 			<div class="col-md-2"></div>
@@ -448,7 +431,7 @@
 			var setQuestion = function(questions){
 				$question = selectQuestion(questions);
 				setScore(questions);
-				time_by_question = $question.seconds;
+				time_by_question = 120;
 				resetTimer(setTimer);
 				decreaseInterval = setInterval(function(){
 					decreaseTimer(setTimer);
