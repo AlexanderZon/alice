@@ -96,37 +96,43 @@
 													</a>
 												</div>
 											</div>
-											<div class="col-md-12"><hr></div>
-											<div class="col-md-12 testers">
-													<div class="col-md-5">
-														<div class="portfolio-text">
-															<img src="{{ Auth::user()->profile->getAvatar() }}" alt="" style="max-width:100px" />
-															<div class="portfolio-text-info">
-																<h4>Carminy Angulo</h4>
-																<p>
-																	<em class="timeago">({{ $evaluation->date_start }})</em>
-																</p>
+											@if($evaluation->tests->count() > 0)
+												<div class="col-md-12 testers-btn" style="text-align:center;cursor:pointer;"><i class="fa fa-angle-double-down"></i></div>
+												<div class="col-md-12 testers hidden">
+													@foreach($evaluation->tests as $test)
+														<?php $tester = $test->author; ?>
+														<div class="col-md-1">&nbsp;</div>
+														<div class="col-md-4">
+															<div class="portfolio-text">
+																<img src="{{ $tester->profile->getAvatar() }}" alt="" style="max-width:75px" />
+																<div class="portfolio-text-info">
+																	<h4>{{ $tester->display_name }}</h4>
+																	<p>
+																		(<em class="timeago">{{ $test->updated_at }}</em>)
+																	</p>
+																</div>
 															</div>
 														</div>
-													</div>
-													<div class="col-md-7 portfolio-stat">
-														<div class="portfolio-info col-md-3">
-															Porcentaje <span>
-															{{ '75%' }} </span>
+														<div class="col-md-7 portfolio-stat">
+															<div class="portfolio-info col-md-3">
+																Porcentaje <span>
+																{{ $test->percentage() }} </span>
+															</div>
+															<div class="portfolio-info col-md-3">
+																Preguntas Acertadas <span>
+																{{ $test->hits }} </span>
+															</div>
+															<div class="portfolio-info col-md-3">
+																Equivocaciones <span>
+																{{ $test->mistakes }} </span>
+															</div>
+															<div class="portfolio-info col-md-3">
+																Duración <span>{{ $test->duration() }}</span>
+															</div>
 														</div>
-														<div class="portfolio-info col-md-3">
-															Preguntas Acertadas <span>
-															{{ '18' }} </span>
-														</div>
-														<div class="portfolio-info col-md-3">
-															Equivocaciones <span>
-															{{ '6' }} </span>
-														</div>
-														<div class="portfolio-info col-md-3">
-															Duración <span>{{ '14 min' }}</span>
-														</div>
-													</div>
-											</div>
+													@endforeach
+												</div>
+											@endif
 										</div>
 									@endforeach
 								@endif
@@ -212,7 +218,47 @@
 	
 	<script type="text/javascript">
 
+		var ActivitiesManager = function(){
 
+			var showTesters = function(elem){
+
+				var tester_list = $(elem).siblings('.testers');
+				console.log(tester_list);
+				if(tester_list.hasClass('hidden')){
+					console.log('remove');
+					tester_list.removeClass('hidden');
+					elem.children('i').removeClass('fa-angle-double-down');
+					elem.children('i').addClass('fa-angle-double-up');
+				}
+				else{
+					console.log('add');
+					tester_list.addClass('hidden');
+					elem.children('i').removeClass('fa-angle-double-up');
+					elem.children('i').addClass('fa-angle-double-down');
+				}
+
+			}
+
+			return {
+
+				init: function(){
+
+					$('.testers-btn').click(function(event) {
+						console.log('click');
+						showTesters($(this));
+					});
+
+				}
+
+			}
+
+		}();
+
+		ActivitiesManager.init();
+		
+	 	jQuery('.timeago').each(function(e){
+	 		jQuery(this).html(moment(jQuery(this).html()).fromNow());
+	 	});
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=activities&lesson_id={{ Hashids::encode($lesson->id) }}');
 		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Actividades';

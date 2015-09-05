@@ -185,7 +185,7 @@ class Evaluation extends \Eloquent {
 
     public function tests(){
 
-        return $this->hasMany('Test', 'evaluation_id');
+        return $this->hasMany('Test', 'evaluation_id')->orderBy('percentage','DESC');
 
     }
 
@@ -212,7 +212,7 @@ class Evaluation extends \Eloquent {
         if($this->tests->count() > 0):
             $average = 0;
             foreach( $this->tests as $test):
-                $average += ($test->percentage*100);
+                $average += round($test->percentage);
             endforeach;
 
             $average = $average/$this->tests->count();
@@ -256,6 +256,16 @@ class Evaluation extends \Eloquent {
         endif;
 
         return $points/count($tests);
+
+    }
+
+    public function isAvailable(){
+
+        $start_ts = strtotime($this->date_start);
+        $end_ts = strtotime($this->date_end);
+        $user_ts = strtotime('now');
+
+        return (($user_ts >= $start_ts) && ($user_ts <= $end_ts));
 
     }
 

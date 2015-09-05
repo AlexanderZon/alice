@@ -39,4 +39,37 @@ class Test extends \Eloquent {
     	
     }
 
+    public function percentage(){
+
+        return round($this->percentage).'%';
+
+    }
+
+    public function duration(){
+
+        $time = $this->duration;
+        $cicles = 0;
+        $sufix = null;
+
+        while(($time/60 >= 1) AND $cicles <= 2):
+            $cicles++;
+            $time = $time/60 >= 1;
+        endwhile;
+
+        switch($cicles):
+            case 0: 
+                $sufix = ' seg';
+                break;
+            case 1:
+                $sufix = ' min';
+                break;
+            default:
+                $sufix = ' hrs';
+                break;
+        endswitch;
+
+        return round($time).$sufix;
+
+    }
+
 }

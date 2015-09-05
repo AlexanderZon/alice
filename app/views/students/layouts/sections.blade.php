@@ -1367,6 +1367,49 @@
 
 		    }
 
+		    var evaluationBack = function(el){
+
+		    	var course = el.parents('.portlet').data('course');
+		    	var evaluationable_type = el.data('evaluationable-type');
+		    	var evaluationable_id = el.data('evaluationable-id');
+
+		        loading.show();
+		        content.html(loader);
+		        console.log(evaluationable_id);
+
+		        var url = null;
+		        var data = null;
+
+		        if(evaluationable_type == 'Lesson'){
+		        	url = '{{$route}}/lessons/viewlesson';
+		        	data = {
+		        		lesson_id: evaluationable_id
+		        	};
+		        }
+		        else if(evaluationable_type == 'Course'){
+		        	url = '{{$route}}/activities';
+		        }
+
+		    	$.ajax({
+		    		url: url,
+		    		type: 'GET',
+		    		data: data,
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Evaluation Back');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1659,6 +1702,11 @@
 		            // handle add students button click
 		            $('.profile').on('click', '.evaluation-test-btn', function (e) {
 		                evaluationTest($(this));
+		            });
+
+		            // handle add students button click
+		            $('.profile').on('click', '.evaluation-back-btn', function (e) {
+		                evaluationBack($(this));
 		            });
 
 		            //handle loading content based on URL parameter

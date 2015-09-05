@@ -67,12 +67,25 @@ class ReadController extends \Students\Courses\ReadController {
 
 		$questions = $evaluation->json($evaluation->type);
 
-		/*$test = new Test();
-		$test->evaluation_id = $evaluation->id;
-		$test->user_id = Auth::user()->id;
-		$test->status = 'starting';
-		$test->percentage = 0;
-		$test->save();*/
+		$test = null;
+
+		if($test = Test::where('user_id', '=', Auth::user()->id )->where('evaluation_id', '=', $evaluation->id)->first()):
+
+			$test->status = 'repeated';
+			$test->attempts = $test->attempts+1;
+
+		else:
+
+			$test = new Test();
+			$test->evaluation_id = $evaluation->id;
+			$test->user_id = Auth::user()->id;
+			$test->status = 'starting';
+			$test->percentage = 0;
+			$test->attempts = 1;
+
+		endif;
+
+		$test->save();
 
 		$activities = Auth::user()->achievementFromCourse($course);
 
@@ -82,9 +95,48 @@ class ReadController extends \Students\Courses\ReadController {
 
 		self::addArgument('questions', $questions);
 
-		// self::addArgument('test', $test);
+		self::addArgument('test', $test);
 
 		return self::make($evaluation->type);
+
+	}
+
+	public function postTest( $course_name = '' ){
+
+		$course = Course::getByName($course_name);	
+
+		$evaluation = Evaluation::find(Crypt::decrypt(Input::get('evaluation_id')));
+
+		$questions = $evaluation->json($evaluation->type);
+
+		$test = null;
+
+		if($test = Test::find(Crypt::decrypt(Input::get('test_id')))):
+
+			$test->status = 'finished';			
+
+		elseif($test = Test::where('user_id', '=', Auth::user()->id )->where('evaluation_id', '=', $evaluation->id)->first()):
+
+			$test->status = 'finished';
+
+		else:
+
+			$test = new Test();
+			$test->evaluation_id = $evaluation->id;
+			$test->user_id = Auth::user()->id;
+			$test->attempts = 1;
+			$test->status = 'finished';
+
+		endif;
+
+		$test->hits = Input::get('hits');
+		$test->mistakes = Input::get('mistakes');
+		$test->points = Input::get('points');
+		$test->duration = Input::get('duration');
+		$test->percentage = Input::get('percentage');
+		$test->save();
+
+		return Response::json($test);
 
 	}
 

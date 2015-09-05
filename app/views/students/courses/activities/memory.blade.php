@@ -124,6 +124,12 @@
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Tiempo (segundos): </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-timing">0</h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+						</div>
+						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-1"></div>
 							<div class="col-md-6 col-sm-6 col-xs-10">
 								<div class="progress">
@@ -140,7 +146,7 @@
 						<div class="row">&nbsp;</div>
 						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-2"></div>
-							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-primary btn-lg save-button">Guardar</span>
+							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-primary btn-lg evaluation-back-btn" data-evaluationable-id="{{ Hashids::encode($evaluation->evaluationable_id )}}" data-evaluationable-type="{{ $evaluation->evaluationable_type }}">Volver</span>
 							<div class="col-md-3 col-sm-3 col-xs-2"></div>
 						</div>
 					</div>
@@ -167,7 +173,7 @@
 						<div class="row">&nbsp;</div>
 						<div class="row">
 							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-primary btn-lg next-button">Siguiente</span>
-							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg finish-button">Finalizar</span>
+							<span class="col-md-12 col-sm-12 col-xs-12 btn btn-default btn-lg finish-button">Finalizar</span
 						</div>
 					</div>
 					<div class="col-md-1 col-sm-1 col-xs-1"></div>
@@ -220,7 +226,7 @@
 
 			var $question = null;
 
-			var time_by_question = 90;
+			var time_by_question = 120;
 
 			var timing = 0;
 
@@ -386,36 +392,6 @@
 
 			}
 
-			/*var covered_letters = [];
-
-			var setUnderLinedWord = function(word){
-
-				var upperWord = word.toUpperCase();
-				console.log(upperWord + ' has ' + upperWord.length + ' letters');
-				var html_answer = '';
-				var covered_positions = 0;
-				for (var i = 0; i < upperWord.length; i++) {
-					bool = false;
-					for(var j = 0; j < covered_letters.length; j++){
-						if(upperWord[i] == covered_letters[j]) bool = true;
-					}
-					if (bool) {
-						covered_positions++;
-						html_answer += ' ' + upperWord[i] + ' ';
-					}
-					else{
-						html_answer += ' _ ';						
-					}
-				};
-				if(covered_positions == upperWord.length){
-					wellDone();
-				}
-				$('.answer').html(html_answer);
-
-				return upperWord;
-
-			}*/
-
 			var decreaseInterval = null;
 
 			var setScreen = function(questions){
@@ -423,7 +399,7 @@
 				setDesktop(questions);
 				setScore(questions);
 				// $question.word = setUnderLinedWord($question.word);
-				time_by_question = seconds;
+				time_by_question = questions.length*120;
 				resetTimer(setTimer);
 				decreaseInterval = setInterval(function(){
 					decreaseTimer(setTimer);
@@ -455,6 +431,7 @@
 				$('#final-points').html(points);
 				$('#final-answers').html(correct_answers);
 				$('#final-wrong-answers').html(wrong_answers);
+				$('#final-timing').html((time_by_question-timing));
 
 				$('#final-correct').css({
 					width: percentage+'%'
@@ -466,6 +443,29 @@
 					width: 100-percentage+'%'
 				});
 				$('#final-progress').attr('aria-valuenow',100);
+				clearInterval(decreaseInterval);
+
+				$.ajax({
+					url: '{{ $route }}/test',
+					type: 'POST',
+					data: {
+						user_id: '{{ Crypt::encrypt(Auth::user()->id) }}',
+						evaluation_id: '{{ Crypt::encrypt($evaluation->id ) }}',
+						test_id: '{{ Crypt::encrypt($test->id) }}',
+						duration: time_by_question-timing,
+						points: points,
+						hits: correct_answers,
+						mistakes: wrong_answers,
+						percentage: percentage,
+					},
+					success: function(data){
+						console.log(data);
+					},
+					error: function(xhr){
+						console.log(xhr);
+					}
+
+				});
 
 				scene();
 
@@ -486,7 +486,6 @@
 
 			var spentTime = function(){
 				clearInterval(decreaseInterval);
-				//$('#spent-result').html($question.word);
 				scene4();
 			}
 
@@ -494,21 +493,6 @@
 				console.log("decrease");
 				timing > 0 ? cb(--timing) : spentTime();
 			}
-
-			/*var lowBattery = function(){
-				clearInterval(decreaseInterval);
-				if(progress == questions.length){
-					$('.next-button').css({
-						'display':'none'
-					});
-					$('.finish-button').fadeIn('slow/400/fast', function() {
-						
-					});
-				}
-				$('#answers-result').html($question.word);
-				$('#result-title').html('Bateria Agotada');
-				scene2();
-			}*/
 
 			var wellDone = function(){
 				clearInterval(decreaseInterval);
@@ -525,52 +509,6 @@
 				increaseAnswers();
 				scene2();
 			}
-
-			/*var displayBattery = function(){
-				if(battery < 0){
-					lowBattery();
-				}
-				else{
-					for(var i = 0; i < $('.charge').length; i++){
-							console.log('Battery Discount ' + battery);
-						if(i>=battery) {
-							elem = $('.charge').get(i);
-							$(elem).css({'background-color':'#000'});
-						} 
-					}
-				}
-			}*/
-
-			/*var discountBattery = function(){
-				battery--;
-				console.log(battery);
-				displayBattery();
-			}*/
-
-			/*var letterIsCovered = function(letter){
-				var bool = false;
-				for(var i = 0 ; i < covered_letters.length; i++){
-					if(letter == covered_letters[i]) bool = true;
-				}
-				return bool;
-			}*/
-
-			/*var verifyLetter = function(letter){
-				bool = false;
-				if(!letterIsCovered(letter)){
-					for(var i = 0; i < $question.word.length ; i++){
-						if(letter == $question.word[i]) bool = true;
-					}
-					if(bool) {
-						increasePoints(10);
-						covered_letters.push(letter);
-						setUnderLinedWord($question.word);
-					}
-					else{
-						discountBattery();
-					}
-				}
-			}*/
 
 			var indication1 = function(){
 				
@@ -603,6 +541,10 @@
 			}
 
 			var indicatorTimeout = null;
+
+			var submitFinalScore = function(){
+
+			}
 
 			return {
 
@@ -677,6 +619,7 @@
 
 					$('.save-button').on('click', function(){
 						// -- SAVE BUTTON
+						submitFinalScore();
 					});
 
 					$(document).on('keypress', function(e){

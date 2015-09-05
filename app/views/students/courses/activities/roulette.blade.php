@@ -172,13 +172,19 @@
 						<div class="row">
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Respuestas Erradas: </h3>
-							<h3 class="col-md-5 col-sm-5 col-xs-5 left" id="final-answers">0</h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 left" id="final-wrong">0</h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Tiempo (segundos): </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5 left" id="final-time">0</h3>
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
 							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 							<h3 class="col-md-5 col-sm-5 col-xs-5 right">Comodines: </h3>
-							<h3 class="col-md-5 col-sm-5 col-xs-5 left" id="final-answers">
+							<h3 class="col-md-5 col-sm-5 col-xs-5 left">
 								<span class="ft-red"><i class="fa fa-clock-o"></i>x<span id="clock-counter">0</span></span>
 								<span class="ft-purple"><i class="fa fa-eraser"></i>x<span id="eraser-counter">0</span></span>
 								<span class="ft-blue"><i class="fa fa-flash"></i>x<span id="flash-counter">0</span></span>
@@ -206,7 +212,7 @@
 						<div class="row">&nbsp;</div>
 						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-2"></div>
-							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-primary btn-lg save-button">Guardar</span>
+							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-primary btn-lg evaluation-back-btn" data-evaluationable-id="{{ Hashids::encode($evaluation->evaluationable_id )}}" data-evaluationable-type="{{ $evaluation->evaluationable_type }}">Volver</span>
 							<div class="col-md-3 col-sm-3 col-xs-2"></div>
 						</div>
 					</div>
@@ -244,847 +250,9 @@
 
 			var randomize = [];
 
-			/*var rpslsMAP = {
-				'rock' : {
-					on: [
-						'lizard',
-						'scissors'
-					],
-					below: [
-						'spock',
-						'paper'
-					]
-				},
-				'paper' : {
-					on: [
-						'rock',
-						'spock'
-					],
-					below: [
-						'lizard',
-						'scissors'
-					]
-				},
-				'scissors' : {
-					on: [
-						'lizard',
-						'paper'
-					],
-					below: [
-						'spock',
-						'rock'
-					]
-				},
-				'lizard' : {
-					on: [
-						'spock',
-						'paper'
-					],
-					below: [
-						'rock',
-						'scissors'
-					]
-				},
-				'spock' : {
-					on: [
-						'rock',
-						'scissors'
-					],
-					below: [
-						'lizard',
-						'paper'
-					]
-				},
-			}*/
-
 			var $question = null;
 
 			var questions = {{ $questions }};
-
-			/*var questions = {
-				red: [
-					{
-						question: "Red Question #1",
-						answer: 3,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Correct",
-								answer: true,
-							},
-						]
-					},
-					{
-						question: "Red Question #2",
-						answer: 1,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Red Question #3",
-						answer: 0,
-						options: [
-							{
-								id: 0,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Red Question #4",
-						answer: 2,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Correct",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: true,
-							},
-						]
-					},
-				],
-				purple: [
-					{
-						question: "Purple Question #1",
-						answer: 3,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Correct",
-								answer: true,
-							},
-						]
-					},
-					{
-						question: "Purple Question #2",
-						answer: 1,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Purple Question #3",
-						answer: 0,
-						options: [
-							{
-								id: 0,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Purple Question #4",
-						answer: 2,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Correct",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: true,
-							},
-						]
-					},
-				],
-				blue: [
-					{
-						question: "Blue Question #1",
-						answer: 3,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Correct",
-								answer: true,
-							},
-						]
-					},
-					{
-						question: "Blue Question #2",
-						answer: 1,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Blue Question #3",
-						answer: 0,
-						options: [
-							{
-								id: 0,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Blue Question #4",
-						answer: 2,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Correct",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: true,
-							},
-						]
-					},
-				],
-				sky: [
-					{
-						question: "Sky Question #1",
-						answer: 3,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Correct",
-								answer: true,
-							},
-						]
-					},
-					{
-						question: "Sky Question #2",
-						answer: 1,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Sky Question #3",
-						answer: 0,
-						options: [
-							{
-								id: 0,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Sky Question #4",
-						answer: 2,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Correct",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: true,
-							},
-						]
-					},
-				],
-				green: [
-					{
-						question: "Green Question #1",
-						answer: 3,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Correct",
-								answer: true,
-							},
-						]
-					},
-					{
-						question: "Green Question #2",
-						answer: 1,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Green Question #3",
-						answer: 0,
-						options: [
-							{
-								id: 0,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Green Question #4",
-						answer: 2,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Correct",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: true,
-							},
-						]
-					},
-				],
-				yellow: [
-					{
-						question: "Yellow Question #1",
-						answer: 3,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Correct",
-								answer: true,
-							},
-						]
-					},
-					{
-						question: "Yellow Question #2",
-						answer: 1,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Yellow Question #3",
-						answer: 0,
-						options: [
-							{
-								id: 0,
-								name: "Correct",
-								answer: true,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: false,
-							},
-						]
-					},
-					{
-						question: "Yellow Question #4",
-						answer: 2,
-						options: [
-							{
-								id: 0,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 1,
-								name: "Incorrect",
-								answer: false,
-							},
-							{
-								id: 2,
-								name: "Correct",
-								answer: false,
-							},
-							{
-								id: 3,
-								name: "Incorrect",
-								answer: true,
-							},
-						]
-					},
-				],
-			};*/
-
-			/*var questions = [
-				{
-					question: "Question #1",
-					answer: 3,
-					options: [
-						{
-							id: 0,
-							name: "Incorrect",
-							answer: false,
-						},
-						{
-							id: 1,
-							name: "Incorrect",
-							answer: false,
-						},
-						{
-							id: 2,
-							name: "Incorrect",
-							answer: false,
-						},
-						{
-							id: 3,
-							name: "Correct",
-							answer: true,
-						},
-					],
-				},
-				{
-					question: "Question #2",
-					answer: 1,
-					options: [
-						{
-							id: 0,
-							name: "Incorrect",
-							answer: false,
-						},
-						{
-							id: 1,
-							name: "Correct",
-							answer: true,
-						},
-						{
-							id: 2,
-							name: "Incorrect",
-							answer: false,
-						},
-						{
-							id: 3,
-							name: "Incorrect",
-							answer: false,
-						},
-					],
-				},
-				{
-					question: "Question #3",
-					answer: 0,
-					options: [
-						{
-							id: 0,
-							name: "Correct",
-							answer: true,
-						},
-						{
-							id: 1,
-							name: "Incorrect",
-							answer: false,
-						},
-						{
-							id: 2,
-							name: "Incorrect",
-							answer: false,
-						},
-						{
-							id: 3,
-							name: "Incorrect",
-							answer: false,
-						},
-					],
-				},
-				{
-					question: "Question #4",
-					answer: 2,
-					options: [
-						{
-							id: 0,
-							name: "Incorrect",
-							answer: false,
-						},
-						{
-							id: 1,
-							name: "Incorrect",
-							answer: false,
-						},
-						{
-							id: 2,
-							name: "Correct",
-							answer: true,
-						},
-						{
-							id: 3,
-							name: "Incorrect",
-							answer: false,
-						},
-					],
-				},
-			];*/
-
-			/*var colorMAP = {
-				red: {
-					counter: 0,
-					correct: 0,
-					incorrect: 0,
-					limit: questions.red.length,
-				},
-				purple: {
-					counter: 0,
-					correct: 0,
-					incorrect: 0,
-					limit: questions.purple.length,
-				},
-				blue: {
-					counter: 0,
-					correct: 0,
-					incorrect: 0,
-					limit: questions.blue.length,
-				},
-				sky: {
-					counter: 0,
-					correct: 0,
-					incorrect: 0,
-					limit: questions.sky.length,
-				},
-				green: {
-					counter: 0,
-					correct: 0,
-					incorrect: 0,
-					limit: questions.green.length,
-				},
-				yellow: {
-					counter: 0,
-					correct: 0,
-					incorrect: 0,
-					limit: questions.yellow.length,
-				}
-			};*/
 
 			var actionMAP = {
 				clock: {
@@ -1119,6 +287,8 @@
 			var time_by_question = 90;
 
 			var timing = 0;
+
+			var timer = 0;
 
 			var progress = 0;
 
@@ -1355,6 +525,7 @@
 				time_by_question = 240;
 				resetTimer(setTimer);
 				decreaseInterval = setInterval(function(){
+					timer++;
 					decreaseTimer(setTimer);
 				}, 1000);
 				// console.log("setQuestion");
@@ -1403,15 +574,40 @@
 				percentage = correct_answers*100/questions.length;
 				$('#final-points').html(points);
 				$('#final-answers').html(correct_answers);
+				$('#final-wrong').html(wrong_answers);
 				$('#final-correct').css({
 					width: percentage+'%'
 				});
+				$('#final-time').html(timer);
 				$('#final-correct').attr('aria-valuenow',percentage);
 				$('#final-correct').html(percentage+"%");
 				$('#final-progress').css({
 					width: 100-percentage+'%'
 				});
 				$('#final-progress').attr('aria-valuenow',100);
+
+				$.ajax({
+					url: '{{ $route }}/test',
+					type: 'POST',
+					data: {
+						user_id: '{{ Crypt::encrypt(Auth::user()->id) }}',
+						evaluation_id: '{{ Crypt::encrypt($evaluation->id ) }}',
+						test_id: '{{ Crypt::encrypt($test->id) }}',
+						duration: timer,
+						points: points,
+						hits: correct_answers,
+						mistakes: wrong_answers,
+						percentage: percentage,
+					},
+					success: function(data){
+						console.log(data);
+					},
+					error: function(xhr){
+						console.log(xhr);
+					}
+
+				});
+
 				setComodinScore();
 			}
 

@@ -64,7 +64,7 @@ class Lesson extends \Eloquent {
 
     public function validevaluations(){
 
-        return $this->morphMany('Evaluation', 'evaluationable')->where('evaluations.status','=','active')->orderBy('created_at');
+        return $this->morphMany('Evaluation', 'evaluationable')->where('evaluations.status','=','active')->where('evaluations.date_start','<=',date('Y-m-d'))->where('evaluations.date_end','>=',date('Y-m-d'))->orderBy('created_at');
 
         // return $this->hasMany('Evaluation', 'lesson_id');
 

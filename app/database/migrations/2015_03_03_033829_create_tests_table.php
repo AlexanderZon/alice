@@ -17,7 +17,7 @@ class CreateTestsTable extends Migration {
 			$table->increments('id');
 			$table->integer('user_id');
 			$table->integer('evaluation_id');
-			$table->double('percentage', 3, 2);
+			$table->double('percentage', 4, 2);
 			$table->integer('hits');
 			$table->integer('mistakes');
 			$table->integer('duration');
