@@ -749,6 +749,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 					'id' => $question->id,
 					'hashids' => Hashids::encode($question->id),
 					'question' => $question->question,
+					'reference' => $question->reference,
 					'correct' => '',
 					'incorrect' => array(),
 					);
@@ -777,6 +778,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 					'id' => $question->id,
 					'hashids' => Hashids::encode($question->id),
 					'question' => $question->question,
+					'reference' => $question->reference,
 					'correct' => '',
 					'incorrect' => array(),
 					);

@@ -68,7 +68,7 @@
 					<div class="col-md-4 col-sm-4 col-xs-3" id="hand-selected"></div>
 					<div class="col-md-2 col-sm-2 col-xs-4" id="result-msg">
 						<div class="row" id="answer-selected">
-							<h3 class="col-md-12 col-sm-12 col-xs-12">Blanco</h3>
+							<h3 class="col-md-12 col-sm-12 col-xs-12"></h3>
 						</div>
 						<div class="row">&nbsp;</div>
 						<div class="row">
@@ -94,23 +94,36 @@
 				<div class="row center">
 					<div class="col-md-2 col-sm-2 col-xs-1"></div>
 					<div class="col-md-8 col-sm-8 col-xs-10 center">
-						<div class="row" id="answer-selected">
+						<div class="row">
 							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
 							<h3 class="col-lg-2 col-md-4 col-sm-4 col-xs-6"><img src="{{ Auth::user()->profile->getAvatar() }}" width="100%"/></h3>
 							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
 						</div>
-						<div class="row" id="answer-selected">
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<h3 class="col-md-3 col-sm-3 col-xs-5">Puntos: </h3>
-							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-points">200</h3>
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+						<div class="row">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5">Puntos: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-points"></h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<h3 class="col-md-3 col-sm-3 col-xs-5">Respuestas Acertadas: </h3>
-							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-answers">2</h3>
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5">Respuestas Acertadas: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-answers"></h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
+						<div class="row">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5">Respuestas Incorrectas: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-wrong"></h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5">Tiempo (segundos): </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-time"></h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+						</div>
+						<div class="row">&nbsp;</div>
 						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-1"></div>
 							<div class="col-md-6 col-sm-6 col-xs-10">
@@ -127,9 +140,11 @@
 						<div class="row">&nbsp;</div>
 						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-2"></div>
-							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-primary btn-lg save-button">Guardar</span>
+							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-primary btn-lg evaluation-back-btn" data-evaluationable-id="{{ Hashids::encode($evaluation->evaluationable_id )}}" data-evaluationable-type="{{ $evaluation->evaluationable_type }}">Volver</span>
 							<div class="col-md-3 col-sm-3 col-xs-2"></div>
 						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row">&nbsp;</div>
 					</div>
 					<div class="col-md-2 col-sm-2 col-xs-1"></div>
 				</div>
@@ -249,13 +264,15 @@
 
 			var timing = 0;
 
+			var timer = 0;
+
 			var progress = 0;
 
 			var points = 0;
 
 			var correct_answers = 0;
 
-			var incorrect_answers = 0;
+			var wrong_answers = 0;
 
 			/* METHODS */
 
@@ -435,6 +452,7 @@
 				resetTimer(setTimer);
 				decreaseInterval = setInterval(function(){
 					decreaseTimer(setTimer);
+					timer++;
 				}, 1000);
 				console.log("setQuestion");
 				setAnswers($question.options);
@@ -450,10 +468,16 @@
 				correct_answers++;
 			}
 
+			var increaseWrong = function(){
+				wrong_answers++;
+			}
+
 			var setFinalScore = function(scene){
 				percentage = correct_answers*100/questions.length;
 				$('#final-points').html(points);
 				$('#final-answers').html(correct_answers);
+				$('#final-wrong').html(wrong_answers);
+				$('#final-time').html(timer);
 
 				$('#final-correct').css({
 					width: percentage+'%'
@@ -465,6 +489,28 @@
 					width: 100-percentage+'%'
 				});
 				$('#final-progress').attr('aria-valuenow',100);
+
+				$.ajax({
+					url: '{{ $route }}/test',
+					type: 'POST',
+					data: {
+						user_id: '{{ Crypt::encrypt(Auth::user()->id) }}',
+						evaluation_id: '{{ Crypt::encrypt($evaluation->id ) }}',
+						test_id: '{{ Crypt::encrypt($test->id) }}',
+						duration: timer,
+						points: points,
+						hits: correct_answers,
+						mistakes: wrong_answers,
+						percentage: percentage,
+					},
+					success: function(data){
+						console.log(data);
+					},
+					error: function(xhr){
+						console.log(xhr);
+					}
+
+				});
 
 				scene();
 
@@ -568,6 +614,7 @@
 							$('#answers-result').html('Incorrecto');
 							$('#answers-result').removeClass('alert-success');
 							$('#answers-result').addClass('alert-danger');
+							increaseWrong();
 							/*console.log(rpslsMAP[elem.attr('data-figure')].below.length);
 							$('#enemy-'+rpslsMAP[elem.attr('data-figure')].below[Math.floor((Math.random() * rpslsMAP[elem.attr('data-figure')].below.length))]).animate({
 								width: '200px',

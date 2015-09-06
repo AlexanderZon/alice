@@ -369,7 +369,7 @@
 									'<input type="hidden" name="id" value="' + data.question.hashids + '">' +
 									'<div class="form-group">' +
 										'<label class="control-label">Pregunta</label>' +
-										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="' + data.question.question + '" maxlength="254" required/>' +
+										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="' + data.question.question + '" maxlength="254" required/>' + 
 									'</div>' +
 									'<div class="form-group">' +
 										'<label class="control-label">Respuesta Correcta</label>' +
