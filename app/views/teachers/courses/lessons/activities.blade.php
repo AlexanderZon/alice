@@ -63,9 +63,9 @@
 													<div class="portfolio-text-info">
 														<h4>{{ $evaluation->title != '' ? $evaluation->title : 'Sin nombre' }}</h4>
 														<p>
-															<em>({{ date('d/m/Y', strtotime($evaluation->date_start) ) }} - {{ date('d/m/Y', strtotime($evaluation->date_end) ) }})</em>
 															{{ $evaluation->description != '' ? $evaluation->description : 'Sin descripción' }}
 														</p>
+														<em>({{ date('d/m/Y', strtotime($evaluation->date_start) ) }} - {{ date('d/m/Y', strtotime($evaluation->date_end) ) }})</em>
 													</div>
 												</div>
 											</div>

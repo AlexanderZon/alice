@@ -54,21 +54,35 @@
 								@if($evaluations->count() > 0)
 									@foreach($evaluations as $evaluation)
 										<div class="row portfolio-block activity-block" data-activity="{{ Hashids::encode($evaluation->id) }}">
-											<div class="col-md-10">
+											<div class="col-md-5">
 												<div class="portfolio-text">
 													<img src="{{ $evaluation->image() }}" alt="" style="max-width:100px" />
 													<div class="portfolio-text-info">
 														<h4>{{ $evaluation->title != '' ? $evaluation->title : 'Sin nombre' }}</h4>
 														<p>
-															<em>({{ date('d/m/Y', strtotime($evaluation->date_start) ) }} - {{ date('d/m/Y', strtotime($evaluation->date_end) ) }})</em>
 															{{ $evaluation->description != '' ? $evaluation->description : 'Sin descripción' }}
 														</p>
+														<em>({{ date('d/m/Y', strtotime($evaluation->date_start) ) }} - {{ date('d/m/Y', strtotime($evaluation->date_end) ) }})</em>
 													</div>
+												</div>
+											</div>
+											<div class="col-md-5 portfolio-stat">
+												<div class="portfolio-info col-md-3">
+													Porcentage <span>
+													{{ ($test = $evaluation->myTest()) ? $test->percentage() : '0%' }} </span>
+												</div>
+												<div class="portfolio-info col-md-3">
+													Puntaje <span>
+													{{ ($test = $evaluation->myTest()) ? $test->points : '0' }} </span>
+												</div>
+												<div class="portfolio-info col-md-3">
+													Tiempo <span>
+													{{ ($test = $evaluation->myTest()) ? $test->duration() : '0' }} </span>
 												</div>
 											</div>
 											<div class="col-md-2">
 												<div class="portfolio-btn">
-													<a href="javascript:;" class="btn bigicn-only lesson-activities-edit">
+													<a href="javascript:;" class="btn bigicn-only evaluation-test-btn" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}">
 													<span>
 													Entrar </span>
 													</a>

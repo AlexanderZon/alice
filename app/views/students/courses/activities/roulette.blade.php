@@ -215,6 +215,8 @@
 							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-primary btn-lg evaluation-back-btn" data-evaluationable-id="{{ Hashids::encode($evaluation->evaluationable_id )}}" data-evaluationable-type="{{ $evaluation->evaluationable_type }}">Volver</span>
 							<div class="col-md-3 col-sm-3 col-xs-2"></div>
 						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row">&nbsp;</div>
 					</div>
 					<div class="col-md-2 col-sm-2 col-xs-1"></div>
 				</div>
