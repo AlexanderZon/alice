@@ -1356,7 +1356,7 @@
 
 				        loading.hide();
 				        content.html(html);
-		                Metronic.init();
+		                // Metronic.init();
 		    			// console.log(html);
 		    			console.log('Evaluation Test');
 		    		},

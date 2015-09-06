@@ -580,7 +580,7 @@
 				});
 				$('#final-time').html(timer);
 				$('#final-correct').attr('aria-valuenow',percentage);
-				$('#final-correct').html(percentage+"%");
+				$('#final-correct').html(Math.round(percentage)+"%");
 				$('#final-progress').css({
 					width: 100-percentage+'%'
 				});

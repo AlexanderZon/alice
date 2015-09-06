@@ -196,34 +196,6 @@
 
 			var questions = {{ $questions }};
 
-			/*var questions = [
-				{
-					id: '810c7baa5f2d72a207f453d6854dffa7',
-					question: 'Question 1',
-					answer: 'Answer 1'
-				},
-				{
-					id: '84441ca302e329317d43145abc1048c7',
-					question: 'Question 2',
-					answer: 'Answer 2'
-				},
-				{
-					id: '966d6b5ec637419bad6d3af95808edfe',
-					question: 'Question 3',
-					answer: 'Answer 3'
-				},
-				{
-					id: 'd0cb196e4b46b5eaf6683ddaa2cbc39c',
-					question: 'Question 4',
-					answer: 'Answer 4'
-				},
-				{
-					id: '3f152d8b660786e3003ea43810c06650',
-					question: 'Question 5',
-					answer: 'Answer 5'
-				},
-			]*/
-
 			var $question = null;
 
 			var time_by_question = 120;
@@ -310,11 +282,6 @@
 				}
 
 			}
-
-			/*var showQuestion = function(question){
-				console.log(question.question);
-				$('.question > .text').html(question.question);
-			};*/
 
 			var scene1 = function(){
 
@@ -428,6 +395,7 @@
 
 			var setFinalScore = function(scene){
 				percentage = correct_answers*100/(correct_answers+wrong_answers);
+				clearInterval(decreaseInterval);
 				$('#final-points').html(points);
 				$('#final-answers').html(correct_answers);
 				$('#final-wrong-answers').html(wrong_answers);
@@ -443,7 +411,6 @@
 					width: 100-percentage+'%'
 				});
 				$('#final-progress').attr('aria-valuenow',100);
-				clearInterval(decreaseInterval);
 
 				$.ajax({
 					url: '{{ $route }}/test',
@@ -591,7 +558,7 @@
 								else{
 									indicatorTimeout = setTimeout(function(){
 										indication5();
-										setFinalScore(scene3());
+										setFinalScore(scene3);
 									}, 0);
 								}
 								

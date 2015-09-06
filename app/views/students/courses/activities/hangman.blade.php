@@ -3,7 +3,7 @@
 	<link rel="stylesheet" type="text/css" href="/games/hangman/css/style.css"/>
 	<script type="text/javascript" src="/assets/global/plugins/jquery.min.js"></script>
 
-	<div class="row content">
+	<div class="hangman row content">
 
 		<div class="col-md-8" id="left-side">
 			<div class="row">
@@ -248,25 +248,10 @@
 	      			easing:'swing',
 	      			step: function() {
 				        $('#during-progress').css({width: this.percentage+'%'}, function(){console.log("width")});
-				        // $('#during-progress').css({width: this.width+'%'}, function(){console.log("width")});
-				        // $('#during-progress').text(Math.floor(Math.round(this.percentage))+'%');
 				    }
 	      		});
 
 			}
-
-			/*var correctProgressBar = function(){
-
-				$({percentage:(correct_answers)/questions.length*100, during: (progress)/questions.length*100 }).animate({percentage:(correct_answers)/questions.length*100, during: ((correct_answers)/questions.length*100)-((progress)/questions.length*100)},{
-	      			easing:'swing',
-	      			step: function() {
-				        $('#during-progress').css({width: this.during+'%'}, function(){console.log("width")});
-				        $('#correct-progress').css({width: this.percentage+'%'}, function(){console.log("width")});
-				        // $('#correct-progress').text(Math.floor(Math.round(this.percentage))+'%');
-				    }
-	      		});
-
-			}*/
 
 			var setLayout = function(){
 
@@ -281,17 +266,17 @@
 				var temp,band;
 				do{
 					temp = Math.floor((Math.random() * questions.length));
-					console.log('ciclo: ' + temp);
+					// console.log('ciclo: ' + temp);
 					band = false;
 					for(i = 0; i < randomize.length; i++) if(temp == randomize[i]) band = true;
 				}while(band);
 				randomize.push(temp);
-				console.log(randomize);
+				// console.log(randomize);
 				return questions[temp];
 			}
 
 			var showQuestion = function(question){
-				console.log(question.question);
+				// console.log(question.question);
 				$('.question > .text').html(question.question);
 			};
 
@@ -352,7 +337,7 @@
 			}
 
 			var scene4 = function(){
-				console.log('scene4');
+				// console.log('scene4');
 				$('.enemy').fadeOut('slow/400/fast', function() {
 					
 				});
@@ -376,127 +361,127 @@
 			var filterStressedVowel = function(letter){
 
 				var stressedVowels = [
-						{
-							stressed: 'Á',
-							vowel: 'A',
-						},
-						{
-							stressed: 'À',
-							vowel: 'A',
-						},
-						{
-							stressed: 'Â',
-							vowel: 'A',
-						},
-						{
-							stressed: 'Ã',
-							vowel: 'A',
-						},
-						{
-							stressed: 'Å',
-							vowel: 'A',
-						},
-						{
-							stressed: 'Ä',
-							vowel: 'A',
-						},
-						{
-							stressed: 'Æ',
-							vowel: 'A',
-						},
-						{
-							stressed: 'Ç',
-							vowel: 'C',
-						},
-						{
-							stressed: 'È',
-							vowel: 'E',
-						},
-						{
-							stressed: 'É',
-							vowel: 'E',
-						},
-						{
-							stressed: 'Ê',
-							vowel: 'E',
-						},
-						{
-							stressed: 'Ë',
-							vowel: 'E',
-						},
-						{
-							stressed: 'Ì',
-							vowel: 'I',
-						},
-						{
-							stressed: 'Í',
-							vowel: 'I',
-						},
-						{
-							stressed: 'Î',
-							vowel: 'I',
-						},
-						{
-							stressed: 'Ï',
-							vowel: 'I',
-						},
-						{
-							stressed: 'Ð',
-							vowel: 'D',
-						},
-						{
-							stressed: 'Ò',
-							vowel: 'O',
-						},
-						{
-							stressed: 'Ó',
-							vowel: 'O',
-						},
-						{
-							stressed: 'Ó',
-							vowel: 'O',
-						},
-						{
-							stressed: 'Ô',
-							vowel: 'O',
-						},
-						{
-							stressed: 'Õ',
-							vowel: 'O',
-						},
-						{
-							stressed: 'Ö',
-							vowel: 'O',
-						},
-						{
-							stressed: 'Ø',
-							vowel: 'O',
-						},
-						{
-							stressed: 'Ù',
-							vowel: 'U',
-						},
-						{
-							stressed: 'Ú',
-							vowel: 'U',
-						},
-						{
-							stressed: 'Û',
-							vowel: 'U',
-						},
-						{
-							stressed: 'Ü',
-							vowel: 'U',
-						},
-						{
-							stressed: 'ß',
-							vowel: 'S',
-						},
-					];
+					{
+						stressed: 'Á',
+						vowel: 'A',
+					},
+					{
+						stressed: 'À',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Â',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Ã',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Å',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Ä',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Æ',
+						vowel: 'A',
+					},
+					{
+						stressed: 'Ç',
+						vowel: 'C',
+					},
+					{
+						stressed: 'È',
+						vowel: 'E',
+					},
+					{
+						stressed: 'É',
+						vowel: 'E',
+					},
+					{
+						stressed: 'Ê',
+						vowel: 'E',
+					},
+					{
+						stressed: 'Ë',
+						vowel: 'E',
+					},
+					{
+						stressed: 'Ì',
+						vowel: 'I',
+					},
+					{
+						stressed: 'Í',
+						vowel: 'I',
+					},
+					{
+						stressed: 'Î',
+						vowel: 'I',
+					},
+					{
+						stressed: 'Ï',
+						vowel: 'I',
+					},
+					{
+						stressed: 'Ð',
+						vowel: 'D',
+					},
+					{
+						stressed: 'Ò',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ó',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ó',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ô',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Õ',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ö',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ø',
+						vowel: 'O',
+					},
+					{
+						stressed: 'Ù',
+						vowel: 'U',
+					},
+					{
+						stressed: 'Ú',
+						vowel: 'U',
+					},
+					{
+						stressed: 'Û',
+						vowel: 'U',
+					},
+					{
+						stressed: 'Ü',
+						vowel: 'U',
+					},
+					{
+						stressed: 'ß',
+						vowel: 'S',
+					},
+				];
 
 				for(vowel in stressedVowels){
 					if(stressedVowels[vowel].stressed == letter) {
-						console.log("stressed vowel at " + stressedVowels[vowel].stressed);
+						// console.log("stressed vowel at " + stressedVowels[vowel].stressed);
 						return stressedVowels[vowel].vowel;
 					}
 				}
@@ -520,16 +505,15 @@
 			var setUnderLinedWord = function(word){
 
 				var upperWord = word.toUpperCase();
-				console.log(upperWord + ' has ' + lettersWithoutSpaces(upperWord) + ' letters');
+				// console.log(upperWord + ' has ' + lettersWithoutSpaces(upperWord) + ' letters');
 				var html_answer = '';
 				var covered_positions = 0;
 				for (var i = 0; i < upperWord.length; i++) {
 					bool = false;
-					console.log("upperWord length");
 					for(var j = 0; j < covered_letters.length; j++){
 						if(filterStressedVowel(upperWord[i]) == covered_letters[j]) bool = true;
 					}
-					console.log(upperWord[i] == ' ');
+					// console.log(upperWord[i] == ' ');
 					if (bool) {
 						covered_positions++;
 						html_answer += ' ' + upperWord[i] + ' ';
@@ -564,8 +548,6 @@
 					timer++;
 					decreaseTimer(setTimer);
 				}, 1000);
-				console.log("setQuestion");
-				// setAnswers($question.options);
 				showQuestion($question);
 			}
 
@@ -584,6 +566,8 @@
 
 			var setFinalScore = function(scene){
 				percentage = correct_answers*100/questions.length;
+				clearInterval(decreaseInterval);
+
 				$('#final-points').html(points);
 				$('#final-answers').html(correct_answers);
 				$('#final-wrong').html(wrong_answers);
@@ -600,7 +584,30 @@
 				});
 				$('#final-progress').attr('aria-valuenow',100);
 
+				$.ajax({
+					url: '{{ $route }}/test',
+					type: 'POST',
+					data: {
+						user_id: '{{ Crypt::encrypt(Auth::user()->id) }}',
+						evaluation_id: '{{ Crypt::encrypt($evaluation->id ) }}',
+						test_id: '{{ Crypt::encrypt($test->id) }}',
+						duration: timer,
+						points: points,
+						hits: correct_answers,
+						mistakes: wrong_answers,
+						percentage: percentage,
+					},
+					success: function(data){
+						console.log(data);
+					},
+					error: function(xhr){
+						console.log(xhr);
+					}
+
+				});
+
 				scene();
+				resetGame();
 
 			}
 
@@ -674,10 +681,6 @@
 					$(elem).removeClass('battery-1');
 					$(elem).removeClass('battery-0');
 					$(elem).addClass('battery-'+(battery));
-					/*for(var i = 0; i < $('.charge').length; i++){
-						if(i>=battery) {
-						} 
-					}*/
 				}
 			}
 
@@ -689,6 +692,7 @@
 			}
 
 			var letterIsCovered = function(letter){
+				// console.log('Covered Letters')
 				var bool = false;
 				for(var i = 0 ; i < covered_letters.length; i++){
 					if(letter == covered_letters[i]) bool = true;
@@ -698,6 +702,8 @@
 
 			var verifyLetter = function(letter){
 				bool = false;
+				// console.log('PALABRA: ' + $question.word);
+				// console.log('RANDOMIZE: ' + randomize);
 				if(!letterIsCovered(letter)){
 					for(var i = 0; i < $question.word.length ; i++){
 						if(letter == filterStressedVowel($question.word[i])) bool = true;
@@ -711,6 +717,27 @@
 						discountBattery();
 					}
 				}
+			}
+
+			var resetGame = function(){
+
+				battery = 5;
+				randomize = [];
+				$question =  null;
+				questions = null;
+				time_by_question = 90;
+				timing = 0;
+				timer = 0;
+				progress = 0;
+				points = 0;
+				correct_answers = 0;
+				wrong_answers = 0;
+				clearInterval(decreaseInterval);
+				$(document).unbind('keypress');
+				$('.next-button').unbind('click');
+				$('.finish-button').unbind('click');
+				$('.save-button').unbind('click');
+
 			}
 
 			/* EVENT LISTENERS */
