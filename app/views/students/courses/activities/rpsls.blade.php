@@ -1,7 +1,7 @@
 
 	<link rel="stylesheet" type="text/css" href="/games/rpsls/css/style.css"/>
 
-	<div class="row content">
+	<div class="row content" style="height:1000px;">
 
 		<div class="col-md-8" id="left-side">
 			<div class="row">
@@ -178,7 +178,10 @@
 
 		</div>
 
-		<div class="col-md-4 aside center" id="right-side">
+		<div class="col-md-4 aside center" id="right-side" style="height:1000px !important;">
+			<div class="row">&nbsp;</div>
+			<div class="row"><h4 style="color: white;font-weight: 500;font-size: 16pt;">Indicaciones</h4></div>
+			<div class="row">&nbsp;</div>
 			<div class="row">
 				<div class="col-md-2"></div>
 				<img class="col-md-8" src="/games/rpsls/images/help.png"/>
@@ -186,7 +189,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-2"></div>
-				<div class="col-md-8">
+				<div class="col-md-8" style="color: white;font-size: 11pt;">
 					Las tijeras cortan el papel, el papel cubre a la piedra, la piedra aplasta a la iguana, la iguana muerde a la garra, la garra destroza las tijeras, las tijeras decapitan a la iguana, la iguana se come el papel, el papel dibuja a la garra, la garra tira la piedra, y como es habitual... la piedra aplasta las tijeras.
 				</div>
 			</div>
@@ -315,7 +318,7 @@
 
 			var setLayout = function(){
 
-				$('#right-side').height($('#left-side').height());
+				// $('#right-side').height($('#left-side').height());
 
 			}
 

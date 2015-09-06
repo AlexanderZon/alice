@@ -102,20 +102,32 @@
 							<div class="col-lg-5 col-md-4 col-sm-4 col-xs-3"></div>
 						</div>
 						<div class="row" id="answer-selected">
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<h3 class="col-md-3 col-sm-3 col-xs-5">Puntos: </h3>
-							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-points">200</h3>
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5">Puntos: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-points"></h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<h3 class="col-md-3 col-sm-3 col-xs-5">Palabras Acertadas: </h3>
-							<h3 class="col-md-3 col-sm-3 col-xs-5" id="final-answers">2</h3>
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5">Palabras Acertadas: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-answers"></h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
 						</div>
 						<div class="row">
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
-							<div class="col-md-6 col-sm-6 col-xs-10">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5">Palabras No Acertadas: </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-wrong"></h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+							<h3 class="col-md-5 col-sm-5 col-xs-5">Tiempo (segundos): </h3>
+							<h3 class="col-md-5 col-sm-5 col-xs-5" id="final-time"></h3>
+							<div class="col-md-1 col-sm-1 col-xs-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-2 col-sm-2 col-xs-1"></div>
+							<div class="col-md-8 col-sm-8 col-xs-10">
 								<div class="progress">
 								  <div id="final-correct" class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 								    0%
@@ -125,14 +137,16 @@
 								  </div>
 								</div>
 							</div>
-							<div class="col-md-3 col-sm-3 col-xs-1"></div>
+							<div class="col-md-2 col-sm-2 col-xs-1"></div>
 						</div>
 						<div class="row">&nbsp;</div>
 						<div class="row">
 							<div class="col-md-3 col-sm-3 col-xs-2"></div>
-							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-primary btn-lg save-button">Guardar</span>
+							<span class="col-md-6 col-sm-6 col-xs-8 btn btn-primary btn-lg evaluation-back-btn" data-evaluationable-id="{{ Hashids::encode($evaluation->evaluationable_id )}}" data-evaluationable-type="{{ $evaluation->evaluationable_type }}">Volver</span>
 							<div class="col-md-3 col-sm-3 col-xs-2"></div>
 						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row">&nbsp;</div>
 					</div>
 					<div class="col-md-2 col-sm-2 col-xs-1"></div>
 				</div>
@@ -203,13 +217,15 @@
 
 			var timing = 0;
 
+			var timer = 0;
+
 			var progress = 0;
 
 			var points = 0;
 
 			var correct_answers = 0;
 
-			var incorrect_answers = 0;
+			var wrong_answers = 0;
 
 			var battery = 5;
 
@@ -541,8 +557,11 @@
 				setScore(questions);
 				$question.word = setUnderLinedWord($question.word);
 				time_by_question = $question.seconds;
+				battery = 5;
+				displayBattery();
 				resetTimer(setTimer);
 				decreaseInterval = setInterval(function(){
+					timer++;
 					decreaseTimer(setTimer);
 				}, 1000);
 				console.log("setQuestion");
@@ -559,16 +578,22 @@
 				correct_answers++;
 			}
 
+			var increaseWrong = function(){
+				wrong_answers++;
+			}
+
 			var setFinalScore = function(scene){
 				percentage = correct_answers*100/questions.length;
 				$('#final-points').html(points);
 				$('#final-answers').html(correct_answers);
+				$('#final-wrong').html(wrong_answers);
+				$('#final-time').html(timer);
 
 				$('#final-correct').css({
 					width: percentage+'%'
 				});
 				$('#final-correct').attr('aria-valuenow',percentage);
-				$('#final-correct').html(percentage+"%");
+				$('#final-correct').html(Math.round(percentage)+"%");
 
 				$('#final-progress').css({
 					width: 100-percentage+'%'
@@ -615,6 +640,7 @@
 				}
 				$('#answers-result').html($question.word);
 				$('#result-title').html('Bateria Agotada');
+				increaseWrong();
 				scene2();
 			}
 
@@ -641,7 +667,12 @@
 				else{
 					console.log('Battery Discount ' + battery);
 					elem = $('#right-side');
-					$(elem).removeClass('battery-'+(battery+1));
+					$(elem).removeClass('battery-5');
+					$(elem).removeClass('battery-4');
+					$(elem).removeClass('battery-3');
+					$(elem).removeClass('battery-2');
+					$(elem).removeClass('battery-1');
+					$(elem).removeClass('battery-0');
 					$(elem).addClass('battery-'+(battery));
 					/*for(var i = 0; i < $('.charge').length; i++){
 						if(i>=battery) {
@@ -652,6 +683,7 @@
 
 			var discountBattery = function(){
 				battery--;
+				timing -= 10;
 				console.log(battery);
 				displayBattery();
 			}
