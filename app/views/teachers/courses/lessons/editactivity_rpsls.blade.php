@@ -283,7 +283,11 @@
 						console.log(data);
 						$('#questions-form-loader').addClass('hidden');
 						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > span').html(data.question.question.slice(0, 25) + '...');
-						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').removeClass('font-red');
+						if(data.question.question != '' && data.question.answer != '' && data.question.incorrect[0] != '' && data.question.incorrect[1] != '' && data.question.incorrect[2] != '' && data.question.incorrect[3] != ''){
+							$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').removeClass('font-red');
+						}else{
+							$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').addClass('font-red');							
+						}
 						toastr['success']("Los datos de la pregunta han sido modificados con éxito!", "Pregunta Modificada");
 					},
 					error: function(xhr){
@@ -356,7 +360,7 @@
 						$('#questions-list').append(''+
 							'<li class="active">' +
 								'<a data-toggle="tab" href="#question_' + data.question.hashids + '">'+
-									'<i class="fa fa-cube"></i><span>' + data.question.question.slice(0, 25) + '</span></a>' +
+									'<i class="fa fa-cube font-red"></i><span>' + data.question.question.slice(0, 25) + '</span></a>' +
 								'<span class="after">' +
 								'</span>' +
 							'</li>');

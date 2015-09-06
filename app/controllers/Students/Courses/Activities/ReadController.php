@@ -53,6 +53,20 @@ class ReadController extends \Students\Courses\ReadController {
 
 	}
 
+	public function postIndex( $course_name = '' ){
+
+		$course = Course::getByName( $course_name );
+
+		$evaluations = $course->evaluations;
+
+		self::addArgument('course', $course);
+
+		self::addArgument('evaluations', $evaluations);
+
+		return self::make('index');
+
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 * GET /courses

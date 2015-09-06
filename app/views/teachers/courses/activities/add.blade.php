@@ -30,13 +30,13 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="portlet-title">
-							<h4 class="profile-usertitle-name">Nueva Actividad para la Lección "{{ $lesson->title }}"	
-								<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-activities-back" data-placement="left" data-original-title="Ir al listado de Lecciones" data-course="{{ Hashids::encode($course->id) }}" data-lesson="{{ Hashids::encode($lesson->id) }}">
+							<h4 class="profile-usertitle-name">Nueva Actividad para el Curso "{{ $course->title }}"	
+								<a href="javascript:;" class="btn blue-madison pull-right tooltips course-activities-back" data-placement="left" data-original-title="Ir al listado de Lecciones" data-course="{{ Hashids::encode($course->id) }}" >
 									<i class="fa fa-arrow-left"></i>
 								</a>
 							</h4>
 						</div>
-						<div class="portlet-body form" data-course="{{ Hashids::encode($course->id) }}" data-lesson="{{ Hashids::encode($lesson->id) }}">
+						<div class="portlet-body form" data-course="{{ Hashids::encode($course->id) }}">
 					
 							<!-- END PAGE CONTENT INNER -->
 							<div class="row">&nbsp;</div>
@@ -45,7 +45,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="javascript:;" class="btn red lesson-activities-new" data-type="rpsls">
+										<a href="javascript:;" class="btn red course-activities-new" data-type="rpsls">
 										<span>
 										Piedra, Papel, Tijeras, Iguana, Garra </span>
 										<em>Una pregunta y Cinco Posibles Respuestas</em>
@@ -58,7 +58,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="javascript:;" class="btn green lesson-activities-new" data-type="roulette">
+										<a href="javascript:;" class="btn green course-activities-new" data-type="roulette">
 										<span>
 										Corona del Ganador </span>
 										<em>Una pregunta y Cuatro posibles Respuestas</em>
@@ -71,7 +71,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="javascript:;" class="btn blue lesson-activities-new" data-type="memory">
+										<a href="javascript:;" class="btn blue course-activities-new" data-type="memory">
 										<span>
 										La Taguara </span>
 										<em>Una Pregunta y una Respuesta</em>
@@ -84,7 +84,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="top-news">
-										<a href="javascript:;" class="btn yellow lesson-activities-new" data-type="hangman">
+										<a href="javascript:;" class="btn yellow course-activities-new" data-type="hangman">
 										<span>
 										El nombre que dijo Carminy </span>
 										<em>Una pregunta y una respuesta</em>
@@ -112,8 +112,8 @@
 	
 	<script type="text/javascript">
 
-		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=addactivity&lesson_id={{ Hashids::encode($lesson->id) }}');
-		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Añadir una nueva actividad';
+		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=activities&action=add');
+		document.title = 'Alice | {{ $course->title }} | Añadir una nueva actividad';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

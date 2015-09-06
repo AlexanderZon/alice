@@ -34,14 +34,14 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="portlet-title">
-							<h4 class="profile-usertitle-name">Actividad de la Lección "{{ $lesson->title }}"	
-								<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-activities-back" data-placement="left" data-original-title="Ir al listado de Actividades" data-course="{{ Hashids::encode($course->id) }}" data-lesson="{{ Hashids::encode($lesson->id) }}">
+							<h4 class="profile-usertitle-name">Actividad del Curso "{{ $course->title }}"	
+								<a href="javascript:;" class="btn blue-madison pull-right tooltips course-activities-back" data-placement="left" data-original-title="Ir al listado de Actividades" data-course="{{ Hashids::encode($course->id) }}">
 									<i class="fa fa-arrow-left"></i>
 								</a>
 							</h4>
 						</div>
 						<div class="portlet-body form" data-activity="{{ Hashids::encode($evaluation->id) }}">
-							<form id="editactivity-form" action="" method="post" class="form-horizontal evaluation-ajax-form" data-url="{{ $route }}/editactivity" enctype="multipart/form-data">
+							<form id="edit-form" action="" method="post" class="form-horizontal evaluation-ajax-form" data-url="{{ $route }}/edit" enctype="multipart/form-data">
 								<input type="hidden" name="activity_id" value="{{ Hashids::encode($evaluation->id) }}">
 								<div class="form-body"> 
 									<div class="row">
@@ -117,8 +117,8 @@
 							<div class="row">
 								<div class="col-md-4">
 									<ul id="questions-list" class="ver-inline-menu tabbable margin-bottom-10">
-										@if($evaluation->memory->count() > 0 AND ($counter = 0) == 0)
-											@foreach($evaluation->memory as $question)
+										@if($evaluation->rpsls->count() > 0 AND ($counter = 0) == 0)
+											@foreach($evaluation->rpsls as $question)
 												<li class="{{ $counter++ == 0 ? 'active' : ''}}">
 													<a data-toggle="tab" href="#question_{{ Hashids::encode($question->id) }}">
 													<i class="fa fa-cube {{ $question->isIncomplete() ? 'font-red' : '' }}"></i><span>{{ substr($question->question, 0, 25).'...'}}</span></a>
@@ -150,8 +150,8 @@
 								</div>
 								<div class="col-md-8">
 									<div id="questions-content" class="tab-content">
-										@if($evaluation->memory->count() > 0 AND ($counter = 0) == 0)
-											@foreach($evaluation->memory as $question)
+										@if($evaluation->rpsls->count() > 0 AND ($counter = 0) == 0)
+											@foreach($evaluation->rpsls as $question)
 												<div id="question_{{ Hashids::encode($question->id) }}" class="tab-pane question-pane {{ $counter++ == 0 ? 'active' : ''}}">
 													<form role="form" action="#" class="question-ajax-form">
 														<input type="hidden" name="evaluation_id" value="{{ Hashids::encode($question->evaluation_id) }}">
@@ -160,13 +160,22 @@
 															<label class="control-label">Pregunta</label>
 															<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="{{ $question->question }}" maxlength="254" required/>
 														</div>
-														<div class="form-group">
+														<!-- <div class="form-group">
 															<label class="control-label">Respuesta</label>
 															<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="{{ $question->answer }}" maxlength="254" required/>
-														</div>
+														</div> -->
+														@if($question->answers->count() > 0 AND ($counter = 0) == 0)
+															@foreach($question->answers as $answer)
+																<div class="form-group">
+																	<label class="control-label">Respuesta {{ $counter == 0 ? 'Correcta' : 'Incorrecta #'.$counter }}</label>
+																	<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="{{ $answer->is_correct ? 'correct' : 'incorrect[]' }}" value="{{ $answer->answer }}" maxlength="254" required/>
+																</div>
+																<?php $counter++ ?>
+															@endforeach
+														@endif
 														<div class="form-group">
 															<label class="control-label">Referencia Bibliográfica</label>
-															<input type="text" placeholder="Indique una referencia" class="form-control" name="reference" value="{{ $question->reference }}" required/>
+															<input type="text" placeholder="Indique una referencia" class="form-control" name="reference" value="{{ $question->reference }}"/>
 														</div>
 														<div class="form-group">
 															<input type="submit" placeholder="Indique una Opción Errónea" class="btn green" value="Guardar" />
@@ -239,7 +248,7 @@
 				$('#evaluation-form-loader').removeClass('hidden');
 
 				$.ajax({
-					url: '{{ $route }}/editactivity',
+					url: '{{ $route }}/edit',
 					type: 'POST',
 					datatype: 'json',
 					data: el.serialize(),
@@ -274,10 +283,10 @@
 						console.log(data);
 						$('#questions-form-loader').addClass('hidden');
 						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > span').html(data.question.question.slice(0, 25) + '...');
-						if(data.question.question != '' && data.question.answer != ''){
-							$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').removeClass('font-red');							
+						if(data.question.question != '' && data.question.answer != '' && data.question.incorrect[0] != '' && data.question.incorrect[1] != '' && data.question.incorrect[2] != '' && data.question.incorrect[3] != ''){
+							$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').removeClass('font-red');
 						}else{
-							$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').addClass('font-red');														
+							$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').addClass('font-red');							
 						}
 						toastr['success']("Los datos de la pregunta han sido modificados con éxito!", "Pregunta Modificada");
 					},
@@ -367,8 +376,24 @@
 										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="' + data.question.question + '" maxlength="254" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="control-label">Respuesta</label>' +
-										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="' + data.question.answer + '" maxlength="254" required/>' +
+										'<label class="control-label">Respuesta Correcta</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="correct" value="' + data.question.correct + '" maxlength="254" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="control-label">Respuesta Incorrecta #1</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[0] + '" maxlength="254" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="control-label">Respuesta Incorrecta #2</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[1] + '" maxlength="254" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="control-label">Respuesta Incorrecta #3</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[2] + '" maxlength="254" required/>' +
+									'</div>' +
+									'<div class="form-group">' +
+										'<label class="control-label">Respuesta Incorrecta #4</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="incorrect[]" value="' + data.question.incorrect[3] + '" maxlength="254" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
 										'<label class="control-label">Referencia Bibliográfica</label>' +
@@ -383,6 +408,9 @@
 						
 						Metronic.init();
 
+					},
+					error: function(xhr){
+						console.log(xhr);
 					}
 				});
 
@@ -452,8 +480,6 @@
 		                separator: ' to ',
 		                startDate: moment("{{ date('Ymd', strtotime($evaluation->date_start)) }}", "YYYYMMDD" ),
 		                endDate: moment("{{ date('Ymd', strtotime($evaluation->date_end)) }}", "YYYYMMDD" ),
-		                minDate: moment("{{ date('Ymd', strtotime($module->date_start)) }}", "YYYYMMDD" ),
-		                maxDate: moment("{{ date('Ymd', strtotime($module->date_end)) }}", "YYYYMMDD" ),
 		            },
 		            function (start, end) {
 		            	console.log('change;');
@@ -475,8 +501,8 @@
 		ComponentsPickers.init();
 		QuestionsManager.init();
 
-		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=editactivity&lesson_id={{ Hashids::encode($lesson->id) }}&activity_id={{ Hashids::encode($evaluation->id) }}');
-		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Editar Actividad';
+		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=activities&action=edit&activity_id={{ Hashids::encode($evaluation->id) }}');
+		document.title = 'Alice | {{ $course->title }} | Editar Actividad';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

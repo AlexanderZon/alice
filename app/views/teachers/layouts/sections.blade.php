@@ -1617,6 +1617,92 @@
 
 		    }
 
+		    var courseActivitiesAdd = function(el) {
+
+		    	var course = el.data('course');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/activities/add',
+		    		type: 'GET',
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Activities Add');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var courseActivitiesNew = function(el) {
+
+		    	var course = el.parents('.portlet-body').data('course');
+		    	var type = el.data('type');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/activities/add',
+		    		type: 'POST',
+		    		data: {
+		    			type: type,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Activities New');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
+		    var courseActivitiesEdit = function(el) {
+
+		    	var course = el.parents('.portlet-body').data('course');
+		    	var activity = el.parents('.activity-block').data('activity');
+
+		        loading.show();
+		        content.html(loader);
+
+		    	$.ajax({
+		    		url: '{{$route}}/' + course + '/activities/edit',
+		    		type: 'GET',
+		    		data: {
+		    			activity_id: activity,
+		    		},
+		    		async: true,
+		    		success: function(html) {
+
+				        loading.hide();
+				        content.html(html);
+		                Metronic.init();
+		    			// console.log(html);
+		    			console.log('Activities Edit');
+		    		},
+		    		error: function(xhr) {
+		    			console.log(xhr);
+		    		}
+		    	});
+
+		    }
+
 		    return {
 		        //main function to initiate the module
 		        init: function () {
@@ -1950,6 +2036,29 @@
 		                studentsStatistics($(this));
 		            });
 
+		            /* Course Activities Events */
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.course-activities-add', function (e) {
+		                courseActivitiesAdd($(this));
+		            });
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.course-activities-back', function (e) {
+		                backWall($(this), 'activities');
+		            });
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.course-activities-new', function (e) {
+		                courseActivitiesNew($(this), 'activities');
+		            });
+
+		            // handle view discussion button click
+		            $('.profile').on('click', '.course-activities-edit', function (e) {
+		                courseActivitiesEdit($(this), 'activities');
+		            });
+		            
+
 		            //handle loading content based on URL parameter
 		            if (Metronic.getURLParameter("a") === "view") {
 		                viewMessage();
@@ -2004,6 +2113,12 @@
 		        				break;
 		            		case 'statistics':
 		        				initWall($('.statistics-btn'), 'statistics');
+		        				break;
+		            		case 'activities':
+		        				initWall($('.activities-btn'), 'activities');
+		        				break;
+		            		case 'questions':
+		        				initWall($('.questions-btn'), 'questions');
 		        				break;
 		        			default:
 		        				initWall($('.general-btn'), 'general');

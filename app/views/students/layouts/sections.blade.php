@@ -1548,7 +1548,7 @@
 
 		            // handle activities button click
 		            $('.profile').on('click', '.activities-btn', function (e) {
-		                loadWall($(this), 'activities');
+		                loadWall($(this), 'activities-btn');
 		            });
 
 		            // handle activities button click
@@ -1754,6 +1754,12 @@
 		        				break;
 		            		case 'discussions':
 		        				initWall($('.discussions-btn'), 'discussions');
+		        				break;
+		            		case 'activities':
+		        				initWall($('.activities-btn'), 'activities');
+		        				break;
+		            		case 'questions':
+		        				initWall($('.questions-btn'), 'questions');
 		        				break;
 		        			default:
 		        				initWall($('.general-btn'), 'general');

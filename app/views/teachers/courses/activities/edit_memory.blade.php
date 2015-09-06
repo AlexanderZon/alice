@@ -34,14 +34,14 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="portlet-title">
-							<h4 class="profile-usertitle-name">Actividad de la Lección "{{ $lesson->title }}"	
-								<a href="javascript:;" class="btn blue-madison pull-right tooltips lesson-activities-back" data-placement="left" data-original-title="Ir al listado de Actividades" data-course="{{ Hashids::encode($course->id) }}" data-lesson="{{ Hashids::encode($lesson->id) }}">
+							<h4 class="profile-usertitle-name">Actividad del Curso "{{ $course->title }}"	
+								<a href="javascript:;" class="btn blue-madison pull-right tooltips course-activities-back" data-placement="left" data-original-title="Ir al listado de Actividades" data-course="{{ Hashids::encode($course->id) }}">
 									<i class="fa fa-arrow-left"></i>
 								</a>
 							</h4>
 						</div>
 						<div class="portlet-body form" data-activity="{{ Hashids::encode($evaluation->id) }}">
-							<form id="editactivity-form" action="" method="post" class="form-horizontal evaluation-ajax-form" data-url="{{ $route }}/editactivity" enctype="multipart/form-data">
+							<form id="edit-form" action="" method="post" class="form-horizontal evaluation-ajax-form" data-url="{{ $route }}/edit" enctype="multipart/form-data">
 								<input type="hidden" name="activity_id" value="{{ Hashids::encode($evaluation->id) }}">
 								<div class="form-body"> 
 									<div class="row">
@@ -166,7 +166,7 @@
 														</div>
 														<div class="form-group">
 															<label class="control-label">Referencia Bibliográfica</label>
-															<input type="text" placeholder="Indique una referencia" class="form-control" name="reference" value="{{ $question->reference }}" required/>
+															<input type="text" placeholder="Indique una referencia" class="form-control" name="reference" value="{{ $question->reference }}"/>
 														</div>
 														<div class="form-group">
 															<input type="submit" placeholder="Indique una Opción Errónea" class="btn green" value="Guardar" />
@@ -239,7 +239,7 @@
 				$('#evaluation-form-loader').removeClass('hidden');
 
 				$.ajax({
-					url: '{{ $route }}/editactivity',
+					url: '{{ $route }}/edit',
 					type: 'POST',
 					datatype: 'json',
 					data: el.serialize(),
@@ -452,8 +452,6 @@
 		                separator: ' to ',
 		                startDate: moment("{{ date('Ymd', strtotime($evaluation->date_start)) }}", "YYYYMMDD" ),
 		                endDate: moment("{{ date('Ymd', strtotime($evaluation->date_end)) }}", "YYYYMMDD" ),
-		                minDate: moment("{{ date('Ymd', strtotime($module->date_start)) }}", "YYYYMMDD" ),
-		                maxDate: moment("{{ date('Ymd', strtotime($module->date_end)) }}", "YYYYMMDD" ),
 		            },
 		            function (start, end) {
 		            	console.log('change;');
@@ -475,8 +473,8 @@
 		ComponentsPickers.init();
 		QuestionsManager.init();
 
-		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=editactivity&lesson_id={{ Hashids::encode($lesson->id) }}&activity_id={{ Hashids::encode($evaluation->id) }}');
-		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Editar Actividad';
+		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=activities&action=edit&activity_id={{ Hashids::encode($evaluation->id) }}');
+		document.title = 'Alice | {{ $course->title }} | Editar Actividad';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

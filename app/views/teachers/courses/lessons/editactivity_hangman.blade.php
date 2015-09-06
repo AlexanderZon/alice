@@ -278,6 +278,11 @@
 						console.log(data);
 						$('#questions-form-loader').addClass('hidden');
 						$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > span').html(data.question.question.slice(0, 25) + '...');
+						if(data.question.word != '' && data.question.question != '' && data.question.seconds != '' && data.question.seconds > 0){	
+							$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').removeClass('font-red');
+						}else{
+							$('#questions-list > li > a[href=#question_' + data.question.hashids + '] > i').addClass('font-red');
+						}
 						toastr['success']("Los datos de la pregunta han sido modificados con éxito!", "Pregunta Modificada");
 					},
 					error: function(xhr){
