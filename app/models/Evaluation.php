@@ -15,6 +15,8 @@ class Evaluation extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    public $max_attempts = 2;
+
     public function evaluationable(){
 
         return $this->morphTo();
@@ -229,16 +231,19 @@ class Evaluation extends \Eloquent {
 
     public function testsOf( $user ){
 
-        $results = array();
-        $counter = 0;
+        return $this->tests()->where('tests.user_id','=',$user->id)->get();
 
-        if($this->tests->count() > 0):
-            foreach($this->tests as $test):
-                if($test->user_id == $user->id) $results[] = $test;
-            endforeach;
-        endif;
+    }
 
-        return $results;
+    public function testOf( $user ){
+
+        return $this->tests()->where('tests.user_id','=',$user->id)->first();
+
+    }
+
+    public function myTest(){
+
+        return $this->testOf(Auth::user());
 
     }
 
@@ -266,6 +271,28 @@ class Evaluation extends \Eloquent {
         $user_ts = strtotime('now');
 
         return (($user_ts >= $start_ts) && ($user_ts <= $end_ts));
+
+    }
+
+    public function isAvailableToTest(){
+
+        if($test = $this->myTest()):
+
+            if($test->attempts >= $this->max_attempts):
+
+                return false;
+
+            else: 
+
+                return true;
+
+            endif;
+
+        else:
+
+            return true;
+
+        endif;
 
     }
 

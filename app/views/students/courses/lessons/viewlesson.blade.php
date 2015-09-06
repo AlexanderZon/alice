@@ -255,11 +255,22 @@
 									@if($lesson->validevaluations->count() > 0)
 										@foreach($lesson->validevaluations as $evaluation)
 											<div class="row" style="margin-bottom:5px">
-												<div class="col-md-9">
+												<div class="col-md-1">
+													<img src="{{ $evaluation->image() }}" alt="" style="max-width:100px" />
+												</div>
+												<div class="col-md-7">
 													<h4>{{ $evaluation->title }}</h4>
+													<p>{{ $evaluation->description }}</p>
+													<em>({{ date('d/m/Y', strtotime($evaluation->date_start) ) }} - {{ date('d/m/Y', strtotime($evaluation->date_end) ) }})</em>
+												</div>
+												<div class="col-md-1">
+													<em>{{ ($test = $evaluation->myTest()) ? $test->percentage() : '0%' }}</em>
 												</div>
 												<div class="col-md-3">
-													<span class="btn blue-madison evaluation-test-btn" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}">Ir a la actividad <i class="fa fa-flask"></i></span>
+													@if($evaluation->isAvailableToTest())
+														<span class="btn blue-madison evaluation-test-btn" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}">Ir a la actividad <i class="fa fa-flask"></i></span>
+													@endif
+													<span class="btn green-haze evaluation-help-btn" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}"><i class="fa fa-info-circle"></i></span>
 												</div>
 											</div>
 										@endforeach
