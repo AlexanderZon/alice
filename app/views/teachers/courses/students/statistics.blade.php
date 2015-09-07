@@ -44,7 +44,7 @@
 							</div>
 							<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
 								<div class="col-lg-4 col-md-4 col-sm-6">
-									<h3><i class="fa fa-book"></i> Lecciones participadas: {{ 0 }}</h3>
+									<h3><i class="fa fa-book"></i> Lecciones participadas: {{ $course->lessonParticipationOf($student) }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
 									<h3><i class="fa fa-comments"></i> Comentarios en lecciones: {{ count($course->discussionsInLessonsOf($student)) }}</h3>
@@ -97,8 +97,8 @@
 
 <script type="text/javascript">
 	
-	window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=students');
-		document.title = 'Alice | {{ $course->title }} | Estudiantes';
+	window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=students&action=statistics&student_id={{ Hashids::encode($student->id) }}');
+		document.title = 'Alice | {{ $course->title }} | Estadisticas de {{ $student->display_name }}';
 
 </script>
 

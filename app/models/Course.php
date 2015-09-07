@@ -205,7 +205,7 @@ class Course extends \Eloquent {
     public function questions(){
 
         return $this->hasMany('CourseQuestion', 'course_id');
-        
+
     }
 
     public function discussionsOf($user){
@@ -254,6 +254,28 @@ class Course extends \Eloquent {
         endforeach;
 
         return $counter;
+
+    }
+
+    public function discussionsInDiscussionsOf($user){
+
+        $results = array();
+        $counter = 0;
+
+        foreach($this->discussions as $discus):
+            if($discus->children->count() > 0 ):
+                foreach($discus->children as $discussion):
+                    if($discussion->user_id == $user->id) $results[] = $discussion; $counter++;
+                    if($discussion->children->count() > 0 ):
+                        foreach($discussion->children as $child):
+                            if($child->user_id == $user->id) $results[] = $child; $counter++;
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
+        endforeach;
+
+        return $results;
 
     }
 
@@ -512,6 +534,18 @@ class Course extends \Eloquent {
     public function iveInscription(){
 
         return $this->hasInscription(Auth::user());
+
+    }
+
+    public function lessonParticipationOf($student){
+
+        $counter = 0;
+
+        foreach($this->lessons as $lesson):
+            $lesson->hasBeenViewedBy($student) ? $counter++ : $counter;
+        endforeach;
+
+        return $counter;
 
     }
 

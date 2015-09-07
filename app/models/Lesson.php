@@ -156,6 +156,12 @@ class Lesson extends \Eloquent {
 
     }
 
+    public function hasBeenViewedBy( $student ){
+
+        return $this->students()->where('user_lessons.user_id','=',$student->id)->first() ? true : false;
+        
+    }
+
     public function studentsApproved(){
 
     	$students = new User();

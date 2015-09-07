@@ -147,6 +147,11 @@ class ReadController extends \BaseController {
 				case 'discussions':
 					self::addArgument('discussions',$user->discussionsfromcourses);
 					break;
+				case 'statistics':
+					self::addArgument('statistics',$user->statistics());
+					break;
+				case 'achievements':
+					break;
 			endswitch;
 
 			return self::make($section);

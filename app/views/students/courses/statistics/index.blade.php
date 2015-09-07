@@ -29,7 +29,7 @@
 						<div class="row mix-grid">
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								<div class="col-lg-4 col-md-4 col-sm-6">
-									<h3><i class="fa fa-book"></i> Lecciones participadas: {{ 0 }}</h3>
+									<h3><i class="fa fa-book"></i> Lecciones participadas: {{ $course->lessonParticipationOf($student) }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
 									<h3><i class="fa fa-comments"></i> Comentarios en lecciones: {{ count($course->discussionsInLessonsOf($student)) }}</h3>

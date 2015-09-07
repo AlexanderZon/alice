@@ -183,6 +183,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
+	public function historylearning(){
+
+		return $this->belongsToMany('Course','inscriptions');
+
+	}
+
 	public function myCourses(){
 
 		return $this->belongsToMany('Course','inscriptions')->where('status','=','active')->get();
@@ -479,6 +485,42 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 		if($role->name == 'coordinator') return true;
 		else return false;
+
+	}
+
+	public function statistics(){
+
+		$statistics = array(
+			'lessons_viewed' => 0,
+			'lessons_comments' => 0,
+			'discussion_comments' => 0,
+			'files_uploaded' => 0,
+			'activities_tested' => 0,
+			'average' => 0,
+			'likes' => 0,
+			'banned' => 0,
+			'achievements' => 0
+			);
+
+		$courses = $this->historylearning;
+
+		foreach($courses as $course):
+
+			$statistics['lessons_viewed'] += $course->lessonParticipationOf($this);
+			$statistics['lessons_comments'] += count($course->discussionsInLessonsOf($this));
+			$statistics['discussion_comments'] += count($course->discussionsInDiscussionsOf($this));
+			$statistics['files_uploaded'] += count($course->attachmentsInLessonsOf($this));
+			$statistics['activities_tested'] += count($course->activitiesOf($this));
+			$statistics['average'] += $course->averageOf($this);
+			$statistics['likes'] += $course->discussionsInLessonsThumbsupsOf($this);
+			$statistics['banned'] += $course->discussionsInLessonsBannedOf($this);
+			$statistics['achievements'] += count($this->achievementFromCourse($course));
+
+		endforeach;
+
+		$statistics['average'] = round($statistics['average']/$courses->count()).'%';
+
+		return $statistics;
 
 	}
 
