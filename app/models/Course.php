@@ -202,6 +202,12 @@ class Course extends \Eloquent {
 
     }
 
+    public function questions(){
+
+        return $this->hasMany('CourseQuestion', 'course_id');
+        
+    }
+
     public function discussionsOf($user){
 
         $results = array();
