@@ -209,6 +209,12 @@ class Evaluation extends \Eloquent {
 
     }
 
+    public function infoUrl(){
+
+        return '/help/evaluations/'.$this->type;
+        
+    }
+
     public function average(){
 
         if($this->tests->count() > 0):

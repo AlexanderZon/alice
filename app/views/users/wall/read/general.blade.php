@@ -11,7 +11,7 @@
 				<div class="row list-separated profile-stat">
 					<div class="col-md-6 col-sm-6 col-xs-6">
 						<div class="uppercase profile-stat-title">
-							 {{ count($user->followers) }}
+							 {{ ($user->followers->count()) }}
 						</div>
 						<div class="uppercase profile-stat-text">
 							 Seguidores
@@ -19,7 +19,7 @@
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-6">
 						<div class="uppercase profile-stat-title">
-							 {{ count($user->followed) }}
+							 {{ ($user->followed->count()) }}
 						</div>
 						<div class="uppercase profile-stat-text">
 							 Siguiendo

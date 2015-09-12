@@ -127,6 +127,9 @@ if(Auth::check()):
 	Route::controller('/notifications', '\Users\Notifications\ReadController');
 	Route::controller('/notificaciones', '\Users\Notifications\ReadController');
 
+	Route::controller('/help/evaluations/{section}', '\Help\Evaluations\ReadController');
+	Route::controller('/help', '\Help\ReadController');
+
 	Route::controller('/rpsls', '\Games\RPSLS\ReadController');
 	Route::controller('/hangman', '\Games\Hangman\ReadController');
 	Route::controller('/memory', '\Games\Memory\ReadController');

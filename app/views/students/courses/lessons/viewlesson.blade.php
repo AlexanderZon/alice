@@ -270,7 +270,7 @@
 													@if($evaluation->isAvailableToTest())
 														<span class="btn blue-madison evaluation-test-btn" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}">Ir a la actividad <i class="fa fa-flask"></i></span>
 													@endif
-													<span class="btn green-haze evaluation-help-btn" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}"><i class="fa fa-info-circle"></i></span>
+													<a class="btn green-haze evaluation-help-btn fancybox fancybox.ajax" href="{{ $evaluation->infoUrl() }}" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}"><i class="fa fa-info-circle"></i></a>
 												</div>
 											</div>
 										@endforeach
@@ -1451,12 +1451,24 @@
 
 		}();
 
+		var FancyboxManager = function () {
+
+		    return {
+		        //main function to initiate the module
+		        init: function () {
+		            $('.fancybox').fancybox();
+		        }
+		    };
+
+		}();
+
 		ComponentsEditors.init();
 		Todo.init();
 		CommentsManager.init();
 		NotesManager.init();
 		AttachmentsManager.init();
 		MomentManager.init();
+		FancyboxManager.init();
 
 		window.history.pushState("", "", '/curso/{{ $course->name }}?section=lessons&action=viewlesson&lesson_id={{ Hashids::encode($lesson->id) }}');
 		document.title = 'Alice | {{ $course->title }} | Contenido';
