@@ -185,9 +185,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function historylearning(){
 
-		return $this->belongsToMany('Course','inscriptions');
+		return $this->belongsToMany('Course','inscriptions')->whereRaw("(inscriptions.status = 'done' OR inscriptions.status = 'active')");
 
 	}
+
 
 	public function myCourses(){
 

@@ -6,7 +6,7 @@
 	<div class="col-md-12">
 		<!-- BEGIN PORTLET -->
 
-		<div class="portlet light" data-course="{{ Hashids::encode($course->id) }}">
+		<div class="portlet light">
 			<!-- STAT -->
 			<!-- <div class="row list-separated profile-stat">
 				<img class="col-md-12" src="{{ Auth::user()->profile->getCover() }}"/>
@@ -15,7 +15,7 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="portlet-title">
-						<h4 class="profile-usertitle-name">Mis Premios en este Curso
+						<h4 class="profile-usertitle-name">Premiaciones por Curso
 							<!--
 							<a href="javascript:;" class="btn blue-madison pull-right tooltips students-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
 								<i class="fa fa-arrow-left"></i>
@@ -30,12 +30,28 @@
 						<div class="row mix-grid">
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									@if(count($achievements) > 0)
-										<div class="col-md-12 achievements-container">
-											@foreach($achievements as $achievement)
-												<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3" style="padding:0px; padding-right: 5px">
-													<div class="mask-circle tooltips" data-original-title="{{$achievement->title}}">
-														<img src="{{ $achievement->picture }}" alt="" class="img-responsive" style="border-radius:50%; max-width:75px" title="{{ $achievement->title }}">			
+									@if(count($courses) > 0)
+										<div class="col-md-12 courses-container">
+											@foreach($courses as $course)
+												<div class="col-md-12">&nbsp;</div>
+												<div class="col-md-12" style="padding:0px; padding-right: 5px">
+													<div>
+														<h4>{{ $course->title }}</h4>
+														<?php $achievements = $user->achievementFromCourse( $course ); ?>
+														@if($achievements->count() > 0)
+															@foreach($achievements as $achievement)
+																<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3" style="padding:0px; padding-right: 5px">
+																	<div class="mask-circle tooltips" data-original-title="{{$achievement->title}}">
+																		<img src="{{ $achievement->picture }}" alt="" class="img-responsive" style="border-radius:50%; max-width:75px" title="{{ $achievement->title }}">
+																	</div>
+																</div>
+															@endforeach
+														@else
+															<div class="col-md-12">
+																<h4>No tiene Aún</h4>
+															</div>
+														@endif
+														<!-- <img src="{{ $course->picture }}" alt="" class="img-responsive" style="border-radius:50%; max-width:75px" title="{{ $course->title }}">			 -->
 													</div>
 												</div>
 											@endforeach
@@ -56,7 +72,7 @@
 
 <script type="text/javascript">
 	
-	window.history.pushState("", "", '/curso/{{ $course->name }}?section=achievements');
+	window.history.pushState("", "", '/{{ $user->username }}?section=courses');
 		document.title = 'Alice | {{ $course->title }} | Premiaciones';
 
 </script>

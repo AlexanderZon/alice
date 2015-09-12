@@ -151,6 +151,7 @@ class ReadController extends \BaseController {
 					self::addArgument('statistics',$user->statistics());
 					break;
 				case 'achievements':
+					self::addArgument('courses', $user->historylearning);
 					break;
 			endswitch;
 
