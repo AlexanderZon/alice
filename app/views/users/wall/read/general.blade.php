@@ -28,43 +28,43 @@
 				</div>
 				<!-- END STAT -->
 				<div>
-					@if($profile->about_me != '')
+					@if(trim(html_entity_decode(strip_tags($profile->about_me))) != '')
 						<h4 class="profile-desc-title">Sobre {{ $user->display_name }}</h4>
 						<span class="profile-desc-text">{{ $profile->about_me }}</span>
 					@endif
-					@if($profile->activities != '')
+					@if(trim(html_entity_decode(strip_tags($profile->activities))) != '')
 						<h4 class="profile-desc-title">Actividades</h4>
 						<span class="profile-desc-text">{{ $profile->activities }}</span>
 					@endif
-					@if($profile->interests != '')
+					@if(trim(html_entity_decode(strip_tags($profile->interests))) != '')
 						<h4 class="profile-desc-title">Intereses</h4>
 						<span class="profile-desc-text">{{ $profile->interests }}</span>
 					@endif
-					@if($profile->website != '')
+					@if(trim(html_entity_decode(strip_tags($profile->website))) != '')
 						<div class="margin-top-20 profile-desc-link">
 							<i class="fa fa-globe"></i>
 							<a href="{{ $profile->getWebsiteURL() }}" target="_blank">{{ $profile->getWebsiteName() }}</a>
 						</div>
 					@endif
-					@if($profile->twitter != '')
+					@if(trim(html_entity_decode(strip_tags($profile->twitter))) != '')
 						<div class="margin-top-20 profile-desc-link">
 							<i class="fa fa-twitter"></i>
 							<a href="{{ $profile->getTwitterURL() }}" target="_blank">{{ $profile->getTwitterName() }}</a>
 						</div>
 					@endif
-					@if($profile->facebook != '')
+					@if(trim(html_entity_decode(strip_tags($profile->facebook))) != '')
 						<div class="margin-top-20 profile-desc-link">
 							<i class="fa fa-facebook"></i>
 							<a href="{{ $profile->getFacebookURL()}}" target="_blank">{{ $profile->getFacebookName() }}</a>
 						</div>
 					@endif
-					@if($user->email != '')
+					@if(trim(html_entity_decode(strip_tags($user->email))) != '')
 						<div class="margin-top-20 profile-desc-link">
 							<i class="fa fa-envelope"></i>
 							<a href="mailto({{ $user->email }})" target="_blank">{{ $user->email }}</a>
 						</div>
 					@endif
-					@if($profile->phone != '')
+					@if(trim(html_entity_decode(strip_tags($profile->phone))) != '')
 						<div class="margin-top-20 profile-desc-link">
 							<i class="fa fa-phone"></i>
 							<a href="{{ $profile->phone }}" target="_blank">{{ $profile->phone }}</a>
