@@ -29,7 +29,7 @@
 		<div class="col-md-12">
 			<!-- BEGIN PORTLET -->
 
-			<div class="portlet light">
+			<div class="portlet light" data-lesson="{{ Hashids::encode($lesson->id) }}">
 				<!-- STAT -->
 				<div class="row list-separated profile-stat">
 					<img class="col-md-12" src="{{ $course->cover_picture }}"/>
@@ -283,6 +283,8 @@
 									@endif
 								</div>
 								<div class="tab-pane" id="tab_5">
+									<div class="row col-md-12"><div class="pull-right btn blue-madison tooltips notes-download-btn" data-original-title="Descargar mis Notas"><i class="fa fa-download"></i></div></div>
+									<div class="row">&nbsp;</div>
 									<?php $notes = $lesson->myNotes(); ?>
 									<?php $avatar = Auth::user()->profile->getAvatar() ?>
 									<div class="row notes"> 
@@ -1324,6 +1326,14 @@
 
 			}
 
+			var downloadNotes = function(el){
+
+				var lesson = el.parents('.portlet').data('lesson');
+
+		        window.open('{{$route}}/notes?lesson_id=' + lesson);
+
+			}
+
 			return {
 
 				init: function (){
@@ -1355,6 +1365,13 @@
 					$('.notes').on('keyup', '.note-editable', function(event) {
 						event.preventDefault();
 						updateSummernoteTextarea($(this));
+						/* Act on the event */
+					});
+
+					$('.tab-pane').on('click', '.notes-download-btn', function(event) {
+						event.preventDefault();
+						downloadNotes($(this));
+						console.log("download");
 						/* Act on the event */
 					});
 

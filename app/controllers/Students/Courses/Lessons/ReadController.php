@@ -438,5 +438,31 @@ class ReadController extends \Students\Courses\ReadController {
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 * GET /notes
+	 *
+	 * @return Response
+	 */
+
+	public function getNotes( $course_name = '' ){
+
+		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
+		
+		$notes = $lesson->myNotes();
+
+		$args = array(
+			'lesson' => $lesson,
+			'course' => $lesson->module->course,
+			'notes' => $notes
+			);
+
+		$pdf = new \Thujohn\Pdf\Pdf();
+	   	$pdf->load(\View::make('pdf.mynotes')->with($args), 'A4', 'portrait')->show();;
+
+		return Response::json($notes);
+
+	}
+
 
 }
