@@ -122,7 +122,7 @@
 																<label class="control-label">Imagen</label>
 																<select class="image-picker" name="picture">
 																	<?php $counter = 0; ?>
-																	@foreach(Achievement::$defaults as $icon)
+																	@foreach(CourseAchievement::$defaults as $icon)
 																		<?php $counter++; ?>
 																  		<option data-img-src="{{ $icon }}" value="{{ $icon }}" {{ $icon == $achievement->picture ? 'selected' : '' }}>  Icono {{ $counter }}  </option>
 																	@endforeach
