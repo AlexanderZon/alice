@@ -760,6 +760,92 @@
 
 	});
 
+	################## ACHIEVEMENTS ##################
+
+	Event::listen('notification.achievement_earned', function($user, $achievement){
+
+			$notification = new Notification();
+			$notification->user_id = $user->id;
+			$notification->notificationable_id = $achievement->id;
+			$notification->notificationable_type = 'Achievement';
+			$notification->icon = 'fa-trophy';
+			$notification->badge = 'bg-purple';
+			$notification->picture = $achievement->picture;
+			$notification->route = '/'.$user->username.'?section=achievements';
+			$notification->title = 'Nueva Insignia en Tu Perfil';
+			$notification->description = ' Has ganado la insignia "'.$achievement->title.'"';
+			$notification->status = 'fired';
+			$notification->save();
+
+	});
+
+	Event::listen('achievement.comments', function($user){
+
+		$courses = $user->historylearning;
+
+		$comments = 0;
+
+		foreach($courses as $course):
+
+			$comments += count($course->discussionsInLessonsOf($user));
+			$comments += count($course->discussionsInDiscussionsOf($user));
+
+		endforeach;
+
+		$break_point = Achievement::numberBreakingPoint($comments);
+
+		if($achievement = $user->achievementType('comments')):
+			if($break_point > $achievement->value):
+				if($new_achievement = Achievement::getAchievement('comments', $break_point)):
+					$user->achievements()->detach($achievement->id);
+					$user->achievements()->attach($new_achievement->id);
+					Event::fire('notification.achievement_earned', array($user, $new_achievement));
+				endif;
+			endif;
+		else:
+			if($new_achievement = Achievement::getAchievement('comments', $break_point)):
+				$user->achievements()->attach($new_achievement->id);
+				Event::fire('notification.achievement_earned', array($user, $new_achievement));
+			endif;
+		endif;
+
+		return true;
+
+	});
+
+	Event::listen('achievement.likes', function($user){
+
+		$courses = $user->historylearning;
+
+		$likes = 0;
+
+		foreach($courses as $course):
+
+			$likes += $course->discussionsInLessonsThumbsupsOf($user);
+
+		endforeach;
+
+		$break_point = Achievement::numberBreakingPoint($likes);
+
+		if($achievement = $user->achievementType('likes')):
+			if($break_point > $achievement->value):
+				if($new_achievement = Achievement::getAchievement('likes', $break_point)):
+					$user->achievements()->detach($achievement->id);
+					$user->achievements()->attach($new_achievement->id);
+					Event::fire('notification.achievement_earned', array($user, $new_achievement));
+				endif;
+			endif;
+		else:
+			if($new_achievement = Achievement::getAchievement('likes', $break_point)):
+				$user->achievements()->attach($new_achievement->id);
+				Event::fire('notification.achievement_earned', array($user, $new_achievement));
+			endif;
+		endif;
+
+		return true;
+
+	});
+
 	//Teachers
 
 	// 1023-1327-2857-0284-8569-7626 Adobe AfterEffects CC 

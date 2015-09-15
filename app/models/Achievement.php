@@ -15,7 +15,7 @@ class Achievement extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
-   	public static $number = array(
+   	public static $numbers = array(
       5,    # bronze
       10,   # bronze
       25,   # bronze
@@ -26,7 +26,7 @@ class Achievement extends \Eloquent {
       1000, # diamond
    		);
 
-    public static $percentage = array(
+    public static $percentages = array(
       70,   # bronze
       75,   # bronze
       80,   # bronze
@@ -45,6 +45,36 @@ class Achievement extends \Eloquent {
     public function users(){
 
     	return $this->belongsToMany('User', 'user_achievements', 'id_user', 'id_achievement');
+
+    }
+
+    public static function numberBreakingPoint($value){
+
+      $tmp = null; 
+
+      foreach(self::$numbers as $number):
+        if($value >= $number) $tmp = $number;
+      endforeach;
+
+      return $tmp;
+
+    }
+
+    public static function percentageBreakingPoint($value){
+
+      $tmp = null; 
+
+      foreach(self::$percentages as $percentage):
+        if($value >= $percentage) $tmp = $percentage;
+      endforeach;
+
+      return $tmp;
+
+    }
+
+    public static function getAchievement($type, $value){
+
+      return self::where('name','=',$type)->where('value','=',$value)->first();
 
     }
 

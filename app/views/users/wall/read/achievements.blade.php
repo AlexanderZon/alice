@@ -15,7 +15,7 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="portlet-title">
-						<h4 class="profile-usertitle-name">Premiaciones por Curso
+						<h4 class="profile-usertitle-name">Insignias
 							<!--
 							<a href="javascript:;" class="btn blue-madison pull-right tooltips students-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
 								<i class="fa fa-arrow-left"></i>
@@ -23,6 +23,41 @@
 						</h4>
 					</div>
 					<div class="row">&nbsp;</div>
+					<div class="portlet-body form students" >
+				
+						<!-- BEGIN FILTER -->
+						<div class="row mix-grid">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<?php $achievements = $user->achievements; ?>
+										@if($achievements->count() > 0)
+											@foreach($achievements as $achievement)
+												<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4" style="padding:0px; padding-right: 5px">
+													<div class="mask-circle tooltips" data-original-title="{{$achievement->title}}">
+														<img src="{{ $achievement->picture }}" alt="" class="img-responsive" style="border-radius:50%; max-width:200px" title="{{ $achievement->title }}">
+													</div>
+												</div>
+											@endforeach
+										@else
+											<div class="col-md-12">
+												<h4>No tiene Aún</h4>
+											</div>
+										@endif
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- END FILTER -->
+					</div>
+					<div class="portlet-title">
+						<h4 class="profile-usertitle-name">Premiaciones por Curso
+							<!--
+							<a href="javascript:;" class="btn blue-madison pull-right tooltips students-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
+								<i class="fa fa-arrow-left"></i>
+							</a>-->
+						</h4>
+					</div>
 					<div class="row">&nbsp;</div>
 					<div class="portlet-body form students" >
 				

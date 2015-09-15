@@ -18,8 +18,10 @@ class CreateAchievementsTable extends Migration {
 			$table->string('name');
 			$table->string('title');
 			$table->text('description');
+			$table->integer('value');
 			$table->string('picture');
 			$table->string('status');
+			$table->string('type');
 			$table->timestamps();
 			$table->softDeletes();
 		});

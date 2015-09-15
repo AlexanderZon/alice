@@ -153,10 +153,12 @@ class ReadController extends \Students\Courses\ReadController {
 		if($parent):
 
 			\Event::fire('notification.discussions_reply_comment', array(Auth::user(), $discussion, $comment, $parent));
+			\Event::fire('achievement.comments', array(Auth::user()));
 
 		else:
 
 			\Event::fire('notification.discussions_write_comment', array(Auth::user(), $discussion, $comment));
+			\Event::fire('achievement.comments', array(Auth::user()));
 
 		endif;
 
@@ -242,6 +244,7 @@ class ReadController extends \Students\Courses\ReadController {
 			$thumbsup->save();
 			
 			\Event::fire('notification.discussions_like_comment', array(Auth::user(), $comment));
+			\Event::fire('achievement.likes', array($comment->author));
 
 		endif;
 

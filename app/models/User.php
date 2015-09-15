@@ -125,6 +125,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
+	public function achievementType( $type ){
+
+		foreach($this->achievements as $achievement):
+			if($achievement->name == $type) return $achievement;
+		endforeach;
+
+		return false;
+		
+	}
+
 	public function courseAchievements(){
 
 		return $this->belongsToMany('CourseAchievement','user_course_achievements');

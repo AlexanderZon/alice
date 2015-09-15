@@ -32,16 +32,16 @@
 									<h3><i class="fa fa-book"></i> Lecciones participadas: {{ $statistics['lessons_viewed'] }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
-									<h3><i class="fa fa-comments"></i> Comentarios en lecciones: {{ count($statistics['lessons_comments']) }}</h3>
+									<h3><i class="fa fa-comments"></i> Comentarios en lecciones: {{ $statistics['lessons_comments'] }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
-									<h3><i class="fa fa-comments"></i> Comentarios en discusiones: {{ count($statistics['discussion_comments']) }}</h3>
+									<h3><i class="fa fa-comments"></i> Comentarios en discusiones: {{ $statistics['discussion_comments'] }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
-									<h3><i class="fa fa-file"></i> Archivos subidos: {{ count($statistics['files_uploaded']) }}</h3>
+									<h3><i class="fa fa-file"></i> Archivos subidos: {{ $statistics['files_uploaded'] }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
-									<h3><i class="fa fa-flask"></i> Actividades Realizadas: {{ count($statistics['activities_tested']) }}</h3>
+									<h3><i class="fa fa-flask"></i> Actividades Realizadas: {{ $statistics['activities_tested'] }}</h3>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
 									<h3><i class="fa fa-lightbulb-o"></i> Promedio: {{ $statistics['average'] }}</h3>
