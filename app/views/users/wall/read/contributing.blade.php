@@ -108,6 +108,13 @@
 		<!-- END PORTLET -->
 	</div>
 </div>		
+
+<script type="text/javascript">
+	
+	window.history.pushState("", "", '/{{ $user->username }}?section=contributing');
+		document.title = 'Alice | {{ $user->username }} | Contribuyendo';
+
+</script>
 	
 <script type="text/javascript">
 	Metronic.init();

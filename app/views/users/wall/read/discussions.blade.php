@@ -171,6 +171,13 @@
 	</div>
 </div>
 
+<script type="text/javascript">
+	
+	window.history.pushState("", "", '/{{ $user->username }}?section=discussions');
+		document.title = 'Alice | {{ $user->username }} | Discusiones';
+
+</script>
+
 <script type="text/javascript" src="/assets/global/plugins/moment/moment.conf.js"></script>
 	
 <script type="text/javascript">

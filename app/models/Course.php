@@ -389,6 +389,17 @@ class Course extends \Eloquent {
                 endforeach;
             endif;
         endforeach;
+        
+        if($this->evaluations->count() > 0 ):
+            foreach($this->evaluations as $evaluation):
+                $tmp = $evaluation->testsOf( $user );
+                if(count($tmp) > 0):
+                    foreach($tmp as $test):
+                        $points += $test->percentage; $counter++;
+                    endforeach;
+                endif;
+            endforeach;
+        endif;
 
         if($counter > 0 ):
 

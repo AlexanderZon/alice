@@ -110,6 +110,8 @@ class ReadController extends \Students\Courses\ReadController {
 			$user_lesson->save();
 		endif;
 
+		\Event::fire('achievement.lessons', array(Auth::user()));
+
 		self::addArgument('module', $lesson->module);
 
 		self::addArgument('lesson', $lesson);

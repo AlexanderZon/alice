@@ -155,7 +155,12 @@
 	</div>
 </div>
 
+<script type="text/javascript">
+	
+	window.history.pushState("", "", '/{{ $user->username }}?section=followers');
+		document.title = 'Alice | {{ $user->username }} | Seguidores';
 
+</script>
 
 <!--<script src="/assets/admin/pages/scripts/portfolio.js"></script>
 <script>

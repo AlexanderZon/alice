@@ -575,32 +575,29 @@
 		                viewMessage();
 		            } else if (Metronic.getURLParameter("section") != null) {
 		            	switch(Metronic.getURLParameter("section")){
-		            		case 'lesson':
-		        				initWall($('.lessons-btn'), 'lessons');
-		        				break;
-		            		case 'lessons':
-		        				initWall($('.lessons-btn'), 'lessons');
-		        				break;
 		            		case 'general':
 		        				initWall($('.general-btn'), 'general');
 		        				break;
-		            		case 'students':
-		        				initWall($('.students-btn'), 'students');
+		            		case 'learning':
+		        				initWall($('.learning-btn'), 'learning');
 		        				break;
-		            		case 'discussions':
-		        				initWall($('.discussions-btn'), 'discussions');
+		            		case 'teaching':
+		        				initWall($('.teaching-btn'), 'teaching');
 		        				break;
-		            		case 'inscriptions':
-		        				initWall($('.inscriptions-btn'), 'inscriptions');
+		            		case 'contributing':
+		        				initWall($('.contributing-btn'), 'contributing');
 		        				break;
 		            		case 'achievements':
 		        				initWall($('.achievements-btn'), 'achievements');
 		        				break;
-		            		case 'contributors':
-		        				initWall($('.contributors-btn'), 'contributors');
-		        				break;
 		            		case 'statistics':
 		        				initWall($('.statistics-btn'), 'statistics');
+		        				break;
+		            		case 'followers':
+		        				initWall($('.followers-btn'), 'followers');
+		        				break;
+		            		case 'following':
+		        				initWall($('.following-btn'), 'following');
 		        				break;
 		        			default:
 		        				initWall($('.general-btn'), 'general');

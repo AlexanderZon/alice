@@ -846,6 +846,105 @@
 
 	});
 
+	Event::listen('achievement.activities', function($user){
+
+		$courses = $user->historylearning;
+
+		$activities = 0;
+
+		foreach($courses as $course):
+
+			$activities += count($course->activitiesOf($user));
+
+		endforeach;
+
+		$break_point = Achievement::numberBreakingPoint($activities);
+
+		if($achievement = $user->achievementType('activities')):
+			if($break_point > $achievement->value):
+				if($new_achievement = Achievement::getAchievement('activities', $break_point)):
+					$user->achievements()->detach($achievement->id);
+					$user->achievements()->attach($new_achievement->id);
+					Event::fire('notification.achievement_earned', array($user, $new_achievement));
+				endif;
+			endif;
+		else:
+			if($new_achievement = Achievement::getAchievement('activities', $break_point)):
+				$user->achievements()->attach($new_achievement->id);
+				Event::fire('notification.achievement_earned', array($user, $new_achievement));
+			endif;
+		endif;
+
+		return true;
+
+	});
+
+	Event::listen('achievement.average', function($user){
+
+		$courses = $user->historylearning;
+
+		$average = 0;
+
+		foreach($courses as $course):
+
+			$average += $course->averageOf($user);
+
+		endforeach;
+
+		$break_point = Achievement::percentageBreakingPoint(round($average/$courses->count()));
+
+		if($achievement = $user->achievementType('average')):
+			if($break_point > $achievement->value):
+				if($new_achievement = Achievement::getAchievement('average', $break_point)):
+					$user->achievements()->detach($achievement->id);
+					$user->achievements()->attach($new_achievement->id);
+					Event::fire('notification.achievement_earned', array($user, $new_achievement));
+				endif;
+			endif;
+		else:
+			if($new_achievement = Achievement::getAchievement('average', $break_point)):
+				$user->achievements()->attach($new_achievement->id);
+				Event::fire('notification.achievement_earned', array($user, $new_achievement));
+			endif;
+		endif;
+
+		return true;
+
+	});
+
+	Event::listen('achievement.lessons', function($user){
+
+		$courses = $user->historylearning;
+
+		$lessons = 0;
+
+		foreach($courses as $course):
+
+			$lessons += $course->lessonParticipationOf($user);
+
+		endforeach;
+
+		$break_point = Achievement::numberBreakingPoint($lessons);
+
+		if($achievement = $user->achievementType('lessons')):
+			if($break_point > $achievement->value):
+				if($new_achievement = Achievement::getAchievement('lessons', $break_point)):
+					$user->achievements()->detach($achievement->id);
+					$user->achievements()->attach($new_achievement->id);
+					Event::fire('notification.achievement_earned', array($user, $new_achievement));
+				endif;
+			endif;
+		else:
+			if($new_achievement = Achievement::getAchievement('lessons', $break_point)):
+				$user->achievements()->attach($new_achievement->id);
+				Event::fire('notification.achievement_earned', array($user, $new_achievement));
+			endif;
+		endif;
+
+		return true;
+
+	});
+
 	//Teachers
 
 	// 1023-1327-2857-0284-8569-7626 Adobe AfterEffects CC 

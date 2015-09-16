@@ -150,6 +150,9 @@ class ReadController extends \Students\Courses\ReadController {
 		$test->percentage = Input::get('percentage');
 		$test->save();
 
+		\Event::fire('achievement.activities', array(Auth::user()));
+		\Event::fire('achievement.average', array(Auth::user()));
+
 		return Response::json($test);
 
 	}

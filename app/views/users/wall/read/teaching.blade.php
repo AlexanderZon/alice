@@ -107,7 +107,14 @@
 				
 		<!-- END PORTLET -->
 	</div>
-</div>		
+</div>	
+
+<script type="text/javascript">
+	
+	window.history.pushState("", "", '/{{ $user->username }}?section=teaching');
+		document.title = 'Alice | {{ $user->username }} | Enseñando';
+
+</script>	
 	
 <script type="text/javascript">
 	Metronic.init();
