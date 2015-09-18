@@ -77,8 +77,8 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$course = Course::find(Hashids::decode($course_id));
 		$course->title = Input::get('title');
 		$course->description = Input::get('description');
-		if(Input::file('main_picture') != null) $course->main_picture = Course::uploadMainPicture(Input::file('main_picture'), $course->name);
-		if(Input::file('cover_picture') != null) $course->cover_picture = Course::uploadCoverPicture(Input::file('cover_picture'), $course->name);
+		if(Input::file('main_picture') != null) $course->main_picture = Course::uploadMainPicture(Input::file('main_picture'), $course->name); \Event::fire('notification.course_image', array($course));
+		if(Input::file('cover_picture') != null) $course->cover_picture = Course::uploadCoverPicture(Input::file('cover_picture'), $course->name); \Event::fire('notification.course_cover', array($course));
 		$course->save();
 
 		self::addArgument('hashid', $course_id);

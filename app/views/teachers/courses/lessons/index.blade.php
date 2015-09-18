@@ -79,7 +79,7 @@
 											<div class="timeline-body">
 												<div class="timeline-footer">
 													<a href="javascript:;" class="nav-link module-edit">
-														<h2>{{ $module->title }}</h2>
+														<h2>{{ $module->title }} {{ $module->status == 'inactive' ? '(inactivo)' : '' }}</h2>
 													</a>
 													@if($module->lessons->count() == 0)
 														<a href="javascript:;" class="btn red pull-right tooltips module-delete" data-original-title="Eliminar Módulo">

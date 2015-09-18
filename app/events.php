@@ -760,6 +760,135 @@
 
 	});
 
+	Event::listen('notification.publish_lesson', function($teacher, $lesson){
+
+		$course = $lesson->module->course;
+
+		foreach($course->students as $student):
+
+			$notification = new Notification();
+			$notification->user_id = $student->id;
+			$notification->notificationable_id = $lesson->id;
+			$notification->notificationable_type = 'Lesson';
+			$notification->icon = 'fa-book';
+			$notification->badge = 'bg-yellow';
+			$notification->picture = $course->main_picture;
+			$notification->route = '/curso/'.$course->name.'?section=lessons&action=viewlesson&type=post&lesson_id='.Hashids::encode($lesson->id);
+			$notification->title = 'Nueva Lección Disponible';
+			$notification->description = 'La lección "'.$lesson->title.'" del curso '.$course->title.' ya está disponible.';
+			$notification->save();
+
+		endforeach;
+
+	});
+
+
+	Event::listen('notification.publish_module', function($module){
+
+		$course = $module->course;
+
+		foreach($course->students as $student):
+
+			$notification = new Notification();
+			$notification->user_id = $student->id;
+			$notification->notificationable_id = $module->id;
+			$notification->notificationable_type = 'Module';
+			$notification->icon = 'fa-cube';
+			$notification->badge = 'bg-yellow';
+			$notification->picture = $course->main_picture;
+			$notification->route = '/curso/'.$course->name.'?section=lessons';
+			$notification->title = 'Nuevo Módulo Disponible';
+			$notification->description = 'El Módulo "'.$module->title.'" del curso '.$course->title.' ya está disponible.';
+			$notification->save();
+
+		endforeach;
+
+	});
+
+	Event::listen('notification.update_lesson', function($teacher, $lesson){
+
+		$course = $lesson->module->course;
+
+		foreach($course->students as $student):
+
+			$notification = new Notification();
+			$notification->user_id = $student->id;
+			$notification->notificationable_id = $lesson->id;
+			$notification->notificationable_type = 'Lesson';
+			$notification->icon = 'fa-book';
+			$notification->badge = 'bg-blue';
+			$notification->picture = $course->main_picture;
+			$notification->route = '/curso/'.$course->name.'?section=lessons&action=viewlesson&type=post&lesson_id='.Hashids::encode($lesson->id);
+			$notification->title = 'Contenido Nuevo en Lección';
+			$notification->description = 'La lección "'.$lesson->title.'" del curso '.$course->title.' tiene nuevo contenido.';
+			$notification->save();
+
+		endforeach;
+
+	});
+
+	Event::listen('notification.course_image', function($course){
+
+		foreach($course->students as $student):
+
+			$notification = new Notification();
+			$notification->user_id = $student->id;
+			$notification->notificationable_id = $course->id;
+			$notification->notificationable_type = 'Course';
+			$notification->icon = 'fa-file-image-o';
+			$notification->badge = 'bg-green-haze';
+			$notification->picture = $course->main_picture;
+			$notification->route = '/curso/'.$course->name.'?section=general';
+			$notification->title = 'Nueva Imagen en ' . $course->title;
+			$notification->description = 'El Curso ' . $course->title . ' ha cambiado su imagen principal.';
+			$notification->save();
+
+		endforeach;
+
+	});
+
+	Event::listen('notification.course_cover', function($course){
+
+		foreach($course->students as $student):
+
+			$notification = new Notification();
+			$notification->user_id = $student->id;
+			$notification->notificationable_id = $course->id;
+			$notification->notificationable_type = 'Course';
+			$notification->icon = 'fa-file-image-o';
+			$notification->badge = 'bg-green-haze';
+			$notification->picture = $course->main_picture;
+			$notification->route = '/curso/'.$course->name.'?section=general';
+			$notification->title = 'Nueva Portada en ' . $course->title;
+			$notification->description = 'El Curso ' . $course->title . ' ha cambiado su imagen de Portada.';
+			$notification->save();
+
+		endforeach;
+
+	});
+
+	Event::listen('notification.lesson_upload_files', function($lesson){
+
+		$course = $lesson->module->course;
+
+		foreach($course->students as $student):
+
+			$notification = new Notification();
+			$notification->user_id = $student->id;
+			$notification->notificationable_id = $course->id;
+			$notification->notificationable_type = 'Course';
+			$notification->icon = 'fa-download';
+			$notification->badge = 'bg-green-haze';
+			$notification->picture = $course->main_picture;
+			$notification->route = '/curso/'.$course->name.'?section=general';
+			$notification->title = 'Nuevos Archivos Descargavles ';
+			$notification->description = 'Se ha subido nuevo contenido a la Lección ' . $lesson->title . '.';
+			$notification->save();
+
+		endforeach;
+
+	});
+
 	################## ACHIEVEMENTS ##################
 
 	Event::listen('notification.achievement_earned', function($user, $achievement){

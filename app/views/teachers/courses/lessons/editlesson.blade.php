@@ -70,6 +70,7 @@
 											</div>
 										</div>
 									</div>
+									<!--
 									@if($module->lessons->count() > 1)
 										<div class="row">
 											<div class="col-md-12">
@@ -94,6 +95,7 @@
 											</div>
 										</div>
 									@endif
+									--!>
 									<h3 class="form-section">Contenido</h3>
 									<!--/row-->
 									<div class="row">

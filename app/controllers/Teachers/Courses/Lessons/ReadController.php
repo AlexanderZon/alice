@@ -160,7 +160,10 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$module->name = Module::setPermalink(Input::get('title'));
 		$module->date_start = date('Y-m-d', strtotime(str_replace('/','-',strstr(Input::get('daterange'),' - ', true))));
 		$module->date_end = date('Y-m-d', strtotime(str_replace('/','-',str_replace(' - ','',strstr(Input::get('daterange'),' - ', false)))));
-		$module->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
+		if($module->status != Input::get('status')):
+			$module->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
+			if($module->status == 'active') \Event::fire('notification.publish_module', array($module));
+		endif;
 		$module->save();
 
 		$course = Course::find(Hashids::decode($course_id));
@@ -338,17 +341,23 @@ class ReadController extends \Teachers\Courses\ReadController {
 	public function postEditlesson( $course_id = '' )
 	{
 
+		$course = Course::find(Hashids::decode($course_id));
+		
 		$lesson = Lesson::find(Crypt::decrypt(Input::get('lesson_id')));
-		$lesson->previous_id = Input::get('previous_id') != null ? Input::get('previous_id') : 0;
+
+		if($lesson->status == 'active' AND $lesson->status == Input::get('status') AND $lesson->content != Input::get('content')) \Event::fire('notification.update_lesson', array(Auth::user(), $lesson));
+		// $lesson->previous_id = Input::get('previous_id') != null ? Input::get('previous_id') : 0;
 		$lesson->title = Input::get('title');
 		$lesson->approval_percentage = (Input::get('approval_percentage')/100);
 		$lesson->content = Input::get('content');
 		// $lesson->date_start = date('Y-m-d', strtotime(str_replace('/','-',strstr(Input::get('daterange'),' - ', true))));
 		// $lesson->date_end = date('Y-m-d', strtotime(str_replace('/','-',str_replace(' - ','',strstr(Input::get('daterange'),' - ', false)))));
-		$lesson->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
+		if($lesson->status != Input::get('status')):
+			$lesson->status = (Input::get('status') != null) ? Input::get('status') : 'inactive';
+			if($lesson->status == 'active') \Event::fire('notification.publish_lesson', array(Auth::user(), $lesson));
+		endif;
 		$lesson->save();
 
-		$course = Course::find(Hashids::decode($course_id));
 
 		self::addArgument('course', $course);
 
@@ -445,6 +454,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 		$lesson = Lesson::find(Hashids::decode(Input::get('lesson_id')));
 		$lesson->status = $lesson->status == 'active' ? 'inactive' : 'active';
 		$lesson->save();
+		if($lesson->status == 'active') \Event::fire('notification.publish_lesson', array(Auth::user(), $lesson));
 
 		return Response::json(array('status' => $lesson->status));
 
