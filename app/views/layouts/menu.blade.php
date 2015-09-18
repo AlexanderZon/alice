@@ -105,9 +105,9 @@
 			<div class="page-top">
 				<!-- BEGIN HEADER SEARCH BOX -->
 				<!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-				<form class="search-form" action="/" method="post">
+				<form class="search-form" action="/search" method="get">
 					<div class="input-group">
-						<input type="text" class="form-control input-sm" placeholder="Buscar..." name="query">
+						<input type="text" class="form-control input-sm" placeholder="Buscar..." name="q">
 						<span class="input-group-btn">
 						<a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a>
 						</span>
