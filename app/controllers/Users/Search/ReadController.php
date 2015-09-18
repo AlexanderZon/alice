@@ -8,7 +8,7 @@ use \Input as Input;
 use \Response as Response;
 
 class ReadController extends \BaseController {
-	
+
 	public $deleted_words = array(
 		'a',
 		'e',
@@ -65,13 +65,13 @@ class ReadController extends \BaseController {
 		$quest = Input::get('q');
 
 		$results = array(
-			/*'courses' => $this->courses( $quest ),
-			'lessons' => $this->lessons( $quest ),
-			'students' => $this->users( $quest , $students_role),*/
+			'courses' => $this->coursesEngine( $quest ),
+			'lessons' => $this->lessonsEngine( $quest ),
+			'students' => $this->usersEngine( $quest , $students_role),
 			'teachers' => $this->usersEngine( $quest, $teachers_role),
 			);
 
-		return Response::json($results);
+		dd($results);
 
 		self::addArgument('results', $results);
 
@@ -79,35 +79,7 @@ class ReadController extends \BaseController {
 
 	}
 
-	public function courses( $quest ){
-
-		$results = Course::whereNested(function($query) use($quest){
-
-			$query->where('title', 'LIKE', '%'.$quest.'%');
-			$query->where('name', 'LIKE', '%'.$quest.'%');
-			$query->where('description', 'LIKE', '%'.$quest.'%');
-
-		})->select(array( 'id' ))
-		  ->get();
-
-		return $results;
-
-	}
-
-	public function lessons( $quest ){
-
-		$results = Lesson::whereNested(function($query) use($quest){
-
-			$query->where('title', 'LIKE', '%'.$quest.'%');
-			$query->where('name', 'LIKE', '%'.$quest.'%');
-			$query->where('content', 'LIKE', '%'.$quest.'%');
-
-		})->select(array( 'id' ))
-		  ->get();
-
-		return $results;
-
-	}
+	# USER SEARCH ENGINE
 
 	public function usersDisplayName( $quest, $role ){
 
@@ -228,7 +200,7 @@ class ReadController extends \BaseController {
 				$coincidences += count($this->multiexplode($pieces, $result->$field));
 			endforeach;
 			$weights[] = $coincidences;
-			$ids[] = $result->$primary_key;
+			$ids[] = $result->id;
 		endforeach;
 
 		//Ordenando arreglos por peso
@@ -236,61 +208,309 @@ class ReadController extends \BaseController {
 
 		$list = $this->arrayMergin($top_results, $ids);
 
-		$ins = $this->arrayToText($list, ',');
+
+		$ins = $this->modelToText($list, ',');
 
 		if($ins == '') $ins = '0';
 
-		return array(
-			'pieces' => $pieces,
-			'regexp' => $regexp,
-			'ins' => $ins
+		$results = User::whereNested(function($query) use($pieces, $regexp, $ins){
+
+			$query->whereRaw('id in ('.$ins.') ');
+
+		})
+			// ->select(array('id','display_name','first_name','last_name','username','email'))
+		  	->orderByRaw(\DB::raw("FIELD(id, ".$ins.")"))->get();
+
+		/*foreach( $results as $result ):
+			foreach($fields as $field):
+				$result->$field = str_replace(trim($quest), '<span style="background-color:#FFFF00">'.trim($quest).'</span>', $result->$field);
+				$result->$field = str_replace(mb_strtoupper(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtoupper($quest, 'UTF-8')).'</span>', $result->$field);
+				$result->$field = str_replace(mb_strtolower(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtolower($quest, 'UTF-8')).'</span>', $result->$field);
+				$result->$field = str_replace(mb_convert_case(trim($quest), MB_CASE_TITLE, 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_convert_case($quest, MB_CASE_TITLE, 'UTF-8')).'</span>', $result->$field);
+				foreach( $pieces as $piece ):
+					$result->$field	= str_replace($piece, ' <span style="background-color:#FFFF00">'.trim($piece).'</span> ', $result->$field);
+					$result->$field	= str_replace(mb_strtoupper($piece,'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtoupper($piece,'UTF-8')).'</span> ', $result->$field);
+					$result->$field	= str_replace(mb_strtolower($piece,'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtolower($piece,'UTF-8')).'</span> ', $result->$field);
+					$result->$field	= str_replace(mb_convert_case($piece, MB_CASE_TITLE, 'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_convert_case($piece, MB_CASE_TITLE, 'UTF-8')).'</span> ', $result->$field);
+				endforeach;
+			endforeach;
+		endforeach;*/
+
+		return $results;
+
+	}
+
+	# COURSES SEARCH ENGINE
+
+	public function coursesTitle( $quest ){
+
+		$results = Course::where('status','=','active')->whereNested(function($query) use($quest){
+
+			$query->where('title', 'LIKE', '%'.$quest.'%');
+
+		})->select(array( 'id' ))
+		  ->get();
+
+		return $results;
+
+	}
+
+	public function coursesName( $quest ){
+
+		$results = Course::where('status','=','active')->whereNested(function($query) use($quest){
+
+			$query->where('name', 'LIKE', '%'.$quest.'%');
+
+		})->select(array( 'id' ))
+		  ->get();
+
+		return $results;
+
+	}
+
+	public function coursesDescription( $quest ){
+
+		$results = Course::where('status','=','active')->whereNested(function($query) use($quest){
+
+			$query->where('description', 'LIKE', '%'.$quest.'%');
+
+		})->select(array( 'id' ))
+		  ->get();
+
+		return $results;
+
+	}
+
+	public function coursesEngine($quest){
+
+		$title_results = $this->coursesTitle($quest);
+		$name_results = $this->coursesName($quest);
+		$description_results = $this->coursesDescription($quest);
+
+		$top_results = $this->arrayMergin($title_results, $name_results);
+		$top_results = $this->arrayMergin($top_results, $description_results);
+
+		$pieces = strtolower(trim($quest));
+
+		$pieces = $this->explodePieces($pieces);
+
+		//Contruyendo Expresion regular a partir de las palabras de la busqueda
+		$regexp = $this->arrayToText($pieces, '|');
+
+		//Campo al cual se le hara la busqueda
+		$fields = array(
+			'title',
+			'name',
+			'description',
 			);
 
-		//Busqueda de registros ordenados por pesos
-		/*$results = ORGAssociates::whereNested(function($query) use($pieces, $regexp, $ins, $primary_key){
+		//Busqueda de coincidencias en el Modelo por expresion regular
+		$results = Course::where('status','=','active');
 
-			$query->whereRaw($primary_key.' in ('.$ins.') ');
+		foreach($fields as $field):
+			$results = $results->whereNested(function($query) use($field, $regexp){
 
-		})->select(array('id_asociado','nombre_completo','email', 'telefone_res','ddi_res','sexo','classificados_conteudo','classificados_imagem'))
-		  ->orderByRaw(\DB::raw("FIELD(".$primary_key.", ".$ins.")"))->paginate(2);
+				$query->whereRaw($field.' REGEXP "('.$regexp.')"');
 
+			});
+		endforeach;
+		
+		$results = $results->select(array('id'))
+			->get();
+
+		//Inicializacion de pesos e ids
+		$weights = array();
+		$ids = array();
+
+		//Llenando estructura de pesos
 		foreach( $results as $result ):
-			$result->nombre_completo = str_replace($quest, ' <span style="background-color:#FFFF00">'.trim($quest).'</span> ', $result->nombre_completo);
-			$result->email = str_replace($quest, ' <span style="background-color:#FFFF00">'.trim($quest).'</span> ', $result->email);
-			$result->classificados_conteudo = str_replace($quest, ' <span style="background-color:#FFFF00">'.trim($quest).'</span> ', $result->classificados_conteudo);
-			$result->classificados_conteudo = str_replace(mb_strtoupper($quest, 'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtoupper($quest, 'UTF-8')).'</span> ', $result->classificados_conteudo);
-			$result->classificados_conteudo = str_replace(mb_strtolower($quest, 'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtolower($quest, 'UTF-8')).'</span> ', $result->classificados_conteudo);
-			$result->classificados_conteudo= str_replace(mb_convert_case($quest, MB_CASE_TITLE, 'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_convert_case($quest, MB_CASE_TITLE, 'UTF-8')).'</span> ', $result->classificados_conteudo);
-			foreach( $pieces as $piece ):
-				$result->classificados_conteudo= str_replace($piece, ' <span style="background-color:#FFFF00">'.trim($piece).'</span> ', $result->classificados_conteudo);
-				$result->classificados_conteudo= str_replace(mb_strtoupper($piece,'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtoupper($piece,'UTF-8')).'</span> ', $result->classificados_conteudo);
-				$result->classificados_conteudo= str_replace(mb_strtolower($piece,'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtolower($piece,'UTF-8')).'</span> ', $result->classificados_conteudo);
-				$result->classificados_conteudo= str_replace(mb_convert_case($piece, MB_CASE_TITLE, 'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_convert_case($piece, MB_CASE_TITLE, 'UTF-8')).'</span> ', $result->classificados_conteudo);
-				//var_dump($result->classificados_conteudo);
-				//var_dump('<br>');
-				//var_dump($piece);
-				//var_dump('<br>');
-				//var_dump(strtoupper($piece));
-				//var_dump('<br>');
-				//var_dump(mb_strtoupper($piece,'UTF-8'));
-				//var_dump('<br>');
-				//var_dump(utf8_encode($piece));
-				//var_dump('<br>');
-				//var_dump(utf8_decode($piece));
-				//var_dump('<br>');
-				//var_dump('<br>');
+			$coincidences = 0;
+			foreach($fields as $field):
+				$coincidences += count($this->multiexplode($pieces, $result->$field));
 			endforeach;
+			$weights[] = $coincidences;
+			$ids[] = $result->id;
 		endforeach;
 
-		//Parametros para la vista
-		$args = array(
-			'results' => $results,
-			'weights' => $weights,
-			'list' => $list
+		//Ordenando arreglos por peso
+		array_multisort($weights, SORT_DESC, $ids );
+
+		$list = $this->arrayMergin($top_results, $ids);
+
+
+		$ins = $this->modelToText($list, ',');
+
+		if($ins == '') $ins = '0';
+
+		$results = Course::whereNested(function($query) use($pieces, $regexp, $ins){
+
+			$query->whereRaw('id in ('.$ins.') ');
+
+		})
+			// ->select(array('id','title','name','description'))
+			->orderByRaw(\DB::raw("FIELD(id, ".$ins.")"))->get();
+
+		/*foreach( $results as $result ):
+			foreach($fields as $field):
+				if($field == 'description'):
+					$result->summary = html_entity_decode(strip_tags( $result->description ));
+					$result->summary = str_replace(trim($quest), '<span style="background-color:#FFFF00">'.trim($quest).'</span>', $result->summary);
+					$result->summary = str_replace(mb_strtoupper(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtoupper($quest, 'UTF-8')).'</span>', $result->summary);
+					$result->summary = str_replace(mb_strtolower(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtolower($quest, 'UTF-8')).'</span>', $result->summary);
+					$result->summary = str_replace(mb_convert_case(trim($quest), MB_CASE_TITLE, 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_convert_case($quest, MB_CASE_TITLE, 'UTF-8')).'</span>', $result->summary);
+					$result->description = null;
+				else:
+					$result->$field = str_replace(trim($quest), '<span style="background-color:#FFFF00">'.trim($quest).'</span>', $result->$field);
+					$result->$field = str_replace(mb_strtoupper(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtoupper($quest, 'UTF-8')).'</span>', $result->$field);
+					$result->$field = str_replace(mb_strtolower(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtolower($quest, 'UTF-8')).'</span>', $result->$field);
+					$result->$field = str_replace(mb_convert_case(trim($quest), MB_CASE_TITLE, 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_convert_case($quest, MB_CASE_TITLE, 'UTF-8')).'</span>', $result->$field);
+				endif;
+				foreach( $pieces as $piece ):
+					$result->$field	= str_replace($piece, ' <span style="background-color:#FFFF00">'.trim($piece).'</span> ', $result->$field);
+					$result->$field	= str_replace(mb_strtoupper($piece,'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtoupper($piece,'UTF-8')).'</span> ', $result->$field);
+					$result->$field	= str_replace(mb_strtolower($piece,'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtolower($piece,'UTF-8')).'</span> ', $result->$field);
+					$result->$field	= str_replace(mb_convert_case($piece, MB_CASE_TITLE, 'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_convert_case($piece, MB_CASE_TITLE, 'UTF-8')).'</span> ', $result->$field);
+				endforeach;
+			endforeach;
+		endforeach;*/
+
+		return $results;
+
+	}
+
+	public function lessonsTitle( $quest ){
+
+		$results = Lesson::whereNested(function($query) use($quest){
+
+			$query->where('title', 'LIKE', '%'.$quest.'%');
+
+		})->select(array( 'id' ))
+		  ->get();
+
+		return $results;
+
+	}
+
+	public function lessonsName( $quest ){
+
+		$results = Lesson::whereNested(function($query) use($quest){
+
+			$query->where('name', 'LIKE', '%'.$quest.'%');
+
+		})->select(array( 'id' ))
+		  ->get();
+
+		return $results;
+
+	}
+
+	public function lessonsContent( $quest ){
+
+		$results = Lesson::whereNested(function($query) use($quest){
+
+			$query->where('content', 'LIKE', '%'.$quest.'%');
+
+		})->select(array( 'id' ))
+		  ->get();
+
+		return $results;
+
+	}
+
+	public function lessonsEngine($quest){
+
+		$title_results = $this->lessonsTitle($quest);
+		$name_results = $this->lessonsName($quest);
+		$content_results = $this->lessonsContent($quest);
+
+		$top_results = $this->arrayMergin($title_results, $name_results);
+		$top_results = $this->arrayMergin($top_results, $content_results);
+
+		$pieces = strtolower(trim($quest));
+
+		$pieces = $this->explodePieces($pieces);
+
+		//Contruyendo Expresion regular a partir de las palabras de la busqueda
+		$regexp = $this->arrayToText($pieces, '|');
+
+		//Campo al cual se le hara la busqueda
+		$fields = array(
+			'title',
+			'name',
+			'content',
 			);
 
-		//Construccion de vista con parametros ordenados
-		return $results;*/
+		//Busqueda de coincidencias en el Modelo por expresion regular
+		$results = Lesson::where('status','=','active');
+
+		foreach($fields as $field):
+			$results = $results->whereNested(function($query) use($field, $regexp){
+
+				$query->whereRaw($field.' REGEXP "('.$regexp.')"');
+
+			});
+		endforeach;
+		
+		$results = $results->select(array('id'))
+			->get();
+
+		//Inicializacion de pesos e ids
+		$weights = array();
+		$ids = array();
+
+		//Llenando estructura de pesos
+		foreach( $results as $result ):
+			$coincidences = 0;
+			foreach($fields as $field):
+				$coincidences += count($this->multiexplode($pieces, $result->$field));
+			endforeach;
+			$weights[] = $coincidences;
+			$ids[] = $result->id;
+		endforeach;
+
+		//Ordenando arreglos por peso
+		array_multisort($weights, SORT_DESC, $ids );
+
+		$list = $this->arrayMergin($top_results, $ids);
+
+
+		$ins = $this->modelToText($list, ',');
+
+		if($ins == '') $ins = '0';
+
+		$results = Lesson::whereNested(function($query) use($pieces, $regexp, $ins){
+
+			$query->whereRaw('id in ('.$ins.') ');
+
+		})
+			// ->select(array('id','title','name','content'))
+			->orderByRaw(\DB::raw("FIELD(id, ".$ins.")"))->get();
+
+		/*foreach( $results as $result ):
+			foreach($fields as $field):
+				if($field == 'content'):
+					$result->summary = html_entity_decode(strip_tags( $result->content ));
+					$result->summary = str_replace(trim($quest), '<span style="background-color:#FFFF00">'.trim($quest).'</span>', $result->summary);
+					$result->summary = str_replace(mb_strtoupper(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtoupper($quest, 'UTF-8')).'</span>', $result->summary);
+					$result->summary = str_replace(mb_strtolower(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtolower($quest, 'UTF-8')).'</span>', $result->summary);
+					$result->summary = str_replace(mb_convert_case(trim($quest), MB_CASE_TITLE, 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_convert_case($quest, MB_CASE_TITLE, 'UTF-8')).'</span>', $result->summary);
+					$result->content = null;
+				else:
+					$result->$field = str_replace(trim($quest), '<span style="background-color:#FFFF00">'.trim($quest).'</span>', $result->$field);
+					$result->$field = str_replace(mb_strtoupper(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtoupper($quest, 'UTF-8')).'</span>', $result->$field);
+					$result->$field = str_replace(mb_strtolower(trim($quest), 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_strtolower($quest, 'UTF-8')).'</span>', $result->$field);
+					$result->$field = str_replace(mb_convert_case(trim($quest), MB_CASE_TITLE, 'UTF-8'), '<span style="background-color:#FFFF00">'.trim(mb_convert_case($quest, MB_CASE_TITLE, 'UTF-8')).'</span>', $result->$field);
+				endif;
+				foreach( $pieces as $piece ):
+					$result->$field	= str_replace($piece, ' <span style="background-color:#FFFF00">'.trim($piece).'</span> ', $result->$field);
+					$result->$field	= str_replace(mb_strtoupper($piece,'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtoupper($piece,'UTF-8')).'</span> ', $result->$field);
+					$result->$field	= str_replace(mb_strtolower($piece,'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_strtolower($piece,'UTF-8')).'</span> ', $result->$field);
+					$result->$field	= str_replace(mb_convert_case($piece, MB_CASE_TITLE, 'UTF-8'), ' <span style="background-color:#FFFF00">'.trim(mb_convert_case($piece, MB_CASE_TITLE, 'UTF-8')).'</span> ', $result->$field);
+				endforeach;
+			endforeach;
+		endforeach;*/
+
+		return $results;
 
 	}
 
@@ -313,6 +533,22 @@ class ReadController extends \BaseController {
 			# code...
 			if($position++ > 0) $text .= $separator;
 			$text .= $element;
+		endforeach;
+
+		return $text;
+
+	}
+
+	public function modelToText($array, $separator){
+
+		$text = '';
+		$position = 0;
+
+		//Contruyendo expresion regular a partir de los ids ordenados para hacer busqueda ordenada
+		foreach ($array as $element) :
+			# code...
+			if($position++ > 0) $text .= $separator;
+			$text .= $element->id;
 		endforeach;
 
 		return $text;
