@@ -517,10 +517,10 @@
 									<a href="/{{ Auth::user()->username }}">
 									<i class="icon-user"></i> Mi Perfil </a>
 								</li>
-								<li>
+								<!-- <li>
 									<a href="/my/calendar">
 									<i class="icon-calendar"></i> Mi Calendario </a>
-								</li>
+								</li> -->
 								<li>
 									<a href="/messages">
 									<i class="icon-envelope-open"></i> Mi Buzón 

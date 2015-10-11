@@ -74,7 +74,7 @@
 	</form>
 	<!-- END FORGOT PASSWORD FORM -->
 	<form class="register-form" action="{{ $route }}/signup" method="post">
-		<h3>Registro</h3>
+		<h3>Registro de Estudiantes</h3>
 		<p class="hint">
 			 Introduce tus datos Personales:
 		</p>

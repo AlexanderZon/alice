@@ -75,7 +75,20 @@
 					url: 'http://google.com/',
 					start: '2014-09-28'
 				}
-			]
+			],
+			eventClick: function(callEvent, jsEvent, view){
+				console.log('Click: ', callEvent);
+			}, 
+			eventDrop: function(event, delta, revertFunc) {
+
+		        // alert(event.title + " was dropped on " + event.start.format());
+		        console.log('EventDrop: ', event);
+
+		        if (!confirm("Are you sure about this change?")) {
+		            revertFunc();
+		        }
+
+		    }
 		});
 		
 	});

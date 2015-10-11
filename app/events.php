@@ -285,7 +285,7 @@
 
 		// Notificacion al que realizó el comentario
 
-		if($writer->id != $parent->user_id):
+		if($writer->id != $parent->user_id AND $parent->author->isStudent()):
 
 			$notification = new Notification();
 			$notification->user_id = $parent->user_id;
