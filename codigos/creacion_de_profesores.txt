@@ -1,0 +1,71 @@
+
+	public function postCreate()
+	{
+
+		if( !User::isValidUsername(Input::get('username')) ):
+
+			self::setWarning('coordinators_teachers_username_err', 'Error al agregar estudiante', 'El nombre de usuario ' . Input::get('username') . ' no es Válido, por favor ingrese uno diferente');
+
+			return self::go( 'create' );
+
+		elseif( User::hasUsername(Input::get('username')) ):
+
+			self::setWarning('coordinators_teachers_username_err', 'Error al agregar profesor', 'El profesor ' . Input::get('username') . ' ya existe, por favor ingrese uno diferente');
+
+			return self::go( 'create' );
+
+		elseif( User::hasEmail(Input::get('email')) ):
+
+			self::setWarning('coordinators_teachers_email_err', 'Error al agregar profesor', 'El correo ' . Input::get('email') . ' ya existe, por favor ingrese uno diferente');
+
+			return self::go( 'create' );
+
+		elseif( strlen(Input::get('password_1')) < 6 ):
+
+			self::setWarning('coordinators_teachers_password_err', 'Error al agregar profesor', 'La contraseña debe contener más de 5 caracteres');
+
+			return self::go( 'create' );
+
+		elseif( Input::get('password_1') != Input::get('password_2')):
+
+			self::setWarning('coordinators_teachers_password_err', 'Error al agregar profesor', 'Las contraseñas deben ser iguales');
+
+			return self::go( 'create' );
+
+		else:
+
+			$role = Role::getByName( 'teacher' );
+
+			$teacher = new User();
+			$teacher->first_name = Input::get('first_name');
+			$teacher->last_name = Input::get('last_name');
+			$teacher->username = Input::get('username');
+			$teacher->display_name = Input::get('display_name') != '' ? Input::get('display_name') : Input::get('first_name').' '.Input::get('last_name');
+			$teacher->email = Input::get('email');
+			$teacher->password = Hash::make(Input::get('password_1'));
+			$teacher->role_id = $role->id;
+			$teacher->status = 'active';
+			
+			if( $teacher->save() ):
+
+				$profile = new UserProfile();
+				$profile->user_id = $teacher->id;
+				$profile->save();
+
+				\Event::fire('notification.new_teacher', array($teacher));
+	
+				self::setSuccess('coordinators_teachers_create', 'Profesor Agregado', 'El profesor ' . $teacher->display_name . ' fue agregado exitósamente');
+
+				return self::go( 'index' );
+
+			else:
+
+				self::setDanger('coordinators_teachers_create_err', 'Error al agregar profesor', 'Hubo un error al agregar el profesor ' . $teacher->display_name);
+
+				return self::go( 'create' );
+
+			endif;
+
+		endif;
+
+	}

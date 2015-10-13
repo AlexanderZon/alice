@@ -1,0 +1,19 @@
+public function postDelete($id)
+	{
+		$course = Course::find(Hashids::decode($id));
+
+		if($course->delete()):
+
+			self::setSuccess('coordinators_courses_delete', 'Curso Eliminado', 'El curso ' . $course->title . ' fue eliminado exitósamente');
+
+			return self::go( 'inactive' );
+
+		else:
+
+			self::setDanger('coordinators_courses_delete_err', 'Error al eliminar curso', 'Hubo un error al eliminar el curso ' . $course->title);
+
+			return self::go( 'delete/'.Crypt::encrypt($course->id) );
+
+		endif;
+
+	}
