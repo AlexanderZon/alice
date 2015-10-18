@@ -284,11 +284,27 @@ class ReadController extends \Coordinators\ReadController {
 	public function getDelete($id)
 	{
 
-		self::addArgument('teacher', User::find( Hashids::decode($id) ));
+		$teacher = User::find( Hashids::decode($id) );
 
-		self::addArgument('roles', Role::all());
+		if($teacher->teaching):
 
-		return self::make('delete');
+			self::addArgument('teacher', $teacher);
+
+			self::addArgument('courses', $teacher->teaching);
+
+			self::addArgument('roles', Role::all());
+
+			return self::make('dont_delete');
+
+		else:
+
+			self::addArgument('teacher', $teacher);
+
+			self::addArgument('roles', Role::all());
+
+			return self::make('delete');
+
+		endif;
 	}
 
 	/**

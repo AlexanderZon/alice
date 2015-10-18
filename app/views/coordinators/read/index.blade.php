@@ -16,13 +16,13 @@
 					</div>
 					<div class="progress-info">
 						<div class="progress">
-							<span style="width: {{ count($active_teachers) > 0 ? count($all_teachers)*100/count($active_teachers) : '0' }}%;" class="progress-bar progress-bar-success green-sharp">
-							<span class="sr-only"><span class="currency">{{ count($active_teachers) > 0 ? round(count($all_teachers)*100/count($active_teachers)) : '0' }}</span> Activos</span>
+							<span style="width: {{ count($active_teachers) > 0 ? count($active_teachers)*100/count($all_teachers) : '0' }}%;" class="progress-bar progress-bar-success green-sharp">
+							<span class="sr-only"><span class="currency">{{ count($active_teachers) > 0 ? round(count($active_teachers)*100/count($all_teachers)) : '0' }}</span> Activos</span>
 							</span>
 						</div>
 						<div class="status">
 							<div class="status-title">porcentaje activo</div>
-							<div class="status-number">{{ count($active_teachers) > 0 ? round(count($all_teachers)*100/count($active_teachers)) : '0' }}%</div>
+							<div class="status-number">{{ count($active_teachers) > 0 ? round(count($active_teachers)*100/count($all_teachers)) : '0' }}%</div>
 						</div>
 					</div>
 				</div>
@@ -40,13 +40,13 @@
 					</div>
 					<div class="progress-info">
 						<div class="progress">
-							<span style="width: {{ count($active_students) > 0 ? round(count($all_students)*100/count($active_students)) : '0' }}%;" class="progress-bar progress-bar-success red-haze">
+							<span style="width: {{ count($active_students) > 0 ? round(count($active_students)*100/count($all_students)) : '0' }}%;" class="progress-bar progress-bar-success red-haze">
 							<span class="sr-only"></span>
 							</span>
 						</div>
 						<div class="status">
 							<div class="status-title">porcentaje activo</div>
-							<div class="status-number">{{ count($active_students) > 0 ? round(count($all_students)*100/count($active_students)) : '0' }}%</div>
+							<div class="status-number">{{ count($active_students) > 0 ? round(count($active_students)*100/count($all_students)) : '0' }}%</div>
 						</div>
 					</div>
 				</div>
@@ -64,13 +64,13 @@
 					</div>
 					<div class="progress-info">
 						<div class="progress">
-							<span style="width: {{ count($active_courses) > 0 ? round(count($all_courses)*100/count($active_courses)) : '0' }}%;" class="progress-bar progress-bar-success blue-sharp">
+							<span style="width: {{ count($active_courses) > 0 ? round(count($active_courses)*100/count($all_courses)) : '0' }}%;" class="progress-bar progress-bar-success blue-sharp">
 							<span class="sr-only">80% grow</span>
 							</span>
 						</div>
 						<div class="status">
 							<div class="status-title">en ejecución</div>
-							<div class="status-number">{{ count($active_courses) > 0 ? round(count($all_courses)*100/count($active_courses)) : '0' }}%</div>
+							<div class="status-number">{{ count($active_courses) > 0 ? round(count($active_courses)*100/count($all_courses)) : '0' }}%</div>
 						</div>
 					</div>
 				</div>
@@ -88,13 +88,13 @@
 					</div>
 					<div class="progress-info">
 						<div class="progress">
-							<span style="width: {{ count($active_discussions) > 0 ? round(count($all_discussions)*100/count($active_discussions)) : '0' }}%;" class="progress-bar progress-bar-success purple-soft">
+							<span style="width: {{ count($active_discussions) > 0 ? round(count($active_discussions)*100/count($all_discussions)) : '0' }}%;" class="progress-bar progress-bar-success purple-soft">
 							<span class="sr-only">56% change</span>
 							</span>
 						</div>
 						<div class="status">
 							<div class="status-title">ACTIVAS</div>
-							<div class="status-number">{{ count($active_discussions) > 0 ? round(count($all_discussions)*100/count($active_discussions)) : '0' }}%</div>
+							<div class="status-number">{{ count($active_discussions) > 0 ? round(count($active_discussions)*100/count($all_discussions)) : '0' }}%</div>
 						</div>
 					</div>
 				</div>

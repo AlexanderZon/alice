@@ -1317,7 +1317,7 @@
 	<!-- BEGIN FOOTER -->
 	<div class="page-footer">
 		<div class="page-footer-inner">
-			2014 © Magicmedia Inc. Todos los Derechos Reservados.
+			Copyright 2015. Todos los Derechos Reservados.
 		</div>
 		<div class="scroll-to-top">
 			<i class="icon-arrow-up"></i>

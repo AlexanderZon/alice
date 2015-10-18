@@ -123,7 +123,7 @@
 	</form>
 </div>
 <div class="copyright">
-	 2014 © Magicmedia Inc. Todos los Derechos Reservados.
+	Copyright 2015. Todos los Derechos Reservados.
 </div>
 <!-- END LOGIN -->
 @stop
