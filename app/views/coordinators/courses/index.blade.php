@@ -105,12 +105,12 @@
 									@if( $course->status == 'active' )
 										@if(Auth::user()->hasCap('coordinators_courses_get_show'))
 											&nbsp;&nbsp;
-											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+											<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
 										@endif
 									@elseif( $course->status == 'inactive' )
 										@if(Auth::user()->hasCap('coordinators_courses_get_show'))
 											&nbsp;&nbsp;
-											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+											<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
 										@endif
 										@if(Auth::user()->hasCap('coordinators_courses_get_update'))
 											&nbsp;&nbsp;

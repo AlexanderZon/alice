@@ -33,6 +33,8 @@ class ReadController extends \Coordinators\ReadController {
 
 		self::addSection('inactive', 'Inactivos');
 
+		self::addSection('show', 'Informacion del Curso');
+
 		self::$title = 'Cursos';
 
 		self::$description = 'Gestión de Cursos del Sistema';

@@ -99,12 +99,12 @@
 									@if( $student->status == 'active' )
 										@if(Auth::user()->hasCap('coordinators_students_get_show'))
 											&nbsp;&nbsp;
-											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Hashids::encode($student->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+											<a class="font-blue-steel tooltips" href="/{{ $student->username }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
 										@endif
 									@elseif( $student->status == 'inactive' )
 										@if(Auth::user()->hasCap('coordinators_students_get_show'))
 											&nbsp;&nbsp;
-											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Hashids::encode($student->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+											<a class="font-blue-steel tooltips" href="/{{ $student->username }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
 										@endif
 										@if(Auth::user()->hasCap('coordinators_students_get_update'))
 											&nbsp;&nbsp;

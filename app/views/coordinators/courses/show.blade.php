@@ -1,113 +1,108 @@
+@extends ('layouts.master')
+
+@section('toolbar')
+	
+	<div class="page-toolbar">
+		<!-- BEGIN THEME PANEL -->
+		<!-- <div class="btn-group btn-theme-panel">
+			@if(Auth::user()->hasCap('coordinators_students_get_inactive'))
+				<a href="{{ $route }}/inactive" class="btn tooltips" data-toggle="Visualizar Estudiantes Inactivos" data-container="body" data-placement="left" data-html="true"  data-original-title="Visualizar Estudiantes Inactivos"><i class="icon-ban"></i></a>
+			@endif
+			@if(Auth::user()->hasCap('coordinators_students_get_create'))
+				<a href="{{ $route }}/create" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo Estudiante"><i class="icon-plus"></i></a>
+			@endif
+		</div> -->
+		<div class="btn-group btn-theme-panel">
+			<a href="{{ $route }}" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Volver al Listado de Cursos"><i class="icon-arrow-left"></i></a>
+		</div>
+		<!-- END THEME PANEL -->
+	</div>
+
+@stop
+
+@section ("content")
+
 <div class="col-md-12">
 	<!-- BEGIN PROFILE SIDEBAR -->
-	<div class="profile-sidebar col-md-2" >
-		<!-- PORTLET MAIN -->
-		<div class="portlet light profile-sidebar-portlet">
-			<!-- SIDEBAR USERPIC -->
-			<div class="profile-userpic">
-				<img src="{{ $course->main_picture != '' ? $course->main_picture : Course::DEFAULT_MAIN_PICTURE }}" class="img-responsive" alt="">
-			</div>
-			<!-- END SIDEBAR USERPIC -->
-			<!-- SIDEBAR USER TITLE -->
-			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">
-					 {{ $course->title }}
-				</div>
-				<div class="profile-usertitle-job">
-					 {{ $course->name }}
-				</div>
-			</div>
-			<!-- END SIDEBAR USER TITLE -->
-			<!-- SIDEBAR BUTTONS -->
-			<div class="profile-userbuttons">
-				@if( Auth::user()->hasCap('coordinators_courses_get_update'))
-					<a href="{{ $route }}/update/{{ Hashids::encode($course->id) }}" type="button" class="btn btn-circle green-haze btn-sm">Editar</a>
-				@endif
-				@if( Auth::user()->hasCap('coordinators_courses_get_delete'))
-					<a href="{{ $route }}/delete/{{ Hashids::encode($course->id) }}" type="button" class="btn btn-circle btn-danger btn-sm">Eliminar</a>
-				@endif
-			</div>
-			<!-- END SIDEBAR BUTTONS -->
-			<!-- SIDEBAR MENU -->
-			<div class="profile-usermenu">
-				<ul class="nav">
-					<li class="active">
-						<a href="#">
-						<i class="icon-user"></i>
-						Datos Generales </a>
-					</li>
-					<li>
-						<a href="#">
-						<i class="icon-book-open"></i>
-						Cursos </a>
-					</li>
-					<li>
-						<a href="#" target="_blank">
-						<i class="icon-bar-chart"></i>
-						Estadisticas </a>
-					</li>
-					<li>
-						<a href="#">
-						<i class="icon-emoticon-smile"></i>
-						Estudiantes </a>
-					</li>
-				</ul>
-			</div>
-			<!-- END MENU -->
-		</div>
-		<!-- END PORTLET MAIN -->
+	<div class="col-md-12" >
 		<!-- PORTLET MAIN -->
 		<div class="portlet light">
-			<!-- STAT -->
-			<div class="row list-separated profile-stat">
-				<div class="col-md-4 col-sm-4 col-xs-6">
-					<div class="uppercase profile-stat-title">
-						 {{ count($course->students) }}
+			<div class="portlet-body">
+				<div class="row">
+					<div class="col-md-2">
+						<!-- SIDEBAR USERPIC -->
+						<div class="profile-userpic">
+							<img src="{{ $course->main_picture != '' ? $course->main_picture : Course::DEFAULT_MAIN_PICTURE }}" class="img-responsive" alt="">
+						</div>
+						<!-- END SIDEBAR USERPIC -->
+						<!-- SIDEBAR USER TITLE -->
+						<div class="profile-usertitle">
+							<div class="profile-usertitle-name">
+								 {{ $course->title }}
+							</div>
+							<div class="profile-usertitle-job">
+								 {{ $course->teacher->display_name }}
+							</div>
+						</div>
 					</div>
-					<div class="uppercase profile-stat-text">
-						 Estudiantes
+					<!-- END PORTLET MAIN -->
+					<!-- PORTLET MAIN -->
+					<div class="col-md-10">
+						<!-- STAT -->
+						<div class="row">
+							<div class="col-md-4 col-sm-4 col-xs-4">
+								<div class="uppercase profile-stat-title">
+									 {{ count($course->students) }}
+								</div>
+								<div class="uppercase profile-stat-text">
+									 Estudiantes
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-4 col-xs-4">
+								<div class="uppercase profile-stat-title">
+									 {{ count($course->discussions) }}
+								</div>
+								<div class="uppercase profile-stat-text">
+									 Discusiones
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-4 col-xs-4">
+								<div class="uppercase profile-stat-title">
+									 {{ count($course->lessons) }}
+								</div>
+								<div class="uppercase profile-stat-text">
+									 Lecciones
+								</div>
+							</div>
+						</div>
+
+						
+						<!-- END STAT -->
+						<!-- <div>
+							<h4 class="profile-desc-title">Descripción</h4>
+							<span class="profile-desc-text"> {{ substr(strip_tags($course->description),0,140) . "..." }} </span>
+							<div class="margin-top-20 profile-desc-link">
+								<i class="fa fa-globe"></i>
+								<a href="{{ $course->web }}">www.curso.edu.ve</a>
+							</div>
+							<div class="margin-top-20 profile-desc-link">
+								<i class="fa fa-twitter"></i>
+								<a href="{{ 'http://www.twitter.com/'.strstr('@', $course->twitter) }}">@cursove</a>
+							</div>
+							<div class="margin-top-20 profile-desc-link">
+								<i class="fa fa-facebook"></i>
+								<a href="{{ 'http://www.facebook.com/'.$course->facebook }}">cursove</a>
+							</div>
+						</div> -->
 					</div>
-				</div>
-				<div class="col-md-4 col-sm-4 col-xs-6">
-					<div class="uppercase profile-stat-title">
-						 {{ count($course->discussions) }}
-					</div>
-					<div class="uppercase profile-stat-text">
-						 Discusiones
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4 col-xs-6">
-					<div class="uppercase profile-stat-title">
-						 {{ count($course->lessons) }}
-					</div>
-					<div class="uppercase profile-stat-text">
-						 Lecciones
-					</div>
-				</div>
-			</div>
-			<!-- END STAT -->
-			<div>
-				<h4 class="profile-desc-title">Descripción</h4>
-				<span class="profile-desc-text"> {{ substr(strip_tags($course->description),0,140) . "..." }} </span>
-				<div class="margin-top-20 profile-desc-link">
-					<i class="fa fa-globe"></i>
-					<a href="{{ $course->web }}">www.curso.edu.ve</a>
-				</div>
-				<div class="margin-top-20 profile-desc-link">
-					<i class="fa fa-twitter"></i>
-					<a href="{{ 'http://www.twitter.com/'.strstr('@', $course->twitter) }}">@cursove</a>
-				</div>
-				<div class="margin-top-20 profile-desc-link">
-					<i class="fa fa-facebook"></i>
-					<a href="{{ 'http://www.facebook.com/'.$course->facebook }}">cursove</a>
+					<!-- END PORTLET MAIN -->
 				</div>
 			</div>
 		</div>
-		<!-- END PORTLET MAIN -->
 	</div>
 	<!-- END BEGIN PROFILE SIDEBAR -->
 	<!-- BEGIN PROFILE CONTENT -->
-	<div class="profile-content">
+	<div class="row">
 		<div class="row">
 			<div class="col-md-6">
 				<!-- BEGIN PORTLET -->
@@ -116,9 +111,9 @@
 						<div class="caption caption-md">
 							<i class="icon-bar-chart theme-font hide"></i>
 							<span class="caption-subject font-blue-madison bold uppercase">Rendimiento de Estudiantes</span>
-							<span class="caption-helper hide">weekly stats...</span>
+							<!-- <span class="caption-helper hide">weekly stats...</span> -->
 						</div>
-						<div class="actions">
+						<!-- <div class="actions">
 							<div class="btn-group btn-group-devided" data-toggle="buttons">
 								<label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
 								<input type="radio" name="options" class="toggle" id="option1">Hoy</label>
@@ -127,7 +122,7 @@
 								<label class="btn btn-transparent grey-salsa btn-circle btn-sm">
 								<input type="radio" name="options" class="toggle" id="option2">Mes</label>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="portlet-body">
 						<div class="row number-stats margin-bottom-30">
@@ -791,3 +786,5 @@
 	 	});
 	});
 </script>
+
+@stop
