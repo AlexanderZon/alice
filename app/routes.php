@@ -48,6 +48,11 @@ if(Auth::check()):
 		
 			# Routes for coordinator
 
+			Route::controller('/coordinators/courses/{course_id}/activities', '\Coordinators\Courses\Activities\ReadController');
+			Route::controller('/coordinators/courses/{course_id}/discussions', '\Coordinators\Courses\Discussions\ReadController');
+			Route::controller('/coordinators/courses/{course_id}/general', '\Coordinators\Courses\General\ReadController');
+			Route::controller('/coordinators/courses/{course_id}/lessons', '\Coordinators\Courses\Lessons\ReadController');
+			Route::controller('/coordinators/courses/{course_id}/students', '\Coordinators\Courses\Students\ReadController');
 			Route::controller('/coordinators/courses', '\Coordinators\Courses\ReadController');
 			Route::controller('/coordinators/students', '\Coordinators\Students\ReadController');
 			Route::controller('/coordinators/teachers', '\Coordinators\Teachers\ReadController');
