@@ -47,7 +47,7 @@
 									<div class="top-news">
 										<a href="javascript:;" class="btn red course-activities-new" data-type="rpsls">
 										<span>
-										Piedra, Papel, Tijeras, Iguana, Garra </span>
+										Piedra, Papel, Tijeras, Iguana, y Garra </span>
 										<em>Una pregunta y Cinco Posibles Respuestas</em>
 										<em>
 										<i class="fa fa-info"></i>
@@ -86,7 +86,7 @@
 									<div class="top-news">
 										<a href="javascript:;" class="btn yellow course-activities-new" data-type="hangman">
 										<span>
-										El nombre que dijo Carminy </span>
+										Krapula </span>
 										<em>Una pregunta y una respuesta</em>
 										<em>
 										<i class="fa fa-info"></i>
