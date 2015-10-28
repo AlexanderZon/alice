@@ -46,7 +46,7 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 |
 */
 
-/*App::error(function(\Illuminate\Encryption\DecryptException $exception)
+App::error(function(\Illuminate\Encryption\DecryptException $exception)
 {
     Log::error($exception);
 
@@ -63,7 +63,7 @@ App::error(function(\Symfony\Component\HttpKernel\Exception\NotFoundHttpExceptio
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
-});*/
+});
 
 /*
 |--------------------------------------------------------------------------
