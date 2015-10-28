@@ -128,8 +128,14 @@ class BaseController extends Controller implements BaseInterface{
 
 		if(!empty(self::$parameters)):
 			foreach(self::$parameters as $key => $value):
-				self::$route = str_replace('{'.$key.'}', $value, self::$route);
-				self::$route = str_replace('{'.$key.'?}', $value, self::$route);
+				try{
+					self::$route = str_replace('{'.$key.'}', $value, self::$route);
+					self::$route = str_replace('{'.$key.'?}', $value, self::$route);
+				}
+				catch(Exception $e){
+					Log::error($e);
+    				return View::make('security.auth.404');
+				}
 			endforeach;
 		endif;
 
@@ -139,8 +145,14 @@ class BaseController extends Controller implements BaseInterface{
 		
 		if(!empty(self::$parameters)):
 			foreach(self::$parameters as $key => $value):
-				self::$parent = str_replace('{'.$key.'}', $value, self::$parent);
-				self::$parent = str_replace('{'.$key.'?}', $value, self::$parent);
+				try{
+					self::$parent = str_replace('{'.$key.'}', $value, self::$parent);
+					self::$parent = str_replace('{'.$key.'?}', $value, self::$parent);
+				}
+				catch(Exception $e){
+					Log::error($e);
+    				return View::make('security.auth.404');
+				}
 			endforeach;
 		endif;
 
@@ -287,8 +299,14 @@ class BaseController extends Controller implements BaseInterface{
 			foreach(self::$parameters as $key => $value):
 				foreach (self::$breadcrumbs as $i => $breadcrumb):
 					# code...
-					self::$breadcrumbs[$i]['route'] = str_replace('{'.$key.'}', $value, self::$breadcrumbs[$i]['route']);
-					self::$breadcrumbs[$i]['route'] = str_replace('{'.$key.'?}', $value, self::$breadcrumbs[$i]['route']);
+					try{
+						self::$breadcrumbs[$i]['route'] = str_replace('{'.$key.'}', $value, self::$breadcrumbs[$i]['route']);
+						self::$breadcrumbs[$i]['route'] = str_replace('{'.$key.'?}', $value, self::$breadcrumbs[$i]['route']);
+					}
+					catch(Exception $e){
+						Log::error($e);
+	    				return View::make('security.auth.404');
+					}
 				endforeach;
 			endforeach;
 		endif;

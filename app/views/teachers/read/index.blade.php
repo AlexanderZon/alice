@@ -269,7 +269,7 @@
 												</div>
 												<div class="col-lg-10 col-md-8 blog-article">
 													<h3>
-													<a href="{{ $course->getRoute() }}">{{ $course->title }}</a>
+													<a href="{{ $route }}/courses/show/{{ Hashids::encode($course->id) }}">{{ $course->title }}</a>
 													</h3>
 													<p class="justify">
 														{{ $course->getSummary(2000) }}

@@ -107,7 +107,7 @@
 											<div class="row">
 												<div class="col-md-offset-3 col-md-9">
 													<button type="submit" class="btn green">Actualizar</button>
-													<a href="{{ $route }}" class="btn default">Volver</a>
+													<a href="/teachers/courses" class="btn default">Volver</a>
 												</div>
 											</div>
 										</div>

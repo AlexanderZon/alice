@@ -145,10 +145,10 @@ class ReadController extends \Coordinators\ReadController {
 
 			$teacher = User::find(Input::get('author_id'));
 
-			\Event::fire('notification.course_assigned', array($teacher, $course));
 			
 			if( $course->save() ):
 	
+				\Event::fire('notification.course_assigned', array($teacher, $course));
 				self::setSuccess('coordinators_courses_create', 'Curso Agregado', 'El curso ' . $course->title . ' fue agregado exitósamente');
 
 				return self::go( 'inactive' );
@@ -208,11 +208,6 @@ class ReadController extends \Coordinators\ReadController {
 			return self::go( 'create' );
 
 		else:
-			
-			if(Input::get('author_id') != $course->author_id):
-				$teacher = User::find(Input::get('author_id'));
-				\Event::fire('notification.course_assigned', array($teacher, $course));
-			endif;
 
 			$course->author_id = Input::get('author_id');
 			$course->title = Input::get('title');
@@ -222,6 +217,11 @@ class ReadController extends \Coordinators\ReadController {
 			$course->thumbnail_picture = Input::file('thumbnail_picture') != null ? Course::uploadThumbnailPicture( Input::file('thumbnail_picture'), $course->name ) : $course->thumbnail_picture;
 			
 			if( $course->save() ):
+				
+				if(Input::get('author_id') != $course->author_id):
+					$teacher = User::find(Input::get('author_id'));
+					\Event::fire('notification.course_assigned', array($teacher, $course));
+				endif;
 	
 				self::setSuccess('coordinators_courses_create', 'Curso Agregado', 'El curso ' . $course->title . ' fue actualizado exitósamente');
 

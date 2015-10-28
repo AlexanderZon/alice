@@ -82,7 +82,7 @@
 							<div class="tab-pane" id="tab_1_4">
 								<div class="row">&nbsp;</div>
 								<div class="row">
-									<div class="col-md-12 media">
+									<div class="col-md-12 media" data-comment="{{ Hashids::encode($discussion->id) }}">
 										<a class="pull-left" href="javascript:;">
 											<img class="todo-userpic" src="{{ $discussion_user->profile->getAvatar() }}" width="45px" height="45px">
 										</a>
@@ -414,7 +414,7 @@
 					data: like,
 					async: true,
 					success: function(data){
-						// console.log(data);
+						console.log(data);
 						var counter = parseInt(comment_like_element.children('.thumbsups-counter').html());
 						console.log(counter);
 						var thumbsup_color = (data.thumbsup) ? 'font-blue' : 'font-blue-chambray';

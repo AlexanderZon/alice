@@ -63,8 +63,8 @@ App::error(function(\Symfony\Component\HttpKernel\Exception\NotFoundHttpExceptio
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
-});
-*/
+});*/
+
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler

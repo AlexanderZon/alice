@@ -214,6 +214,7 @@ class AuthenticationController extends ReadController {
 
 				$profile = new \UserProfile();
 				$profile->user_id = $user->id;
+				$profile->born_date = date('Y-m-d H:m:i');
 				$profile->save();
 
 				\Event::fire('notification.new_student', array($user));

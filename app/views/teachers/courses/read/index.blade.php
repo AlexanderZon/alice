@@ -81,7 +81,13 @@
 												</div>
 												<div class="col-lg-10 col-md-8 blog-article">
 													<h3>
-													<a href="{{ $course->getRoute() }}">{{ $course->title }}</a>
+													@if($course->author_id == Auth::user()->id)
+														<a href="{{ $route }}/show/{{ Hashids::encode($course->id) }}">{{ $course->title }}</a>
+													@elseif($course->isContributor(Auth::user()))
+														<a href="/teachers/contributions/show/{{ Hashids::encode($course->id) }}">{{ $course->title }}</a>
+													@else
+														<a href="/curso/{{ $course->name }}">{{ $course->title }}</a>
+													@endif
 													</h3>
 													<p class="justify">
 														{{ $course->getSummary(2000) }}

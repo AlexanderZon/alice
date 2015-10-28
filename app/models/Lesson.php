@@ -174,7 +174,7 @@ class Lesson extends \Eloquent {
 
     public function getAvatar(){
 
-        $character = substr($this->title, 0, 1);
+        $character = strtolower(substr(BaseController::sanitizeString($this->title), 0, 1));
 
         $color = rand(0, count($this->defaults_avatar_colors)-1);
 

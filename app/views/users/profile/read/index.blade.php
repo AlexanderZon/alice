@@ -155,7 +155,7 @@
 										<div class="col-md-9">
 											<div class="input-icon right">
 												<i class="fa fa-map-marker"></i>
-												<input name="born_place" type="text" placeholder="Ingrese el Correo Electrónico" class="form-control"  value="{{ $profile->born_place }}">
+												<input name="born_place" type="text" placeholder="Ingrese la Fecha de Nacimiento" class="form-control"  value="{{ $profile->born_place }}">
 											</div>
 										</div>
 									</div>

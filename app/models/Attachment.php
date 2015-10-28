@@ -132,7 +132,7 @@ class Attachment extends \Eloquent {
                 break;
     		# PDF
     		case 'application/pdf':
-    			return $path.'PDF.png';
+    			return $path.'pdf.png';
     			break;
     		# Word
     		case 'application/msword':

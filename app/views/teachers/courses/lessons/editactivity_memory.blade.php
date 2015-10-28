@@ -49,7 +49,7 @@
 											<div class="form-group">
 												<label class="control-label col-md-5">Nombre de la Actividad</label>
 												<div class="col-md-7">
-													<input name="title" type="text" class="form-control" placeholder="Ingrese el nombre del Curso" value="{{ $evaluation->title }}" required>
+													<input name="title" type="text" class="form-control" placeholder="Ingrese el Nombre o Tema de la Actividad" value="{{ $evaluation->title }}" required>
 													<!-- <span class="help-block">This is inline help</span> -->
 												</div>
 											</div>
@@ -82,7 +82,7 @@
 											<div class="form-group">
 												<label class="control-label col-md-5">Descripción de la Actividad</label>
 												<div class="col-md-7">
-													<input name="description" type="text" class="form-control" placeholder="Ingrese el nombre del Curso" value="{{ $evaluation->description }}" required>
+													<input name="description" type="text" class="form-control" placeholder="Ingrese la Descripción de la Actividad" value="{{ $evaluation->description }}" required>
 													<!-- <span class="help-block">This is inline help</span> -->
 												</div>
 											</div>

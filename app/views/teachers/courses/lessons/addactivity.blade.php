@@ -86,7 +86,7 @@
 									<div class="top-news">
 										<a href="javascript:;" class="btn yellow lesson-activities-new" data-type="hangman">
 										<span>
-										El nombre que dijo Carminy </span>
+										Krapula </span>
 										<em>Una pregunta y una respuesta</em>
 										<em>
 										<i class="fa fa-info"></i>

@@ -463,7 +463,7 @@ class ReadController extends \Students\Courses\ReadController {
 			);
 
 		$pdf = new \Thujohn\Pdf\Pdf();
-	   	$pdf->load(\View::make('pdf.mynotes')->with($args), 'A4', 'portrait')->show();;
+	   	$pdf->load(\View::make('pdf.mynotes')->with($args), 'A4', 'portrait')->download('Alyce Notas, '.$lesson->module->course->title.' - '.$lesson->title.' - '.date('YmdHmi'));;
 
 		return Response::json($notes);
 

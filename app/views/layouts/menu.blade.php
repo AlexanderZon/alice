@@ -54,7 +54,7 @@
 				<a href="/">
 				<img src="/assets/images/logo_main.png" alt="logo" class="logo-default" style="width:auto; height: 51px" />
 				</a>
-				<div class="menu-toggler sidebar-toggler">
+				<div class="menu-toggler sidebar-toggler tooltips" data-original-title="Menú">
 					<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
 				</div>
 			</div>

@@ -46,13 +46,17 @@ class UserProfile extends \Eloquent {
     	);
 
     public $DEFAULT_MALE_COVERS = array(
-    	'/uploads/users/defaults/male_cover_1.jpg',
-    	'/uploads/users/defaults/male_cover_2.jpg',
+    	'/uploads/users/defaults/cover_1.png',
+        '/uploads/users/defaults/cover_2.png',
+        '/uploads/users/defaults/cover_3.png',
+    	'/uploads/users/defaults/cover_4.png',
     	);
 
     public $DEFAULT_FEMALE_COVERS = array(
-    	'/uploads/users/defaults/female_cover_1.jpg',
-    	'/uploads/users/defaults/female_cover_2.jpg',
+        '/uploads/users/defaults/cover_1.png',
+        '/uploads/users/defaults/cover_2.png',
+    	'/uploads/users/defaults/cover_3.png',
+    	'/uploads/users/defaults/cover_4.png',
     	);
 
     public static $profile_sections = array(

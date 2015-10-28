@@ -66,7 +66,7 @@
 											<p class="justify">
 												{{ $course->getSummary() }}
 											</p>
-											<a class="btn blue" href="{{ $course->getRoute() }}">
+											<a class="btn blue" href="{{ $route }}/show/{{ Hashids::encode($course->id) }}">
 											Gestionar <i class="m-icon-swapright m-icon-white"></i>
 											</a>
 											<div class="course-students">
