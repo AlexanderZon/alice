@@ -47,7 +47,7 @@
 									<div class="top-news">
 										<a href="javascript:;" class="btn red lesson-activities-new" data-type="rpsls">
 										<span>
-										Piedra, Papel, Tijeras, Iguana, Garra </span>
+										Piedra, Papel, Tijeras, Iguana, y Garra </span>
 										<em>Una pregunta y Cinco Posibles Respuestas</em>
 										<em>
 										<i class="fa fa-info"></i>

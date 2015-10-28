@@ -23,7 +23,7 @@ class ReadController extends \Coordinators\ReadController {
 
 		$this->afterFilter('auditory');
 		
-		self::pushViews('courses');    
+		self::pushViews('courses.read');    
 
 		self::pushRoute('courses');       
 
@@ -85,9 +85,23 @@ class ReadController extends \Coordinators\ReadController {
 	public function getShow($id)
 	{
 
-		self::addArgument('course', Course::find(Hashids::decode($id)));
+		$course = Course::find(Hashids::decode($id));
 
-		return self::make('show');
+		if($course):
+
+			self::addArgument('hashid', $id);
+
+			self::addArgument('course', $course);
+			
+			self::addArgument('sidebar_closed', true);
+
+			return self::make('show');
+
+		else:
+
+			return \View::make('security.auth.404');
+
+		endif;
 
 	}
 
