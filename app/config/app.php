@@ -127,7 +127,7 @@ return array(
 		'Intervention\Image\ImageServiceProvider',
 		'Nathanmac\GUID\GUIDServiceProvider',
 		'Alexanderzon\Hashids\HashidsServiceProvider',
-		'Barryvdh\Debugbar\ServiceProvider',
+		// 'Barryvdh\Debugbar\ServiceProvider',
 		// 'Chumper\Zipper\ZipperServiceProvider',
 
 	),
@@ -199,7 +199,7 @@ return array(
 		'PDF'			  	=> 'Thujohn\Pdf\PdfFacade',
 		'Excel' 		  	=> 'Maatwebsite\Excel\Facades\Excel',
 		'Image'           	=> 'Intervention\Image\Facades\Image',
-		'Debugbar'			=> 'Barryvdh\Debugbar\Facade',
+		// 'Debugbar'			=> 'Barryvdh\Debugbar\Facade',
 		// 'Zipper' 			=> 'Chumper\Zipper\Zipper',
 
 	),

@@ -80,31 +80,31 @@
 		</p>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">Nombre</label>
-			<input class="form-control placeholder-no-fix" type="text" placeholder="Nombre" name="first_name"/>
+			<input class="form-control placeholder-no-fix" type="text" placeholder="Nombre" name="first_name" required/>
 		</div>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">Apellidos</label>
-			<input class="form-control placeholder-no-fix" type="text" placeholder="Apellidos" name="last_name"/>
+			<input class="form-control placeholder-no-fix" type="text" placeholder="Apellidos" name="last_name" required/>
 		</div>
 		<div class="form-group">
 			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
 			<label class="control-label visible-ie8 visible-ie9">Correo</label>
-			<input class="form-control placeholder-no-fix" type="text" placeholder="Correo" name="email"/>
+			<input class="form-control placeholder-no-fix" type="text" placeholder="Correo" name="email" required/>
 		</div>
 		<p class="hint">
 			 Datos de Cuenta:
 		</p>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">Usuario</label>
-			<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Usuario" name="username"/>
+			<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Usuario" name="username" required/>
 		</div>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">Contraseña</label>
-			<input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Contraseña" name="password"/>
+			<input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Contraseña" name="password" required/>
 		</div>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">Repita su contraseña</label>
-			<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Repita su contraseña" name="rpassword"/>
+			<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Repita su contraseña" name="rpassword" required/>
 		</div>
 		<div class="form-group margin-top-20 margin-bottom-20">
 			<label class="check">

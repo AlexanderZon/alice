@@ -218,6 +218,12 @@ class BaseController extends Controller implements BaseInterface{
 
 	}
 
+	public static function render( $file = 'index'){
+
+		return View::make(self::$views.'.'.$file)->with(self::$arguments)->render();
+
+	}
+
 	# --- Redirect ---#
 
 	public static function go( $route = 'index'){
