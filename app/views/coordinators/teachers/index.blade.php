@@ -9,7 +9,7 @@
 				<a href="{{ $route }}/inactive" class="btn tooltips" data-toggle="Visualizar Profesores Inactivos" data-container="body" data-placement="left" data-html="true"  data-original-title="Visualizar Profesores Inactivos"><i class="icon-ban"></i></a>
 			@endif
 			@if(Auth::user()->hasCap('coordinators_teachers_get_create'))
-				<a href="{{ $route }}/create" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo usuario"><i class="icon-plus"></i></a>
+				<a href="{{ $route }}/create" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo Profesor"><i class="icon-plus"></i></a>
 			@endif
 		</div>
 		<!-- END THEME PANEL -->
@@ -29,10 +29,10 @@
 						</div>
 						<div class="tools">
 							@if(Auth::user()->hasCap('coordinators_teachers_get_inactive'))
-								<a href="{{ $route }}/inactive" class="label bg-green-haze"><i class="fa fa-ban"></i> Ver Inactivos</a>
+								<a href="{{ $route }}/inactive" class="label bg-green-haze tooltips" data-original-title="Visualizar Profesores Inactivos"><i class="fa fa-ban"></i> Ver Inactivos</a>
 							@endif
 							@if(Auth::user()->hasCap('coordinators_teachers_get_create'))
-								<a href="{{ $route }}/create" class="label bg-green-haze"><i class="fa fa-plus-circle"></i> Añadir Nuevo</a>
+								<a href="{{ $route }}/create" class="label bg-green-haze tooltips" data-original-title="Añadir un nuevo Profesor"><i class="fa fa-plus-circle"></i> Añadir Nuevo</a>
 							@endif
 						</div>
 					</div>

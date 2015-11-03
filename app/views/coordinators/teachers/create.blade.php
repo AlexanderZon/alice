@@ -151,7 +151,7 @@
 								<div class="col-md-6">
 									<div class="row">
 										<div class="col-md-offset-3 col-md-9">
-											<button type="submit" class="btn green">Agregar</button>
+											<button type="submit" class="btn green tooltips" data-original-title="Agregar Profesor">Agregar</button>
 											<a href="{{ $route }}" class="btn default">Volver</a>
 										</div>
 									</div>

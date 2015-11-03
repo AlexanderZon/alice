@@ -140,9 +140,33 @@ class ReadController extends \Coordinators\ReadController {
 
 			return self::go( 'create' );
 
+		elseif( !filter_var(Input::get('email'), FILTER_VALIDATE_EMAIL) ):
+
+			self::setWarning('security_user_email_err', 'Error al agregar profesor', 'El correo ' . Input::get('email') . ' no es válido, por favor ingrese uno diferente');
+
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'create' );
+
+		elseif( !filter_var(Input::get('first_name'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '/^[a-zA-Z][a-zA-Z ]*$/'))) ):
+
+			self::setWarning('security_user_first_name_err', 'Error al agregar profesor', 'El nombre ' . Input::get('first_name') . ' no es válido, por favor ingrese uno diferente');
+
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'create' );
+
+		elseif( !filter_var(Input::get('last_name'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '/^[a-zA-Z][a-zA-Z ]*$/'))) ):
+
+			self::setWarning('security_user_last_name_err', 'Error al agregar profesor', 'El nombre ' . Input::get('last_name') . ' no es válido, por favor ingrese uno diferente');
+
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'create' );
+
 		elseif( strlen(Input::get('password_1')) < 6 ):
 
-			self::setWarning('coordinators_teachers_password_err', 'Error al agregar profesor', 'La contraseña debe contener más de 5 caracteres');
+			self::setWarning('coordinators_teachers_password_err', 'Error al agregar profesor', 'La contraseña debe contener al menos 6 caracteres');
 
 			return self::go( 'create' );
 

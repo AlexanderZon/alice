@@ -4,7 +4,9 @@ use \Input as Input;
 use \Response as Response;
 use \Auth as Auth;
 use \Hash as Hash;
+use \Hashids as Hashids;
 use \UserProfile as UserProfile;
+use \User as User;
 
 class ReadController extends \BaseController {
 
@@ -52,6 +54,19 @@ class ReadController extends \BaseController {
 
 	public function postIndex(){
 
+		if( Input::has('phones')):
+
+			if( !filter_var(Input::get('phones'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '/^([(0412)|(0414)|(0416)|(0424)|(0426)]{4}|[02]{2}[0-9]{2})[0-9]{7}$/'))) ):
+
+				self::setWarning('security_user_phones_err', 'Error al cambiar teléfono', 'El Teléfono ' . Input::get('phones') . ' no es válido, solo puede agregar telefonos 0412, 0414, 0416, 0424, 0426, 02XX y solo en este Formato 0416XXXXXXX');
+
+				return self::go( 'index' );
+
+			endif;
+
+		endif;
+
+
 		$user = Auth::user();
 		$user->first_name = Input::get('first_name');
 		$user->last_name = Input::get('last_name');
@@ -82,9 +97,9 @@ class ReadController extends \BaseController {
 
 			if( User::hasEmail(Input::get('email'), $user->id) ):
 				
-				self::setWarning('security_user_email_err', 'Error al agregar usuario', 'El correo ' . Input::get('email') . ' ya existe, por favor ingrese uno diferente');
+				self::setWarning('security_user_email_err', 'Error al cambiar correo', 'El correo ' . Input::get('email') . ' ya existe para otro usuario, por favor ingrese uno diferente');
 
-				return self::go( 'update/'.Hashids::encrypt($user->id) );
+				return self::go( 'index' );
 
 			else:
 			

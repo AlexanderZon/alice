@@ -119,7 +119,15 @@ class AuthenticationController extends ReadController {
 
 				Auth::logout();
 
-				self::addArgument('msg_error', 'Tu usuario no ha sido verificado');
+				self::addArgument('msg_error', 'Tu cuenta aún no ha sido confirmada');
+
+				self::addArgument('redirect_to', Input::get('redirect_to'));
+
+				return self::go('login');
+
+			elseif(!User::where('username','=',Input::get('username'))->first()):
+
+				self::addArgument('msg_error', 'Usuario no Registrado');
 
 				self::addArgument('redirect_to', Input::get('redirect_to'));
 
@@ -162,7 +170,7 @@ class AuthenticationController extends ReadController {
 
 		if( !\User::isValidUsername(Input::get('username')) ):
 
-			self::setWarning('security_user_username_err', 'Error al agregar usuario', 'El nombre de usuario ' . Input::get('username') . ' no es Válido, por favor ingrese uno diferente');
+			self::setWarning('security_user_username_err', 'Error al agregar usuario', 'El nombre de usuario ' . Input::get('username') . ' no es válido, por favor ingrese uno diferente');
 
 			return self::go( 'login' );
 
@@ -208,7 +216,7 @@ class AuthenticationController extends ReadController {
 
 		elseif( strlen(Input::get('password')) < 6 ):
 
-			self::setWarning('security_user_password_err', 'Error al agregar usuario', 'La contraseña debe contener más de 5 caracteres');
+			self::setWarning('security_user_password_err', 'Error al agregar usuario', 'La contraseña debe contener al menos 6 caracteres');
 		
 			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
 
@@ -307,6 +315,22 @@ class AuthenticationController extends ReadController {
 			return self::make( 'lock' );
 
 		endif;
+
+	}
+
+	public function postForgot(){
+
+		if(User::where('email','=',Input::get('email'))->first()):
+
+			self::setSuccess('forgot_password', 'Mensaje de Recuperación', 'Se ha Enviado un Mensaje a su correo un enlace para establecer una nueva Contraseña');
+
+		else:
+
+			self::addArgument('msg_error','El Correo Electrónico '.Input::get('email').' no ha sido Registrado');
+
+		endif;
+
+		return self::go( 'login' );
 
 	}
 

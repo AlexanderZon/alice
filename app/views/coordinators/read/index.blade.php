@@ -251,7 +251,7 @@
 											Media de Lecciones por Curso
 										</div>
 										<div class="number">
-											{{ count($active_courses) > 0 ? count($active_lessons)/count($active_courses) : 0 }}
+											{{ count($active_courses) > 0 ? round(count($active_lessons)/count($active_courses), 2 ) : 0 }}
 										</div>
 									</div>
 								</div>
