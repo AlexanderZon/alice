@@ -573,7 +573,7 @@ class ReadController extends \BaseController {
 
 		$message = Message::find(Crypt::decrypt($id));
 
-    	\Debugbar::disable();
+    	if(class_exists('Debugbar')) \Debugbar::disable();
 
 		return $message->message;
 
@@ -587,7 +587,7 @@ class ReadController extends \BaseController {
     		case 'image/png':
     		case 'image/gif':
     		case 'image/jpeg':
-    			\Debugbar::disable();
+    			if(class_exists('Debugbar')) \Debugbar::disable();
     			self::addArgument('attachment', $attachment);
     			return self::make('viewimage');
 				// return '<img src="'.$attachment->route.'"/>';
@@ -595,7 +595,7 @@ class ReadController extends \BaseController {
 				break;
 			
 			default:
-				\Debugbar::disable();
+				if(class_exists('Debugbar')) \Debugbar::disable();
 				return \View::make('security.auth.404');
 				# code...
 				break;
@@ -646,6 +646,16 @@ class ReadController extends \BaseController {
 		$attachment = Attachment::find(Crypt::decrypt($id));
 
 		return Response::json(array('destination' => $attachment->route));
+
+	}
+
+	public function getDelete( $id ){
+		
+		self::markMessage(Input::get('message_id'), 'deleted');
+
+		self::addArgument('inbox', Auth::user()->inbox()->paginate(25));
+
+		return self::make('inbox');
 
 	}
 

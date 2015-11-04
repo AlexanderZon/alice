@@ -82,10 +82,15 @@ class ReadController extends \BaseController {
 	public function getGo($notification_id){
 
 		$notification = Notification::find(Crypt::decrypt($notification_id));
-		$notification->status = 'viewed';
-		$notification->save();
 
-		return Redirect::to($notification->route);
+		if($notification):
+			$notification->status = 'viewed';
+			$notification->save();
+
+			return Redirect::to($notification->route);
+		else:
+			return Redirect::to('notifications');
+		endif;
 
 	}
 

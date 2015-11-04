@@ -66,11 +66,77 @@ class ReadController extends \BaseController {
 
 		endif;
 
+		if( Input::has('website')):
+
+			if( !filter_var(Input::get('website'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '#((https?|ftp)://(\S*?\.\S*?))([\s)\[\]{},;"\':<]|\.\s|$)#i')) )):
+
+				self::setWarning('security_user_website_err', 'Error al cambiar el website', 'La URL ' . Input::get('website') . ' no es válida, solo puede agregar una URL con el formato http://ejemplo.com, y seran válido solo los protocolos http, https, y ftp');
+
+				return self::go( 'index' );
+
+			endif;
+
+		endif;
+
+		if( Input::has('facebook')):
+
+			if( !filter_var(Input::get('facebook'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '/^@[a-z\d.]{5,50}$/')) )):
+
+				self::setWarning('security_user_facebook_err', 'Error al cambiar el usuario facebook', 'El Nombre de Usuario ' . Input::get('facebook') . ' no es válido, solo puede agregar un usuario de Facebook con el formato @UsuarioFacebook, y debe contener entre 5 y 50 catacteres, y puede contener numeros y punto (.)');
+
+				return self::go( 'index' );
+
+			endif;
+
+		endif;
+
+		if( Input::has('twitter')):
+
+			if( !filter_var(Input::get('twitter'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '/^@([A-Za-z0-9_]{1,15})/')) )):
+
+				self::setWarning('security_user_twitter_err', 'Error al cambiar el usuario twitter', 'El Nombre de Usuario ' . Input::get('twitter') . ' no es válido, solo puede agregar un usuario de Twitter con el formato @UsuarioTwitter, y debe contener entre 5 y 15 catacteres, y puede contener numeros y punto (.)');
+
+				return self::go( 'index' );
+
+			endif;
+
+		endif;
+
+		if( !filter_var(Input::get('email'), FILTER_VALIDATE_EMAIL) ):
+
+			self::setWarning('security_user_email_err', 'Error al cambiar correo', 'El correo ' . Input::get('email') . ' no es válido, por favor ingrese uno diferente');
+
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'index' );
+
+		endif;
+
+		if( !filter_var(Input::get('first_name'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '/^[a-zA-Z][a-zA-Z ]*$/'))) ):
+
+			self::setWarning('security_user_first_name_err', 'Error al agregar usuario', 'El nombre ' . Input::get('first_name') . ' no es válido, por favor ingrese uno diferente');
+
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'index' );
+
+		endif;
+
+		if( !filter_var(Input::get('last_name'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '/^[a-zA-Z][a-zA-Z ]*$/'))) ):
+
+			self::setWarning('security_user_last_name_err', 'Error al agregar usuario', 'El nombre ' . Input::get('last_name') . ' no es válido, por favor ingrese uno diferente');
+
+			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
+
+			return self::go( 'index' );
+
+		endif;
 
 		$user = Auth::user();
 		$user->first_name = Input::get('first_name');
 		$user->last_name = Input::get('last_name');
 		$user->display_name = Input::get('display_name') != '' ? Input::get('display_name') : $user->first_name . ' ' . $user->last_name;
+		$user->save();
 		
 		$directory = UserProfile::makeFullDirectory( $user->username );
 
@@ -114,7 +180,7 @@ class ReadController extends \BaseController {
 
 			if( strlen(Input::get('password_1')) < 6 ):
 
-				self::setWarning('users_password_password_err', 'Error al cambiar la contraseña', 'La contraseña debe contener más de 5 caracteres');
+				self::setWarning('users_password_password_err', 'Error al cambiar la contraseña', 'La contraseña debe contener al menos 6 caracteres');
 
 				return self::go( 'index' );
 
@@ -132,6 +198,8 @@ class ReadController extends \BaseController {
 			endif;
 
 		endif;
+
+		self::setSuccess('users_data_changed', 'Datos Actualizados', 'Los Datos del Perfil se han cambiado exitósamente.');
 
 		return self::go('index');
 

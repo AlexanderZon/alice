@@ -37,7 +37,7 @@
 							<!-- <span class="caption-helper hide">estadísticas semanales...</span> -->
 						</div>
 						<div class="actions">
-							<a href="javascript:;" class="btn green-haze notification-markasread-btn">Marcar todas como leidas</a>
+							<a href="javascript:;" class="btn green-haze notification-markasread-btn tooltips" data-original-title="Marcar todas las notificaciones como Leidas">Marcar todas como leidas</a>
 						</div>
 					</div>
 					<div class="portlet-body">
@@ -59,7 +59,7 @@
 													<!-- <span class="todo-tasklist-badge badge badge-roundless">Urgent</span> -->
 												</div>
 											</div>
-											<span class="notification-delete-btn" data-notification="{{ Hashids::encode($notification->id)}}"><i class="fa fa-times"></i></span>
+											<span class="notification-delete-btn" data-notification="{{ Hashids::encode($notification->id)}}"><i class="fa fa-times tooltips" data-original-title="Eliminar Notificación" data-placement="top"  data-container="body" ></i></span>
 										@endforeach
 										<!--
 										<div class="todo-tasklist-item todo-tasklist-item-border-green">

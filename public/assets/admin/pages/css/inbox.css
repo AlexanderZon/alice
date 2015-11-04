@@ -120,7 +120,7 @@ Inbox Page
 }
 
 .inbox tr.unread td {
-  font-weight: 600;
+  font-weight: 900;
 }
 
 .inbox td i.icon-paper-clip {

@@ -51,12 +51,12 @@
 					</li> -->
 					<li class="divider">
 					</li>
-					<li>
+					<!-- <li>
 						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="spam-btn">
 						<i class="fa fa-ban"></i> Spam </a>
-					</li>
+					</li> -->
 					<li>
-						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="delete-btn">
+						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="discard-btn">
 						<i class="fa fa-trash-o"></i> Eliminar </a>
 					</li>
 				</ul>

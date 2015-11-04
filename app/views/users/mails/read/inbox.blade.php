@@ -9,18 +9,18 @@
 			Más <i class="fa fa-angle-down"></i>
 			</a>
 			<ul class="dropdown-menu">
-				<li>
-					<a class="markasread-btn" href="javascript:;">
+				<li class="tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo Profesor">
+					<a class="markasread-btn"href="javascript:;">
 					<i class="fa fa-pencil"></i> Marcar como leído </a>
 				</li>
 				<li>
 					<a class="markasnoneread-btn" href="javascript:;">
 					<i class="fa fa-envelope-o"></i> Marcar como No leído </a>
 				</li>
-				<li>
+				<!-- <li>
 					<a class="markasspam-btn" href="javascript:;">
 					<i class="fa fa-ban"></i> Spam </a>
-				</li>
+				</li> -->
 				<li class="divider">
 				</li>
 				<li>

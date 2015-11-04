@@ -52,10 +52,10 @@
 					</li>
 					<li class="divider">
 					</li>
-					<li>
+					<!-- <li>
 						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="spam-btn">
 						<i class="fa fa-ban"></i> Spam </a>
-					</li>
+					</li> -->
 					<li>
 						<a href="javascript:;" data-messageid="{{ Crypt::encrypt($message->id) }}" class="delete-btn">
 						<i class="fa fa-trash-o"></i> Eliminar </a>
@@ -71,16 +71,16 @@
 		</div>
 		<hr>
 		<div class="inbox-attached">
-			<div class="margin-bottom-15">
-				<span>
-				{{ count($message->attachments) }} Archivos Adjuntos — </span>
-				<a href="javascript:;" class="download-all-btn" data-messageid="{{ Crypt::encrypt($message->id) }}">
-				Descargar todos los archivos adjuntos </a>
-				<!-- <a href="javascript:;" class="view-all-btn">
-				Ver todas las imágenes </a> -->
-			</div>
-			<!--- Ciclo por cada Dato Adjunto -->
 			@if(count($message->attachments) > 0 AND ($counter = 0) == 0)
+				<div class="margin-bottom-15">
+					<span>
+					{{ count($message->attachments) }} Archivos Adjuntos — </span>
+					<a href="javascript:;" class="download-all-btn" data-messageid="{{ Crypt::encrypt($message->id) }}">
+					Descargar todos los archivos adjuntos </a>
+					<!-- <a href="javascript:;" class="view-all-btn">
+					Ver todas las imágenes </a> -->
+				</div>
+				<!--- Ciclo por cada Dato Adjunto -->
 				<div class="row">
 					@foreach($message->attachments as $attachment)
 						@if((($counter)%6 )== 0)
@@ -102,9 +102,9 @@
 								<div class="row">
 									<div class="col-md-1"></div>
 									<span class="col-md-5">{{ $attachment->getSize() }} </span>
-									<a class="col-md-1 download-btn" href="javascript:;" data-attachmentid="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-download"></i></a>					
+									<a class="col-md-1 download-btn tooltips" data-original-title="Descargar Archivo" href="javascript:;" data-attachmentid="{{ Crypt::encrypt($attachment->id) }}"><i class="fa fa-download"></i></a>					
 									@if( $attachment->mime == 'image/png' || $attachment->mime == 'image/jpeg' || $attachment->mime == 'image/gif')
-									<a class="col-md-1 fancybox" data-fancybox-type="iframe" title="{{ $attachment->name }} ({{ $attachment->getSize() }})" href="{{ $route }}/viewimage/{{ Crypt::encrypt($attachment->id) }}" rel="view-images"><i class="fa fa-eye"></i></a>
+									<a class="col-md-1 fancybox tooltips" data-original-title="Ver Imagen" data-fancybox-type="iframe" title="{{ $attachment->name }} ({{ $attachment->getSize() }})" href="{{ $route }}/viewimage/{{ Crypt::encrypt($attachment->id) }}" rel="view-images"><i class="fa fa-eye"></i></a>
 									@endif
 									<!-- <a class="col-md-3" href="javascript:;">Descargar</a>									
 									<a class="col-md-3" href="javascript:;">Ver</a> -->

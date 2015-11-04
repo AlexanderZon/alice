@@ -143,7 +143,7 @@
 											<div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="+0d">
 												<input name="born_date" type="text" placeholder="Ingrese la Fecha de Nacimiento" class="form-control"  value="{{ date('d-m-Y', strtotime($profile->born_date)) }}" required readonly>
 												<soan class="input-group-btn">
-													<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+													<button class="btn default tooltips" data-original-title="Cambiar Fecha de Nacimiento" type="button"><i class="fa fa-calendar"></i></button>
 												</soan>
 											</div>
 										</div>
@@ -290,7 +290,7 @@
 										<div class="col-md-9">
 											<div class="input-icon right">
 												<i class="fa fa-facebook"></i>
-												<input name="facebook" type="text" placeholder="Ingrese su Nombre de Usuario en Facebook" class="form-control"  value="{{ $profile->facebook }}">
+												<input name="facebook" type="text" placeholder="Ingrese su Nombre de Usuario en Facebook @UsuarioFacebook" class="form-control"  value="{{ $profile->facebook }}">
 											</div>
 										</div>
 									</div>
@@ -301,7 +301,7 @@
 										<div class="col-md-9">
 											<div class="input-icon right">
 												<i class="fa fa-twitter"></i>
-												<input name="twitter" type="text" placeholder="Ingrese su Nombre de Usuario en Twitter" class="form-control"  value="{{ $profile->twitter }}">
+												<input name="twitter" type="text" placeholder="Ingrese su Nombre de Usuario en Twitter @UsuarioTwitter" class="form-control"  value="{{ $profile->twitter }}">
 											</div>
 										</div>
 									</div>
@@ -365,8 +365,8 @@
 								<div class="col-md-6">
 									<div class="row">
 										<div class="col-md-offset-3 col-md-9">
-											<button type="submit" class="btn green">Actualizar</button>
-											<a href="{{ $route }}" class="btn default">Volver</a>
+											<button type="submit" class="btn green tooltips" data-original-title="Actualizar Datos del Perfil">Actualizar</button>
+											<a href="/{{ $user->username }}" class="btn default tooltips" data-original-title="Regresar al Perfil">Volver</a>
 										</div>
 									</div>
 								</div>

@@ -185,13 +185,7 @@ class UserProfile extends \Eloquent {
 
     public function getTwitterURL(){
 
-    	$bool = false;
-
-    	$twitter = $this->twitter;
-
-    	if(!(strpos($twitter, '@') === false)) $bool = true; $twitter = str_replace(array('@'), '', $twitter);
-
-    	return !$bool ? 'http://twitter.com/'.$twitter : $twitter;
+    	return 'http://twitter.com/'.str_replace(array('@'), '', $this->twitter);
 
     }
 
@@ -205,15 +199,7 @@ class UserProfile extends \Eloquent {
 
     public function getFacebookURL(){
 
-    	$bool = false;
-
-    	if(!(strpos($this->facebook, 'http://facebook.com') === false)) $bool = true;
-    	if(!(strpos($this->facebook, 'https://facebook.com') === false)) $bool = true;
-    	if(!(strpos($this->facebook, 'http://www.facebook.com') === false)) $bool = true;
-    	if(!(strpos($this->facebook, 'www.facebook.com') === false)) $bool = true;
-    	if(!(strpos($this->facebook, 'facebook.com') === false)) $bool = true;
-
-    	return !$bool ? 'http://facebook.com/'.$this->facebook : $this->facebook;
+    	return 'http://facebook.com/'. str_replace(array('@'), '', $this->facebook);
 
     }
 

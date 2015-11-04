@@ -744,6 +744,28 @@
 
 		    	// 
 
+		        // loading.show();
+		        content.html(loader);
+		        toggleButton(el);
+
+		    	var messageid = $(el).attr("data-messageid");
+		    	var url = '{{$route}}/delete/' + messageid;
+
+		    	$.ajax({
+		    		url: url,
+		    		type: 'GET',
+		    		data: {message_id: messageid},
+		    		success: function(res){
+
+		                loading.hide();
+		                content.html(res);
+		                if (Layout.fixContentHeight) {
+		                    Layout.fixContentHeight();
+		                }
+		                Metronic.initUniform();
+		    		}
+		    	});
+
 		    }
 
 		    var cancelAttachment = function(el) {

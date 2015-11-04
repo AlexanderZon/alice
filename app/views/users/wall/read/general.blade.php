@@ -61,13 +61,13 @@
 					@if(trim(html_entity_decode(strip_tags($user->email))) != '')
 						<div class="margin-top-20 profile-desc-link">
 							<i class="fa fa-envelope"></i>
-							<a href="mailto({{ $user->email }})" target="_blank">{{ $user->email }}</a>
+							{{ $user->email }}
 						</div>
 					@endif
 					@if(trim(html_entity_decode(strip_tags($profile->phone))) != '')
 						<div class="margin-top-20 profile-desc-link">
 							<i class="fa fa-phone"></i>
-							<a href="{{ $profile->phone }}" target="_blank">{{ $profile->phone }}</a>
+							{{ $profile->phone }}
 						</div>
 					@endif
 				</div>
