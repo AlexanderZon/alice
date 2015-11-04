@@ -1,5 +1,0 @@
-errores.txt
-
-- Registro de Estudiantes en el formulario de registro
-- Tooltip de "postularme al curso" en el boton de postularse
-
