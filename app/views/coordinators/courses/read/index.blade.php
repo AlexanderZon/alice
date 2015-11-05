@@ -9,7 +9,7 @@
 				<a href="{{ $route }}/inactive" class="btn tooltips" data-toggle="Visualizar Cursos Inactivos" data-container="body" data-placement="left" data-html="true"  data-original-title="Visualizar Cursos Inactivos"><i class="icon-ban"></i></a>
 			@endif
 			@if(Auth::user()->hasCap('coordinators_courses_get_create'))
-				<a href="{{ $route }}/create" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo usuario"><i class="icon-plus"></i></a>
+				<a href="{{ $route }}/create" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo curso"><i class="icon-plus"></i></a>
 			@endif
 		</div>
 		<!-- END THEME PANEL -->
@@ -29,10 +29,10 @@
 						</div>
 						<div class="tools">
 							@if(Auth::user()->hasCap('coordinators_courses_get_inactive'))
-								<a href="{{ $route }}/inactive" class="label bg-green-haze"><i class="fa fa-ban"></i> Ver Inactivos</a>
+								<a href="{{ $route }}/inactive" class="label bg-green-haze tooltips" data-original-title="Ver los Cursos Inactivos"><i class="fa fa-ban"></i> Ver Inactivos</a>
 							@endif
 							@if(Auth::user()->hasCap('coordinators_courses_get_create'))
-								<a href="{{ $route }}/create" class="label bg-green-haze"><i class="fa fa-plus-circle"></i> Añadir Nuevo</a>
+								<a href="{{ $route }}/create" class="label bg-green-haze tooltips" data-original-title="Añadir un nuevo curso"><i class="fa fa-plus-circle"></i> Añadir Nuevo</a>
 							@endif
 						</div>
 					</div>
@@ -105,7 +105,7 @@
 									@if( $course->status == 'active' )
 										@if(Auth::user()->hasCap('coordinators_courses_get_show'))
 											&nbsp;&nbsp;
-											<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+											<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar contenido del curso"> <i class="fa fa-eye"></i> </a> 
 										@endif
 									@elseif( $course->status == 'inactive' )
 										@if(Auth::user()->hasCap('coordinators_courses_get_show'))

@@ -41,12 +41,12 @@
 					<!-- SIDEBAR BUTTONS -->
 					<div class="profile-userbuttons">
 						@if($user->id != Auth::user()->id)
-							<a href="javascript:;" type="button" class="btn btn-large green-haze btn-sm follow-btn {{ ($hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-up"></i> Seguir</a>
-							<a href="javascript:;" type="button" class="btn btn-large btn-danger btn-sm unfollow-btn {{ (!$hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}"><i class="fa fa-thumbs-o-down"></i> Dejar de Seguir</a>
+							<a href="javascript:;" type="button" class="btn btn-large green-haze btn-sm follow-btn {{ ($hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }} tooltips" data-original-title="Seguir al Usuario {{ $user->display_name }}" data-placement="right"><i class="fa fa-thumbs-o-up"></i> Seguir</a>
+							<a href="javascript:;" type="button" class="btn btn-large btn-danger btn-sm unfollow-btn {{ (!$hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }} tooltips" data-original-title="Dejar de seguir al Usuario {{ $user->display_name }}" data-placement="right"><i class="fa fa-thumbs-o-down"></i> Dejar de Seguir</a>
 							<!-- <a href="{{ $route }}/follow" type="button" class="btn green-haze btn-sm follow-btn"><i class="fa fa-thumbs-o-up"></i> Seguir</a>
 							<a href="{{ $route }}/unfollow" type="button" class="btn btn-danger btn-sm unfollow-btn"><i class="fa fa-thumbs-o-down"></i> Dejar de Seguir</a>  -->
 						@else
-							<a href="/profile" type="button" class="btn btn-large green-haze btn-sm"><i class="fa fa-pencil"></i> Editar</a>
+							<a href="/profile" type="button" class="btn btn-large green-haze btn-sm tooltips" data-original-title="Editar el perfil" data-placement="right"><i class="fa fa-pencil"></i> Editar</a>
 						@endif
 
 					</div>
@@ -56,8 +56,8 @@
 							<!-- <a href="{{ $route }}/follow" type="button" class="btn btn-circle green-haze btn-sm follow-btn {{ ($hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}">Seguir</a>
 							<a href="{{ $route }}/unfollow" type="button" class="btn btn-circle btn-danger btn-sm unfollow-btn {{ (!$hasMyFollow OR $user->id == Auth::user()->id ) ? 'hidden' : '' }}">Dejar de Seguir</a> -->
 							
-							<a href="javascript:;" type="button" class="btn btn-danger btn-sm block-btn"><i class="fa fa-ban"></i> Bloquear</a> 
-							<a href="/messages?a=compose&profile={{ Crypt::encrypt($user->id) }}" type="button" class="btn green-haze btn-sm message-btn"><i class="fa fa-envelope-o"></i> Mensaje</a> 
+							<!-- <a href="javascript:;" type="button" class="btn btn-danger btn-sm block-btn"><i class="fa fa-ban"></i> Bloquear</a>  -->
+							<a href="/messages?a=compose&profile={{ Crypt::encrypt($user->id) }}" type="button" class="btn green-haze btn-sm message-btn tooltips" data-original-title="Enviar un mensaje al Usuario {{ $user->display_name }}" data-placement="right"><i class="fa fa-envelope-o"></i> Mensaje</a> 
 						@endif
 
 					</div>
@@ -67,28 +67,28 @@
 						<ul class="nav">
 							@if(UserProfile::hasSection('general', $role))
 								<li class="{{ $section == 'general' ? 'active' : '' }}">
-									<a href="javascript:;" class="general-btn">
+									<a href="javascript:;" class="general-btn tooltips" data-original-title="Datos Generales" data-placement="right">
 									<i class="icon-home"></i>
 									General </a>
 								</li>
 							@endif
 							@if(UserProfile::hasSection('learning', $role))
 								<li class="{{ $section == 'learning' ? 'active' : '' }}">
-									<a href="javascript:;" class="learning-btn">
+									<a href="javascript:;" class="learning-btn tooltips" data-original-title="Cursos que está aprendiendo" data-placement="right">
 									<i class="icon-graduation"></i>
 									Aprendiendo </a>
 								</li>
 							@endif
 							@if(UserProfile::hasSection('teaching', $role))
 								<li class="{{ $section == 'teaching' ? 'active' : '' }}">
-									<a href="javascript:;" class="teaching-btn">
+									<a href="javascript:;" class="teaching-btn tooltips" data-original-title="Cursos que está enseñando" data-placement="right">
 									<i class="icon-notebook"></i>
 									Enseñando </a>
 								</li>
 							@endif
 							@if(UserProfile::hasSection('contributing', $role))
 								<li class="{{ $section == 'contributing' ? 'active' : '' }}">
-									<a href="javascript:;" class="contributing-btn">
+									<a href="javascript:;" class="contributing-btn tooltips" data-original-title="Cursos a los cuales contribuye" data-placement="right">
 									<i class="icon-eyeglasses"></i>
 									Contribuciones </a>
 								</li>
@@ -102,28 +102,28 @@
 							@endif
 							@if(UserProfile::hasSection('achievements', $role))
 								<li class="{{ $section == 'achievements' ? 'active' : '' }}">
-									<a href="javascript:;" class="achievements-btn">
+									<a href="javascript:;" class="achievements-btn tooltips" data-original-title="Premiaciones en los cursos e insignias" data-placement="right">
 									<i class="icon-badge"></i>
 									Medallero </a>
 								</li>
 							@endif
 							@if(UserProfile::hasSection('statistics', $role))
 								<li class="{{ $section == 'statistics' ? 'active' : '' }}">
-									<a href="javascript:;" class="statistics-btn">
+									<a href="javascript:;" class="statistics-btn tooltips" data-original-title="Estadisticas en los cursos" data-placement="right">
 									<i class="icon-graph"></i>
 									Estadísticas </a>
 								</li>
 							@endif
 							@if(UserProfile::hasSection('followers', $role))
 								<li class="{{ $section == 'followers' ? 'active' : '' }}">
-									<a href="javascript:;" class="followers-btn">
+									<a href="javascript:;" class="followers-btn tooltips" data-original-title="Listado de seguidores" data-placement="right">
 									<i class="icon-user-following"></i>
 									Seguidores </a>
 								</li>
 							@endif
 							@if(UserProfile::hasSection('following', $role))
 								<li class="{{ $section == 'following' ? 'active' : '' }}">
-									<a href="javascript:;" class="following-btn">
+									<a href="javascript:;" class="following-btn tooltips" data-original-title="Listado de usuarios que está siguiendo" data-placement="right">
 									<i class="icon-user-follow"></i>
 									Siguiendo </a>
 								</li>

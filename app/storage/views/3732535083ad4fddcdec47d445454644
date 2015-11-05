@@ -1,0 +1,270 @@
+
+	<!-- BEGIN PICKERS LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/clockface/css/clockface.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"/>
+	<!-- END PICKERS LEVEL STYLES -->
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link href="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/admin/pages/css/profile-old.css" rel="stylesheet" type="text/css"/>
+	<!-- END PAGE LEVEL STYLES -->
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-summernote/summernote.css">
+
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+	<!-- END PAGE LEVEL STYLES -->
+
+	<div class="row">
+		<div class="col-md-12">
+			<!-- BEGIN PORTLET -->
+
+			<div class="portlet light">
+
+				<!-- END PAGE CONTENT INNER -->
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="portlet-title">
+							<h4 class="profile-usertitle-name">Listado de Actividades del Curso "<?php echo $course->title; ?>"	
+							</h4>
+						</div>
+						<div class="portlet-body form" data-course="<?php echo Hashids::encode($course->id); ?>">
+							<!-- BEGIN FORM-->
+							<div class="tab-pane" id="tab_1_4">
+								<div class="row">&nbsp;</div>
+								<div class="row">&nbsp;</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="add-portfolio">
+											<span>
+											Hay <?php echo $evaluations->count(); ?> Actividad(es) en este Curso </span>
+											
+										</div>
+									</div>
+								</div>
+								<!--end add-portfolio-->
+								<?php if($evaluations->count() > 0): ?>
+									<?php foreach($evaluations as $evaluation): ?>
+										<div class="row portfolio-block activity-block" data-activity="<?php echo Hashids::encode($evaluation->id); ?>">
+											<div class="col-md-5">
+												<div class="portfolio-text">
+													<img src="<?php echo $evaluation->image(); ?>" alt="" style="max-width:100px" />
+													<div class="portfolio-text-info">
+														<h4><?php echo $evaluation->title != '' ? $evaluation->title : 'Sin nombre'; ?></h4>
+														<p>
+															<?php echo $evaluation->description != '' ? $evaluation->description : 'Sin descripción'; ?>
+
+														</p>
+														<em>(<?php echo date('d/m/Y', strtotime($evaluation->date_start) ); ?> - <?php echo date('d/m/Y', strtotime($evaluation->date_end) ); ?>)</em>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-7 portfolio-stat">
+												<div class="portfolio-info col-md-3">
+													Estudiantes <span>
+													<?php echo $evaluation->tests->count(); ?> </span>
+												</div>
+												<div class="portfolio-info col-md-3">
+													Promedio <span>
+													<?php echo $evaluation->average(); ?>% </span>
+												</div>
+												<div class="portfolio-info col-md-3">
+													Preguntas <span>
+													<?php if($evaluation->type == 'hangman'): ?> <?php echo $evaluation->hangman->count(); ?>
+
+													<?php elseif($evaluation->type == 'memory'): ?> <?php echo $evaluation->memory->count(); ?>
+
+													<?php elseif($evaluation->type == 'rpsls'): ?> <?php echo $evaluation->rpsls->count(); ?>
+
+													<?php elseif($evaluation->type == 'roulette'): ?> <?php echo $evaluation->roulette->count(); ?>
+
+													<?php endif; ?>
+													 </span>
+												</div>
+											</div>
+											<!-- <div class="col-md-2">
+												<div class="portfolio-btn">
+													<a href="javascript:;" class="btn bigicn-only course-activities-edit">
+													<span>
+													Gestionar </span>
+													</a>
+												</div>
+											</div> -->
+											<?php if($evaluation->tests->count() > 0): ?>
+												<div class="col-md-12 testers-btn" style="text-align:center;cursor:pointer;"><i class="fa fa-angle-double-down"></i></div>
+												<div class="col-md-12 testers hidden">
+													<?php foreach($evaluation->tests as $test): ?>
+														<?php $tester = $test->author; ?>
+														<div class="col-md-1">&nbsp;</div>
+														<div class="col-md-4">
+															<div class="portfolio-text">
+																<img src="<?php echo $tester->profile->getAvatar(); ?>" alt="" style="max-width:75px" />
+																<div class="portfolio-text-info">
+																	<h4><?php echo $tester->display_name; ?></h4>
+																	<p>
+																		(<em class="timeago"><?php echo $test->updated_at; ?></em>)
+																	</p>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-7 portfolio-stat">
+															<div class="portfolio-info col-md-3">
+																Porcentaje <span>
+																<?php echo $test->percentage(); ?> </span>
+															</div>
+															<div class="portfolio-info col-md-3">
+																Preguntas Acertadas <span>
+																<?php echo $test->hits; ?> </span>
+															</div>
+															<div class="portfolio-info col-md-3">
+																Equivocaciones <span>
+																<?php echo $test->mistakes; ?> </span>
+															</div>
+															<div class="portfolio-info col-md-3">
+																Duración <span><?php echo $test->duration(); ?></span>
+															</div>
+														</div>
+													<?php endforeach; ?>
+												</div>
+											<?php endif; ?>
+										</div>
+									<?php endforeach; ?>
+								<?php endif; ?>
+								<!-- <div class="row portfolio-block activity-block" data-activity="<?php echo '2'; ?>">
+									<div class="col-md-5 col-sm-12 portfolio-text">
+										<img src="/assets/admin/pages/media/profile/logo_azteca.jpg" alt=""/>
+										<div class="portfolio-text-info">
+											<h4>Actividad II</h4>
+											<p>
+												<em>(30/10/2015 - 05/11/2015)</em>
+												Lorem ipsum dolor sit consectetuer adipiscing elit.
+											</p>
+										</div>
+									</div>
+									<div class="col-md-5 portfolio-stat">
+										<div class="portfolio-info col-md-3">
+											Estudiantes <span>
+											24 </span>
+										</div>
+										<div class="portfolio-info col-md-3">
+											Promedio <span>
+											66% </span>
+										</div>
+										<div class="portfolio-info col-md-3">
+											Preguntas <span>
+											25 </span>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-12 portfolio-btn">
+										<a href="javascript:;" class="btn bigicn-only lesson-activities-edit">
+										<span>
+										Gestionar </span>
+										</a>
+									</div>
+								</div>
+								<div class="row portfolio-block activity-block" data-activity="<?php echo '3'; ?>">
+									<div class="col-md-5 portfolio-text">
+										<img src="/assets/admin/pages/media/profile/logo_conquer.jpg" alt=""/>
+										<div class="portfolio-text-info">
+											<h4>Actividad III</h4>
+											<p>
+												<em>(07/11/2015 - 14/11/2015)</em>
+												Lorem ipsum dolor sit consectetuer adipiscing elit.
+											</p>
+										</div>
+									</div>
+									<div class="col-md-5 portfolio-stat">
+										<div class="portfolio-info col-md-3">
+											Estudiantes <span>
+											24 </span>
+										</div>
+										<div class="portfolio-info col-md-3">
+											Promedio <span>
+											97% </span>
+										</div>
+										<div class="portfolio-info col-md-3">
+											Preguntas <span>
+											21 </span>
+										</div>
+									</div>
+									<div class="col-md-2 portfolio-btn">
+										<a href="javascript:;" class="btn bigicn-only lesson-activities-edit">
+										<span>
+										Gestionar </span>
+										</a>
+									</div>
+								</div> -->
+							</div>
+
+							<!-- END FORM-->
+						</div>
+					</div>
+				</div>
+				<!-- END PAGE CONTENT INNER -->
+				
+			</div>
+					
+			<!-- END PORTLET -->
+		</div>
+	</div>		
+
+	<script type="text/javascript" src="/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	
+	<script type="text/javascript">
+
+		var ActivitiesManager = function(){
+
+			var showTesters = function(elem){
+
+				var tester_list = $(elem).siblings('.testers');
+				console.log(tester_list);
+				if(tester_list.hasClass('hidden')){
+					console.log('remove');
+					tester_list.removeClass('hidden');
+					elem.children('i').removeClass('fa-angle-double-down');
+					elem.children('i').addClass('fa-angle-double-up');
+				}
+				else{
+					console.log('add');
+					tester_list.addClass('hidden');
+					elem.children('i').removeClass('fa-angle-double-up');
+					elem.children('i').addClass('fa-angle-double-down');
+				}
+
+			}
+
+			return {
+
+				init: function(){
+
+					$('.testers-btn').click(function(event) {
+						console.log('click');
+						showTesters($(this));
+					});
+
+				}
+
+			}
+
+		}();
+
+		ActivitiesManager.init();
+		
+	 	jQuery('.timeago').each(function(e){
+	 		jQuery(this).html(moment(jQuery(this).html()).fromNow());
+	 	});
+
+		window.history.pushState("", "", '/coordinators/courses/show/<?php echo Hashids::encode($course->id); ?>?section=activities');
+		document.title = 'Alice | <?php echo $course->title; ?> | Actividades';
+
+		$('#course-title').html('<?php echo $course->title; ?>');
+		$('#course-teacher').html('<?php echo $course->teacher->display_name; ?>');
+		$('#course-main-image').html('<img src="<?php echo $course->getMainPicture(); ?>" class="img-responsive" alt="">');
+
+	</script>

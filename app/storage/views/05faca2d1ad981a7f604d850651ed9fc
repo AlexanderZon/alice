@@ -1,0 +1,137 @@
+
+<link href="/assets/admin/pages/css/blog.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/admin/pages/css/news.css" rel="stylesheet" type="text/css"/>
+
+<style type="text/css">
+	.course-students{
+		text-align: right;
+		display: block;
+	}
+	.student-line-picture{
+		width: 40px;
+		height: 40px;
+		display: inline-block;
+		margin-left: 5px;
+	}
+	.full-width{
+		width: 100%;
+	}
+</style>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN PORTLET -->
+
+		<div class="portlet light">
+			<!-- STAT -->
+			<div class="row list-separated profile-stat">
+				<img class="col-md-12" src="<?php echo $profile->getCover(); ?>"/>
+			</div>
+			<div class="portlet-body">
+					<div class="row">
+						<div class="col-md-12 blog-page">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 article-block">
+									<h4 class="profile-desc-title">Enseñando (<?php echo $courses->count(); ?>)</h4>
+									<?php if($courses->count() > 0): ?>
+										<?php foreach($courses as $course): ?>
+											<div class="row">
+												<div class="col-md-4 blog-img blog-tag-data">
+													<div class="mask-circle">
+														<img src="<?php echo $course->main_picture; ?>" alt="" class="img-responsive">			
+													</div>
+													<ul class="list-inline">
+														<li>
+															<i class="fa fa-user"></i>
+															<?php echo $course->teacher->display_name; ?>
+
+														</li>
+														<li>
+															<i class="fa fa-users"></i>
+															<?php echo $course->students()->count(); ?> Estudiantes
+														</li>
+													</ul>
+													<!-- <ul class="list-inline blog-tags">
+														<li>
+															<i class="fa fa-tags"></i>
+															<a href="javascript:;">
+															Technology </a>
+															<a href="javascript:;">
+															Education </a>
+															<a href="javascript:;">
+															Internet </a>
+														</li>
+													</ul> -->
+												</div>
+												<div class="col-md-8 blog-article">
+													<h3>
+													<a href="<?php echo $course->getRoute(); ?>"><?php echo $course->title; ?></a>
+													</h3>
+													<p class="justify">
+														<?php echo $course->getSummary(); ?>
+
+													</p>
+
+													<?php if(Auth::user()->isCoordinator()): ?>
+														<a class="btn blue tooltips" data-original-title="Ver contenido del curso" data-placement="bottom" data-container="body" href="/coordinators/courses/show/<?php echo Hashids::encode($course->id); ?>">
+														Leer más <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													<?php elseif($course->author_id == Auth::user()->id): ?>
+														<a class="btn blue tooltips" data-original-title="Gestionar contenido del curso" data-placement="bottom" data-container="body"  href="/teachers/courses/show/<?php echo Hashids::encode($course->id); ?>">
+														Gestionar <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													<?php elseif($course->isContributor(Auth::user())): ?>
+														<a class="btn blue tooltips" data-original-title="Contribuir en el curso" data-placement="bottom" data-container="body"  href="/teachers/contributions/show/<?php echo Hashids::encode($course->id); ?>">
+														Contribuir <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													<?php else: ?>
+														<a class="btn blue tooltips" data-original-title="Ver el contenido del curso" data-placement="bottom" data-container="body"  href="/curso/<?php echo $course->name; ?>">
+														Leer más <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													<?php endif; ?>
+													<div class="course-students">
+														<h5>Estudiantes destacados</h5>
+														<?php if(count($course->beststudents()) > 0): ?>
+															<?php foreach($course->beststudents() as $student): ?>
+																<a href="/<?php echo $student->username; ?>" class="student-line-picture tooltips" data-original-title="<?php echo $student->display_name; ?>"><img alt="" class="img-circle full-width" src="<?php echo $student->profile->getAvatar(); ?>"></a>
+															<?php endforeach; ?>
+														<?php else: ?>
+															<span>No hay estudientes en este curso aún</span>
+														<?php endif; ?>
+														<!-- <a href="#" class="student-line-picture"><img alt="" class="img-circle full-width" src="/uploads/users/AlexanderZon/images/A5790167-359B-B89B-60CD-A405C4207010.jpg"></a>
+														<a href="#" class="student-line-picture"><img alt="" class="img-circle full-width" src="/uploads/users/AlexanderZon/images/A5790167-359B-B89B-60CD-A405C4207010.jpg"></a>
+														<a href="#" class="student-line-picture"><img alt="" class="img-circle full-width" src="/uploads/users/AlexanderZon/images/A5790167-359B-B89B-60CD-A405C4207010.jpg"></a> -->
+													</div>
+												</div>
+											</div>
+											<hr>
+										<?php endforeach; ?>
+									<?php else: ?>
+										<div class="col-md-12">Aún no esta enseñando en ningún Curso</div>
+									<?php endif; ?>
+								</div>
+								<!--end col-md-12-->
+							</div>
+							<?php if($courses->count() > 0): ?>
+								<?php echo $courses->links('users.wall.read.paginate')->with(array('courses' => $courses, 'section' => 'teaching')); ?>
+
+							<?php endif; ?>
+						</div>
+					</div>
+				</div>
+		</div>
+				
+		<!-- END PORTLET -->
+	</div>
+</div>	
+
+<script type="text/javascript">
+	
+	window.history.pushState("", "", '/<?php echo $user->username; ?>?section=teaching');
+		document.title = 'Alice | <?php echo $user->username; ?> | Enseñando';
+
+</script>	
+	
+<script type="text/javascript">
+	Metronic.init();
+</script>

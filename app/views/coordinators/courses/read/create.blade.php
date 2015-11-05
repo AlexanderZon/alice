@@ -128,10 +128,10 @@
 												Remover </a>
 											</div>
 										</div>
-										<div class="fileinput fileinput-new" data-provides="thumbnail_picture">
+										<!-- <div class="fileinput fileinput-new" data-provides="thumbnail_picture">
 											<div>Imagen Miniatura</div>
 											<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
-												<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
+												<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/>
 												<img src="{{Course::DEFAULT_THUMBNAIL_PICTURE}}" alt=""/>
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;">
@@ -147,7 +147,7 @@
 												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="thumbnail_picture">
 												Remover </a>
 											</div>
-										</div>
+										</div> -->
 									</div>
 								</div>
 
@@ -160,8 +160,8 @@
 								<div class="col-md-6">
 									<div class="row">
 										<div class="col-md-offset-3 col-md-9">
-											<button type="submit" class="btn green">Agregar</button>
-											<a href="{{ $route }}" class="btn default">Volver</a>
+											<button type="submit" class="btn green tooltips" data-original-title="Agregar Curso">Agregar</button>
+											<a href="{{ $route }}" class="btn default tooltips" data-original-title="Volver al listado de Cursos">Volver</a>
 										</div>
 									</div>
 								</div>

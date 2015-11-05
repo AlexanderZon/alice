@@ -35,12 +35,12 @@
 										<div class="mix-inner">
 											<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" style="max-width:200px !important">
 											<div class="mix-details" style="max-width:200px !important;">
-												<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
+												<a href="/{{ $student->username }}" class="tooltips" data-original-title="Ver perfil de {{ $student->display_name }}" data-placement="top" data-container="div.row"><h4>{{ $student->display_name }}</h4></a>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $student->last_login }}</span></span>
-												<a href="javascript:;" class="mix-link students-statistics-btn" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}">
+												<a href="javascript:;" class="mix-link students-statistics-btn tooltips" data-original-title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}" data-placement="bottom" data-container="div.row">
 													<i class="fa fa-sliders"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button">
+												<a class="mix-preview fancybox-button tooltips" href="/{{ $student->username }}" data-original-title="Ver perfil de {{ $student->display_name }}" data-placement="bottom" data-container="div.row" data-rel="fancybox-button">
 													<i class="fa fa-eye"></i>
 												</a>
 											</div>

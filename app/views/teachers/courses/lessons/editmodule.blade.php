@@ -76,8 +76,8 @@
 										<div class="col-md-6">
 											<div class="row">
 												<div class="col-md-offset-3 col-md-9">
-													<button type="submit" class="btn green">Enviar</button>
-													<a href="javascript:;" class="btn default lessons-back-btn">Volver</a>
+													<button type="submit" class="btn green tooltips" data-original-title="Guardar Cambios en el Módulo">Enviar</button>
+													<a href="javascript:;" class="btn default lessons-back-btn tooltips" data-original-title="Volver al listado de Lecciones">Volver</a>
 												</div>
 											</div>
 										</div>
@@ -192,6 +192,6 @@
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
-		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="{{ $course->getMainPicture() }}" class="img-responsive" alt="">');
 
 	</script>

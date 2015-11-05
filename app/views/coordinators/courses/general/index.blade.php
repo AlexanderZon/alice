@@ -14,7 +14,7 @@
 			<div class="portlet light">
 				<!-- STAT -->
 				<div class="row list-separated profile-stat">
-					<img class="col-md-12" src="{{ $course->cover_picture }}"/>
+					<img class="col-md-12" src="{{ $course->getCoverPicture() }}"/>
 				</div>
 				<!-- END PAGE CONTENT INNER -->
 				<div class="row">
@@ -93,6 +93,6 @@
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
-		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="{{ $course->getMainPicture() }}" class="img-responsive" alt="">');
 
 	</script>

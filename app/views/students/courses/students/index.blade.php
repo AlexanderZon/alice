@@ -35,10 +35,10 @@
 										<div class="mix-inner">
 											<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" style="max-width:200px !important">
 											<div class="mix-details" style="max-width:200px !important;">
-												<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
+												<a href="/{{ $student->username }}" class="tooltips" data-original-title="Ver perfil de {{ $student->display_name }}" data-placement="top" data-container="body"><h4>{{ $student->display_name }}</h4></a>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $student->last_login }}</span></span>
 												<span>
-													<a class="fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button" style="color: #555;display: block;cursor: pointer;margin-top: 10px;position: absolute;left: 37%;padding: 10px 15px;background: #16b2f4;">
+													<a class="fancybox-button tooltips" href="/{{ $student->username }}" data-original-title="Ver perfil de {{ $student->display_name }}" data-placement="bottom" data-container="body" data-rel="fancybox-button" style="color: #555;display: block;cursor: pointer;margin-top: 10px;position: absolute;left: 37%;padding: 10px 15px;background: #16b2f4;">
 														<i class="fa fa-eye"></i>
 													</a>
 												</span>

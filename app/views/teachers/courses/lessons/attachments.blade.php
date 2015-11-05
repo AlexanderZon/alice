@@ -82,23 +82,23 @@
 								<div class="row fileupload-buttonbar">
 									<div class="col-lg-12 col-md-12 col-sm-12">
 										<!-- The fileinput-button span is used to style the file input field as button -->
-										<span class="btn green fileinput-button">
+										<span class="btn green fileinput-button tooltips" data-original-title="Añadir nuevos archivos a la Lección" data-placement="bottom">
 										<i class="fa fa-plus"></i>
 										<span>
 										Añadir Archivos... </span>
 										<input type="file" name="files[]" multiple="">
 										</span>
-										<button type="submit" class="btn blue start">
+										<button type="submit" class="btn blue start tooltips" data-original-title="Comenzar la subida de los Archivos Nuevos" data-placement="bottom">
 										<i class="fa fa-upload"></i>
 										<span>
 										Comenzar Subida </span>
 										</button>
-										<button type="reset" class="btn warning cancel">
+										<button type="reset" class="btn warning cancel tooltips" data-original-title="Cancelar la subida de los Archivos Nuevos" data-placement="bottom">
 										<i class="fa fa-ban-circle"></i>
 										<span>
 										Cancelar Subida </span>
 										</button>
-										<button type="button" class="btn red delete">
+										<button type="button" class="btn red delete tooltips" data-original-title="Eliminar los Archivos Seleccionados" data-placement="bottom">
 										<i class="fa fa-trash"></i>
 										<span>
 										Eliminar </span>
@@ -212,14 +212,16 @@
 							                <td>
 							                    <span class="preview">
 							                        {% if (file.thumbnailUrl) { %}
-							                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}" style="max-height: 70px; max-width:100px"></a>
+							                            <img src="{%=file.thumbnailUrl%}" style="max-height: 70px; max-width:100px">
 							                        {% } %}
 							                    </span>
 							                </td>
 							                <td>
 							                    <p class="name">
 							                        {% if (file.url) { %}
-							                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+							                            <!-- <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.url%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a> -->
+
+							                            <span>{%=file.name%}</span>
 							                        {% } else { %}
 							                            <span>{%=file.name%}</span>
 							                        {% } %}
@@ -233,10 +235,14 @@
 							                </td>
 							                <td>
 							                    {% if (file.deleteUrl) { %}
-							                        <button class="btn red delete btn-sm" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+							                        <button class="btn red delete btn-sm tooltips" data-original-title="Eliminar este Archivo" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
 							                            <i class="fa fa-trash-o"></i>
 							                            <span>Eliminar</span>
 							                        </button>
+							                        <a href="{%=file.url%}" target="_blank" class="btn blue btn-sm tooltips" data-original-title="Descargar este Archivo">
+							                            <i class="fa fa-download"></i>
+							                            <span>Descargar</span>
+							                        </a>
 							                        <input type="checkbox" name="delete" value="{%=file._id %}" class="toggle">
 							                    {% } else { %}
 							                        <button class="btn yellow cancel btn-sm">
@@ -538,6 +544,6 @@
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
-		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="{{ $course->getMainPicture() }}" class="img-responsive" alt="">');
 
 	</script>

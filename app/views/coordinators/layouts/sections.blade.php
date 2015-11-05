@@ -39,7 +39,7 @@
 				<div class="portlet light profile-sidebar-portlet">
 					<!-- SIDEBAR USERPIC -->
 					<div id="course-main-image" class="profile-userpic">
-						<img src="{{ $course->main_picture }}" class="img-responsive" alt="">
+						<img src="{{ $course->getMainPicture() }}" class="img-responsive" alt="">
 					</div>
 					<!-- END SIDEBAR USERPIC -->
 					<!-- SIDEBAR USER TITLE -->
@@ -143,7 +143,7 @@
 									Preguntas </a>
 								</li>
 							@endif
-							@if($course->author_id == Auth::user()->id)
+							@if(true)
 								<li id="activities-section" class="{{ $section == 'activities' ? 'active' : '' }}">
 									<a href="javascript:;" class="activities-btn">
 									<i class="icon-chemistry"></i>

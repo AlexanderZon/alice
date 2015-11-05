@@ -1,0 +1,68 @@
+<?php $__env->startSection('css'); ?>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link href="/assets/admin/pages/css/follows.css" rel="stylesheet" type="text/css"/>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content_courses"); ?>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN PORTLET -->
+
+		<div class="portlet light">
+			<!-- STAT -->
+			<!-- <div class="row list-separated profile-stat">
+				<img class="col-md-12" src="<?php echo Auth::user()->profile->getCover(); ?>"/>
+			</div> -->
+			<!-- END STAT -->
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="portlet-title">
+						<h4 class="profile-usertitle-name">Profesores (<?php echo $teachers->count(); ?>)
+							<!-- <a href="javascript:;" class="btn blue-madison pull-right tooltips lessons-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
+								<i class="fa fa-arrow-left"></i>
+							</a> -->
+						</h4>
+					</div>
+					<div class="row">&nbsp;</div>
+					<div class="row">&nbsp;</div>
+					<div class="portlet-body form teachers">
+				
+						<!-- BEGIN FILTER -->
+						<div class="row mix-grid">
+							<?php if($teachers->count() == 0): ?>
+								<div class="col-md-12">Todavia no existen profesores activos en el sistema.</div>
+							<?php else: ?>
+								<?php foreach($teachers as $teacher): ?>
+									<div class="col-lg-2 col-md-3 col-sm-4 col-xm-4 mix">
+										<div class="mix-inner">
+											<img class="img-responsive" src="<?php echo $teacher->profile->getAvatar(); ?>" alt="" style="max-width:200px !important">
+											<div class="mix-details" style="max-width:200px !important;">
+												<a href="/<?php echo $teacher->username; ?>" class="" title="Ver perfil de <?php echo $teacher->display_name; ?>"><h4><?php echo $teacher->display_name; ?></h4></a>
+												<span>Última visita: <span class="moment-fromnow"><?php echo $teacher->last_login; ?></span></span>
+												<span>
+													<a class="mix-preview fancybox-button tooltips" data-original-title="Ver perfil de <?php echo $teacher->display_name; ?>" data-container="body" data-placement="bottom" href="/<?php echo $teacher->username; ?>" title="Ver perfil de <?php echo $teacher->display_name; ?>" data-rel="fancybox-button" style="color: #555;display: block;cursor: pointer;margin-top: 10px;position: absolute;left: 37%;padding: 10px 15px;background: #16b2f4;">
+														<i class="fa fa-eye"></i>
+													</a>													
+												</span>
+											</div>
+										</div>
+									</div>
+								<?php endforeach; ?>
+							<?php endif; ?>
+						</div>
+						<!-- END FILTER -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('javascript'); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('students.layouts.courses', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

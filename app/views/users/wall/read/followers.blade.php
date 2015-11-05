@@ -23,13 +23,13 @@
 						<div class="col-lg-2 col-md-3 col-sm-4 col-xm-4 mix">
 							<div class="mix-inner">
 								<img class="img-responsive" src="{{ $follower->profile->getAvatar() }}" alt="" style="max-width:200px !important">
-								<div class="mix-details" style="max-width:200px !important"
-									<a href="/{{ $follower->username }}" title="Ver perfil de {{ $follower->display_name }}"><h4>{{ $follower->display_name }}</h4></a>
+								<div class="mix-details" style="max-width:200px !important">
+									<a href="/{{ $follower->username }}" class="tooltips" data-original-title="Ver perfil de {{ $follower->display_name }}" data-placement="top" data-container="body"><h4>{{ $follower->display_name }}</h4></a>
 									@if($follower->id != Auth::user()->id)
-										<a href="javascript:;" class="mix-link follow-follows" data-user="{{ $follower->username }}" title="Seguir a {{ $follower->display_name }}">
+										<a href="javascript:;" class="mix-link follow-follows tooltips" data-user="{{ $follower->username }}" data-original-title="Seguir a {{ $follower->display_name }}" data-container="body" data-placement="bottom">
 											<i class="fa fa-thumbs-o-up"></i>
 										</a>
-										<a class="mix-preview fancybox-button" href="/{{ $follower->username }}" title="Ver perfil de {{ $follower->display_name }}" data-rel="fancybox-button">
+										<a class="mix-preview fancybox-button tooltips" href="/{{ $follower->username }}" data-original-title="Ver perfil de {{ $follower->display_name }}" data-rel="fancybox-button" data-container="body" data-placement="bottom">
 											<i class="fa fa-eye"></i>
 										</a>
 									@endif

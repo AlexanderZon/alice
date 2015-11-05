@@ -61,7 +61,7 @@
 								</a>
 								<span class="pull-right">&nbsp;</span>
 								<span class="pull-right">&nbsp;</span>
-								<a href="javascript:;" class="btn yellow pull-right tooltips discussion-edit" data-placement="left" data-original-title="Comentarios de Discusión">
+								<a href="javascript:;" class="btn yellow pull-right tooltips discussion-edit" data-placement="left" data-original-title="Gestionar Discusión">
 									<i class="fa fa-pencil"></i>
 								</a>
 							</h4>
@@ -1029,6 +1029,6 @@
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
-		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="{{ $course->getMainPicture() }}" class="img-responsive" alt="">');
 
 	</script>

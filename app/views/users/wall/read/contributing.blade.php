@@ -32,7 +32,7 @@
 						<div class="col-md-12 blog-page">
 							<div class="row">
 								<div class="col-md-12 col-sm-12 article-block">
-									<h4 class="profile-desc-title">Enseñando ({{ $courses->count() }})</h4>
+									<h4 class="profile-desc-title">Contribuyendo ({{ $courses->count() }})</h4>
 									@if($courses->count() > 0)
 										@foreach($courses as $course)
 											<div class="row">
@@ -43,13 +43,11 @@
 													<ul class="list-inline">
 														<li>
 															<i class="fa fa-user"></i>
-															<a href="{{ $course->getRoute() }}/profesor">
-															{{ $course->teacher->display_name }} </a>
+															{{ $course->teacher->display_name }}
 														</li>
 														<li>
 															<i class="fa fa-users"></i>
-															<a href="{{ $course->getRoute() }}/estudiantes">
-															{{ $course->students()->count() }} Estudiantes </a>
+															{{ $course->students()->count() }} Estudiantes
 														</li>
 													</ul>
 													<!-- <ul class="list-inline blog-tags">
@@ -71,9 +69,24 @@
 													<p class="justify">
 														{{ $course->getSummary() }}
 													</p>
-													<a class="btn blue" href="{{ $course->getRoute() }}">
-													Leer Mas <i class="m-icon-swapright m-icon-white"></i>
-													</a>
+
+													@if(Auth::user()->isCoordinator())
+														<a class="btn blue tooltips" data-original-title="Ver contenido del curso" data-placement="bottom" data-container="body" href="/coordinators/courses/show/{{ Hashids::encode($course->id) }}">
+														Leer más <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													@elseif($course->author_id == Auth::user()->id)
+														<a class="btn blue tooltips" data-original-title="Gestionar contenido del curso" data-placement="bottom" data-container="body"  href="/teachers/courses/show/{{ Hashids::encode($course->id) }}">
+														Gestionar <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													@elseif($course->isContributor(Auth::user()))
+														<a class="btn blue tooltips" data-original-title="Contribuir en el curso" data-placement="bottom" data-container="body"  href="/teachers/contributions/show/{{ Hashids::encode($course->id) }}">
+														Contribuir <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													@else
+														<a class="btn blue tooltips" data-original-title="Ver el contenido del curso" data-placement="bottom" data-container="body"  href="/curso/{{ $course->name }}">
+														Leer más <i class="m-icon-swapright m-icon-white"></i>
+														</a>
+													@endif
 													<div class="course-students">
 														<h5>Estudiantes destacados</h5>
 														@if(count($course->beststudents()) > 0)

@@ -54,13 +54,13 @@
 										<?php $viewed = $lesson->viewedBy($student) ?>
 											<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" style="max-width:200px">
 											<div class="mix-details" style="max-width:200px">
-												<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
+												<a href="/{{ $student->username }}" class="tooltips" data-original-title="Ver perfil de {{ $student->display_name }}" data-container="div.row" data-placement="top"><h4>{{ $student->display_name }}</h4></a>
 												<span href="/">Primera visita: <span class="moment-fromnow">{{ $viewed->created_at }}</span></span><br>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $viewed->updated_at }}</span></span>
-												<a href="javascript:;" class="mix-link students-statistics-btn" title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}">
+												<a href="javascript:;" class="mix-link students-statistics-btn tooltips" data-original-title="Estadísticas de {{ $student->display_name }} para este curso" data-user="{{ Hashids::encode($student->id) }}" data-container="div.row" data-placement="bottom">
 													<i class="fa fa-sliders"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button">
+												<a class="mix-preview fancybox-button tooltips" href="/{{ $student->username }}" data-original-title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button" data-container="div.row" data-placement="bottom">
 													<i class="fa fa-eye"></i>
 												</a>
 											</div>

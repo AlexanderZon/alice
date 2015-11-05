@@ -31,12 +31,12 @@
 								<div class="mix-inner">
 									<img class="img-responsive" src="{{ $student->profile->getAvatar() }}" alt="" style="max-width:200px !important">
 									<div class="mix-details" style="max-width:200px !important;">
-										<a href="/{{ $student->username }}" class="" title="Ver perfil de {{ $student->display_name }}"><h4>{{ $student->display_name }}</h4></a>
+										<a href="/{{ $student->username }}" class="tooltips" data-original-title="Ver perfil de {{ $student->display_name }}" data-placement="bottom" data-container="div.row"><h4>{{ $student->display_name }}</h4></a>
 										<span href="/">Última visita: <span class="moment-fromnow">{{ $student->last_login }}</span></span>
-										<a href="javascript:;" class="mix-link students-back-btn" title="Ir al listado de Estudiantes" data-user="{{ Hashids::encode($student->id) }}">
+										<a href="javascript:;" class="mix-link students-back-btn tooltips" data-original-title="Volver al listado de Estudiantes" data-user="{{ Hashids::encode($student->id) }}" data-placement="bottom" data-container="div.row">
 											<i class="fa fa-arrow-left"></i>
 										</a>
-										<a class="mix-preview fancybox-button" href="/{{ $student->username }}" title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button">
+										<a class="mix-preview fancybox-button tooltips" href="/{{ $student->username }}" data-original-title="Ver perfil de {{ $student->display_name }}" data-rel="fancybox-button" data-placement="bottom" data-container="div.row">
 											<i class="fa fa-eye"></i>
 										</a>
 									</div>
@@ -75,7 +75,7 @@
 										<div class="col-md-12 achievements-container">
 											@foreach($student->achievementFromCourse($course) as $achievement)
 												<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3" style="padding:0px; padding-right: 5px">
-													<div class="mask-circle tooltips" data-original-title="{{$achievement->title}}">
+													<div class="mask-circle tooltips" data-original-title="{{$achievement->title}}" data-placement="top" data-container="div.row">
 														<img src="{{ $achievement->picture }}" alt="" class="img-responsive" style="border-radius:50%; max-width:75px" title="{{ $achievement->title }}">			
 													</div>
 												</div>

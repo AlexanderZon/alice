@@ -35,12 +35,12 @@
 										<div class="mix-inner">
 											<img class="img-responsive" src="{{ $teacher->profile->getAvatar() }}" alt="" style="max-width:200px !important">
 											<div class="mix-details" style="max-width:200px !important;">
-												<a href="/{{ $teacher->username }}" class="" title="Ver perfil de {{ $teacher->display_name }}"><h4>{{ $teacher->display_name }}</h4></a>
+												<a href="/{{ $teacher->username }}" class="tooltips" data-original-title="Ver perfil de {{ $teacher->display_name }}" data-placement="top" data-container="div.row"><h4>{{ $teacher->display_name }}</h4></a>
 												<span href="/">Última visita: <span class="moment-fromnow">{{ $teacher->last_login }}</span></span>
-												<a href="javascript:;" class="mix-link contributors-invite-btn" title="Invitar a {{ $teacher->display_name }} a ser Contribuidor de este curso" data-teacher="{{ Hashids::encode($teacher->id) }}">
+												<a href="javascript:;" class="mix-link contributors-invite-btn tooltips" data-original-title="Invitar a {{ $teacher->display_name }} a ser Contribuidor de este curso" data-placement="bottom" data-container="div.row" data-teacher="{{ Hashids::encode($teacher->id) }}">
 													<i class="fa fa-paper-plane-o"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="/{{ $teacher->username }}" title="Ver perfil de {{ $teacher->display_name }}" data-rel="fancybox-button">
+												<a class="mix-preview fancybox-button tooltips" href="/{{ $teacher->username }}" data-original-title="Ver perfil de {{ $teacher->display_name }}" data-placement="bottom" data-container="div.row" data-rel="fancybox-button">
 													<i class="fa fa-eye"></i>
 												</a>
 											</div>

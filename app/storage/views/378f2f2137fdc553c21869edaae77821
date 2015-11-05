@@ -1,0 +1,134 @@
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link href="/assets/admin/pages/css/follows.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/global/plugins/bootstrap-image-picker/image-picker/image-picker.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
+
+<style type="text/css">
+	ul.list-inline li i.fa{
+		color: #78cff8;
+	}
+</style>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN PORTLET -->
+
+		<div class="portlet light" data-course="<?php echo Hashids::encode($course->id); ?>">
+			<!-- STAT -->
+			<!-- <div class="row list-separated profile-stat">
+				<img class="col-md-12" src="<?php echo Auth::user()->profile->getCover(); ?>"/>
+			</div> -->
+			<!-- END STAT -->
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="portlet-title">
+						<h4 class="profile-usertitle-name">Manojo de insignias a entregar
+							<a href="javascript:;" class="btn blue-madison pull-right tooltips achievements-back-btn" data-placement="left" data-original-title="Ir a las premiaciones por estudiante" data-course="<?php echo Hashids::encode($course->id); ?>">
+								<i class="fa fa-arrow-left"></i>
+							</a>
+							<span class="pull-right">&nbsp;</span>
+							<a href="javascript:;" class="btn yellow pull-right tooltips achievements-edit-btn" data-placement="left" data-original-title="Editar Insignias">
+								<i class="fa fa-pencil"></i>
+							</a>
+						</h4>
+					</div>
+					<div class="row">&nbsp;</div>
+					<div class="row">&nbsp;</div>
+					<div class="portlet-body form achievements" data-course="<?php echo Hashids::encode($course->id); ?>">
+				
+						<!-- BEGIN FILTER -->
+						<div class="row mix-grid blog-page">
+							<?php if($achievements->count() == 0): ?>
+								<div class="col-md-12">Todavia no existen estudiantes en este curso.</div>
+							<?php else: ?>
+								<div class="col-md-12">
+									<select class="image-picker" name="achievements" data-limit="10" multiple="multiple">
+									<?php foreach($achievements as $achievement): ?>
+										<?php if($achievement->picture != '' AND $achievement->picture != null): ?>
+											<option data-img-src="<?php echo $achievement->picture; ?>" value="<?php echo Hashids::encode($achievement->id); ?>" <?php echo $achievement->status == 'active' ? 'selected' : ''; ?>><?php echo $achievement->title; ?></option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+									</select>
+								</div>
+							<?php endif; ?>
+						</div>
+						<!-- END FILTER -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="/assets/global/plugins/bootstrap-image-picker/image-picker/image-picker.js"></script>
+	<script src="/assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+<script type="text/javascript">
+
+	var ImagePicker = function(){
+
+		var submitBunched = function(el){
+
+			console.log('<?php echo $route; ?>');
+
+			$.ajax({
+				url: '<?php echo $route; ?>/bunch',
+				type: 'POST',
+				data: {
+					'achievements': el.val()
+				},
+				dataType: 'json',
+				async: true,
+				success: function(data){
+					toastr['success']("", "Manojo Editado");
+					console.log(data);
+				},
+				error: function(xhr){
+					toastr['error']("", "Error al editar Manojo");
+					console.log(xhr);
+				}
+			});
+		}
+
+		var limitReached = function(){
+
+			toastr['error']("Solo se pueden seleccionar 10 insignias para el manojo", "Limite de Insignias alcanzado");
+
+		}
+
+		return {
+
+			init: function(){
+			    $(".image-picker").imagepicker({
+			    	show_label: true,
+			    	changed: function(data){
+			    		console.log($(this).val());
+			    		submitBunched($(this));
+			    		console.log(data);
+			    	},
+			    	limit_reached:function(){
+			    		limitReached();
+			    	}
+			    });
+			}
+
+		}
+
+	}();
+
+	ImagePicker.init();
+	
+	window.history.pushState("", "", '/teachers/courses/show/<?php echo Hashids::encode($course->id); ?>?section=achievements&action=bunch');
+		document.title = 'Alice | <?php echo $course->title; ?> | Premiaciones';
+
+</script>
+
+<script type="text/javascript" src="/assets/global/plugins/moment/moment.conf.js"></script>
+
+<!--<script src="/assets/admin/pages/scripts/portfolio.js"></script>
+<script>
+jQuery(document).ready(function() {    
+   Portfolio.init();
+});
+</script> -->
+

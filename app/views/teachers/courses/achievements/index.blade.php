@@ -62,8 +62,8 @@
 										</div>
 										<div class="col-md-6 student-achievement">
 											<h4>{{$student->display_name}}</h4>
-											@if(count($student_achievements) > 0)
-												<div class="col-md-12 achievements-container">
+											<div class="col-md-12 achievements-container">
+												@if(count($student_achievements) > 0)
 													@foreach($student->achievementFromCourse($course) as $achievement)
 														<div class="col-md-2" style="padding:0px; padding-right: 5px">
 															<div class="mask-circle tooltips" data-original-title="{{$achievement->title}}">
@@ -71,10 +71,10 @@
 															</div>
 														</div>
 													@endforeach
-												</div>
-											@else
-												<span>Todavia no tiene insignias de premiación</span>
-											@endif
+												@else
+													<span id="dont-have-achievements-{{Hashids::encode($student->id)}}">Todavia no tiene insignias de premiación</span>
+												@endif
+											</div>
 										</div>
 										<div class="col-md-3">
 										  <a href="#{{$student->username}}" class="wheel-button" style="background-color:#1ABC9C;background-size:100%;text-decoration:none">+</a>

@@ -1,0 +1,13 @@
+<span class="pagination-info">
+	<span id="pagination-from"><?php echo $messages->getFrom(); ?></span> - <span id="pagination-to"><?php echo $messages->getTo(); ?></span> de <span id="pagination-total"><?php echo $messages->getTotal(); ?></span>
+</span>
+<?php if($messages->getCurrentPage() > 1): ?>
+<a class="btn btn-sm blue paginate-btn" data-box="<?php echo $box; ?>" data-paginateid="<?php echo $messages->getCurrentPage() - 1; ?>">
+	<i class="fa fa-angle-left"></i>
+</a>
+<?php endif; ?>
+<?php if($messages->getCurrentPage() < $messages->getLastPage()): ?>
+<a class="btn btn-sm blue paginate-btn" data-box="<?php echo $box; ?>" data-paginateid="<?php echo $messages->getCurrentPage() + 1; ?>" url="">
+	<i class="fa fa-angle-right"></i>
+</a>
+<?php endif; ?>

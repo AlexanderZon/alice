@@ -11,6 +11,7 @@ use \Response as Response;
 use \GUID as GUID;
 use \Hash as Hash;
 use \Hashids as Hashids;
+use \Crypt as Crypt;
 
 
 class ReadController extends \Teachers\Courses\ReadController {
@@ -151,7 +152,7 @@ class ReadController extends \Teachers\Courses\ReadController {
 	{
 		$course = Course::find(Hashids::decode($course_id));
 
-		$discussion = Discussion::find(Hashids::decode(Input::get('discussion_id')));
+		$discussion = Discussion::find(Crypt::decrypt(Input::get('discussion_id')));
 		$discussion->delete();
 
 		self::addArgument('course', $course);

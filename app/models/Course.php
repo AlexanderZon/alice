@@ -415,9 +415,25 @@ class Course extends \Eloquent {
 
     public function average(){
 
-        # CODE: Average Calculating
+        $students = $this->students;
 
-        return 0;
+        $averages = 0;
+        $counter = 0;
+
+        if($students):
+
+            foreach($students as $student):
+                $averages += $this->averageOf($student);
+                $counter++;
+            endforeach;
+
+            return $averages/$counter;
+
+        else:
+
+            return 0;
+
+        endif;
 
     }
 
@@ -557,6 +573,54 @@ class Course extends \Eloquent {
         endforeach;
 
         return $counter;
+
+    }
+
+    public function getMainPicture(){
+
+        $image = $this->main_picture;
+
+        if($image != ''):
+
+            if(File::exists(public_path().$image)):
+
+                return $image;
+
+            else:
+
+                return Course::DEFAULT_MAIN_PICTURE;
+
+            endif;
+
+        else:
+
+            return Course::DEFAULT_MAIN_PICTURE;
+
+        endif;
+
+    }
+
+    public function getCoverPicture(){
+
+        $image = $this->cover_picture;
+
+        if($image != ''):
+
+            if(File::exists(public_path().$image)):
+
+                return $image;
+
+            else:
+
+                return Course::DEFAULT_COVER_PICTURE;
+
+            endif;
+
+        else:
+
+            return Course::DEFAULT_COVER_PICTURE;
+
+        endif;
 
     }
 
@@ -722,5 +786,7 @@ class Course extends \Eloquent {
         return HTML::image($route, $title, array($pivot => $width));
 
     }
+
+
 
 }

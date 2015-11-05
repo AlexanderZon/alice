@@ -54,12 +54,12 @@
 						@if(Auth::user()->isStudent() AND !$course->iveAccepted())
 							<div class="row students-postulation-container" data-course="{{ Hashids::encode($course->id) }}">
 								@if($course->ivePostuled())
-									<a class="btn green students-notpostulation-btn" href="javascript:;">
+									<a class="btn green students-notpostulation-btn tooltips" data-original-title="Dejar de Postularme como estudiante a este curso" data-placement="right" data-container="body" href="javascript:;">
 										Dejar de Postular <i class="fa fa-history"></i>
 									</a>
 									<!-- {{ $route }}/nopostular/{{ Hashids::encode($course->id) }} -->
 								@else
-									<a class="btn blue students-postulation-btn" href="javascript:;">
+									<a class="btn blue students-postulation-btn tooltips" data-original-title="Postularme como estudiante a este curso" data-placement="right" data-container="body"  href="javascript:;">
 										Postularme <i class="fa fa-sign-in"></i>
 									</a>
 									<!-- {{ $route }}/postular/{{ Hashids::encode($course->id) }} -->
@@ -83,49 +83,49 @@
 						<ul class="nav">
 							@if(true)
 								<li id="general-section" class="{{ $section == 'show' ? 'active' : '' }}">
-									<a href="javascript:;" class="general-btn">
+									<a href="javascript:;" class="general-btn tooltips" data-original-title="Ver la Información General del Curso" data-container="body" data-placement="right">
 									<i class="icon-home"></i>
 									General </a>
 								</li>
 							@endif
 							@if($course->iveAccepted())
 								<li id="lessons-section" class="{{ $section == 'lessons' ? 'active' : '' }}">
-									<a href="javascript:;" class="lessons-btn">
+									<a href="javascript:;" class="lessons-btn tooltips" data-original-title="Entrar al listado de Lecciones del Curso" data-container="body" data-placement="right">
 									<i class="icon-notebook"></i>
 									Lecciones </a>
 								</li>
 								<li id="students-section" class="{{ $section == 'students' ? 'active' : '' }}">
-									<a href="javascript:;" class="students-btn">
+									<a href="javascript:;" class="students-btn tooltips" data-original-title="Visualizar el listados de estudiantes inscritos al Curso" data-container="body" data-placement="right">
 									<i class="icon-graduation"></i>
 									Compañeros </a>
 								</li>
 								<li id="discussions-section" class="{{ $section == 'discussions' ? 'active' : '' }}">
-									<a href="javascript:;" class="discussions-btn">
+									<a href="javascript:;" class="discussions-btn tooltips" data-original-title="Entrar a las discusiones del Curso" data-container="body" data-placement="right">
 									<i class="icon-bubbles"></i>
 									Discusiones </a>
 								</li>
 								<li id="contributors-section" class="{{ $section == 'contributing' ? 'active' : '' }}">
-									<a href="javascript:;" class="contributors-btn">
+									<a href="javascript:;" class="contributors-btn tooltips" data-original-title="Visualizar el listado de Contribuidores del Curso" data-container="body" data-placement="right">
 									<i class="icon-eyeglasses"></i>
 									Contribuidores </a>
 								</li>
 								<li id="achievements-section" class="{{ $section == 'achievements' ? 'active' : '' }}">
-									<a href="javascript:;" class="achievements-btn">
+									<a href="javascript:;" class="achievements-btn tooltips" data-original-title="Visualizar mis premiaciones en este Curso" data-container="body" data-placement="right">
 									<i class="icon-badge"></i>
 									Premios </a>
 								</li>
 								<li id="statistics-section" class="{{ $section == 'statistics' ? 'active' : '' }}">
-									<a href="javascript:;" class="statistics-btn">
+									<a href="javascript:;" class="statistics-btn tooltips" data-original-title="Visualizar mis estadísticas en este Curso" data-container="body" data-placement="right">
 									<i class="icon-graph"></i>
 									Estadísticas </a>
 								</li>
 								<li id="questions-section" class="{{ $section == 'questions' ? 'active' : '' }}">
-									<a href="javascript:;" class="questions-btn">
+									<a href="javascript:;" class="questions-btn tooltips" data-original-title="Visualizar el cuestionario del Curso" data-container="body" data-placement="right">
 									<i class="icon-question"></i>
-									Preguntas </a>
+									Cuestionario </a>
 								</li>
 								<li id="activities-section" class="{{ $section == 'activities' ? 'active' : '' }}">
-									<a href="javascript:;" class="activities-btn">
+									<a href="javascript:;" class="activities-btn tooltips" data-original-title="Entrar a las Actividades del Curso" data-container="body" data-placement="right">
 									<i class="icon-chemistry"></i>
 									Actividades </a>
 								</li>

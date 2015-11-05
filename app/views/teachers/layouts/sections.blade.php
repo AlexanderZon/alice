@@ -82,70 +82,70 @@
 						<ul class="nav">
 							@if(true)
 								<li id="general-section" class="{{ $section == 'show' ? 'active' : '' }}">
-									<a href="javascript:;" class="general-btn">
+									<a href="javascript:;" class="general-btn tooltips" data-original-title="Editar la Información General del Curso" data-placement="right" data-container="body">
 									<i class="icon-home"></i>
 									General </a>
 								</li>
 							@endif
 							@if($course->author_id == Auth::user()->id)
 								<li id="lessons-section" class="{{ $section == 'lessons' ? 'active' : '' }}">
-									<a href="javascript:;" class="lessons-btn">
+									<a href="javascript:;" class="lessons-btn tooltips" data-original-title="Gestionar las Lecciones del Curso" data-placement="right" data-container="body">
 									<i class="icon-notebook"></i>
 									Lecciones </a>
 								</li>
 							@endif
 							@if($course->author_id == Auth::user()->id)
 								<li id="students-section" class="{{ $section == 'students' ? 'active' : '' }}">
-									<a href="javascript:;" class="students-btn">
+									<a href="javascript:;" class="students-btn tooltips" data-original-title="Ver el Listado de Estudiantes del Curso" data-placement="right" data-container="body">
 									<i class="icon-graduation"></i>
 									Estudiantes </a>
 								</li>
 							@endif
 							@if($course->author_id == Auth::user()->id OR $course->contributionStatus(Auth::user()) == 'active')
 								<li id="discussions-section" class="{{ $section == 'discussions' ? 'active' : '' }}">
-									<a href="javascript:;" class="discussions-btn">
+									<a href="javascript:;" class="discussions-btn tooltips" data-original-title="Gestionar las Discusiones del Curso" data-placement="right" data-container="body">
 									<i class="icon-bubbles"></i>
 									Discusiones </a>
 								</li>
 							@endif
 							@if($course->author_id == Auth::user()->id)
 								<li id="contributors-section" class="{{ $section == 'contributing' ? 'active' : '' }}">
-									<a href="javascript:;" class="contributors-btn">
+									<a href="javascript:;" class="contributors-btn tooltips" data-original-title="Ver el listado de Contribuidores del Curso" data-placement="right" data-container="body">
 									<i class="icon-eyeglasses"></i>
 									Contribuidores </a>
 								</li>
 							@endif
 							@if($course->author_id == Auth::user()->id)
 								<li id="achievements-section" class="{{ $section == 'achievements' ? 'active' : '' }}">
-									<a href="javascript:;" class="achievements-btn">
+									<a href="javascript:;" class="achievements-btn tooltips" data-original-title="Gestionar las Premiaciones del Curso" data-placement="right" data-container="body">
 									<i class="icon-badge"></i>
 									Premiaciones </a>
 								</li>
 							@endif
 							@if($course->author_id == Auth::user()->id)
 								<li id="statistics-section" class="{{ $section == 'statistics' ? 'active' : '' }}">
-									<a href="javascript:;" class="statistics-btn">
+									<a href="javascript:;" class="statistics-btn tooltips" data-original-title="Estadisticas de los estudiantes en el curso" data-placement="right" data-container="body">
 									<i class="icon-graph"></i>
 									Estadísticas </a>
 								</li>
 							@endif
 							@if($course->author_id == Auth::user()->id)
 								<li id="inscriptions-section" class="{{ $section == 'inscriptions' ? 'active' : '' }}">
-									<a href="javascript:;" class="inscriptions-btn">
+									<a href="javascript:;" class="inscriptions-btn tooltips" data-original-title="Listados de Estudiantes postulados para entrar al curso" data-placement="right" data-container="body">
 									<i class="icon-user-following"></i>
 									Inscripciones </a>
 								</li>
 							@endif
 							@if($course->author_id == Auth::user()->id)
 								<li id="questions-section" class="{{ $section == 'questions' ? 'active' : '' }}">
-									<a href="javascript:;" class="questions-btn">
+									<a href="javascript:;" class="questions-btn tooltips" data-original-title="Gestionar el Cuestionario del Curso" data-placement="right" data-container="body">
 									<i class="icon-question"></i>
 									Preguntas </a>
 								</li>
 							@endif
 							@if($course->author_id == Auth::user()->id)
 								<li id="activities-section" class="{{ $section == 'activities' ? 'active' : '' }}">
-									<a href="javascript:;" class="activities-btn">
+									<a href="javascript:;" class="activities-btn tooltips" data-original-title="Gestionar las Actividades del Curso" data-placement="right" data-container="body">
 									<i class="icon-chemistry"></i>
 									Actividades </a>
 								</li>
@@ -572,7 +572,7 @@
 			        async: true,
 			        success: function (html) {
 			        	content.html(html);
-			        	// console.log(html);
+			        	console.log(html);
 		                Metronic.init();
 			            console.log('Ajax Form Sent!');
 			        },
@@ -1395,9 +1395,11 @@
 			        },
 		    		async: true,
 		    		success: function(data) {
+		    			toastr.success("La Premiación ha sido Agregada correctamente","Premiación Agregada");
 		    			container = $($(el.parents('.student-container')).children('.student-achievement').children('.achievements-container')[0]);
 		    			counter = $($(el.parents('.student-container')).children('.student-info').children('ul.list-inline').children('li.list-achievements').children('.achievements-counter')[0]);
 		    			counter.html(parseInt(counter.html()) + 1 );
+		    			$("#dont-have-achievements-" + el.parents('ul').data('student')).remove();
 		    			console.log(data);
 		    			container.append('' +
 							'<div class="col-md-2" style="padding:0px; padding-right: 5px">' +
@@ -1606,8 +1608,8 @@
 		    		success: function(html) {
 
 				        loading.hide();
-		                Metronic.init();
 		    			content.html(html);
+		                Metronic.init();
 		    			console.log('Students Statistics');
 		    		},
 		    		error: function(xhr) {

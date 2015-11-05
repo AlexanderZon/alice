@@ -80,9 +80,7 @@
 												</div>
 												<div class="timeline-body">
 													<div class="timeline-footer">
-														<a href="javascript:;" class="nav-link module-edit">
-															<h2>{{ $module->title }}</h2>
-														</a>
+														<h2>{{ $module->title }}</h2>
 														<!--
 														@if($module->lessons->count() == 0)
 															<a href="javascript:;" class="btn red pull-right tooltips module-delete" data-original-title="Eliminar Módulo">
@@ -267,6 +265,6 @@
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
-		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="{{ $course->getMainPicture() }}" class="img-responsive" alt="">');
 
 	</script>

@@ -1,0 +1,273 @@
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<style type="text/css">
+	#radialchart {	
+		background: #3f3f4f;color:#ffffff;	
+		width		: 100%;
+		height		: 500px;
+		font-size	: 11px;
+	}				
+</style>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN PORTLET -->
+
+		<div class="portlet light">
+			<!-- STAT -->
+			<!-- <div class="row list-separated profile-stat">
+				<img class="col-md-12" src="<?php echo Auth::user()->profile->getCover(); ?>"/>
+			</div> -->
+			<!-- END STAT -->
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="portlet-title">
+						<h4 class="profile-usertitle-name">Estadísticas
+							<!-- <a href="javascript:;" class="btn blue-madison pull-right tooltips lessons-back-btn" data-placement="left" data-original-title="Ir al listado de Lecciones">
+								<i class="fa fa-arrow-left"></i>
+							</a> -->
+						</h4>
+					</div>
+					<div class="row">&nbsp;</div>
+					<div class="row">&nbsp;</div>
+					<div class="portlet-body form students" data-course="<?php echo Hashids::encode($course->id); ?>">
+				
+						<!-- BEGIN FILTER -->
+        				<div id="radialchart" class="col-md-12" style="width:100%; height:650px;"></div>	
+						<!-- END FILTER -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/assets/global/plugins/amcharts/amcharts/amcharts.js"></script>
+<script src="/assets/global/plugins/amcharts/amcharts/radar.js"></script>
+<script src="/assets/global/plugins/amcharts/amcharts/themes/light.js"></script>
+<script src="/assets/global/plugins/amcharts/amcharts/themes/dark.js"></script>
+<script>
+    /*var chart = AmCharts.makeChart( "chartdiv", {
+	  "type": "radar",
+	  "theme": "dark",
+	  "dataProvider": [ {
+	    "student": "Alexis Montenegro",
+	    "likes": 15,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Carminy Angulo",
+	    "likes": 13,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Rosangela Romero",
+	    "likes": 11,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Larysa Guerra",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Marbelys Perez",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Adakarina Vera",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Edixon Noguera",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Carlos Arvelo",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Erick Umanchuk",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Joimar Mamani",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Jesus Rojas",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  },{
+	    "student": "Alexis Montenegro",
+	    "likes": 15,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Carminy Angulo",
+	    "likes": 13,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Rosangela Romero",
+	    "likes": 11,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Larysa Guerra",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Marbelys Perez",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Adakarina Vera",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Edixon Noguera",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Carlos Arvelo",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Erick Umanchuk",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Joimar Mamani",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Jesus Rojas",
+	    "likes": 10,
+	    "comments": 12,
+	    "average": 15,
+	  }, {
+	    "student": "Yesenia Borges",
+	    "likes": 9,
+	    "comments": 12,
+	    "average": 15,
+	  } ],
+	  "valueAxes": [ {
+	    "axisTitleOffset": 20,
+	    "minimum": 0,
+	    "axisAlpha": 0.15
+	  } ],
+	  "startDuration": 2,
+	  "allLabels": [{"x": 20, "y": 40, "text": "Me gustas", "align": "left", "size": 12, "color": "#ae85c9", "alpha": 1, "rotation": 0, "bold": true, "url": "http://www.amcharts.com"},{"x": 20, "y": 60, "text": "Comentarios", "align": "left", "size": 12, "color": "#aab9f7", "alpha": 1, "rotation": 0, "bold": true, "url": "http://www.amcharts.com"},{"x": 20, "y": 80, "text": "Promedio", "align": "left", "size": 12, "color": "#b6d2ff", "alpha": 1, "rotation": 0, "bold": true, "url": "http://www.amcharts.com"},
+	  ],
+	  "titles": [ {
+		"text": "Estadisticas de estudiantes",
+	  } ],
+	  "graphs": [ {
+	    "balloonText": "[[value]] Me gustas",
+	    "bullet": "round",
+	    "valueField": "likes",
+	  },
+	  {
+	    "balloonText": "[[value]] Comentarios",
+	    "bullet": "round",
+	    "valueField": "comments"
+	  },
+	  {
+	    "balloonText": "[[value]] Puntos de Promedio",
+	    "bullet": "round",
+	    "valueField": "average"
+	  } ],
+	  "categoryField": "student",
+	  "export": {
+	    "enabled": true
+	  }
+	} );*/
+
+    var chart = AmCharts.makeChart( "chartdiv", {
+	  "type": "radar",
+	  "theme": "dark",
+	  "dataProvider": <?php echo $statistics; ?>,
+	  "valueAxes": [ {
+	    "axisTitleOffset": 20,
+	    "minimum": 0,
+	    "axisAlpha": 0.15
+	  } ],
+	  "startDuration": 2,
+	  "allLabels": [{"x": 20, "y": 40, "text": "Me gustas", "align": "left", "size": 12, "color": "#ae85c9", "alpha": 1, "rotation": 0, "bold": true, "url": "http://www.amcharts.com"},{"x": 20, "y": 60, "text": "Comentarios", "align": "left", "size": 12, "color": "#aab9f7", "alpha": 1, "rotation": 0, "bold": true, "url": "http://www.amcharts.com"},{"x": 20, "y": 80, "text": "Promedio", "align": "left", "size": 12, "color": "#b6d2ff", "alpha": 1, "rotation": 0, "bold": true, "url": "http://www.amcharts.com"},{"x": 20, "y": 100, "text": "Premios", "align": "left", "size": 12, "color": "#c9e6f2", "alpha": 1, "rotation": 0, "bold": true, "url": "http://www.amcharts.com"},
+	  ],
+	  "titles": [ {
+		"text": "Estadísticas de estudiantes",
+	  } ],
+	  "graphs": [ {
+	    "balloonText": "[[value]] Me gustas",
+	    "bullet": "round",
+	    "valueField": "likes",
+	  },
+	  {
+	    "balloonText": "[[value]] Comentarios",
+	    "bullet": "round",
+	    "valueField": "comments"
+	  },
+	  {
+	    "balloonText": "[[value]] Puntos de Promedio",
+	    "bullet": "round",
+	    "valueField": "average"
+	  }, 
+	  {
+	    "balloonText": "[[value]] Premios",
+	    "bullet": "round",
+	    "valueField": "achievements"
+	  } ],
+	  "categoryField": "student",
+	  "export": {
+	    "enabled": true
+	  }
+	} );
+
+    // WRITE
+    chart.write("radialchart");
+</script>
+
+<script type="text/javascript">
+
+	var ChartsManager = function(){
+
+		return {
+
+			init: function(){
+
+			}
+
+		}
+
+	}
+	
+	window.history.pushState("", "", '/teachers/courses/show/<?php echo Hashids::encode($course->id); ?>?section=statistics');
+		document.title = 'Alice | <?php echo $course->title; ?> | Estudiantes';
+
+</script>
+
+<script type="text/javascript" src="/assets/global/plugins/moment/moment.conf.js"></script>
+
+<!--<script src="/assets/admin/pages/scripts/portfolio.js"></script>
+<script>
+jQuery(document).ready(function() {    
+   Portfolio.init();
+});
+</script> -->
+

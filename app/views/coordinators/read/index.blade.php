@@ -289,19 +289,19 @@
 											<img class="user-pic" src="{{ $course->thumbnail_picture != '' ? $course->thumbnail_picture : Course::DEFAULT_THUMBNAIL_PICTURE }}">
 										</td>
 										<td>
-											<a href="javascript:;" class="primary-link">{{ $course->title }}</a>
+											<a href="/coordinators/courses/show/{{ Hashids::encode($course->id) }}" class="tooltips" data-original-title="Ir al contenido del curso">{{ $course->title }}</a>
 										</td>
 										<td>
-											{{ $course->teacher->first_name }} {{ $course->teacher->last_name }}
+											<a href="/{{ $course->teacher->username }}" class="tooltips" data-original-title="Ir al perfil del profesor">{{ $course->teacher->first_name }} {{ $course->teacher->last_name }}</a>
 										</td>
 										<td>
-											{{ count($course->students) }}
+											<a href="/coordinators/courses/show/{{ Hashids::encode($course->id) }}?section=students" class="tooltips" data-original-title="Ver el listado de Estudiates del curso">{{ count($course->students) }}</a>
 										</td>
 										<td>
-											{{ count($course->lessons) }}
+											<a href="/coordinators/courses/show/{{ Hashids::encode($course->id) }}?section=lessons" class="tooltips" data-original-title="ver el listado de lecciones del curso">{{ count($course->lessons) }}</a>
 										</td>
 										<td>
-											<span class="bold theme-font-color">{{ $course->average() }}</span>
+											<span class="bold theme-font-color">{{ round($course->average()) }}%</span>
 										</td>
 									</tr>
 								@endforeach

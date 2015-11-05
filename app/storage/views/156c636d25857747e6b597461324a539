@@ -1,0 +1,119 @@
+<?php $__env->startSection('css'); ?>
+
+	<link href="/assets/admin/pages/css/blog.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/admin/pages/css/news.css" rel="stylesheet" type="text/css"/>
+
+	<style type="text/css">
+		.course-students{
+			text-align: right;
+			display: block;
+		}
+		.student-line-picture{
+			width: 40px;
+			height: 40px;
+			display: inline-block;
+			margin-left: 5px;
+		}
+		.full-width{
+			width: 100%;
+		}
+	</style>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content_courses"); ?>
+
+	<div class="row">
+		<div class="col-md-12">
+			<!-- BEGIN PORTLET -->
+
+			<div class="portlet light">
+				<!-- STAT -->
+				<div class="portlet-body">
+					<div class="row">
+						<div class="col-md-12 blog-page">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 article-block">
+									<!-- <h4 class="profile-desc-title">Aprendiendo (<?php echo $courses->count(); ?>)</h4> -->
+									<?php if($courses->count() > 0): ?>
+										<?php foreach($courses as $course): ?>
+											<div class="row">
+												<div class="col-md-4 blog-img blog-tag-data">
+													<div class="mask-circle">
+														<img src="<?php echo $course->main_picture; ?>" alt="" class="img-responsive">			
+													</div>
+													<ul class="list-inline">
+														<li>
+															<i class="fa fa-user"></i>
+															<a href="<?php echo $course->getRoute(); ?>/profesor">
+															<?php echo $course->teacher->display_name; ?> </a>
+														</li>
+														<li>
+															<i class="fa fa-users"></i>
+															<a href="<?php echo $course->getRoute(); ?>/estudiantes">
+															<?php echo $course->students()->count(); ?> Estudiantes </a>
+														</li>
+													</ul>
+													<!-- <ul class="list-inline blog-tags">
+														<li>
+															<i class="fa fa-tags"></i>
+															<a href="javascript:;">
+															Technology </a>
+															<a href="javascript:;">
+															Education </a>
+															<a href="javascript:;">
+															Internet </a>
+														</li>
+													</ul> -->
+												</div>
+												<div class="col-md-8 blog-article">
+													<h3>
+													<a href="<?php echo $course->getRoute(); ?>"><?php echo $course->title; ?></a>
+													</h3>
+													<p class="justify">
+														<?php echo $course->getSummary(); ?>
+
+													</p>
+													<a class="btn blue" href="<?php echo $course->getRoute(); ?>">
+													Entrar <i class="m-icon-swapright m-icon-white"></i>
+													</a>
+													<div class="course-students">
+														<h5>Estudiantes destacados</h5>
+														<?php if(count($course->beststudents()) > 0): ?>
+															<?php foreach($course->beststudents() as $student): ?>
+																<a href="/<?php echo $student->username; ?>" class="student-line-picture tooltips" data-original-title="<?php echo $student->display_name; ?>"><img alt="" class="img-circle full-width" src="<?php echo $student->profile->getAvatar(); ?>"></a>
+															<?php endforeach; ?>
+														<?php else: ?>
+															<span>No hay estudientes en este curso aún</span>
+														<?php endif; ?>
+														<!-- <a href="#" class="student-line-picture"><img alt="" class="img-circle full-width" src="/uploads/users/AlexanderZon/images/A5790167-359B-B89B-60CD-A405C4207010.jpg"></a>
+														<a href="#" class="student-line-picture"><img alt="" class="img-circle full-width" src="/uploads/users/AlexanderZon/images/A5790167-359B-B89B-60CD-A405C4207010.jpg"></a>
+														<a href="#" class="student-line-picture"><img alt="" class="img-circle full-width" src="/uploads/users/AlexanderZon/images/A5790167-359B-B89B-60CD-A405C4207010.jpg"></a> -->
+													</div>
+												</div>
+											</div>
+											<hr>
+										<?php endforeach; ?>
+									<?php else: ?>
+										<h1>¡Bienvenido/a, <?php echo Auth::user()->display_name; ?>!</h1>
+										Todavia no te has inscrito en ningún curso, te invitamos a hacer una exploracion a <a href="/cursos">Todos los cursos</a> para que puedas optar para entrar a un curso. 
+										Tambien puedes <a href="/perfil">Personalizar tu Perfil</a>.
+									<?php endif; ?>
+								</div>
+								<!--end col-md-12-->
+							</div>
+							<?php if($courses->count()>0): ?>
+								<?php echo $courses->links('users.wall.read.paginate')->with(array('courses' => $courses, 'section' => 'list')); ?>
+
+							<?php endif; ?>
+						</div>
+					</div>
+				</div>
+			</div>
+					
+			<!-- END PORTLET -->
+		</div>
+	</div>		
+	
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('students.layouts.courses', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

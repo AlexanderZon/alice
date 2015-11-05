@@ -68,7 +68,7 @@
 											</div>
 											<div class="col-md-5 portfolio-stat">
 												<div class="portfolio-info col-md-3">
-													Porcentage <span>
+													Porcentaje <span>
 													{{ ($test = $evaluation->myTest()) ? $test->percentage() : '0%' }} </span>
 												</div>
 												<div class="portfolio-info col-md-3">
@@ -156,6 +156,6 @@
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
-		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="{{ $course->getMainPicture() }}" class="img-responsive" alt="">');
 
 	</script>

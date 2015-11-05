@@ -1,7 +1,11 @@
 moment.locale('es');
 $('.moment-fromnow').each(function(e){
 	var time = $(this).html();
-	$(this).html(moment(time).fromNow());
+	if(time == '0000-00-00 00:00:00'){
+		$(this).html('Nunca');		
+	}else{
+		$(this).html(moment(time).fromNow());		
+	}
 	$(this).removeClass('moment-fromnow');
 });
 $('.moment-date').each(function(e){

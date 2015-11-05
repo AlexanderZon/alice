@@ -1,0 +1,90 @@
+<ul class="pagination pull-right"> 
+    <li>
+        <a class="paginate-btn" href="javascript:;" data-section="<?php echo $section; ?>" data-page="1"><i class="fa fa-angle-double-left"></i></a>
+    </li>
+    <li <?php echo $courses->getCurrentPage() == 1 ? 'class=disabled': ''; ?>>
+        <?php if($courses->getCurrentPage() == 1): ?>
+            <span><i class="fa fa-angle-left"></i></span>
+        <?php else: ?>
+            <a class="paginate-btn" href="javascript:;" data-section="<?php echo $section; ?>" data-page="<?php echo $courses->getCurrentPage() - 1; ?>"><i class="fa fa-angle-left"></i></a>
+        <?php endif; ?>
+    </li>
+    <?php if($courses->getCurrentPage() > 8): ?>
+        <li>
+            <a href="javascript:;" class="paginate-btn" data-section="<?php echo $section; ?>" data-page="1">1</a>
+        </li>
+        <li <?php echo $courses->getCurrentPage() == 1 ? 'class=disabled': ''; ?>>
+            <a href="javascript:;" class="paginate-btn" data-section="<?php echo $section; ?>" data-page="2">2</a>
+        </li>
+        <li class="disabled"><span>...</span></li>
+    <?php endif; ?>
+    <?php for($i = $courses->getCurrentPage() - 3 ; $i <= ($courses->getCurrentPage() + 3) ; $i++): ?>
+        <?php if($i > 0 && $i <= $courses->getLastPage()): ?>
+            <?php if($i == $courses->getCurrentPage()): ?>
+                <li class="active">
+                    <span><?php echo ($i); ?></span>
+                </li>
+            <?php else: ?>
+                <li>
+                    <a href="javascript:;" class="paginate-btn" data-section="<?php echo $section; ?>" data-page="<?php echo $i; ?>"><?php echo ($i); ?></a>
+                </li>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endfor; ?>
+    <?php if($courses->getCurrentPage() < ($courses->getLastPage() - 5)): ?>
+        <li class="disabled"><span>...</span></li>
+        <li>
+            <a href="javascript:;" class="paginate-btn" data-section="<?php echo $section; ?>" data-page="<?php echo ($courses->getLastPage() - 1); ?>"><?php echo ($courses->getLastPage() - 1); ?></a>
+        </li>
+        <li >
+            <a href="javascript:;" class="paginate-btn" data-section="<?php echo $section; ?>" data-page="<?php echo ($courses->getLastPage()); ?>"><?php echo ($courses->getLastPage() ); ?></a>
+        </li>
+    <?php endif; ?>
+    <li <?php echo $courses->getCurrentPage() == 1 ? 'class=disabled': ''; ?>>
+        <?php if($courses->getCurrentPage() == $courses->getLastPage()): ?>
+            <span><i class="fa fa-angle-right"></i></span>
+        <?php else: ?>
+            <a href="javascript:;" class="paginate-btn" data-section="<?php echo $section; ?>" data-page="<?php echo $courses->getCurrentPage() + 1; ?>"><i class="fa fa-angle-right"></i></a>
+        <?php endif; ?>
+    </li>
+    <li>
+        <a href="javascript:;" class="paginate-btn" data-section="<?php echo $section; ?>" data-page="<?php echo $courses->getLastPage(); ?>"><i class="fa fa-angle-double-right"></i></a>
+    </li>
+</ul>   <!-- 
+
+<ul class="pagination pull-right">
+	<li>
+		<a href="javascript:;">
+		<i class="fa fa-angle-left"></i>
+		</a>
+	</li>
+	<li>
+		<a href="javascript:;">
+		1 </a>
+	</li>
+	<li>
+		<a href="javascript:;">
+		2 </a>
+	</li>
+	<li>
+		<a href="javascript:;">
+		3 </a>
+	</li>
+	<li>
+		<a href="javascript:;">
+		4 </a>
+	</li>
+	<li>
+		<a href="javascript:;">
+		5 </a>
+	</li>
+	<li>
+		<a href="javascript:;">
+		6 </a>
+	</li>
+	<li>
+		<a href="javascript:;">
+		<i class="fa fa-angle-right"></i>
+		</a>
+	</li>
+</ul> -->

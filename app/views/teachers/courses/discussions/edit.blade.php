@@ -77,8 +77,8 @@
 										<div class="col-md-6">
 											<div class="row">
 												<div class="col-md-offset-3 col-md-9">
-													<button type="submit" class="btn green">Actualizar</button>
-													<a href="javascript:;" class="btn default discussion-back-btn">Volver</a>
+													<button type="submit" class="btn green tooltips" data-original-title="Actualizar informaciones de la discusión">Actualizar</button>
+													<a href="javascript:;" class="btn default discussions-back-btn tooltips" data-original-title="Volver al listado de Discusiones">Volver</a>
 												</div>
 											</div>
 										</div>
@@ -157,6 +157,6 @@
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');
-		$('#course-main-image').html('<img src="{{ $course->main_picture }}" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="{{ $course->getMainPicture() }}" class="img-responsive" alt="">');
 
 	</script>

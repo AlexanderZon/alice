@@ -152,7 +152,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Test','user_id');
 
 	}
-
+	
 	public function approvedTests(){
 
 		$approved = array();
@@ -183,7 +183,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function learning(){
 
-		return $this->belongsToMany('Course','inscriptions')->where('inscriptions.status','=','active');
+		return $this->belongsToMany('Course','inscriptions')->where('inscriptions.status','=','active')->where('courses.status','=','active');
 
 	}
 

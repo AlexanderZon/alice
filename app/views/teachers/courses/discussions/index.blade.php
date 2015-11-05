@@ -25,7 +25,7 @@
 					</div>
 					<div class="row">&nbsp;</div>
 					<div class="row">&nbsp;</div>
-					<div class="portlet-body form discussions" data-course="{{ Hashids::encode($course->id) }}">
+					<div class="portlet-portlet-body form discussions" data-course="{{ Hashids::encode($course->id) }}">
 						<div class="col-md-12 news-page">
 							<!-- <h3 style="margin-top:0">Más Populares</h3> -->
 							<div class="row">
@@ -41,7 +41,7 @@
 										@if($discussions[0]->status == 'active')
 											<div class="news-blocks discussion-block" data-discussion="{{Hashids::encode($discussions[0]->id)}}">
 												<h3>
-													<a href="javascript:;" class="discussion-comments">
+													<a href="javascript:;" class="discussion-comments tooltips" data-original-title="Entrar a la Discusión" data-placement="top">
 														{{ $discussions[0]->title}}
 													</a>
 												</h3>
@@ -54,13 +54,13 @@
 													<img class="news-block-img pull-right" src="{{ $discussions[0]->getAvatar() }}" alt="">
 													{{ $discussions[0]->getSummary(250) }}
 												</p>
-												<a href="javascript:;" class="news-block-btn discussion-edit" >
+												<a href="javascript:;" class="news-block-btn discussion-edit tooltips" data-original-title="Gestionar Discusión" data-placement="right">
 													Gestionar <i class="m-icon-swapright m-icon-black"></i>
 												</a>
 											</div>
 										@else
 											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[0]->id)}}">
-												<a href="javascript:;" class="btn grey-silver discussion-edit">
+												<a href="javascript:;" class="btn grey-silver discussion-edit tooltips" data-original-title="Gestionar Discusión" data-placement="top">
 												<span>{{ $discussions[0]->title }}</span>
 												<em class="moment-fromnow">{{ $discussions[0]->created_at }}</em>
 												<em>
@@ -78,7 +78,7 @@
 										@if($discussions[1]->status == 'active')
 											<div class="news-blocks discussion-block" data-discussion="{{Hashids::encode($discussions[1]->id)}}">
 												<h3>
-													<a href="javascript:;" class="discussion-comments">
+													<a href="javascript:;" class="discussion-comments tooltips" data-original-title="Entrar a la Discusión" data-placement="top">
 														{{ $discussions[1]->title}}
 													</a>
 												</h3>
@@ -91,13 +91,13 @@
 													<img class="news-block-img pull-right" src="{{ $discussions[1]->getAvatar() }}" alt="">
 													{{ $discussions[1]->getSummary(200) }}
 												</p>
-												<a href="javascript:;" class="news-block-btn discussion-edit">
+												<a href="javascript:;" class="news-block-btn discussion-edit tooltips" data-original-title="Gestionar Discusión" data-placement="right">
 													Gestionar <i class="m-icon-swapright m-icon-black"></i>
 												</a>
 											</div>
 										@else
 											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[1]->id)}}">
-												<a href="javascript:;" class="btn grey-silver discussion-edit">
+												<a href="javascript:;" class="btn grey-silver discussion-edit tooltips" data-original-title="Gestionar Discusión" data-placement="top">
 												<span>{{ $discussions[1]->title }}</span>
 												<em class="moment-fromnow">{{ $discussions[1]->created_at }}</em>
 												<em>
@@ -119,7 +119,7 @@
 										@if($discussions[$i]->status == 'active')
 											<div class="news-blocks discussion-block" data-discussion="{{ Hashids::encode($discussions[$i]->id)}}">
 												<h3>
-													<a href="javascript:;" class="discussion-comments">
+													<a href="javascript:;" class="discussion-comments tooltips" data-original-title="Entrar a la Discusión" data-placement="top">
 														{{ $discussions[$i]->title}}
 													</a>
 												</h3>
@@ -132,13 +132,13 @@
 													<img class="news-block-img pull-right" src="{{ $discussions[$i]->getAvatar() }}" alt="">
 													{{ $discussions[$i]->getSummary(300 - ((6-$col)*50)) }}
 												</p>
-												<a href="javascript:;" class="news-block-btn discussion-edit">
+												<a href="javascript:;" class="news-block-btn discussion-edit tooltips" data-original-title="Gestionar Discusión" data-placement="{{ $col != 3 ? 'right' : 'left'}}">
 													Gestionar <i class="m-icon-swapright m-icon-black"></i>
 												</a>
 											</div>
 										@else
 											<div class="top-news" data-discussion="{{ Hashids::encode($discussions[$i]->id)}}">
-												<a href="javascript:;" class="btn grey-silver discussion-edit">
+												<a href="javascript:;" class="btn grey-silver discussion-edit tooltips" data-original-title="Gestionar Discusión" data-placement="top">
 												<span>{{ $discussions[$i]->title }}</span>
 												<em class="moment-fromnow">{{ $discussions[$i]->created_at }}</em>
 												<em>

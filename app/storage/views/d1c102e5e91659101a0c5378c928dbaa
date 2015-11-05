@@ -1,0 +1,89 @@
+
+	<div class="row">
+		<div class="col-md-12">
+			<!-- BEGIN PORTLET -->
+
+			<div class="portlet light">
+				<!-- STAT -->
+				<div class="row list-separated profile-stat">
+					<img class="col-md-12" src="<?php echo $profile->getCover(); ?>"/>
+				</div>
+				<div class="row list-separated profile-stat">
+					<div class="col-md-6 col-sm-6 col-xs-6">
+						<div class="uppercase profile-stat-title">
+							 <?php echo ($user->followers->count()); ?>
+
+						</div>
+						<div class="uppercase profile-stat-text">
+							 Seguidores
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6 col-xs-6">
+						<div class="uppercase profile-stat-title">
+							 <?php echo ($user->followed->count()); ?>
+
+						</div>
+						<div class="uppercase profile-stat-text">
+							 Siguiendo
+						</div>
+					</div>
+				</div>
+				<!-- END STAT -->
+				<div>
+					<?php if(trim(html_entity_decode(strip_tags($profile->about_me))) != ''): ?>
+						<h4 class="profile-desc-title">Sobre <?php echo $user->display_name; ?></h4>
+						<span class="profile-desc-text"><?php echo $profile->about_me; ?></span>
+					<?php endif; ?>
+					<?php if(trim(html_entity_decode(strip_tags($profile->activities))) != ''): ?>
+						<h4 class="profile-desc-title">Actividades</h4>
+						<span class="profile-desc-text"><?php echo $profile->activities; ?></span>
+					<?php endif; ?>
+					<?php if(trim(html_entity_decode(strip_tags($profile->interests))) != ''): ?>
+						<h4 class="profile-desc-title">Intereses</h4>
+						<span class="profile-desc-text"><?php echo $profile->interests; ?></span>
+					<?php endif; ?>
+					<?php if(trim(html_entity_decode(strip_tags($profile->website))) != ''): ?>
+						<div class="margin-top-20 profile-desc-link">
+							<i class="fa fa-globe"></i>
+							<a href="<?php echo $profile->getWebsiteURL(); ?>" target="_blank"><?php echo $profile->getWebsiteName(); ?></a>
+						</div>
+					<?php endif; ?>
+					<?php if(trim(html_entity_decode(strip_tags($profile->twitter))) != ''): ?>
+						<div class="margin-top-20 profile-desc-link">
+							<i class="fa fa-twitter"></i>
+							<a href="<?php echo $profile->getTwitterURL(); ?>" target="_blank"><?php echo $profile->getTwitterName(); ?></a>
+						</div>
+					<?php endif; ?>
+					<?php if(trim(html_entity_decode(strip_tags($profile->facebook))) != ''): ?>
+						<div class="margin-top-20 profile-desc-link">
+							<i class="fa fa-facebook"></i>
+							<a href="<?php echo $profile->getFacebookURL(); ?>" target="_blank"><?php echo $profile->getFacebookName(); ?></a>
+						</div>
+					<?php endif; ?>
+					<?php if(trim(html_entity_decode(strip_tags($user->email))) != ''): ?>
+						<div class="margin-top-20 profile-desc-link">
+							<i class="fa fa-envelope"></i>
+							<?php echo $user->email; ?>
+
+						</div>
+					<?php endif; ?>
+					<?php if(trim(html_entity_decode(strip_tags($profile->phone))) != ''): ?>
+						<div class="margin-top-20 profile-desc-link">
+							<i class="fa fa-phone"></i>
+							<?php echo $profile->phone; ?>
+
+						</div>
+					<?php endif; ?>
+				</div>
+			</div>
+					
+			<!-- END PORTLET -->
+		</div>
+	</div>		
+
+<script type="text/javascript">
+	
+	window.history.pushState("", "", '/<?php echo $user->username; ?>?section=general');
+		document.title = 'Alice | <?php echo $user->username; ?> | Perfil';
+
+</script>

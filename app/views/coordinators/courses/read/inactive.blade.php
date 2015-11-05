@@ -105,20 +105,25 @@
 									@if( $course->status == 'active' )
 										@if(Auth::user()->hasCap('coordinators_courses_get_show'))
 											&nbsp;&nbsp;
-											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+											<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
 										@endif
 									@elseif( $course->status == 'inactive' )
 										@if(Auth::user()->hasCap('coordinators_courses_get_show'))
 											&nbsp;&nbsp;
-											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+											<a class="font-blue-steel tooltips" href="{{ $route . '/show/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Vista previa del Curso"> <i class="fa fa-eye"></i> </a> 
 										@endif
 										@if(Auth::user()->hasCap('coordinators_courses_get_update'))
 											&nbsp;&nbsp;
 											<a class="font-yellow-crusta tooltips" href="{{ $route . '/update/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
 										@endif
 										@if(Auth::user()->hasCap('coordinators_courses_get_delete'))
-											&nbsp;&nbsp;
-											<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
+											@if($course->accepted->count() == 0)
+												&nbsp;&nbsp;
+												<a class="font-red-sunglo tooltips" href="{{ $route . '/delete/' . Hashids::encode($course->id) }}" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
+											@else
+												&nbsp;&nbsp;
+												<a class="font-grey tooltips" href="#" data-container="body" data-placement="bottom" data-html="true"  data-original-title="No se Puede Eliminar este Curso, ya que contiene información de Estudiantes"> <i class="fa fa-trash-o"></i> </a>
+											@endif
 										@endif
 									@endif
 								</td>

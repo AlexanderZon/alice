@@ -35,10 +35,10 @@
 										<div class="mix-inner">
 											<img class="img-responsive" src="{{ $contributor->profile->getAvatar() }}" alt="" style="max-width:200px !important">
 											<div class="mix-details" style="max-width:200px !important;">
-												<a href="/{{ $contributor->username }}" class="" title="Ver perfil de {{ $contributor->display_name }}"><h4>{{ $contributor->display_name }}</h4></a>
+												<a href="/{{ $contributor->username }}" class="tooltips" data-original-title="Ver perfil de {{ $contributor->display_name }}" data-container="div.row" data-placement="top"><h4>{{ $contributor->display_name }}</h4></a>
 												<span>Última visita: <span class="moment-fromnow">{{ $contributor->last_login }}</span></span>
 												<span>
-													<a class="mix-preview fancybox-button" href="/{{ $contributor->username }}" title="Ver perfil de {{ $contributor->display_name }}" data-rel="fancybox-button" style="color: #555;display: block;cursor: pointer;margin-top: 10px;position: absolute;left: 37%;padding: 10px 15px;background: #16b2f4;">
+													<a class="mix-preview fancybox-button tooltips" href="/{{ $contributor->username }}" data-original-title="Ver perfil de {{ $contributor->display_name }}" data-container="div.row" data-placement="bottom" data-rel="fancybox-button" style="color: #555;display: block;cursor: pointer;margin-top: 10px;position: absolute;left: 37%;padding: 10px 15px;background: #16b2f4;">
 														<i class="fa fa-eye"></i>
 													</a>
 												</span>

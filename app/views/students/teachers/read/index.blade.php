@@ -45,7 +45,7 @@
 												<a href="/{{ $teacher->username }}" class="" title="Ver perfil de {{ $teacher->display_name }}"><h4>{{ $teacher->display_name }}</h4></a>
 												<span>Última visita: <span class="moment-fromnow">{{ $teacher->last_login }}</span></span>
 												<span>
-													<a class="mix-preview fancybox-button" href="/{{ $teacher->username }}" title="Ver perfil de {{ $teacher->display_name }}" data-rel="fancybox-button" style="color: #555;display: block;cursor: pointer;margin-top: 10px;position: absolute;left: 37%;padding: 10px 15px;background: #16b2f4;">
+													<a class="mix-preview fancybox-button tooltips" data-original-title="Ver perfil de {{ $teacher->display_name }}" data-container="body" data-placement="bottom" href="/{{ $teacher->username }}" title="Ver perfil de {{ $teacher->display_name }}" data-rel="fancybox-button" style="color: #555;display: block;cursor: pointer;margin-top: 10px;position: absolute;left: 37%;padding: 10px 15px;background: #16b2f4;">
 														<i class="fa fa-eye"></i>
 													</a>													
 												</span>
