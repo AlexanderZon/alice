@@ -1,0 +1,14 @@
+<?php foreach($users as $user): ?>
+	<?php echo $user->first_name; ?> <?php echo $user->last_name; ?> <br>
+<?php endforeach; ?>
+
+<?php
+
+Event::listen('users.create', function($users)
+{
+    foreach($users as $user):
+	echo $user->first_name . ' ' . $user->last_name . '<br>';
+	endforeach;
+});
+
+?>

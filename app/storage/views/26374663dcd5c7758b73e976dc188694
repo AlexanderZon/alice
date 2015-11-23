@@ -1,0 +1,20 @@
+<?php $position = 0; ?>
+
+<table>
+
+	<tr>
+		<th>ID</th>
+		<th>TITLE</th>
+		<th>WEIGHT</th>
+	</tr>
+
+	<?php foreach($results as $result): ?>
+		<tr>
+			<td><?php echo $ids[$position]; ?></td>
+			<td><?php echo $result->title; ?></td>
+			<td><?php echo $weights[$position]; ?></td>
+		</tr>
+		<?php $position++ ?>
+	<?php endforeach; ?>
+	
+</table>

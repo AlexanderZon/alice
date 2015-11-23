@@ -1,0 +1,72 @@
+<?php $__env->startSection("content_profile"); ?>
+
+	<div class="portlet light">
+		<!-- STAT -->
+		<div class="row list-separated profile-stat">
+			
+			<img class="col-md-12" src="<?php echo $profile->getCover(); ?>"/>
+		</div>
+		<div class="row list-separated profile-stat">
+			<div class="col-md-6 col-sm-6 col-xs-6">
+				<div class="uppercase profile-stat-title">
+					 <?php echo count($user->followers); ?>
+
+				</div>
+				<div class="uppercase profile-stat-text">
+					 Seguidores
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-6">
+				<div class="uppercase profile-stat-title">
+					 <?php echo count($user->followed); ?>
+
+				</div>
+				<div class="uppercase profile-stat-text">
+					 Siguiendo
+				</div>
+			</div>
+		</div>
+		<!-- END STAT -->
+		<div>
+			<h4 class="profile-desc-title">Sobre <?php echo $user->display_name; ?></h4>
+			<span class="profile-desc-text"><?php echo $profile->about_me; ?></span>
+			<h4 class="profile-desc-title">Actividades</h4>
+			<span class="profile-desc-text"><?php echo $profile->activities; ?></span>
+			<h4 class="profile-desc-title">Intereses</h4>
+			<span class="profile-desc-text"><?php echo $profile->interests; ?></span>
+			<div class="margin-top-20 profile-desc-link">
+				<i class="fa fa-globe"></i>
+				<a href="<?php echo $profile->getWebsiteURL(); ?>" target="_blank"><?php echo $profile->getWebsiteName(); ?></a>
+			</div>
+			<?php if($profile->twitter != ''): ?>
+				<div class="margin-top-20 profile-desc-link">
+					<i class="fa fa-twitter"></i>
+					<a href="<?php echo $profile->getTwitterURL(); ?>" target="_blank"><?php echo $profile->getTwitterName(); ?></a>
+				</div>
+			<?php endif; ?>
+			<?php if($profile->facebook != ''): ?>
+				<div class="margin-top-20 profile-desc-link">
+					<i class="fa fa-facebook"></i>
+					<a href="<?php echo $profile->getFacebookURL(); ?>" target="_blank"><?php echo $profile->getFacebookName(); ?></a>
+				</div>
+			<?php endif; ?>
+			<?php if($user->email != ''): ?>
+				<div class="margin-top-20 profile-desc-link">
+					<i class="fa fa-envelope"></i>
+					<a href="mailto(<?php echo $user->email; ?>)" target="_blank"><?php echo $user->email; ?></a>
+				</div>
+			<?php endif; ?>
+			<?php if($profile->phone != ''): ?>
+				<div class="margin-top-20 profile-desc-link">
+					<i class="fa fa-phone"></i>
+					<a href="<?php echo $profile->phone; ?>" target="_blank"><?php echo $profile->phone; ?></a>
+				</div>
+			<?php endif; ?>
+		</div>
+	</div>
+					
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make('layouts.wall', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

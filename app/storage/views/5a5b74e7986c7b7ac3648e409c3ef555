@@ -1,0 +1,262 @@
+<?php $__env->startSection('toolbar'); ?>
+	
+	<div class="page-toolbar">
+		<!-- BEGIN THEME PANEL -->
+		<div class="btn-group btn-theme-panel">
+			<?php if(Auth::user()->hasCap('coordinators_courses_get_index')): ?>
+				<a href="<?php echo $route; ?>" class="btn tooltips" data-toggle="Volver al Listado" data-container="body" data-placement="left" data-html="true"  data-original-title="Volver al Listado de Cursos"><i class="icon-arrow-left"></i></a>
+			<?php endif; ?>
+			<?php if(Auth::user()->hasCap('coordinators_courses_get_create')): ?>
+				<a href="<?php echo $route; ?>/create" class="btn tooltips" data-toggle="Añadir un nuevo registro" data-container="body" data-placement="left" data-html="true"  data-original-title="Añadir un nuevo curso"><i class="icon-plus"></i></a>
+			<?php endif; ?>
+		</div>
+		<!-- END THEME PANEL -->
+	</div>
+	
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+
+		<div class="row">
+			<div class="col-md-12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box green-haze">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-notebook"></i>Listado de Cursos Inactivos
+						</div>
+						<div class="tools">
+							<?php if(Auth::user()->hasCap('coordinators_courses_get_index')): ?>
+								<a href="<?php echo $route; ?>" class="label bg-green-haze"><i class="fa fa-arrow-circle-left"></i> Volver</a>
+							<?php endif; ?>
+							<?php if(Auth::user()->hasCap('coordinators_courses_get_create')): ?>
+								<a href="<?php echo $route; ?>/create" class="label bg-green-haze"><i class="fa fa-plus-circle"></i> Nuevo</a>
+							<?php endif; ?>
+						</div>
+					</div>
+					<div class="portlet-body">
+						<table class="table table-striped table-bordered table-hover" id="datatable">
+						<thead>
+						<tr>
+							<th>
+								 Título 
+							</th>
+							<th>
+								 Profesor
+							</th>
+							<th>
+								 Estudiantes
+							</th>
+							<th>
+								 Lecciones
+							</th>
+							<th>
+								 Discusiones
+							</th>
+							<th>
+								 Estado
+							</th>
+							<?php if(Auth::user()->hasCap('coordinators_courses_get_show') OR Auth::user()->hasCap('coordinators_courses_get_update') OR Auth::user()->hasCap('coordinators_courses_get_delete')): ?>
+								<th>
+									 Acciones
+								</th>
+							<?php endif; ?>
+						</tr>
+						</thead>
+						<tbody>
+						<?php foreach( $courses as $course ): ?>
+						<tr>
+							<td>
+								<?php echo $course->title; ?>
+
+							</td>
+							<td>
+								<?php echo $course->teacher->first_name; ?> <?php echo $course->teacher->last_name; ?>
+
+							</td>
+							<td>
+								<?php echo count($course->students); ?>
+
+							</td>
+							<td>
+								<?php echo count($course->lessons); ?>
+
+							</td>
+							<td>
+								<?php echo count($course->discussions); ?>
+
+							</td>
+							<td>
+							<?php if( $course->status == 'active' ): ?>
+								<?php if(Auth::user()->hasCap('coordinators_courses_get_deactivate')): ?>
+									<a href="<?php echo $route . '/deactivate/' . Hashids::encode($course->id); ?>" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Desactivar"><span class="label bg-blue"><?php echo 'Activo'; ?></span></a>
+								<?php else: ?>
+									<?php echo $course->status == 'active' ? 'Activo' : 'Inactivo'; ?>
+
+								<?php endif; ?>
+							<?php elseif( $course->status == 'inactive' ): ?>
+								<?php if(Auth::user()->hasCap('coordinators_courses_get_activate')): ?>
+									<a href="<?php echo $route . '/activate/' . Hashids::encode($course->id); ?>" class="tooltips" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Activar"><span class="label bg-yellow-saffron"><?php echo 'Inactivo'; ?></span>
+								<?php else: ?>
+									<?php echo $course->status == 'active' ? 'Activo' : 'Inactivo'; ?>
+
+								<?php endif; ?>
+							<?php else: ?>
+								<?php echo $course->status == 'active' ? 'Activo' : 'Inactivo'; ?>
+
+							<?php endif; ?>
+							</td>
+							<?php if(Auth::user()->hasCap('coordinators_courses_get_show') OR Auth::user()->hasCap('coordinators_courses_get_update') OR Auth::user()->hasCap('coordinators_courses_get_delete')): ?>
+								<td>
+									<?php if( $course->status == 'active' ): ?>
+										<?php if(Auth::user()->hasCap('coordinators_courses_get_show')): ?>
+											&nbsp;&nbsp;
+											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="<?php echo $route . '/show/' . Hashids::encode($course->id); ?>" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+										<?php endif; ?>
+									<?php elseif( $course->status == 'inactive' ): ?>
+										<?php if(Auth::user()->hasCap('coordinators_courses_get_show')): ?>
+											&nbsp;&nbsp;
+											<a class="font-blue-steel tooltips fancybox fancybox.ajax" href="<?php echo $route . '/show/' . Hashids::encode($course->id); ?>" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Visualizar"> <i class="fa fa-eye"></i> </a> 
+										<?php endif; ?>
+										<?php if(Auth::user()->hasCap('coordinators_courses_get_update')): ?>
+											&nbsp;&nbsp;
+											<a class="font-yellow-crusta tooltips" href="<?php echo $route . '/update/' . Hashids::encode($course->id); ?>" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Editar"> <i class="fa fa-pencil"></i> </a> 
+										<?php endif; ?>
+										<?php if(Auth::user()->hasCap('coordinators_courses_get_delete')): ?>
+											&nbsp;&nbsp;
+											<a class="font-red-sunglo tooltips" href="<?php echo $route . '/delete/' . Hashids::encode($course->id); ?>" data-container="body" data-placement="bottom" data-html="true"  data-original-title="Eliminar"> <i class="fa fa-trash-o"></i> </a>
+										<?php endif; ?>
+									<?php endif; ?>
+								</td>
+							<?php endif; ?>
+						</tr>
+						<?php endforeach; ?>
+						</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
+			</div>
+		</div>
+
+		<!-- END PAGE CONTENT INNER -->
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascripts'); ?>
+	
+	<script src="/assets/global/scripts/datatable.js"></script>
+	<script type="text/javascript">	
+		var TableAdvanced = function () {
+
+		    var initDataTable = function () {
+		        var table = $('#datatable');
+
+		        /* Table tools samples: https://www.datatables.net/release-datatables/extras/TableTools/ */
+
+		        /* Set tabletools buttons and button container */
+
+		        $.extend(true, $.fn.DataTable.TableTools.classes, {
+		            "container": "btn-group tabletools-btn-group pull-right",
+		            "buttons": {
+		                "normal": "btn btn-sm default",
+		                "disabled": "btn btn-sm default disabled"
+		            }
+		        });
+
+		        var oTable = table.dataTable({
+
+		            // Internationalisation. For more info refer to http://datatables.net/manual/i18n
+		            "language": {
+		                "aria": {
+		                    "sortAscending": ": activate to sort column ascending",
+		                    "sortDescending": ": activate to sort column descending"
+		                },
+		                "emptyTable": "No hay datos disponibles en la tabla",
+		                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+		                "infoEmpty": "Ningún registro encontrado",
+		                "infoFiltered": "(filtrando de _MAX_ registros totales)",
+		                "lengthMenu": "Ver _MENU_ registros",
+		                "search": "Buscar:",
+		                "zeroRecords": "Ninguna coincidencia encontrada"
+		            },
+
+		            "order": [
+		                [0, 'asc']
+		            ],
+		            "lengthMenu": [
+		                [5, 15, 20, -1],
+		                [5, 15, 20, "All"] // change per page values here
+		            ],
+
+		            // set the initial value
+		            "pageLength": 10,
+		            "dom": "<'row'<'col-md-6 col-sm-4'l><'col-md-4'T><'col-md-2' f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+
+		            // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
+		            // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
+		            // So when dropdowns used the scrollable div should be removed. 
+		            //"dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+
+		            "tableTools": {
+		                "sSwfPath": "/assets/global/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
+		                "aButtons": [{
+		                    "sExtends": "pdf",
+		                    "sButtonText": "PDF"
+		                }, {
+		                    "sExtends": "csv",
+		                    "sButtonText": "CSV"
+		                }, {
+		                    "sExtends": "xls",
+		                    "sButtonText": "Excel"
+		                }, {
+		                    "sExtends": "print",
+		                    "sButtonText": "Imprimir",
+		                    "sInfo": 'Por favor presione "CTRL+P" para imprimir o "ESC" para salir',
+		                    "sMessage": "Generado mediate DataTables"
+		                }, {
+		                    "sExtends": "copy",
+		                    "sButtonText": "Copiar"
+		                }]
+		            }
+		        });
+
+		        var tableWrapper = $('#sample_2_wrapper'); // datatable creates the table wrapper by adding with id {your_table_jd}_wrapper
+		        tableWrapper.find('.dataTables_length select').select2(); // initialize select2 dropdown
+		    }
+
+		    return {
+
+		        //main function to initiate the module
+		        init: function () {
+
+		            if (!jQuery().dataTable) {
+		                return;
+		            }
+
+		            initDataTable();
+
+		        }
+
+		    };
+
+		}();
+	</script>
+	<!-- END PAGE LEVEL SCRIPTS -->
+
+	<script>
+        jQuery(document).ready(function() {  
+           	Metronic.init(); // init metronic core components
+			Layout.init(); // init current layout
+			Demo.init(); // init demo features
+   			TableAdvanced.init();
+
+   			jQuery('.fancybox').fancybox();
+   			
+        });
+
+	</script>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
