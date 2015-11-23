@@ -40,7 +40,7 @@ class ReadController extends \Students\ReadController {
 
 		self::$description = 'Listado de Cursos';
 
-		self::pushBreadCrumb('Cursos', self::$route );
+		self::pushBreadCrumb('Cursos', '/cursos' );
 
 		# --- Put here your global args for this Controller --- #
 
