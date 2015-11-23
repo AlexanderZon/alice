@@ -1,0 +1,26 @@
+<?php $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'); ?>
+<?php $folder = '/uploads/discussions/defaults/'; ?>
+
+
+<table>
+	<tr>
+		<th>Letter</th>
+		<th>Blue</th>
+		<th>Brown</th>
+		<th>Green</th>
+		<th>Orange</th>
+		<th>Pink</th>
+		<th>Purple</th>
+	</tr>
+	<?php foreach($letters as $letter): ?>
+		<tr>
+			<td><?php echo $letter; ?></td>
+			<td><img src="<?php echo $folder; ?><?php echo $letter; ?>_blue.png"/></td>
+			<td><img src="<?php echo $folder; ?><?php echo $letter; ?>_brown.png"/></td>
+			<td><img src="<?php echo $folder; ?><?php echo $letter; ?>_green.png"/></td>
+			<td><img src="<?php echo $folder; ?><?php echo $letter; ?>_orange.png"/></td>
+			<td><img src="<?php echo $folder; ?><?php echo $letter; ?>_pink.png"/></td>
+			<td><img src="<?php echo $folder; ?><?php echo $letter; ?>_purple.png"/></td>
+		</tr>
+	<?php endforeach; ?>
+</table>

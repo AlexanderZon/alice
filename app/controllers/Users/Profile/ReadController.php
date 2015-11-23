@@ -106,8 +106,6 @@ class ReadController extends \BaseController {
 
 			self::setWarning('security_user_email_err', 'Error al cambiar correo', 'El correo ' . Input::get('email') . ' no es válido, por favor ingrese uno diferente');
 
-			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
-
 			return self::go( 'index' );
 
 		endif;
@@ -116,8 +114,6 @@ class ReadController extends \BaseController {
 
 			self::setWarning('security_user_first_name_err', 'Error al agregar usuario', 'El nombre ' . Input::get('first_name') . ' no es válido, por favor ingrese uno diferente');
 
-			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
-
 			return self::go( 'index' );
 
 		endif;
@@ -125,8 +121,6 @@ class ReadController extends \BaseController {
 		if( !filter_var(Input::get('last_name'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '/^[a-zA-Z][a-zA-Z ]*$/'))) ):
 
 			self::setWarning('security_user_last_name_err', 'Error al agregar usuario', 'El nombre ' . Input::get('last_name') . ' no es válido, por favor ingrese uno diferente');
-
-			// Audits::add(Auth::user(), $args['msg_warning'], 'CREATE');
 
 			return self::go( 'index' );
 
@@ -154,9 +148,6 @@ class ReadController extends \BaseController {
 		$profile->twitter = Input::get('twitter');
 		$profile->address = Input::get('address');
 		$profile->phones = Input::get('phones');
-		// $profile->timezone = Input::get('timezone');
-		// $profile->locale = Input::get('locale');
-		// $profile->customs = Input::get('customs');
 		$profile->save();
 
 		if($user->email != Input::get('email')):
