@@ -89,7 +89,7 @@
 		ComponentsPickers.init();
 
 		window.history.pushState("", "", '/teachers/contributions/show/{{Hashids::encode($course->id)}}?section=general');
-		document.title = 'Alice | {{ $course->title }} | Contenido';
+		document.title = 'Alyce | {{ $course->title }} | Contenido';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

@@ -82,7 +82,7 @@ class ReadController extends \BaseController {
 
 			if( !filter_var(Input::get('facebook'), FILTER_VALIDATE_REGEXP, array( 'options' => array( 'regexp' => '/^@[a-z\d.]{5,50}$/')) )):
 
-				self::setWarning('security_user_facebook_err', 'Error al cambiar el usuario facebook', 'El Nombre de Usuario ' . Input::get('facebook') . ' no es válido, solo puede agregar un usuario de Facebook con el formato @UsuarioFacebook, y debe contener entre 5 y 50 catacteres, y puede contener numeros y punto (.)');
+				self::setWarning('security_user_facebook_err', 'Error al cambiar el usuario facebook', 'El Nombre de Usuario ' . Input::get('facebook') . ' no es válido, solo puede agregar un usuario de Facebook con el formato @usuario.de.facebook, y debe contener entre 5 y 50 catacteres, y puede contener numeros y punto (.)');
 
 				return self::go( 'index' );
 

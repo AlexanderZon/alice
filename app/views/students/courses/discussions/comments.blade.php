@@ -1038,7 +1038,7 @@
 		MomentManager.init();
 
 		window.history.pushState("", "", '/curso/{{ $course->name }}?section=discussions&action=comments&discussion_id={{ Hashids::encode($discussion->id) }}');
-		document.title = 'Alice | {{ $course->title }} | {{ $discussion->title }}';
+		document.title = 'Alyce | {{ $course->title }} | {{ $discussion->title }}';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

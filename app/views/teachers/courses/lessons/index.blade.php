@@ -287,7 +287,7 @@
 		ComponentsPickers.init();
 
 		window.history.pushState("", "", "/teachers/courses/show/{{ Hashids::encode($course->id)}}?section=lessons");
-		document.title = 'Alice | {{ $course->title }} | Lecciones';
+		document.title = 'Alyce | {{ $course->title }} | Lecciones';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

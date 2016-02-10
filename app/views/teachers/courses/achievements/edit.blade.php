@@ -440,7 +440,7 @@
 		ImagePicker.init();
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=achievements&action=edit');
-		document.title = 'Alice | {{ $course->title }} | {{ $course->title }} | Insignias';
+		document.title = 'Alyce | {{ $course->title }} | {{ $course->title }} | Insignias';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

@@ -153,7 +153,7 @@
 		ComponentsPickers.init();
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=discussions&action=edit&discussion_id={{Hashids::encode($discussion->id)}}');
-		document.title = 'Alice | {{ $course->title }} | Gestionar Discusión | {{ $discussion->title }}';
+		document.title = 'Alyce | {{ $course->title }} | Gestionar Discusión | {{ $discussion->title }}';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

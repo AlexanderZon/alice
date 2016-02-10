@@ -290,7 +290,7 @@
 		UINestable.init();
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=ordermodules');
-		document.title = 'Alice | {{ $course->title }} | Ordenar Módulos';
+		document.title = 'Alyce | {{ $course->title }} | Ordenar Módulos';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

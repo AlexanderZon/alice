@@ -263,7 +263,7 @@
 		ComponentsPickers.init();
 
 		window.history.pushState("", "", "/coordinators/courses/show/{{Hashids::encode($course->id)}}?section=lessons");
-		document.title = 'Alice | {{ $course->title }} | Lecciones';
+		document.title = 'Alyce | {{ $course->title }} | Lecciones';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

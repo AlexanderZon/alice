@@ -45,10 +45,10 @@
 <script type="text/javascript">
 
 	window.history.pushState("", "", '/curso/<?php echo $course->name; ?>?section=questions');
-	document.title = 'Alice | <?php echo $course->title; ?> | Cuestionario';
+	document.title = 'Alyce | <?php echo $course->title; ?> | Cuestionario';
 
 	$('#course-title').html('<?php echo $course->title; ?>');
 	$('#course-teacher').html('<?php echo $course->teacher->display_name; ?>');
-	$('#course-main-image').html('<img src="<?php echo $course->main_picture; ?>" class="img-responsive" alt="">');
+	$('#course-main-image').html('<img src="<?php echo $course->getMainPicture(); ?>" class="img-responsive" alt="">');
 
 </script>

@@ -52,6 +52,17 @@ return array(
 			'prefix'   => '',
 		),
 
+		/*'mysql' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'alice_master',
+			'username'  => 'alice_root',
+			'password'  => 'TheFourElemelons',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),*/
+
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',

@@ -53,7 +53,7 @@
 	<script type="text/javascript">
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=discussions&action=delete&discussion_id={{ Hashids::encode($discussion->id) }}');
-		document.title = 'Alice | {{ $course->title }} | {{ $discussion->title }} | Eliminar Discusión';
+		document.title = 'Alyce | {{ $course->title }} | {{ $discussion->title }} | Eliminar Discusión';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

@@ -192,7 +192,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/teachers/contributions/show/{{ Hashids::encode($course->id) }}?section=discussions');
-		document.title = 'Alice | {{ $course->title }} | Discusiones';
+		document.title = 'Alyce | {{ $course->title }} | Discusiones';
 
 </script>
 

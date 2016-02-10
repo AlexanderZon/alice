@@ -98,7 +98,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/coordinators/courses/show/{{ Hashids::encode($course->id) }}?section=students&action=statistics&student_id={{ Hashids::encode($student->id) }}');
-		document.title = 'Alice | {{ $course->title }} | Estadisticas de {{ $student->display_name }}';
+		document.title = 'Alyce | {{ $course->title }} | Estadisticas de {{ $student->display_name }}';
 
 </script>
 

@@ -113,7 +113,7 @@
 	<script type="text/javascript">
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=activities&action=add');
-		document.title = 'Alice | {{ $course->title }} | Añadir una nueva actividad';
+		document.title = 'Alyce | {{ $course->title }} | Añadir una nueva actividad';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

@@ -80,7 +80,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/teachers/courses/show/<?php echo Hashids::encode($course->id); ?>?section=lessons&action=students&lesson_id=<?php echo Hashids::encode($lesson->id); ?>');
-		document.title = 'Alice | <?php echo $course->title; ?> | <?php echo $lesson->title; ?> | Estudiantes Participantes';
+		document.title = 'Alyce | <?php echo $course->title; ?> | <?php echo $lesson->title; ?> | Estudiantes Participantes';
 
 </script>
 

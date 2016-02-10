@@ -502,7 +502,7 @@
 		QuestionsManager.init();
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=activities&action=edit&activity_id={{ Hashids::encode($evaluation->id) }}');
-		document.title = 'Alice | {{ $course->title }} | Editar Actividad';
+		document.title = 'Alyce | {{ $course->title }} | Editar Actividad';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

@@ -261,7 +261,7 @@
 		ComponentsPickers.init();
 
 		window.history.pushState("", "", "/curso/{{$course->name}}?section=lessons");
-		document.title = 'Alice | {{ $course->title }} | Lecciones';
+		document.title = 'Alyce | {{ $course->title }} | Lecciones';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

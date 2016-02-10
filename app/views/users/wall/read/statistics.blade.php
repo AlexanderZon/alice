@@ -68,7 +68,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/{{ $user->username }}?section=statistics');
-		document.title = 'Alice | {{ $user->display_name }} | Estadísticas';
+		document.title = 'Alyce | {{ $user->display_name }} | Estadísticas';
 
 </script>
 

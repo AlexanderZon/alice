@@ -69,7 +69,7 @@
 											</div>
 											<div class="col-md-5 portfolio-stat">
 												<div class="portfolio-info col-md-3">
-													Porcentage <span>
+													Porcentaje <span>
 													<?php echo ($test = $evaluation->myTest()) ? $test->percentage() : '0%'; ?> </span>
 												</div>
 												<div class="portfolio-info col-md-3">
@@ -83,10 +83,11 @@
 											</div>
 											<div class="col-md-2">
 												<div class="portfolio-btn">
-													<a href="javascript:;" class="btn bigicn-only evaluation-test-btn" data-evaluation="<?php echo Crypt::encrypt($evaluation->id); ?>">
-													<span>
-													Entrar </span>
-													</a>
+													<?php if($evaluation->isAvailableToTest()): ?>
+														<a href="javascript:;" class="btn bigicn-only evaluation-test-btn" data-evaluation="<?php echo Crypt::encrypt($evaluation->id); ?>">
+															<span>Entrar </span>
+														</a>
+													<?php endif; ?>
 												</div>
 											</div>
 										</div>
@@ -153,10 +154,10 @@
 	 	});
 
 		window.history.pushState("", "", '/curso/<?php echo $course->name; ?>?section=activities');
-		document.title = 'Alice | <?php echo $course->title; ?> | Actividades';
+		document.title = 'Alyce | <?php echo $course->title; ?> | Actividades';
 
 		$('#course-title').html('<?php echo $course->title; ?>');
 		$('#course-teacher').html('<?php echo $course->teacher->display_name; ?>');
-		$('#course-main-image').html('<img src="<?php echo $course->main_picture; ?>" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="<?php echo $course->getMainPicture(); ?>" class="img-responsive" alt="">');
 
 	</script>

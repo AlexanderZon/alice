@@ -1572,7 +1572,7 @@
 		FancyboxManager.init();
 
 		window.history.pushState("", "", '/coordinators/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=viewlesson&lesson_id={{ Hashids::encode($lesson->id) }}');
-		document.title = 'Alice | {{ $course->title }} | Contenido';
+		document.title = 'Alyce | {{ $course->title }} | Contenido';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

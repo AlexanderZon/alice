@@ -318,7 +318,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/{{ $user->username }}?section=learning');
-		document.title = 'Alice | {{ $user->username }} | Aprendiendo';
+		document.title = 'Alyce | {{ $user->username }} | Aprendiendo';
 
 </script>
 	

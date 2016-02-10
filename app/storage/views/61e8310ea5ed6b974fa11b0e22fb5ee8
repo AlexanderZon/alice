@@ -108,7 +108,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/<?php echo $user->username; ?>?section=achievements');
-		document.title = 'Alice | <?php echo $user->username; ?> | Premiaciones';
+		document.title = 'Alyce | <?php echo $user->username; ?> | Premiaciones';
 
 </script>
 

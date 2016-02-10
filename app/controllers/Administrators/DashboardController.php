@@ -24,7 +24,7 @@ class DashboardController extends \BaseController {
 
 		self::$title = 'Administrador';
 
-		self::$description = 'Administrador del Sistem Alice';
+		self::$description = 'Administrador del Sistem Alyce';
 
 		self::fixSection('index', 'Inicio');
 

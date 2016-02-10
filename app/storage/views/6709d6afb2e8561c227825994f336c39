@@ -128,7 +128,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/<?php echo $user->username; ?>?section=contributing');
-		document.title = 'Alice | <?php echo $user->username; ?> | Contribuyendo';
+		document.title = 'Alyce | <?php echo $user->username; ?> | Contribuyendo';
 
 </script>
 	

@@ -108,7 +108,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/{{ $user->username }}?section=achievements');
-		document.title = 'Alice | {{ $user->username }} | Premiaciones';
+		document.title = 'Alyce | {{ $user->username }} | Premiaciones';
 
 </script>
 

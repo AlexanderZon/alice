@@ -174,7 +174,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/{{ $user->username }}?section=discussions');
-		document.title = 'Alice | {{ $user->username }} | Discusiones';
+		document.title = 'Alyce | {{ $user->username }} | Discusiones';
 
 </script>
 

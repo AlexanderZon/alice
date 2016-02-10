@@ -82,10 +82,11 @@
 											</div>
 											<div class="col-md-2">
 												<div class="portfolio-btn">
-													<a href="javascript:;" class="btn bigicn-only evaluation-test-btn" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}">
-													<span>
-													Entrar </span>
-													</a>
+													@if($evaluation->isAvailableToTest())
+														<a href="javascript:;" class="btn bigicn-only evaluation-test-btn" data-evaluation="{{ Crypt::encrypt($evaluation->id) }}">
+															<span>Entrar </span>
+														</a>
+													@endif
 												</div>
 											</div>
 										</div>
@@ -152,7 +153,7 @@
 	 	});
 
 		window.history.pushState("", "", '/curso/{{ $course->name }}?section=activities');
-		document.title = 'Alice | {{ $course->title }} | Actividades';
+		document.title = 'Alyce | {{ $course->title }} | Actividades';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

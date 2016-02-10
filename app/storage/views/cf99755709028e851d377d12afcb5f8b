@@ -59,7 +59,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/curso/<?php echo $course->name; ?>?section=contributors');
-		document.title = 'Alice | <?php echo $course->title; ?> | Compañeros';
+		document.title = 'Alyce | <?php echo $course->title; ?> | Compañeros';
 
 </script>
 

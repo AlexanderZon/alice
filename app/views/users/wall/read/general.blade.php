@@ -80,6 +80,6 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/{{ $user->username }}?section=general');
-		document.title = 'Alice | {{ $user->username }} | Perfil';
+		document.title = 'Alyce | {{ $user->username }} | Perfil';
 
 </script>

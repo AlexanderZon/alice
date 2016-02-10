@@ -119,7 +119,7 @@
 	ImagePicker.init();
 	
 	window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=achievements&action=bunch');
-		document.title = 'Alice | {{ $course->title }} | Premiaciones';
+		document.title = 'Alyce | {{ $course->title }} | Premiaciones';
 
 </script>
 

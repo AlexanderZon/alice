@@ -2,7 +2,7 @@
 
 class BaseController extends Controller implements BaseInterface{
 
-	protected static $app = 'Alice';
+	protected static $app = 'Alyce';
 
 	protected static $upload_folder = 'uploads/';
 

@@ -88,8 +88,15 @@
 											</div>
 										</div>
 										<div class="col-md-4">
-											<div class="col-md-6">
+											<div class="col-md-3">
 												<input type="submit" class="btn blue-madison" value="Guardar">
+											</div>
+											<div class="col-md-3">
+												@if($evaluation->tests->count() == 0)
+													<a href="javascript:;" class="btn red delete-activity" value="Eliminar">Eliminar</a>
+												@else
+													&nbsp;
+												@endif
 											</div>
 											<div class="col-md-6">
 												<img id="evaluation-form-loader" class="col-md-8 hidden" src="/assets/loaders/rubiks-cube.gif">
@@ -259,6 +266,38 @@
 				});
 			}
 
+			var deleteEvaluationConfirm = function(el){
+
+                bootbox.confirm("¿Está usted seguro que desea eliminar esta evaluación?", function(result) {
+                	if(result){
+
+						$('#questions-form-loader').removeClass('hidden');
+
+                		$.ajax({
+                			url: '{{ $route }}/activity',
+                			type: 'DELETE',
+                			datatype: 'json',
+                			data: {
+                				activity_id: $('.portlet-body').data('activity')
+                			},
+                			async: true,
+                			success: function(data){
+								toastr['success']("La evaluación ha sido eliminada con éxito!", "Evaluación Eliminada");
+								$('.lesson-activities-back').click();
+                			},
+                			error: function(xhr){
+                				console.log(xhr);
+								toastr['error']("No se han podido eliminar la evaluación", "ERROR");
+                			}
+                		})
+                	}
+                	else{
+
+                	}
+                   console.log(result);
+                });
+			}
+
 			var submitQuestionForm = function(el){
 
 				console.log('Submit Question Form');
@@ -424,6 +463,13 @@
 						/* Act on the event */
 					});
 
+
+					$('.evaluation').on('click', '.delete-activity', function(event) {
+						event.preventDefault();
+						deleteEvaluationConfirm($(this));
+						/* Act on the event */
+					});
+
 					$('.evaluation').on('click', '.activity-questions-add', function(event) {
 						activityQuestionAdd($(this));
 						/* Act on the event */
@@ -484,7 +530,7 @@
 		QuestionsManager.init();
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=editactivity&lesson_id={{ Hashids::encode($lesson->id) }}&activity_id={{ Hashids::encode($evaluation->id) }}');
-		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Editar Actividad';
+		document.title = 'Alyce | {{ $course->title }} | {{ $lesson->title }} | Editar Actividad';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

@@ -258,7 +258,7 @@
 	}
 	
 	window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=statistics');
-		document.title = 'Alice | {{ $course->title }} | Estudiantes';
+		document.title = 'Alyce | {{ $course->title }} | Estudiantes';
 
 </script>
 

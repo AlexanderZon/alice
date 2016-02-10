@@ -125,7 +125,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/{{ $user->username }}?section=teaching');
-		document.title = 'Alice | {{ $user->username }} | Enseñando';
+		document.title = 'Alyce | {{ $user->username }} | Enseñando';
 
 </script>	
 	

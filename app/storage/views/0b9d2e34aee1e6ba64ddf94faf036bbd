@@ -183,7 +183,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/curso/<?php echo $course->name; ?>?section=discussions');
-		document.title = 'Alice | <?php echo $course->title; ?> | Discusiones';
+		document.title = 'Alyce | <?php echo $course->title; ?> | Discusiones';
 
 </script>
 

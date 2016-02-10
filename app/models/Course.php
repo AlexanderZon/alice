@@ -420,7 +420,7 @@ class Course extends \Eloquent {
         $averages = 0;
         $counter = 0;
 
-        if($students):
+        if($students->count() > 0):
 
             foreach($students as $student):
                 $averages += $this->averageOf($student);

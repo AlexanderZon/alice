@@ -18,9 +18,9 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="portlet-title">
 						<h4 class="profile-usertitle-name">Discusiones sobre {{ $course->title }} ({{ $discussions->count() }})
-							<a href="javascript:;" class="btn blue-madison pull-right tooltips discussion-add" data-placement="left" data-original-title="Añadir una Nueva Discusión">
+							<!-- <a href="javascript:;" class="btn blue-madison pull-right tooltips discussion-add" data-placement="left" data-original-title="Añadir una Nueva Discusión">
 								<i class="fa fa-plus"></i>
-							</a>
+							</a> -->
 						</h4>
 					</div>
 					<div class="row">&nbsp;</div>
@@ -168,7 +168,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/coordinators/courses/show/{{ Hashids::encode($course->id) }}?section=discussions');
-		document.title = 'Alice | {{ $course->title }} | Discusiones';
+		document.title = 'Alyce | {{ $course->title }} | Discusiones';
 
 </script>
 

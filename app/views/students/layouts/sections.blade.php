@@ -1372,12 +1372,13 @@
 		    	var course = el.parents('.portlet').data('course');
 		    	var evaluationable_type = el.data('evaluationable-type');
 		    	var evaluationable_id = el.data('evaluationable-id');
+		    	var lesson_id = el.data('lesson-id');
 
 		        var url = null;
 		        var data = null;
 
 		        if(evaluationable_type == 'Lesson'){
-		        	url = '{{$route}}?section=lessons&action=viewlesson';
+		        	url = '{{$route}}?section=lessons&action=viewlesson&lesson_id='+evaluationable_id;
 		        	data = {
 		        		lesson_id: evaluationable_id
 		        	};

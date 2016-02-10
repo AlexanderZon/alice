@@ -60,7 +60,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=students');
-		document.title = 'Alice | {{ $course->title }} | Estudiantes';
+		document.title = 'Alyce | {{ $course->title }} | Estudiantes';
 
 </script>
 

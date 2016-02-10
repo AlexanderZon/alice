@@ -272,7 +272,7 @@
 		ComponentsIonSliders.init();
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=editlesson&lesson_id={{ Hashids::encode($lesson->id) }}');
-		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Editar Lección';
+		document.title = 'Alyce | {{ $course->title }} | {{ $lesson->title }} | Editar Lección';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

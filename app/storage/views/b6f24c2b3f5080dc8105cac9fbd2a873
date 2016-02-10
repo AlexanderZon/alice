@@ -267,10 +267,10 @@
 		ComponentsPickers.init();
 
 		window.history.pushState("", "", "/curso/<?php echo $course->name; ?>?section=lessons");
-		document.title = 'Alice | <?php echo $course->title; ?> | Lecciones';
+		document.title = 'Alyce | <?php echo $course->title; ?> | Lecciones';
 
 		$('#course-title').html('<?php echo $course->title; ?>');
 		$('#course-teacher').html('<?php echo $course->teacher->display_name; ?>');
-		$('#course-main-image').html('<img src="<?php echo $course->main_picture; ?>" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="<?php echo $course->getMainPicture(); ?>" class="img-responsive" alt="">');
 
 	</script>

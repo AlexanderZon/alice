@@ -52,7 +52,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END SIDEBAR TOGGLER BUTTON -->
 <!-- BEGIN LOGO -->
 <div class="logo">
-	<a href="index.html">
+	<a href="/auth">
 	<img src="/assets/images/logo_blank.png" alt=""/>
 	</a>
 </div>

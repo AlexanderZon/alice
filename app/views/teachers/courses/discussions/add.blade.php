@@ -144,7 +144,7 @@
 		ComponentsPickers.init();
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=discussions&action=add');
-		document.title = 'Alice | {{ $course->title }} | Añadir Discusión';
+		document.title = 'Alyce | {{ $course->title }} | Añadir Discusión';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

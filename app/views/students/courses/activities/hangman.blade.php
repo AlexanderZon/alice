@@ -348,7 +348,16 @@
 				});
 				$('.final-score').fadeOut('slow/400/fast', function() {
 				});
+
+				console.log('Progress: ', progress);
+				console.log('Questions: ', questions.length);
+
+				
 				$('.result').fadeOut('slow/400/fast', function() {
+					if(progress == questions.length){
+						$('.next-button').fadeOut();
+						$('.finish-button').fadeIn();
+					}
 					$('.spent-time').fadeIn('slow/400/fast', function() {
 						setLayout();					
 					});
@@ -492,11 +501,13 @@
 
 			var lettersWithoutSpaces = function(word){
 
+				console.log('Word: ', word);
+
 				var counter = 0;
 
-				for(letter in word){
-					if(word[letter] != ' ') counter++;
-				}
+				console.log('PARALABRA SIN ESPACIOS: ', word.split(' ').join(''));
+
+				return word.split(' ').join('').length;
 
 				return counter;
 
@@ -525,6 +536,9 @@
 						html_answer += ' _ ';						
 					}
 				};
+				console.log('Covered Positions: ', covered_positions);
+				console.log('lettersWithoutSpaces: ', lettersWithoutSpaces(upperWord));
+
 				if(covered_positions == lettersWithoutSpaces(upperWord)){
 					wellDone();
 				}

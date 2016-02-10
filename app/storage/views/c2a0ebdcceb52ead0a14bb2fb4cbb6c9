@@ -321,7 +321,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/<?php echo $user->username; ?>?section=learning');
-		document.title = 'Alice | <?php echo $user->username; ?> | Aprendiendo';
+		document.title = 'Alyce | <?php echo $user->username; ?> | Aprendiendo';
 
 </script>
 	

@@ -1492,10 +1492,10 @@
 		FancyboxManager.init();
 
 		window.history.pushState("", "", '/curso/<?php echo $course->name; ?>?section=lessons&action=viewlesson&lesson_id=<?php echo Hashids::encode($lesson->id); ?>');
-		document.title = 'Alice | <?php echo $course->title; ?> | Contenido';
+		document.title = 'Alyce | <?php echo $course->title; ?> | Contenido';
 
 		$('#course-title').html('<?php echo $course->title; ?>');
 		$('#course-teacher').html('<?php echo $course->teacher->display_name; ?>');
-		$('#course-main-image').html('<img src="<?php echo $course->main_picture; ?>" class="img-responsive" alt="">');
+		$('#course-main-image').html('<img src="<?php echo $course->getMainPicture(); ?>" class="img-responsive" alt="">');
 
 	</script>

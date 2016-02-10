@@ -85,7 +85,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-plus-circle"></i></div>
-						<div class="col-md-10 col-sm-10 col-xs-10">Duplica la cantidad de puntos pon una respuesta correcta</div> 
+						<div class="col-md-10 col-sm-10 col-xs-10">Duplica la cantidad de puntos con una respuesta correcta</div> 
 					</div>
 					<div class="row">
 						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-repeat"></i></div>

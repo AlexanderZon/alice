@@ -174,7 +174,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/curso/{{ $course->name }}?section=discussions');
-		document.title = 'Alice | {{ $course->title }} | Discusiones';
+		document.title = 'Alyce | {{ $course->title }} | Discusiones';
 
 </script>
 

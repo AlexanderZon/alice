@@ -100,11 +100,11 @@
 														<input type="hidden" name="id" value="{{ Hashids::encode($question->id) }}">
 														<div class="form-group">
 															<label class="control-label">Pregunta</label>
-															<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="{{ $question->question }}" required/>
+															<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="{{ $question->question }}" maxlength="254" required/>
 														</div>
 														<div class="form-group">
 															<label class="control-label">Respuesta</label>
-															<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="{{ $question->answer }}" maxlength="254" required/>
+															<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="{{ $question->answer }}" maxlength="3000" required/>
 														</div>
 														<div class="form-group">
 															<label class="control-label">Referencia Bibliográfica</label>
@@ -279,11 +279,11 @@
 									'<input type="hidden" name="id" value="' + data.question.hashids + '">' +
 									'<div class="form-group">' +
 										'<label class="control-label">Pregunta</label>' +
-										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="' + data.question.question + '"  required/>' +
+										'<input type="text" placeholder="Plantee la pregunta en esta caja de texto" class="form-control" name="question" value="' + data.question.question + '" maxlength="254" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
-										'<label class="control-label">Palabra</label>' +
-										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="' + data.question.answer + '" maxlength="254" required/>' +
+										'<label class="control-label">Respuesta</label>' +
+										'<input type="text" placeholder="Indique la respuesta a la Pregunta anterior" class="form-control" name="answer" value="' + data.question.answer + '" maxlength="3000" required/>' +
 									'</div>' +
 									'<div class="form-group">' +
 										'<label class="control-label">Referencia Bibliográfica</label>' +
@@ -341,7 +341,7 @@
 		QuestionsManager.init();
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=questions');
-		document.title = 'Alice | {{ $course->title }} | Editar Cuestionario';
+		document.title = 'Alyce | {{ $course->title }} | Editar Cuestionario';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

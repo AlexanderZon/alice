@@ -158,7 +158,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/<?php echo $user->username; ?>?section=following');
-		document.title = 'Alice | <?php echo $user->username; ?> | Siguiendo';
+		document.title = 'Alyce | <?php echo $user->username; ?> | Siguiendo';
 
 </script>
 

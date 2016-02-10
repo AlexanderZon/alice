@@ -258,7 +258,7 @@
 	 	});
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=activities');
-		document.title = 'Alice | {{ $course->title }} | Actividades';
+		document.title = 'Alyce | {{ $course->title }} | Actividades';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

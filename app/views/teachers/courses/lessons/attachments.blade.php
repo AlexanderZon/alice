@@ -535,7 +535,7 @@
 		});
 	
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=attachments&lesson_id={{ Hashids::encode($lesson->id) }}');
-		document.title = 'Alice | {{ $course->title }} | {{ $lesson->title }} | Archivos Adjuntos';
+		document.title = 'Alyce | {{ $course->title }} | {{ $lesson->title }} | Archivos Adjuntos';
 
 		$('#fileupload').bind('fileuploadprogress', function (e, data) {
 		    // Log the current bitrate for this upload:

@@ -188,7 +188,7 @@
 		ComponentsPickers.init();
 
 		window.history.pushState("", "", '/teachers/courses/show/{{ Hashids::encode($course->id) }}?section=lessons&action=editmodule&module_id={{ Hashids::encode($module->id) }}');
-		document.title = 'Alice | {{ $course->title }} | {{ $module->title }} | Editar Módulo';
+		document.title = 'Alyce | {{ $course->title }} | {{ $module->title }} | Editar Módulo';
 
 		$('#course-title').html('{{ $course->title }}');
 		$('#course-teacher').html('{{ $course->teacher->display_name }}');

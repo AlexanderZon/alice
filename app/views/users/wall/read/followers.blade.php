@@ -158,7 +158,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/{{ $user->username }}?section=followers');
-		document.title = 'Alice | {{ $user->username }} | Seguidores';
+		document.title = 'Alyce | {{ $user->username }} | Seguidores';
 
 </script>
 

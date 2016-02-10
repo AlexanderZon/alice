@@ -60,7 +60,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/teachers/courses/show/<?php echo Hashids::encode($course->id); ?>?section=contributors&action=add');
-		document.title = 'Alice | <?php echo $course->title; ?> | Contribuidores';
+		document.title = 'Alyce | <?php echo $course->title; ?> | Contribuidores';
 
 </script>
 

@@ -99,7 +99,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/coordinators/courses/show/<?php echo Hashids::encode($course->id); ?>?section=students&action=statistics&student_id=<?php echo Hashids::encode($student->id); ?>');
-		document.title = 'Alice | <?php echo $course->title; ?> | Estadisticas de <?php echo $student->display_name; ?>';
+		document.title = 'Alyce | <?php echo $course->title; ?> | Estadisticas de <?php echo $student->display_name; ?>';
 
 </script>
 

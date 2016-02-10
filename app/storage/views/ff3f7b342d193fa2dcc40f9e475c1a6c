@@ -294,7 +294,7 @@
 		ComponentsPickers.init();
 
 		window.history.pushState("", "", "/teachers/courses/show/<?php echo Hashids::encode($course->id); ?>?section=lessons");
-		document.title = 'Alice | <?php echo $course->title; ?> | Lecciones';
+		document.title = 'Alyce | <?php echo $course->title; ?> | Lecciones';
 
 		$('#course-title').html('<?php echo $course->title; ?>');
 		$('#course-teacher').html('<?php echo $course->teacher->display_name; ?>');

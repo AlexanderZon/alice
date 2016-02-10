@@ -177,7 +177,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/coordinators/courses/show/<?php echo Hashids::encode($course->id); ?>?section=discussions');
-		document.title = 'Alice | <?php echo $course->title; ?> | Discusiones';
+		document.title = 'Alyce | <?php echo $course->title; ?> | Discusiones';
 
 </script>
 

@@ -44,7 +44,7 @@
 <script type="text/javascript">
 
 	window.history.pushState("", "", '/curso/{{ $course->name }}?section=questions');
-	document.title = 'Alice | {{ $course->title }} | Cuestionario';
+	document.title = 'Alyce | {{ $course->title }} | Cuestionario';
 
 	$('#course-title').html('{{ $course->title }}');
 	$('#course-teacher').html('{{ $course->teacher->display_name }}');

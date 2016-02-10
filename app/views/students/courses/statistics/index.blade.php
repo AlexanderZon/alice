@@ -66,7 +66,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/curso/{{ $course->name  }}?section=statistics');
-		document.title = 'Alice | {{ $course->title }} | Estadísticas';
+		document.title = 'Alyce | {{ $course->title }} | Estadísticas';
 
 </script>
 

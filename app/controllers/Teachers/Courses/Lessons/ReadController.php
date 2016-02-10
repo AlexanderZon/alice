@@ -717,6 +717,21 @@ class ReadController extends \Teachers\Courses\ReadController {
 
 	/**
 	 * Display a listing of the resource.
+	 * DELETE /activity
+	 *
+	 * @return Response
+	 */
+	public function deleteActivity( $course_id = '' ){
+
+		$evaluation = Evaluation::find(Hashids::decode(Input::get('activity_id')));
+		$evaluation->delete();
+
+		return Response::json(array('evaluation' => $evaluation));
+
+	}
+
+	/**
+	 * Display a listing of the resource.
 	 * POST /question
 	 *
 	 * @return Response

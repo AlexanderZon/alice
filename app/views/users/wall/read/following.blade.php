@@ -158,7 +158,7 @@
 <script type="text/javascript">
 	
 	window.history.pushState("", "", '/{{ $user->username }}?section=following');
-		document.title = 'Alice | {{ $user->username }} | Siguiendo';
+		document.title = 'Alyce | {{ $user->username }} | Siguiendo';
 
 </script>
 
